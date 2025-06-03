@@ -92,6 +92,7 @@ def generate_data(resort, date):
 
     # Season determination
     season = None
+    holiday_name = None  # Initialize here
     if year in season_blocks.get(resort, {}):
         for season_name, ranges in season_blocks[resort][year].items():
             for start_date, end_date in ranges:
@@ -135,7 +136,6 @@ def generate_data(resort, date):
         if not available_day_categories:
             raise KeyError(f"No valid day categories found for {resort}, {season}")
 
-        # Select appropriate day category
         if is_fri_sat and "Fri-Sat" in available_day_categories:
             normal_room_category = "Fri-Sat"
         elif is_sun and "Sun" in available_day_categories:
@@ -145,7 +145,7 @@ def generate_data(resort, date):
         elif "Sun-Thu" in available_day_categories:
             normal_room_category = "Sun-Thu"
         else:
-            normal_room_category = available_day_categories[0]  # Fallback to first available
+            normal_room_category = available_day_categories[0]
             st.session_state.debug_messages.append(f"Fallback to {normal_room_category} for {date_str}")
 
         st.session_state.debug_messages.append(f"Selected normal room category: {normal_room_category}")
@@ -167,7 +167,7 @@ def generate_data(resort, date):
         # Populate entry
         is_holiday = False
         is_holiday_start = False
-        holiday_name = None
+        holiday_name = None  # Reinitialize for entry population
         if year in holiday_weeks.get(resort, {}):
             for h_name, [start, end] in holiday_weeks[resort][year].items():
                 h_start = datetime.strptime(start, "%Y-%m-%d").date()
@@ -214,7 +214,7 @@ def generate_data(resort, date):
     except KeyError as e:
         st.session_state.debug_messages.append(f"KeyError: {str(e)} for resort={resort}, season={season}, normal_room_category={normal_room_category}, ap_day_category={ap_day_category}")
         st.error(f"Error accessing reference points for {resort}, season {season}, day category {normal_room_category}. Check data.json.")
-        raise    
+        raise
     if not season:
         season = next(iter(season_blocks[resort][year].keys()), "Low Season")
         st.session_state.debug_messages.append(f"No season match found for {date_str}, defaulting to {season}")
