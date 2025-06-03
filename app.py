@@ -90,7 +90,6 @@ def generate_data(resort, date):
         ap_room_types = list(reference_points[resort]["AP Rooms"][ap_day_category].keys())
         st.session_state.debug_messages.append(f"AP room types found: {ap_room_types}")
 
-    # Season determination
     season = None
     if year in season_blocks.get(resort, {}):
         for season_name, ranges in season_blocks[resort][year].items():
@@ -98,7 +97,7 @@ def generate_data(resort, date):
                 try:
                     start = datetime.strptime(start_date, "%Y-%m-%d").date()
                     end = datetime.strptime(end_date, "%Y-%m-%d").date()
-                    if start <= date.date() <= end:
+                    if start <= date.date() <= end:  # Error here
                         season = season_name
                         break
                 except ValueError as e:
