@@ -348,7 +348,7 @@ st.title("Marriott Vacation Club Cost Calculator")
 
 with st.expander("\U0001F334 How Cost Is Calculated"):
     st.markdown("""
-    - **Cost is based on FULL (un-discounted) points only.**
+    - ** Membership with less than 7000 points a year will not enjoy last minute discounts **
     - MVC maintenance in **2025** is $0.81 per point 
     - MVC maintenance in **2026** is estimated to be $0.86 per point
     - **Holiday weeks**: For days within a holiday week, please contact me to check.
