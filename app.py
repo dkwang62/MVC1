@@ -324,22 +324,51 @@ reverse_aliases = {v: k for k, v in resort_aliases.items()}
 display_resorts = list(resort_aliases.values())
 
 # Sidebar for display mode and discount
+#with st.sidebar:
+#    display_options = [
+#        (0, "both"), (25, "both"), (30, "both"),
+#        (0, "points"), (25, "points"), (30, "points")
+    ]
+#    display_mode_select = st.selectbox(
+#        "Display and Discount Settings",
+#        options=range(len(display_options)),
+#        format_func=lambda i: (
+#            f"{display_options[i][0]}% Discount (Points Only)" if display_options[i][1] == "points" else
+#            f"{display_options[i][0]}% Discount" if display_options[i][0] else "No Discount"
+#        ),
+#        index=0
+#    )
+#    discount_percent, display_mode = display_options[display_mode_select]
+#    st.caption("Cost calculation is based on ZERO discounts.")
+
+# Sidebar for display mode and discount
 with st.sidebar:
     display_options = [
         (0, "both"), (25, "both"), (30, "both"),
         (0, "points"), (25, "points"), (30, "points")
     ]
+
+    def format_discount(i):
+        discount, mode = display_options[i]
+        level = (
+            "Presidential / Chairman level" if discount == 30 else
+            "Executive level" if discount == 25 else
+            "Ordinary level"
+        )
+        if mode == "points":
+            return f"{discount}% Discount ({level}, Points Only)"
+        else:
+            return f"{discount}% Discount ({level})" if discount else f"No Discount ({level})"
+
     display_mode_select = st.selectbox(
         "Display and Discount Settings",
         options=range(len(display_options)),
-        format_func=lambda i: (
-            f"{display_options[i][0]}% Discount (Points Only)" if display_options[i][1] == "points" else
-            f"{display_options[i][0]}% Discount" if display_options[i][0] else "No Discount"
-        ),
+        format_func=format_discount,
         index=0
     )
+
     discount_percent, display_mode = display_options[display_mode_select]
-    st.caption("Cost calculation is based on FULL undiscounted points.")
+    st.caption("Cost calculation is based on ZERO discounts.")
 
 discount_multiplier = 1 - (discount_percent / 100)
 
@@ -348,7 +377,7 @@ st.title("Marriott Vacation Club Cost Calculator")
 
 with st.expander("\U0001F334 How Cost Is Calculated"):
     st.markdown("""
-    - Note: Ordinary Membership do not have last minute discounts
+    - Ordinary Membership do not have last minute discounts
     - MVC maintenance in **2025** is $0.81 per point 
     - MVC maintenance in **2026** is estimated to be $0.86 per point
     """)
