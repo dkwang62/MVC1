@@ -323,25 +323,6 @@ resort_aliases = {
 reverse_aliases = {v: k for k, v in resort_aliases.items()}
 display_resorts = list(resort_aliases.values())
 
-# Sidebar for display mode and discount
-#with st.sidebar:
-#    display_options = [
-#        (0, "both"), (25, "both"), (30, "both"),
-#        (0, "points"), (25, "points"), (30, "points")
-#    ]
-#    display_mode_select = st.selectbox(
-#        "Display and Discount Settings",
-#        options=range(len(display_options)),
-#        format_func=lambda i: (
-#            f"{display_options[i][0]}% Discount (Points Only)" if display_options[i][1] == "points" else
-#            f"{display_options[i][0]}% Discount" if display_options[i][0] else "No Discount"
-#        ),
-#        index=0
-#    )
-#    discount_percent, display_mode = display_options[display_mode_select]
-#    st.caption("Cost calculation is based on ZERO discounts.")
-
-# Sidebar for display mode and discount
 with st.sidebar:
     display_options = [
         (0, "both"), (25, "both"), (30, "both"),
@@ -351,9 +332,9 @@ with st.sidebar:
     def format_discount(i):
         discount, mode = display_options[i]
         level = (
-            "Presidential / Chairman level" if discount == 30 else
-            "Executive level" if discount == 25 else
-            "Ordinary level"
+            "Presidential" if discount == 30 else
+            "Executive" if discount == 25 else
+            "Ordinary"
         )
         if mode == "points":
             return f"{discount}% Discount ({level}, Points Only)"
