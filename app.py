@@ -339,7 +339,7 @@ with st.sidebar:
         index=0
     )
     discount_percent, display_mode = display_options[display_mode_select]
-    st.caption("Discount is for my use only. Rent is based on FULL undiscounted points.")
+    st.caption("Cost calculation is based on FULL undiscounted points.")
 
 discount_multiplier = 1 - (discount_percent / 100)
 
