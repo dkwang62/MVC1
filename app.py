@@ -74,13 +74,13 @@ def generate_data(resort, date):
     year = date.strftime("%Y")
     day_of_week = date.strftime("%a")
     
-    st.session_state.debug_messages.append(f"Processing date: {date_str}, Day of week: {day_of_week}")
+    st.session_state.debug_messages.append(f"Processing date: {date_str}, Day: {day_of_week}, type(date): {type(date)}")
     
     is_fri_sat = day_of_week in ["Fri", "Sat"]
     is_sun = day_of_week == "Sun"
     day_category = "Fri-Sat" if is_fri_sat else "Sun-Thu"
     ap_day_category = "Fri-Sat" if is_fri_sat else ("Sun" if is_sun else "Mon-Thu")
-    st.session_state.debug_messages.append(f"Day category determined: {day_category} (is_fri_sat: {is_fri_sat})")
+    st.session_state.debug_messages.append(f"Day category determined: {day_category}")
     st.session_state.debug_messages.append(f"AP day category determined: {ap_day_category}")
 
     entry = {}
@@ -88,8 +88,9 @@ def generate_data(resort, date):
     ap_room_types = []
     if resort == "Ko Olina Beach Club" and "AP Rooms" in reference_points[resort]:
         ap_room_types = list(reference_points[resort]["AP Rooms"][ap_day_category].keys())
-        st.session_state.debug_messages.append(f"AP room types found: {ap_room_types}")
+        st.session_state.debug_messages.append(f"AP Room types found: {ap_room_types}")
 
+    # Season determination
     season = None
     if year in season_blocks.get(resort, {}):
         for season_name, ranges in season_blocks[resort][year].items():
@@ -97,7 +98,7 @@ def generate_data(resort, date):
                 try:
                     start = datetime.strptime(start_date, "%Y-%m-%d").date()
                     end = datetime.strptime(end_date, "%Y-%m-%d").date()
-                    if start <= date.date() <= end:  # Error here
+                    if start <= date <= end:
                         season = season_name
                         break
                 except ValueError as e:
@@ -113,17 +114,17 @@ def generate_data(resort, date):
                 start_date, end_date = date_range
                 start = datetime.strptime(start_date, "%Y-%m-%d").date()
                 end = datetime.strptime(end_date, "%Y-%m-%d").date()
-                if start <= date.date() <= end:
+                if start <= date <= end:
                     holiday_name = h_name
                     season = "Holiday Week"
                     break
             except ValueError as e:
                 st.session_state.debug_messages.append(f"Invalid date format in holiday_weeks for {resort}: {e}")
 
-    # Fallback if no season found
+    # Fallback
     if season is None:
-        st.session_state.debug_messages.append(f"No season or holiday found for {resort} on {date_str}")
-        st.error(f"No season defined for {resort} on {date_str}. Check season_blocks and holiday_weeks in data.json.")
+        st.session_state.debug_messages.append(f"No season found for {resort} on {date_str}")
+        st.error(f"No season defined for {resort} on {date_str}. Check data.json.")
         raise ValueError(f"No season defined for {resort} on {date_str}")
 
     st.session_state.debug_messages.append(f"Season determined: {season}, Holiday: {holiday_name if holiday_name else 'None'}")
@@ -145,11 +146,58 @@ def generate_data(resort, date):
             all_display_room_types.extend([get_display_room_type(rt) for rt in ap_room_types])
 
         display_to_internal = dict(zip(all_display_room_types, all_room_types))
-        # ... rest of the function (populate entry, return) ...
+        st.session_state.debug_messages.append(f"Room type mappings: {display_to_internal}")
+
+        # Populate entry
+        is_holiday = False
+        is_holiday_start = False
+        holiday_name = None
+        if year in holiday_weeks.get(resort, {}):
+            for h_name, [start, end] in holiday_weeks[resort][year].items():
+                h_start = datetime.strptime(start, "%Y-%m-%d").date()
+                h_end = datetime.strptime(end, "%Y-%m-%d").date()
+                st.session_state.debug_messages.append(f"Checking holiday {h_name}: {start} to {end}")
+                if h_start <= date <= h_end:
+                    is_holiday = True
+                    holiday_name = h_name
+                    if date == h_start:
+                        is_holiday_start = True
+                    st.session_state.debug_messages.append(f"Holiday match found: {holiday_name} for {date_str}")
+                    break
+
+        for display_room_type, room_type in display_to_internal.items():
+            points = 0
+            is_ap_room = room_type in ap_room_types
+
+            if is_ap_room:
+                points_ref = reference_points[resort]["AP Rooms"][ap_day_category]
+                points = points_ref.get(room_type, 0)
+                st.session_state.debug_messages.append(f"Applying AP room points for {room_type} ({display_room_type}) on {date_str} ({ap_day_category}): {points}")
+            else:
+                if is_holiday and is_holiday_start:
+                    points_ref = reference_points[resort]["Holiday Week"].get(holiday_name, {})
+                    points = points_ref.get(room_type, 0)
+                    st.session_state.debug_messages.append(f"Applying Holiday Week points for {holiday_name} on {date_str} for {display_room_type}: {points}")
+                elif is_holiday and not is_holiday_start:
+                    points = 0
+                    st.session_state.debug_messages.append(f"Zero points for {date_str} (part of holiday week {holiday_name}) for {display_room_type}")
+                else:
+                    points_ref = reference_points[resort][season][ap_day_category if resort in ["Marriott's Phuket Beach Club", "Ko Olina Beach Club"] else day_category]
+                    points = points_ref.get(room_type, 0)
+                    st.session_state.debug_messages.append(f"Applying {season} {ap_day_category if resort in ['Marriott\'s Phuket Beach Club', 'Ko Olina Beach Club'] else day_category} points for {date_str} for {display_room_type}: {points}")
+
+            entry[display_room_type] = points
+
+        if is_holiday:
+            entry["HolidayWeek"] = True
+            entry["holiday_name"] = holiday_name
+            if is_holiday_start:
+                entry["HolidayWeekStart"] = True
+
         return entry, display_to_internal
     except KeyError as e:
         st.session_state.debug_messages.append(f"KeyError: {str(e)} for resort={resort}, season={season}, day_category={day_category}, ap_day_category={ap_day_category}")
-        st.error(f"Error accessing reference points for {resort}, season {season}, day category {ap_day_category if resort in ['Marriott\'s Phuket Beach Club', 'Ko Olina Beach Club'] else day_category}. Check data.json for missing or invalid keys.")
+        st.error(f"Error accessing reference points for {resort}, season {season}, day category {ap_day_category if resort in ['Marriott\'s Phuket Beach Club', 'Ko Olina Beach Club'] else day_category}. Check data.json.")
         raise
     
     if not season:
