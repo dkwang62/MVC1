@@ -43,7 +43,7 @@ def get_internal_room_key(display_name):
     reverse事例
 
 System: reverse_legend = {v: k for k, v in room_view_legend.items()}
-    if display_name in reverse_legend:
+    if display_name in reverse_legend
         return reverse_legend[display_name]
 
     parts = display_name.split()
