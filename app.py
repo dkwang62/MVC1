@@ -80,8 +80,8 @@ def generate_data(resort, date):
     is_sun = day_of_week == "Sun"
     day_category = "Fri-Sat" if is_fri_sat else "Sun-Thu"
     ap_day_category = "Fri-Sat" if is_fri_sat else ("Sun" if is_sun else "Mon-Thu")
-    st.session_state.debug_messages.append(f"Day category determined: {day_category}")
-    st.session_state.debug_messages.append(f"AP day category determined: {ap_day_category}")
+    st.session_state.debug_messages.append(f"Default day category: {day_category}")
+    st.session_state.debug_messages.append(f"Default AP day category: {ap_day_category}")
 
     entry = {}
 
@@ -106,8 +106,6 @@ def generate_data(resort, date):
             if season:
                 break
 
-    # Check holiday weeks
-    holiday_name = None
     if season is None and year in holiday_weeks.get(resort, {}):
         for h_name, date_range in holiday_weeks[resort][year].items():
             try:
@@ -121,7 +119,6 @@ def generate_data(resort, date):
             except ValueError as e:
                 st.session_state.debug_messages.append(f"Invalid date format in holiday_weeks: {e}")
 
-    # Fallback
     if season is None:
         st.session_state.debug_messages.append(f"No season found for {resort} on {date_str}")
         st.error(f"No season defined for {resort} on {date_str}.")
@@ -130,13 +127,28 @@ def generate_data(resort, date):
     st.session_state.debug_messages.append(f"Season determined: {season}, Holiday: {holiday_name if holiday_name else 'None'}")
 
     try:
-        # Use different day categories for normal room types
-        if resort == "Marriott's Phuket Beach Club":
-            normal_room_category = ap_day_category  # Phuket uses Mon-Thu, Sun, Fri-Sat
-        elif resort == "Ko Olina Beach Club":
-            normal_room_category = "Fri-Sat" if is_fri_sat else "Sun-Thu"  # Ko Olina uses Sun-Thu, Fri-Sat
+        # Determine day category dynamically
+        possible_day_categories = ["Fri-Sat", "Sun", "Mon-Thu", "Sun-Thu"]
+        available_day_categories = [cat for cat in possible_day_categories if cat in reference_points[resort][season]]
+        st.session_state.debug_messages.append(f"Available day categories for {resort}, {season}: {available_day_categories}")
+
+        if not available_day_categories:
+            raise KeyError(f"No valid day categories found for {resort}, {season}")
+
+        # Select appropriate day category
+        if is_fri_sat and "Fri-Sat" in available_day_categories:
+            normal_room_category = "Fri-Sat"
+        elif is_sun and "Sun" in available_day_categories:
+            normal_room_category = "Sun"
+        elif not is_fri_sat and "Mon-Thu" in available_day_categories:
+            normal_room_category = "Mon-Thu"
+        elif "Sun-Thu" in available_day_categories:
+            normal_room_category = "Sun-Thu"
         else:
-            normal_room_category = day_category  # Default: Sun-Thu, Fri-Sat
+            normal_room_category = available_day_categories[0]  # Fallback to first available
+            st.session_state.debug_messages.append(f"Fallback to {normal_room_category} for {date_str}")
+
+        st.session_state.debug_messages.append(f"Selected normal room category: {normal_room_category}")
 
         normal_room_types = list(reference_points[resort][season][normal_room_category].keys())
         st.session_state.debug_messages.append(f"Normal room types found for {normal_room_category}: {normal_room_types}")
@@ -202,8 +214,7 @@ def generate_data(resort, date):
     except KeyError as e:
         st.session_state.debug_messages.append(f"KeyError: {str(e)} for resort={resort}, season={season}, normal_room_category={normal_room_category}, ap_day_category={ap_day_category}")
         st.error(f"Error accessing reference points for {resort}, season {season}, day category {normal_room_category}. Check data.json.")
-        raise
-    
+        raise    
     if not season:
         season = next(iter(season_blocks[resort][year].keys()), "Low Season")
         st.session_state.debug_messages.append(f"No season match found for {date_str}, defaulting to {season}")
