@@ -344,14 +344,14 @@ with st.sidebar:
 discount_multiplier = 1 - (discount_percent / 100)
 
 # Title and user input
-st.title("Marriott Vacation Club Rent Calculator")
+st.title("Marriott Vacation Club Cost Calculator")
 
-with st.expander("\U0001F334 How Rent Is Calculated"):
+with st.expander("\U0001F334 How Cost Is Calculated"):
     st.markdown("""
     - **Rent is based on FULL (un-discounted) points only.**
-    - $0.81 per FULL point for dates in **2025**
-    - $0.86 per FULL point for dates in **2026 and beyond**
-    - **Holiday weeks**: For days within a holiday week, please contact me for quotes.
+    - MVC maintenance in **2025** is $0.81 per point 
+    - MVC maintenance in **2026** is estimated to be $0.86 per point
+    - **Holiday weeks**: For days within a holiday week, please contact me to check.
     """)
 
 resort_display = st.selectbox("Select Resort", options=display_resorts, index=display_resorts.index("Ko Olina Beach Club"), key="resort_select")
