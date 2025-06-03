@@ -324,6 +324,7 @@ reverse_aliases = {v: k for k, v in resort_aliases.items()}
 display_resorts = list(resort_aliases.values())
 
 with st.sidebar:
+    st.header("Cost Parameters")
     display_options = [
         (0, "both"), (25, "both"), (30, "both"),
         (0, "points"), (25, "points"), (30, "points")
@@ -349,6 +350,10 @@ with st.sidebar:
     )
 
     discount_percent, display_mode = display_options[display_mode_select]
+    rate_per_point = st.number_input("Maintenance Rate per Point ($)", min_value=0.0, value=0.81, step=0.01)
+    capital_cost_per_point = st.number_input("Capital Cost per Point ($)", min_value=0.0, value=16.0, step=0.1)
+    cost_of_capital_percent = st.number_input("Cost of Capital (%)", min_value=0.0, max_value=100.0, value=7.0, step=0.1)
+    cost_of_capital = cost_of_capital_percent / 100
     st.caption(f"Cost calculation is based on {discount_percent}% discount.")
 
 discount_multiplier = 1 - (discount_percent / 100)
@@ -359,10 +364,12 @@ st.title("Marriott Vacation Club Cost Calculator")
 with st.expander("\U0001F334 How Cost Is Calculated"):
     st.markdown(f"""
     - Ordinary Membership do not have last minute discounts
-    - MVC maintenance in **2025** is $0.81 per point 
-    - MVC maintenance in **2026** is estimated to be $0.86 per point
-    - Selected discount: **{discount_percent}%** (applied to points and cost calculations)
+    - Maintenance rate: ${rate_per_point:.2f} per point (user-defined)
+    - Capital cost per point: ${capital_cost_per_point:.2f} (user-defined)
+    - Cost of capital: {cost_of_capital_percent:.1f}% (user-defined)
+    - Selected discount: {discount_percent}% (applied to points and cost calculations)
     - Cost of capital is calculated as (points * capital cost per point * cost of capital percentage)
+    - Total cost is maintenance cost (points * maintenance rate) plus capital cost
     """)
 
 resort_display = st.selectbox("Select Resort", options=display_resorts, index=display_resorts.index("Ko Olina Beach Club"), key="resort_select")
@@ -370,9 +377,6 @@ resort = reverse_aliases.get(resort_display, resort_display)
 
 checkin_date = st.date_input("Check-in Date", min_value=datetime(2024, 12, 27).date(), max_value=datetime(2026, 12, 31).date(), value=datetime(2026, 7, 10).date())
 num_nights = st.number_input("Number of Nights", min_value=1, max_value=30, value=7)
-capital_cost_per_point = st.number_input("Capital Cost per Point ($)", min_value=0.0, value=16.0, step=0.1)
-cost_of_capital_percent = st.number_input("Cost of Capital (%)", min_value=0.0, max_value=100.0, value=7.0, step=0.1)
-cost_of_capital = cost_of_capital_percent / 100
 
 year_select = str(checkin_date.year)
 
@@ -404,12 +408,11 @@ st.session_state.last_checkin_date = checkin_date
 reference_entry, _ = generate_data(resort, sample_date)
 reference_points_resort = {k: v for k, v in reference_entry.items() if k not in ("HolidayWeek", "HolidayWeekStart", "holiday_name")}
 
-def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent, discount_multiplier, display_mode, capital_cost_per_point, cost_of_capital):
+def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent, discount_multiplier, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital):
     breakdown = []
     total_points = 0
     total_rent = 0
     total_capital_cost = 0
-    rate_per_point = 0.81 if checkin_date.year == 2025 else 0.86
     for i in range(num_nights):
         date = checkin_date + timedelta(days=i)
         date_str = date.strftime("%Y-%m-%d")
@@ -440,8 +443,7 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
 
     return breakdown, total_points, total_rent, total_capital_cost
 
-def compare_room_types(resort, room_types, checkin_date, num_nights, discount_multiplier, discount_percent, ap_display_room_types, display_mode, capital_cost_per_point, cost_of_capital):
-    rate_per_point = 0.81 if checkin_date.year == 2025 else 0.86
+def compare_room_types(resort, room_types, checkin_date, num_nights, discount_multiplier, discount_percent, ap_display_room_types, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital):
     compare_data = []
     chart_data = []
     
@@ -588,7 +590,7 @@ if st.button("Calculate"):
     st.session_state.debug_messages.append("Starting new calculation...")
 
     breakdown, total_points, total_rent, total_capital_cost = calculate_stay(
-        resort, room_type, checkin_date, adjusted_nights, discount_percent, discount_multiplier, display_mode, capital_cost_per_point, cost_of_capital
+        resort, room_type, checkin_date, adjusted_nights, discount_percent, discount_multiplier, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital
     )
     
     st.subheader("Stay Breakdown")
@@ -618,7 +620,7 @@ if st.button("Calculate"):
         all_rooms = [room_type] + compare_rooms
         chart_df, compare_df_pivot, holiday_totals = compare_room_types(
             resort, all_rooms, checkin_date, adjusted_nights, discount_multiplier, 
-            discount_percent, ap_display_room_types, display_mode, capital_cost_per_point, cost_of_capital
+            discount_percent, ap_display_room_types, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital
         )
         
         display_columns = ["Date"] + [col for col in compare_df_pivot.columns if "Points" in col or (display_mode == "both" and ("Rent" in col or "Maintenance Cost" in col or "Capital Cost" in col))]
