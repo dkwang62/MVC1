@@ -337,9 +337,9 @@ with st.sidebar:
             "Ordinary"
         )
         if mode == "points":
-            return f"{discount}% Discount ({level}, Points Only)"
+            return f"{discount}% Discount ({level}, Points)"
         else:
-            return f"{discount}% Discount ({level})" if discount else f"No Discount ({level})"
+            return f"{discount}% Discount ({level}, Cost)" if discount else f"No Discount ({level})"
 
     display_mode_select = st.selectbox(
         "Display and Discount Settings",
