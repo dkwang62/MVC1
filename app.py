@@ -339,7 +339,7 @@ with st.sidebar:
         if mode == "points":
             return f"{discount}% Discount ({level}, Points)"
         else:
-            return f"{discount}% Discount ({level}, Cost)" if discount else f"No Discount ({level})"
+            return f"{discount}% Discount ({level}, Cost)"
 
     display_mode_select = st.selectbox(
         "Display and Discount Settings",
@@ -349,7 +349,7 @@ with st.sidebar:
     )
 
     discount_percent, display_mode = display_options[display_mode_select]
-    st.caption("Cost calculation is based on ZERO discounts.")
+    st.caption(f"Cost calculation is based on {discount_percent}% discount.")
 
 discount_multiplier = 1 - (discount_percent / 100)
 
@@ -357,10 +357,11 @@ discount_multiplier = 1 - (discount_percent / 100)
 st.title("Marriott Vacation Club Cost Calculator")
 
 with st.expander("\U0001F334 How Cost Is Calculated"):
-    st.markdown("""
+    st.markdown(f"""
     - Ordinary Membership do not have last minute discounts
     - MVC maintenance in **2025** is $0.81 per point 
     - MVC maintenance in **2026** is estimated to be $0.86 per point
+    - Selected discount: **{discount_percent}%** (applied to points and cost calculations)
     """)
 
 resort_display = st.selectbox("Select Resort", options=display_resorts, index=display_resorts.index("Ko Olina Beach Club"), key="resort_select")
@@ -419,9 +420,9 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
             "Holiday": entry.get("holiday_name", "No")
         }
         if display_mode == "both":
-            rent = math.ceil(points * rate_per_point)
-            row["Cost"] = f"${rent}"
-            total_rent += rent
+            discounted_rent = math.ceil(discounted_points * rate_per_point)
+            row["Cost"] = f"${discounted_rent}"
+            total_rent += discounted_rent
         if "HolidayWeek" in entry and entry.get("HolidayWeekStart", False):
             row["HolidayMarker"] = "\U0001F386"
         breakdown.append(row)
@@ -495,8 +496,8 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                     "Points": discounted_points
                 }
                 if display_mode == "both":
-                    rent = math.ceil(points * rate_per_point)
-                    row["Rent"] = f"${rent}"
+                    discounted_rent = math.ceil(discounted_points * rate_per_point)
+                    row["Rent"] = f"${discounted_rent}"
                 compare_data.append(row)
             
             chart_row = {
@@ -508,9 +509,9 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                 "Holiday": entry.get("holiday_name", "No")
             }
             if display_mode == "both":
-                rent = math.ceil(points * rate_per_point)
-                chart_row["Rent"] = f"${rent}"
-                chart_row["RentValue"] = rent
+                discounted_rent = math.ceil(discounted_points * rate_per_point)
+                chart_row["Rent"] = f"${discounted_rent}"
+                chart_row["RentValue"] = discounted_rent
             chart_data.append(chart_row)
             
             if not current_holiday or is_ap_room:
@@ -532,8 +533,8 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                     "Points": totals["points"]
                 }
                 if display_mode == "both":
-                    rent = math.ceil(totals["points"] / discount_multiplier * rate_per_point)
-                    row["Rent"] = f"${rent}"
+                    discounted_rent = math.ceil(totals["points"] * rate_per_point)
+                    row["Rent"] = f"${discounted_rent}"
                 compare_data.append(row)
     
     compare_df = pd.DataFrame(compare_data)
@@ -619,9 +620,9 @@ if st.button("Calculate"):
                                 "End": totals["end"]
                             }
                             if display_mode == "both":
-                                rent = math.ceil(totals["points"] / discount_multiplier * (0.81 if checkin_date.year == 2025 else 0.86))
-                                row["Rent"] = f"${rent}"
-                                row["RentValue"] = rent
+                                discounted_rent = math.ceil(totals["points"] * rate_per_point)
+                                row["Rent"] = f"${discounted_rent}"
+                                row["RentValue"] = discounted_rent
                             holiday_data.append(row)
                 holiday_df = pd.DataFrame(holiday_data)
                 
