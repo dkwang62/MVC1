@@ -67,6 +67,8 @@ def get_internal_room_key(display_name):
     return f"{base} {view}"
 
 # Function to generate data structure
+from datetime import datetime
+
 def generate_data(resort, date):
     date_str = date.strftime("%Y-%m-%d")
     year = date.strftime("%Y")
@@ -88,27 +90,69 @@ def generate_data(resort, date):
         ap_room_types = list(reference_points[resort]["AP Rooms"][ap_day_category].keys())
         st.session_state.debug_messages.append(f"AP room types found: {ap_room_types}")
 
+    # Season determination
     season = None
-    try:
-        season_types = list(season_blocks[resort][year].keys())
-        st.session_state.debug_messages.append(f"Available season types for {resort} in {year}: {season_types}")
-        for s_type in season_types:
-            for [start, end] in season_blocks[resort][year][s_type]:
-                s_start = datetime.strptime(start, "%Y-%m-%d").date()
-                s_end = datetime.strptime(end, "%Y-%m-%d").date()
-                st.session_state.debug_messages.append(f"Checking season {s_type}: {start} to {end}")
-                if s_start <= date <= s_end:
-                    season = s_type
-                    st.session_state.debug_messages.append(f"Season match found: {season} for {date_str}")
-                    break
+    if year in season_blocks.get(resort, {}):
+        for season_name, ranges in season_blocks[resort][year].items():
+            for start_date, end_date in ranges:
+                try:
+                    start = datetime.strptime(start_date, "%Y-%m-%d").date()
+                    end = datetime.strptime(end_date, "%Y-%m-%d").date()
+                    if start <= date.date() <= end:
+                        season = season_name
+                        break
+                except ValueError as e:
+                    st.session_state.debug_messages.append(f"Invalid date format in season_blocks for {resort}: {e}")
             if season:
                 break
-    except ValueError as e:
-        st.session_state.debug_messages.append(f"Invalid season date in {resort}, {year}, {s_type}: {e}")
-    except KeyError as e:
-        st.session_state.debug_messages.append(f"KeyError in season_blocks for {resort}, {year}: {e}")
-        raise
 
+    # Check holiday weeks
+    holiday_name = None
+    if season is None and year in holiday_weeks.get(resort, {}):
+        for h_name, date_range in holiday_weeks[resort][year].items():
+            try:
+                start_date, end_date = date_range
+                start = datetime.strptime(start_date, "%Y-%m-%d").date()
+                end = datetime.strptime(end_date, "%Y-%m-%d").date()
+                if start <= date.date() <= end:
+                    holiday_name = h_name
+                    season = "Holiday Week"
+                    break
+            except ValueError as e:
+                st.session_state.debug_messages.append(f"Invalid date format in holiday_weeks for {resort}: {e}")
+
+    # Fallback if no season found
+    if season is None:
+        st.session_state.debug_messages.append(f"No season or holiday found for {resort} on {date_str}")
+        st.error(f"No season defined for {resort} on {date_str}. Check season_blocks and holiday_weeks in data.json.")
+        raise ValueError(f"No season defined for {resort} on {date_str}")
+
+    st.session_state.debug_messages.append(f"Season determined: {season}, Holiday: {holiday_name if holiday_name else 'None'}")
+
+    try:
+        # Use ap_day_category for Phuket Beach Club and Ko Olina Beach Club
+        if resort in ["Marriott's Phuket Beach Club", "Ko Olina Beach Club"]:
+            normal_room_types = list(reference_points[resort][season][ap_day_category].keys())
+        else:
+            normal_room_types = list(reference_points[resort][season][day_category].keys())
+        st.session_state.debug_messages.append(f"Normal room types found: {normal_room_types}")
+
+        all_room_types = []
+        all_display_room_types = []
+        all_room_types.extend(normal_room_types)
+        all_display_room_types.extend([get_display_room_type(rt) for rt in normal_room_types])
+        if ap_room_types:
+            all_room_types.extend(ap_room_types)
+            all_display_room_types.extend([get_display_room_type(rt) for rt in ap_room_types])
+
+        display_to_internal = dict(zip(all_display_room_types, all_room_types))
+        # ... rest of the function (populate entry, return) ...
+        return entry, display_to_internal
+    except KeyError as e:
+        st.session_state.debug_messages.append(f"KeyError: {str(e)} for resort={resort}, season={season}, day_category={day_category}, ap_day_category={ap_day_category}")
+        st.error(f"Error accessing reference points for {resort}, season {season}, day category {ap_day_category if resort in ['Marriott\'s Phuket Beach Club', 'Ko Olina Beach Club'] else day_category}. Check data.json for missing or invalid keys.")
+        raise
+    
     if not season:
         season = next(iter(season_blocks[resort][year].keys()), "Low Season")
         st.session_state.debug_messages.append(f"No season match found for {date_str}, defaulting to {season}")
