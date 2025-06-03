@@ -416,7 +416,7 @@ def create_gantt_chart(resort, year):
 
 # Resort display name mapping
 resort_aliases = {
-    "Sheraton Kauai": "Sheraton Kauai",
+ #   "Sheraton Kauai": "Sheraton Kauai",
     "Kauai Beach Club": "Kauai Beach Club",
     "Ko Olina Beach Club": "Ko Olina Beach Club",
     "Grande Vista": "Grande Vista",
