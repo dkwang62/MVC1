@@ -327,14 +327,12 @@ display_resorts = list(resort_aliases.values())
 with st.sidebar:
     display_options = [
         (0, "both"), (25, "both"), (30, "both"),
-        (0, "rental"), (25, "rental"), (30, "rental"),
         (0, "points"), (25, "points"), (30, "points")
     ]
     display_mode_select = st.selectbox(
         "Display and Discount Settings",
         options=range(len(display_options)),
         format_func=lambda i: (
-            f"{display_options[i][0]}% Discount (Rental Only)" if display_options[i][1] == "rental" else
             f"{display_options[i][0]}% Discount (Points Only)" if display_options[i][1] == "points" else
             f"{display_options[i][0]}% Discount" if display_options[i][0] else "No Discount"
         ),
@@ -405,21 +403,20 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
         points = entry.get(room_type, reference_points_resort.get(room_type, 0))
         st.session_state.debug_messages.append(f"Calculating for {date_str}: Points for {room_type} = {points}")
         discounted_points = math.floor(points * discount_multiplier)
-        rent = math.ceil(points * rate_per_point)
         row = {
             "Date": date_str,
             "Day": date.strftime("%a"),
+            "Points": discounted_points,
             "Holiday": entry.get("holiday_name", "No")
         }
-        if display_mode in ["both", "points"]:
-            row["Points"] = discounted_points
-        if display_mode in ["both", "rental"]:
+        if display_mode == "both":
+            rent = math.ceil(points * rate_per_point)
             row["Rent"] = f"${rent}"
+            total_rent += rent
         if "HolidayWeek" in entry and entry.get("HolidayWeekStart", False):
             row["HolidayMarker"] = "\U0001F386"
         breakdown.append(row)
         total_points += discounted_points
-        total_rent += rent
 
     return breakdown, total_points, total_rent
 
@@ -444,7 +441,6 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                     holiday_names[d] = h_name
                     st.session_state.debug_messages.append(f"Date {d} overlaps with holiday {h_name} ({h_start} to {h_end})")
     
-    total_rent_by_room = {room: 0 for room in room_types}
     total_points_by_room = {room: 0 for room in room_types}
     holiday_totals = {room: {} for room in room_types}
     
@@ -462,9 +458,6 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
             points = entry.get(room, reference_points_resort.get(room, 0))
             st.session_state.debug_messages.append(f"Points for {room} on {date_str} ({day_of_week}): {points}")
             discounted_points = math.floor(points * discount_multiplier)
-            rent = math.ceil(points * rate_per_point)
-            rent_str = f"${rent}"
-            
             is_holiday_date = any(h_start <= date <= h_end for h_start, h_end in holiday_ranges)
             holiday_name = holiday_names.get(date, None)
             if is_holiday_date and entry.get("HolidayWeekStart", False):
@@ -472,28 +465,29 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                 if current_holiday not in holiday_totals[room]:
                     h_start = min(h for h, _ in holiday_ranges if holiday_names.get(date) == current_holiday)
                     h_end = max(e for _, e in holiday_ranges if holiday_names.get(date) == current_holiday)
-                    holiday_totals[room][current_holiday] = {"points": 0, "rent": 0, "start": h_start, "end": h_end}
+                    holiday_totals[room][current_holiday] = {"points": 0, "start": h_start, "end": h_end}
                 if is_ap_room:
                     full_week_points = reference_points[resort]["AP Rooms"]["Full Week"].get(internal_room, 0)
                     full_week_discounted = math.floor(full_week_points * discount_multiplier)
                     holiday_totals[room][current_holiday]["points"] = full_week_discounted
-                    holiday_totals[room][current_holiday]["rent"] = math.ceil(full_week_points * rate_per_point)
-                    st.session_state.debug_messages.append(f"AP Room {room} on {date_str}: Using full week points {full_week_points}, rent = ${holiday_totals[room][current_holiday]['rent']}")
+                    st.session_state.debug_messages.append(f"AP Room {room} on {date_str}: Using full week points {full_week_points}")
                 else:
                     holiday_totals[room][current_holiday]["points"] = discounted_points
-                    holiday_totals[room][current_holiday]["rent"] = rent
-                    st.session_state.debug_messages.append(f"Normal Room {room} on {date_str}: Using first-day points {points}, rent = ${rent}")
+                    st.session_state.debug_messages.append(f"Normal Room {room} on {date_str}: Using first-day points {points}")
             elif is_holiday_date and current_holiday and not is_ap_room:
                 continue
             else:
                 current_holiday = None
             
             if not current_holiday or is_ap_room:
-                row = {"Date": date_str, "Room Type": room}
-                if display_mode in ["both", "rental"]:
-                    row["Rent"] = rent_str
-                if display_mode in ["both", "points"]:
-                    row["Points"] = discounted_points
+                row = {
+                    "Date": date_str,
+                    "Room Type": room,
+                    "Points": discounted_points
+                }
+                if display_mode == "both":
+                    rent = math.ceil(points * rate_per_point)
+                    row["Rent"] = f"${rent}"
                 compare_data.append(row)
             
             chart_row = {
@@ -501,47 +495,43 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                 "DateStr": date_str,
                 "Day": day_of_week,
                 "Room Type": room,
+                "Points": discounted_points,
                 "Holiday": entry.get("holiday_name", "No")
             }
-            if display_mode in ["both", "rental"]:
-                chart_row["Rent"] = rent_str
+            if display_mode == "both":
+                rent = math.ceil(points * rate_per_point)
+                chart_row["Rent"] = f"${rent}"
                 chart_row["RentValue"] = rent
-            if display_mode in ["both", "points"]:
-                chart_row["Points"] = discounted_points
             chart_data.append(chart_row)
             
             if not current_holiday or is_ap_room:
-                total_rent_by_room[room] += rent
                 total_points_by_room[room] += discounted_points
     
-    total_row = {"Date": f"Total {'Rent (Non-Holiday)' if display_mode in ['both', 'rental'] else 'Points (Non-Holiday)'}"}
+    total_row = {"Date": "Total Points (Non-Holiday)"}
     for room in room_types:
-        if display_mode in ["both", "rental"]:
-            total_row[room] = f"${total_rent_by_room[room]}"
-        if display_mode in ["both", "points"]:
-            total_row[room] = total_points_by_room[room]
+        total_row[room] = total_points_by_room[room]
     compare_data.append(total_row)
     
     for room in room_types:
         for holiday_name, totals in holiday_totals[room].items():
-            if (display_mode in ["both", "rental"] and totals["rent"] > 0) or (display_mode == "points" and totals["points"] > 0):
+            if totals["points"] > 0:
                 start_str = totals["start"].strftime("%b %d")
                 end_str = totals["end"].strftime("%b %d, %Y")
                 row = {
                     "Date": f"{holiday_name} Holiday ({start_str} - {end_str})",
-                    "Room Type": room
+                    "Room Type": room,
+                    "Points": totals["points"]
                 }
-                if display_mode in ["both", "rental"]:
-                    row["Rent"] = f"${totals['rent']}"
-                if display_mode in ["both", "points"]:
-                    row["Points"] = totals["points"]
+                if display_mode == "both":
+                    rent = math.ceil(totals["points"] / discount_multiplier * rate_per_point)
+                    row["Rent"] = f"${rent}"
                 compare_data.append(row)
     
     compare_df = pd.DataFrame(compare_data)
     compare_df_pivot = compare_df.pivot_table(
         index="Date",
         columns="Room Type",
-        values=["Rent", "Points"] if display_mode == "both" else ["Rent"] if display_mode == "rental" else ["Points"],
+        values=["Points"] if display_mode == "points" else ["Points", "Rent"],
         aggfunc="first"
     ).reset_index()
     compare_df_pivot.columns = ['Date'] + [f"{col[1]} {col[0]}" for col in compare_df_pivot.columns[1:]]
@@ -568,9 +558,8 @@ if st.button("Calculate"):
     else:
         st.error("No data available for the selected period.")
     
-    if display_mode in ["both", "points"]:
-        st.success(f"Total Points Used: {total_points}")
-    if display_mode in ["both", "rental"]:
+    st.success(f"Total Points Used: {total_points}")
+    if display_mode == "both":
         st.success(f"Estimated Total Rent: ${total_rent}")
     
     if breakdown:
@@ -584,15 +573,15 @@ if st.button("Calculate"):
     
     if compare_rooms:
         st.subheader("Room Type Comparison")
-        st.info("Note: Non-holiday weeks are compared day-by-day; holiday weeks are compared as total rent/points for the week.")
+        st.info("Note: Non-holiday weeks are compared day-by-day; holiday weeks are compared as total points for the week.")
         all_rooms = [room_type] + compare_rooms
         chart_df, compare_df_pivot, holiday_totals = compare_room_types(
             resort, all_rooms, checkin_date, adjusted_nights, discount_multiplier, 
             discount_percent, ap_display_room_types, display_mode
         )
         
-        display_columns = ["Date"] + [col for col in compare_df_pivot.columns if ("Rent" in col and display_mode in ["both", "rental"]) or ("Points" in col and display_mode in ["both", "points"])]
-        st.write(f"### Estimated {'Rent ($)' if display_mode == 'rental' else 'Points' if display_mode == 'points' else 'Rent ($) and Points'}")
+        display_columns = ["Date"] + [col for col in compare_df_pivot.columns if "Points" in col or (display_mode == "both" and "Rent" in col)]
+        st.write(f"### {'Points' if display_mode == 'points' else 'Points and Rent'} Comparison")
         st.dataframe(compare_df_pivot[display_columns], use_container_width=True)
         
         compare_csv = compare_df_pivot.to_csv(index=False).encode('utf-8')
@@ -604,24 +593,26 @@ if st.button("Calculate"):
         )
         
         if not chart_df.empty:
-            required_columns = ["Date", "Room Type", "Holiday"] + (["Rent", "RentValue"] if display_mode in ["both", "rental"] else []) + (["Points"] if display_mode in ["both", "points"] else [])
+            required_columns = ["Date", "Room Type", "Points", "Holiday"]
+            if display_mode == "both":
+                required_columns.extend(["Rent", "RentValue"])
             if all(col in chart_df.columns for col in required_columns):
                 non_holiday_df = chart_df[chart_df["Holiday"] == "No"]
                 holiday_data = []
                 for room in all_rooms:
                     for holiday_name, totals in holiday_totals[room].items():
-                        if (display_mode in ["both", "rental"] and totals["rent"] > 0) or (display_mode == "points" and totals["points"] > 0):
+                        if totals["points"] > 0:
                             row = {
                                 "Holiday": holiday_name,
                                 "Room Type": room,
+                                "Points": totals["points"],
                                 "Start": totals["start"],
                                 "End": totals["end"]
                             }
-                            if display_mode in ["both", "rental"]:
-                                row["Rent"] = f"${totals['rent']}"
-                                row["RentValue"] = totals["rent"]
-                            if display_mode in ["both", "points"]:
-                                row["Points"] = totals["points"]
+                            if display_mode == "both":
+                                rent = math.ceil(totals["points"] / discount_multiplier * (0.81 if checkin_date.year == 2025 else 0.86))
+                                row["Rent"] = f"${rent}"
+                                row["RentValue"] = rent
                             holiday_data.append(row)
                 holiday_df = pd.DataFrame(holiday_data)
                 
@@ -630,26 +621,23 @@ if st.button("Calculate"):
                     end_date = non_holiday_df["Date"].max()
                     start_date_str = start_date.strftime("%b %d")
                     end_date_str = end_date.strftime("%b %d, %Y")
-                    title = f"{'Rent' if display_mode == 'rental' else 'Points' if display_mode == 'points' else 'Rent and Points'} Comparison (Non-Holiday, {start_date_str} - {end_date_str})"
+                    title = f"Points Comparison (Non-Holiday, {start_date_str} - {end_date_str})"
                     st.subheader(title)
                     day_order = ["Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu"]
-                    value_col = "RentValue" if display_mode == "rental" else "Points"
-                    text_col = "Rent" if display_mode == "rental" else "Points"
-                    text_template = "$%{text}" if display_mode == "rental" else "%{text}"
                     fig = px.bar(
                         non_holiday_df,
                         x="Day",
-                        y=value_col,
+                        y="Points",
                         color="Room Type",
                         barmode="group",
                         title=title,
-                        labels={value_col: "Estimated Rent ($)" if display_mode == "rental" else "Points", "Day": "Day of Week"},
+                        labels={"Points": "Points", "Day": "Day of Week"},
                         height=600,
-                        text=text_col,
+                        text="Points",
                         text_auto=True,
                         category_orders={"Day": day_order}
                     )
-                    fig.update_traces(texttemplate=text_template, textposition="auto")
+                    fig.update_traces(texttemplate="%{text}", textposition="auto")
                     fig.update_xaxes(
                         ticktext=day_order,
                         tickvals=[0, 1, 2, 3, 4, 5, 6],
@@ -667,21 +655,21 @@ if st.button("Calculate"):
                     end_date = holiday_df["End"].max()
                     start_date_str = start_date.strftime("%b %d")
                     end_date_str = end_date.strftime("%b %d, %Y")
-                    title = f"{'Rent' if display_mode == 'rental' else 'Points' if display_mode == 'points' else 'Rent and Points'} Comparison (Holiday Weeks, {start_date_str} - {end_date_str})"
+                    title = f"Points Comparison (Holiday Weeks, {start_date_str} - {end_date_str})"
                     st.subheader(title)
                     fig = px.bar(
                         holiday_df,
                         x="Holiday",
-                        y=value_col,
+                        y="Points",
                         color="Room Type",
                         barmode="group",
                         title=title,
-                        labels={value_col: "Estimated Rent ($)" if display_mode == "rental" else "Points", "Holiday": "Holiday Week"},
+                        labels={"Points": "Points", "Holiday": "Holiday Week"},
                         height=600,
-                        text=text_col,
+                        text="Points",
                         text_auto=True
                     )
-                    fig.update_traces(texttemplate=text_template, textposition="auto")
+                    fig.update_traces(texttemplate="%{text}", textposition="auto")
                     fig.update_layout(
                         legend_title_text="Room Type",
                         bargap=0.2,
