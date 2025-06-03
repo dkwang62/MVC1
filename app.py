@@ -410,7 +410,7 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
         }
         if display_mode == "both":
             rent = math.ceil(points * rate_per_point)
-            row["Rent"] = f"${rent}"
+            row["Cost"] = f"${rent}"
             total_rent += rent
         if "HolidayWeek" in entry and entry.get("HolidayWeekStart", False):
             row["HolidayMarker"] = "\U0001F386"
@@ -559,7 +559,7 @@ if st.button("Calculate"):
     
     st.success(f"Total Points Used: {total_points}")
     if display_mode == "both":
-        st.success(f"Estimated Total Rent: ${total_rent}")
+        st.success(f"Estimated Total Cost: ${total_rent}")
     
     if breakdown:
         csv_data = df_breakdown.to_csv(index=False).encode('utf-8')
