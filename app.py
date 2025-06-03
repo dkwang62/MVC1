@@ -328,7 +328,7 @@ display_resorts = list(resort_aliases.values())
 #    display_options = [
 #        (0, "both"), (25, "both"), (30, "both"),
 #        (0, "points"), (25, "points"), (30, "points")
-    ]
+#    ]
 #    display_mode_select = st.selectbox(
 #        "Display and Discount Settings",
 #        options=range(len(display_options)),
