@@ -854,7 +854,7 @@
     },
     "Marriott's Bali Nusa Dua Gardens": {
       "2025": {
-        "Low Season": [
+        "Shoulder": [
           [
             "2025-01-03",
             "2025-01-09"
@@ -878,7 +878,7 @@
             "2025-09-04"
           ]
         ],
-        "Shoulder": [
+        "Low Season": [
           [
             "2025-01-10",
             "2025-01-23"
@@ -902,7 +902,7 @@
         ]
       },
       "2026": {
-        "Low Season": [
+        "Shoulder": [
           [
             "2026-01-02",
             "2026-01-08"
@@ -930,7 +930,7 @@
             "2026-09-03"
           ]
         ],
-        "Shoulder": [
+        "Low Season": [
           [
             "2026-01-09",
             "2026-02-05"
@@ -3088,7 +3088,7 @@
       }
     },
     "Marriott's Bali Nusa Dua Terrace": {
-      "Low Season": {
+      "Shoulder": {
         "Sun-Thu": {
           "1 Bedroom": 270,
           "2 Bedroom": 440,
@@ -3100,7 +3100,7 @@
           "3 Bedroom": 1225
         }
       },
-      "Shoulder": {
+      "Low Season": {
         "Sun-Thu": {
           "1 Bedroom": 170,
           "2 Bedroom": 300,
