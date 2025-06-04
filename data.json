@@ -342,7 +342,7 @@
             "2025-04-10"
           ]
         ],
-        "Summer": [
+        "High Season": [
           [
             "2025-05-02",
             "2025-07-03"
@@ -388,7 +388,7 @@
             "2026-04-09"
           ]
         ],
-        "Summer": [
+        "High Season": [
           [
             "2026-05-01",
             "2026-07-02"
@@ -414,7 +414,7 @@
         ]
       }
     },
-    "Desert Springs Villas II": {
+    "Desert Shoulders Villas II": {
       "2025": {
         "Low Season": [
           [
@@ -454,7 +454,7 @@
             "2025-04-10"
           ]
         ],
-        "Summer": [
+        "High Season": [
           [
             "2025-06-06",
             "2025-07-03"
@@ -504,7 +504,7 @@
             "2026-04-09"
           ]
         ],
-        "Summer": [
+        "High Season": [
           [
             "2026-06-05",
             "2026-07-02"
@@ -556,7 +556,7 @@
             "2025-04-10"
           ]
         ],
-        "Summer": [
+        "High Season": [
           [
             "2025-06-06",
             "2025-07-03"
@@ -606,7 +606,7 @@
             "2026-04-09"
           ]
         ],
-        "Summer": [
+        "High Season": [
           [
             "2026-06-05",
             "2026-07-02"
@@ -1047,6 +1047,312 @@
           ]
         ]
       }
+    },
+    "Playa Andaluza": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-28",
+            "2025-03-27"
+          ],
+          [
+            "2025-11-21",
+            "2025-12-18"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2025-02-14",
+            "2025-02-27"
+          ],
+          [
+            "2025-03-28",
+            "2025-04-10"
+          ],
+          [
+            "2025-04-25",
+            "2025-05-22"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-05-23",
+            "2025-06-05"
+          ],
+          [
+            "2025-07-18",
+            "2025-07-31"
+          ],
+          [
+            "2025-08-15",
+            "2025-09-25"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-06-06",
+            "2025-07-17"
+          ],
+          [
+            "2025-09-26",
+            "2025-11-20"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-08-01",
+            "2025-08-14"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-27",
+            "2026-03-26"
+          ],
+          [
+            "2026-11-20",
+            "2026-12-17"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2026-02-13",
+            "2026-02-26"
+          ],
+          [
+            "2026-04-10",
+            "2026-05-21"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-05-22",
+            "2026-06-04"
+          ],
+          [
+            "2026-07-17",
+            "2026-07-30"
+          ],
+          [
+            "2026-08-14",
+            "2026-09-24"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-06-05",
+            "2026-07-16"
+          ],
+          [
+            "2026-09-25",
+            "2026-11-19"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-07-31",
+            "2026-08-13"
+          ]
+        ]
+      }
+    },
+    "Village Paris": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-10",
+            "2025-03-27"
+          ],
+          [
+            "2025-11-07",
+            "2025-12-18"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2025-03-28",
+            "2025-04-10"
+          ],
+          [
+            "2025-04-25",
+            "2025-05-15"
+          ],
+          [
+            "2025-05-30",
+            "2025-07-03"
+          ],
+          [
+            "2025-09-05",
+            "2025-11-06"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-07-04",
+            "2025-09-04"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-09",
+            "2026-03-26"
+          ],
+          [
+            "2026-11-06",
+            "2026-12-17"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2026-04-10",
+            "2026-05-14"
+          ],
+          [
+            "2026-05-29",
+            "2026-07-02"
+          ],
+          [
+            "2026-09-04",
+            "2026-11-05"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-07-03",
+            "2026-09-03"
+          ]
+        ]
+      }
+    },
+    "Marbella Beach": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-28",
+            "2025-03-27"
+          ],
+          [
+            "2025-11-21",
+            "2025-12-18"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2025-02-14",
+            "2025-02-27"
+          ],
+          [
+            "2025-03-28",
+            "2025-04-10"
+          ],
+          [
+            "2025-04-25",
+            "2025-05-22"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-05-23",
+            "2025-06-05"
+          ],
+          [
+            "2025-07-18",
+            "2025-07-31"
+          ],
+          [
+            "2025-08-15",
+            "2025-09-25"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-06-06",
+            "2025-07-17"
+          ],
+          [
+            "2025-09-26",
+            "2025-11-20"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-08-01",
+            "2025-08-14"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-27",
+            "2026-03-26"
+          ],
+          [
+            "2026-11-20",
+            "2026-12-17"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2026-02-13",
+            "2026-02-26"
+          ],
+          [
+            "2026-04-10",
+            "2026-05-21"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-05-22",
+            "2026-06-04"
+          ],
+          [
+            "2026-07-17",
+            "2026-07-30"
+          ],
+          [
+            "2026-08-14",
+            "2026-09-24"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-06-05",
+            "2026-07-16"
+          ],
+          [
+            "2026-09-25",
+            "2026-11-19"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-07-31",
+            "2026-08-13"
+          ]
+        ]
+      }
     }
   },
   "holiday_weeks": {
@@ -1280,7 +1586,7 @@
         ]
       }
     },
-    "Desert Springs Villas II": {
+    "Desert Shoulders Villas II": {
       "2025": {
         "Independence Day": [
           "2025-07-04",
@@ -1601,12 +1907,142 @@
           "2026-12-31"
         ]
       }
+    },
+    "Playa Andaluza": {
+      "2025": {
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year\u2019s Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ],
+        "Easter1": [
+          "2025-04-11",
+          "2025-04-17"
+        ],
+        "Easter2": [
+          "2025-04-18",
+          "2025-04-24"
+        ]
+      },
+      "2026": {
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year\u2019s Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ],
+        "Easter1": [
+          "2026-03-27",
+          "2026-04-02"
+        ],
+        "Easter2": [
+          "2026-04-03",
+          "2026-04-09"
+        ]
+      }
+    },
+    "Village Paris": {
+      "2025": {
+        "Week 1": [
+          "2025-01-03",
+          "2025-01-09"
+        ],
+        "Easter1": [
+          "2025-04-11",
+          "2025-04-17"
+        ],
+        "Easter2": [
+          "2025-04-18",
+          "2025-04-24"
+        ],
+        "Mid\u2013Term": [
+          "2025-05-16",
+          "2025-05-29"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year\u2019s Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Week 1": [
+          "2026-01-02",
+          "2026-01-08"
+        ],
+        "Easter1": [
+          "2026-03-27",
+          "2026-04-02"
+        ],
+        "Easter2": [
+          "2026-04-03",
+          "2026-04-09"
+        ],
+        "Mid\u2013Term": [
+          "2026-05-15",
+          "2026-05-28"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year\u2019s Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
+    },
+    "Marbella Beach": {
+      "2025": {
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year\u2019s Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ],
+        "Easter1": [
+          "2025-04-11",
+          "2025-04-17"
+        ],
+        "Easter2": [
+          "2025-04-18",
+          "2025-04-24"
+        ]
+      },
+      "2026": {
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year\u2019s Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ],
+        "Easter1": [
+          "2026-03-27",
+          "2026-04-02"
+        ],
+        "Easter2": [
+          "2026-04-03",
+          "2026-04-09"
+        ]
+      }
     }
   },
   "room_view_legend": {
     "GV": "Garden View",
-    "OV": "Ocean View",
-    "OF": "Ocean Front",
+    "OV": "Oceanview",
+    "OF": "Oceanfront",
     "S": "Standard",
     "IS": "Island Side",
     "PS": "Poolside Low Floors",
@@ -1618,7 +2054,7 @@
     "PHGV": "Penthouse Garden",
     "PHOV": "Penthouse Ocean View",
     "PHOF": "Penthouse Ocean Front",
-    "IV": "Island View",
+    "IV": "Islandview",
     "MG": "Garden",
     "MA": "Mountain View",
     "MK": "Ocean View",
@@ -1629,9 +2065,6 @@
     "AP_1BR_MA": "AP 1BR Mountain",
     "AP_2BR_MA": "AP 2BR Mountain",
     "AP_2BR_MK": "AP 2BR Ocean",
-    "IV": "Islandview",
-    "OV": "Oceanview",
-    "OF": "Oceanfront",
     "LO": "Lock-Off"
   },
   "reference_points": {
@@ -2297,7 +2730,7 @@
           "3BR PHUF": 0
         }
       },
-      "Summer": {
+      "High Season": {
         "Fri-Sat": {
           "2BR S": 550,
           "2BR IS": 625,
@@ -2444,7 +2877,7 @@
         }
       }
     },
-    "Desert Springs Villas II": {
+    "Desert Shoulders Villas II": {
       "Low Season": {
         "Fri-Sat": {
           "Studio": 250,
@@ -2496,7 +2929,7 @@
           "2BR": 3775
         }
       },
-      "Summer": {
+      "High Season": {
         "Fri-Sat": {
           "Studio": 175,
           "1BR": 275,
@@ -2593,7 +3026,7 @@
           "2BR": 4000
         }
       },
-      "Summer": {
+      "High Season": {
         "Fri-Sat": {
           "Studio": 200,
           "1BR": 300,
@@ -3144,6 +3577,378 @@
           "1 Bedroom": 3500,
           "2 Bedroom": 5750,
           "3 Bedroom": 9250
+        }
+      }
+    },
+    "Playa Andaluza": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio GV": 175,
+          "Studio SF": 175,
+          "2-BDRM GV": 400,
+          "2-BDRM SF": 550,
+          "3-BDRM GV": 475,
+          "3-BDRM SF": 675
+        },
+        "Sun-Thu": {
+          "Studio GV": 100,
+          "Studio SF": 100,
+          "2-BDRM GV": 225,
+          "2-BDRM SF": 325,
+          "3-BDRM GV": 300,
+          "3-BDRM SF": 400
+        },
+        "Full Week": {
+          "Studio GV": 850,
+          "Studio SF": 850,
+          "2-BDRM GV": 1925,
+          "2-BDRM SF": 2725,
+          "3-BDRM GV": 2450,
+          "3-BDRM SF": 3350
+        }
+      },
+      "Shoulder": {
+        "Fri-Sat": {
+          "Studio GV": 225,
+          "Studio SF": 225,
+          "2-BDRM GV": 450,
+          "2-BDRM SF": 650,
+          "3-BDRM GV": 575,
+          "3-BDRM SF": 800
+        },
+        "Sun-Thu": {
+          "Studio GV": 125,
+          "Studio SF": 125,
+          "2-BDRM GV": 275,
+          "2-BDRM SF": 400,
+          "3-BDRM GV": 350,
+          "3-BDRM SF": 475
+        },
+        "Full Week": {
+          "Studio GV": 1075,
+          "Studio SF": 1075,
+          "2-BDRM GV": 2275,
+          "2-BDRM SF": 3300,
+          "3-BDRM GV": 2900,
+          "3-BDRM SF": 3975
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio GV": 350,
+          "Studio SF": 350,
+          "2-BDRM GV": 700,
+          "2-BDRM SF": 1000,
+          "3-BDRM GV": 875,
+          "3-BDRM SF": 1225
+        },
+        "Sun-Thu": {
+          "Studio GV": 200,
+          "Studio SF": 200,
+          "2-BDRM GV": 425,
+          "2-BDRM SF": 600,
+          "3-BDRM GV": 525,
+          "3-BDRM SF": 725
+        },
+        "Full Week": {
+          "Studio GV": 1700,
+          "Studio SF": 1700,
+          "2-BDRM GV": 3525,
+          "2-BDRM SF": 5000,
+          "3-BDRM GV": 4375,
+          "3-BDRM SF": 6075
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio GV": 250,
+          "Studio SF": 250,
+          "2-BDRM GV": 525,
+          "2-BDRM SF": 750,
+          "3-BDRM GV": 675,
+          "3-BDRM SF": 900
+        },
+        "Sun-Thu": {
+          "Studio GV": 150,
+          "Studio SF": 150,
+          "2-BDRM GV": 325,
+          "2-BDRM SF": 450,
+          "3-BDRM GV": 400,
+          "3-BDRM SF": 550
+        },
+        "Full Week": {
+          "Studio GV": 1250,
+          "Studio SF": 1250,
+          "2-BDRM GV": 2675,
+          "2-BDRM SF": 3750,
+          "3-BDRM GV": 3350,
+          "3-BDRM SF": 4650
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "Studio GV": 400,
+          "Studio SF": 400,
+          "2-BDRM GV": 850,
+          "2-BDRM SF": 1200,
+          "3-BDRM GV": 1075,
+          "3-BDRM SF": 1450
+        },
+        "Sun-Thu": {
+          "Studio GV": 250,
+          "Studio SF": 250,
+          "2-BDRM GV": 500,
+          "2-BDRM SF": 725,
+          "3-BDRM GV": 650,
+          "3-BDRM SF": 875
+        },
+        "Full Week": {
+          "Studio GV": 2050,
+          "Studio SF": 2050,
+          "2-BDRM GV": 4200,
+          "2-BDRM SF": 6025,
+          "3-BDRM GV": 5400,
+          "3-BDRM SF": 7275
+        }
+      },
+      "Easter": {
+        "Full Week": {
+          "Studio GV": 1250,
+          "Studio SF": 1250,
+          "2-BDRM GV": 2500,
+          "2-BDRM SF": 3525,
+          "3-BDRM GV": 3125,
+          "3-BDRM SF": 4200
+        }
+      },
+      "Christmas": {
+        "Full Week": {
+          "Studio GV": 850,
+          "Studio SF": 850,
+          "2-BDRM GV": 1925,
+          "2-BDRM SF": 2725,
+          "3-BDRM GV": 2450,
+          "3-BDRM SF": 3350
+        }
+      },
+      "New Year\u2019s Eve/Day": {
+        "Full Week": {
+          "Studio GV": 850,
+          "Studio SF": 850,
+          "2-BDRM GV": 1925,
+          "2-BDRM SF": 2725,
+          "3-BDRM GV": 2450,
+          "3-BDRM SF": 3350
+        }
+      }
+    },
+    "Village Paris": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio": 200,
+          "2-BDRM": 400,
+          "3-BDRM": 500
+        },
+        "Sun-Thu": {
+          "Studio": 100,
+          "2-BDRM": 200,
+          "3-BDRM": 250
+        },
+        "Full Week": {
+          "Studio": 900,
+          "2-BDRM": 1800,
+          "3-BDRM": 2250
+        }
+      },
+      "Shoulder": {
+        "Fri-Sat": {
+          "Studio": 300,
+          "2-BDRM": 600,
+          "3-BDRM": 725
+        },
+        "Sun-Thu": {
+          "Studio": 150,
+          "2-BDRM": 300,
+          "3-BDRM": 375
+        },
+        "Full Week": {
+          "Studio": 1350,
+          "2-BDRM": 2700,
+          "3-BDRM": 3325
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio": 450,
+          "2-BDRM": 900,
+          "3-BDRM": 1125
+        },
+        "Sun-Thu": {
+          "Studio": 225,
+          "2-BDRM": 450,
+          "3-BDRM": 575
+        },
+        "Full Week": {
+          "Studio": 2025,
+          "2-BDRM": 4050,
+          "3-BDRM": 5125
+        }
+      },
+      "Week 1": {
+        "Full Week": {
+          "Studio": 900,
+          "2-BDRM": 1800,
+          "3-BDRM": 2250
+        }
+      },
+      "Mid\u2013Term": {
+        "Full Week": {
+          "Studio": 1575,
+          "2-BDRM": 3100,
+          "3-BDRM": 3825
+        }
+      },
+      "Christmas": {
+        "Full Week": {
+          "Studio": 1525,
+          "2-BDRM": 2925,
+          "3-BDRM": 3600
+        }
+      },
+      "New Year\u2019s Eve/Day": {
+        "Full Week": {
+          "Studio": 1750,
+          "2-BDRM": 3325,
+          "3-BDRM": 4050
+        }
+      },
+      "Easter1": {
+        "Full Week": {
+          "Studio": 1575,
+          "2-BDRM": 3100,
+          "3-BDRM": 3825
+        }
+      },
+      "Easter2": {
+        "Full Week": {
+          "Studio": 1575,
+          "2-BDRM": 3100,
+          "3-BDRM": 3825
+        }
+      }
+    },
+    "Marbella Beach": {
+      "Low Season": {
+        "Fri-Sat": {
+          "1-BDRM": 350,
+          "2-BDRM": 450,
+          "3-BDRM": 500
+        },
+        "Sun-Thu": {
+          "1-BDRM": 200,
+          "2-BDRM": 275,
+          "3-BDRM": 300
+        },
+        "Full Week": {
+          "1-BDRM": 1700,
+          "2-BDRM": 2275,
+          "3-BDRM": 2500
+        }
+      },
+      "Shoulder": {
+        "Fri-Sat": {
+          "1-BDRM": 400,
+          "2-BDRM": 550,
+          "3-BDRM": 600
+        },
+        "Sun-Thu": {
+          "1-BDRM": 250,
+          "2-BDRM": 325,
+          "3-BDRM": 350
+        },
+        "Full Week": {
+          "1-BDRM": 2050,
+          "2-BDRM": 2725,
+          "3-BDRM": 2950
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "1-BDRM": 625,
+          "2-BDRM": 825,
+          "3-BDRM": 900
+        },
+        "Sun-Thu": {
+          "1-BDRM": 375,
+          "2-BDRM": 500,
+          "3-BDRM": 550
+        },
+        "Full Week": {
+          "1-BDRM": 3125,
+          "2-BDRM": 4150,
+          "3-BDRM": 4550
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "1-BDRM": 475,
+          "2-BDRM": 625,
+          "3-BDRM": 675
+        },
+        "Sun-Thu": {
+          "1-BDRM": 275,
+          "2-BDRM": 375,
+          "3-BDRM": 400
+        },
+        "Full Week": {
+          "1-BDRM": 2325,
+          "2-BDRM": 3125,
+          "3-BDRM": 3350
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "1-BDRM": 750,
+          "2-BDRM": 1000,
+          "3-BDRM": 1100
+        },
+        "Sun-Thu": {
+          "1-BDRM": 450,
+          "2-BDRM": 600,
+          "3-BDRM": 650
+        },
+        "Full Week": {
+          "1-BDRM": 3750,
+          "2-BDRM": 5000,
+          "3-BDRM": 5450
+        }
+      },
+      "Easter1": {
+        "Full Week": {
+          "1-BDRM": 2100,
+          "2-BDRM": 2900,
+          "3-BDRM": 3125
+        }
+      },
+      "Easter2": {
+        "Full Week": {
+          "1-BDRM": 2100,
+          "2-BDRM": 2900,
+          "3-BDRM": 3125
+        }
+      },
+      "Christmas": {
+        "Full Week": {
+          "1-BDRM": 1700,
+          "2-BDRM": 2275,
+          "3-BDRM": 2500
+        }
+      },
+      "New Year\u2019s Eve/Day": {
+        "Full Week": {
+          "1-BDRM": 1700,
+          "2-BDRM": 2275,
+          "3-BDRM": 2500
         }
       }
     }
