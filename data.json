@@ -2360,7 +2360,7 @@
           "AP_2BR_MK": 910
         },
         "Mon-Thu": {
-          "AP_Studio MA": 250,
+          "AP_Studio_MA": 250,
           "AP_1BR_MA": 360,
           "AP_2BR_MA": 550,
           "AP_2BR_MK": 660
