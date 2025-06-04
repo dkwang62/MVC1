@@ -792,7 +792,7 @@
     },
     "Marriott's Phuket Beach Club": {
       "2025": {
-        "Low Season": [
+        "High Season": [
           [
             "2025-01-03",
             "2025-01-23"
@@ -810,7 +810,7 @@
             "2025-12-18"
           ]
         ],
-        "High Season": [
+        "Low Season": [
           [
             "2025-05-23",
             "2025-07-03"
