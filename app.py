@@ -415,7 +415,10 @@ resort_aliases = {
     "Marriott's Bali Nusa Dua Terrace": "Marriott's Bali Nusa Dua Terrace",
     "Marriott's Bali Nusa Dua Gardens": "Marriott's Bali Nusa Dua Gardens",
     "Marriott's Phuket Beach Club": "Marriott's Phuket Beach Club",
-    "The Westin Ka'anapali Ocean Resort Villas": "The Westin Ka'anapali Ocean Resort Villas"
+    "The Westin Ka'anapali Ocean Resort Villas": "The Westin Ka'anapali Ocean Resort Villas",
+    "Playa Andaluza": "Playa Andaluza",
+    "Marbella Beach": "Marbella Beach",
+    "Village Paris": "Village Paris"
 }
 reverse_aliases = {v: k for k, v in resort_aliases.items()}
 display_resorts = list(resort_aliases.values())
