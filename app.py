@@ -421,13 +421,17 @@ reverse_aliases = {v: k for k, v in resort_aliases.items()}
 display_resorts = list(resort_aliases.values())
 
 # Calculate stay function
-def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent, discount_multiplier, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital):
+def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent, discount_multiplier, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital, useful_life, salvage_value):
     breakdown = []
     total_points = 0
     total_rent = 0
     total_capital_cost = 0
+    total_depreciation_cost = 0
     current_holiday = None
     holiday_points = 0
+
+    # Calculate depreciation cost per point using straight-line method
+    depreciation_cost_per_point = (capital_cost_per_point - salvage_value) / useful_life
 
     for i in range(num_nights):
         date = checkin_date + timedelta(days=i)
@@ -452,12 +456,15 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
                     if display_mode == "both":
                         maintenance_cost = math.ceil(holiday_points * rate_per_point)
                         capital_cost = math.ceil(holiday_points * capital_cost_per_point * cost_of_capital)
-                        total_day_cost = maintenance_cost + capital_cost
+                        depreciation_cost = math.ceil(holiday_points * depreciation_cost_per_point)
+                        total_day_cost = maintenance_cost + capital_cost + depreciation_cost
                         row["Cost"] = f"${total_day_cost}"
                         row["Maintenance Cost"] = f"${maintenance_cost}"
                         row["Capital Cost"] = f"${capital_cost}"
+                        row["Depreciation Cost"] = f"${depreciation_cost}"
                         total_rent += total_day_cost
                         total_capital_cost += capital_cost
+                        total_depreciation_cost += depreciation_cost
                     breakdown.append(row)
                 elif current_holiday and date <= holiday_end:
                     continue  # Skip additional days within the holiday week
@@ -470,12 +477,15 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
                 if display_mode == "both":
                     maintenance_cost = math.ceil(discounted_points * rate_per_point)
                     capital_cost = math.ceil(discounted_points * capital_cost_per_point * cost_of_capital)
-                    total_day_cost = maintenance_cost + capital_cost
+                    depreciation_cost = math.ceil(discounted_points * depreciation_cost_per_point)
+                    total_day_cost = maintenance_cost + capital_cost + depreciation_cost
                     row["Cost"] = f"${total_day_cost}"
                     row["Maintenance Cost"] = f"${maintenance_cost}"
                     row["Capital Cost"] = f"${capital_cost}"
+                    row["Depreciation Cost"] = f"${depreciation_cost}"
                     total_rent += total_day_cost
                     total_capital_cost += capital_cost
+                    total_depreciation_cost += depreciation_cost
                 breakdown.append(row)
 
             total_points += discounted_points
@@ -483,10 +493,10 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
             st.session_state.debug_messages.append(f"Error calculating for {resort}, {date_str}: {str(e)}")
             st.error(f"Failed to calculate for {resort}, {date_str}: {str(e)}")
             continue
-    return pd.DataFrame(breakdown), total_points, total_rent, total_capital_cost
+    return pd.DataFrame(breakdown), total_points, total_rent, total_capital_cost, total_depreciation_cost
 
 # Compare room types function
-def compare_room_types(resort, room_types, checkin_date, num_nights, discount_multiplier, discount_percent, ap_display_room_types, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital):
+def compare_room_types(resort, room_types, checkin_date, num_nights, discount_multiplier, discount_percent, ap_display_room_types, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital, useful_life, salvage_value):
     compare_data = []
     chart_data = []
     all_dates = [checkin_date + timedelta(days=i) for i in range(num_nights)]
@@ -513,7 +523,11 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
     
     total_points_by_room = {room: 0 for room in room_types}
     total_rent_by_room = {room: 0 for room in room_types}
+    total_depreciation_by_room = {room: 0 for room in room_types}
     holiday_totals = {room: defaultdict(dict) for room in room_types}
+    
+    # Calculate depreciation cost per point
+    depreciation_cost_per_point = (capital_cost_per_point - salvage_value) / useful_life
     
     for room in room_types:
         internal_room = display_to_internal.get(room, room)
@@ -553,11 +567,14 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                     if display_mode == "both":
                         maintenance_cost = math.ceil(discounted_points * rate_per_point)
                         capital_cost = math.ceil(discounted_points * capital_cost_per_point * cost_of_capital)
-                        total_day_cost = maintenance_cost + capital_cost
+                        depreciation_cost = math.ceil(discounted_points * depreciation_cost_per_point)
+                        total_day_cost = maintenance_cost + capital_cost + depreciation_cost
                         row["Rent"] = f"${total_day_cost}"
                         row["Maintenance Cost"] = f"${maintenance_cost}"
                         row["Capital Cost"] = f"${capital_cost}"
+                        row["Depreciation Cost"] = f"${depreciation_cost}"
                         total_rent_by_room[room] += total_day_cost
+                        total_depreciation_by_room[room] += depreciation_cost
                     compare_data.append(row)
                 
                 chart_row = {
@@ -571,11 +588,13 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                 if display_mode == "both":
                     maintenance_cost = math.ceil(discounted_points * rate_per_point)
                     capital_cost = math.ceil(discounted_points * capital_cost_per_point * cost_of_capital)
-                    total_day_cost = maintenance_cost + capital_cost
+                    depreciation_cost = math.ceil(discounted_points * depreciation_cost_per_point)
+                    total_day_cost = maintenance_cost + capital_cost + depreciation_cost
                     chart_row["Rent"] = f"${total_day_cost}"
                     chart_row["RentValue"] = total_day_cost
                     chart_row["Maintenance Cost"] = f"${maintenance_cost}"
                     chart_row["Capital Cost"] = f"${capital_cost}"
+                    chart_row["Depreciation Cost"] = f"${depreciation_cost}"
                 chart_data.append(chart_row)
                 
                 if not current_holiday or is_ap_room:
@@ -597,10 +616,12 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                 if display_mode == "both":
                     maintenance_cost = math.ceil(totals["points"] * rate_per_point)
                     capital_cost = math.ceil(totals["points"] * capital_cost_per_point * cost_of_capital)
-                    total_holiday_cost = maintenance_cost + capital_cost
+                    depreciation_cost = math.ceil(totals["points"] * depreciation_cost_per_point)
+                    total_holiday_cost = maintenance_cost + capital_cost + depreciation_cost
                     row["Rent"] = f"${total_holiday_cost}"
                     row["Maintenance Cost"] = f"${maintenance_cost}"
                     row["Capital Cost"] = f"${capital_cost}"
+                    row["Depreciation Cost"] = f"${depreciation_cost}"
                 compare_data.append(row)
     
     total_row = {"Date": "Total Points (Non-Holiday)"}
@@ -610,15 +631,18 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
     
     if display_mode == "both":
         total_rent_row = {"Date": "Total Cost (Non-Holiday)"}
+        total_depreciation_row = {"Date": "Total Depreciation Cost (Non-Holiday)"}
         for room in room_types:
             total_rent_row[room] = f"${total_rent_by_room[room]}"
+            total_depreciation_row[room] = f"${total_depreciation_by_room[room]}"
         compare_data.append(total_rent_row)
+        compare_data.append(total_depreciation_row)
     
     compare_df = pd.DataFrame(compare_data)
     compare_df_pivot = compare_df.pivot_table(
         index="Date",
         columns="Room Type",
-        values=["Points"] if display_mode == "points" else ["Points", "Rent", "Maintenance Cost", "Capital Cost"],
+        values=["Points"] if display_mode == "points" else ["Points", "Rent", "Maintenance Cost", "Capital Cost", "Depreciation Cost"],
         aggfunc="first"
     ).reset_index()
     compare_df_pivot.columns = ['Date'] + [f"{col[1]} {col[0]}" for col in compare_df_pivot.columns[1:]]
@@ -677,6 +701,8 @@ try:
         rate_per_point = st.number_input("Maintenance Rate per Point ($)", min_value=0.0, value=0.81, step=0.01)
         capital_cost_per_point = st.number_input("Capital Cost per Point ($)", min_value=0.0, value=16.0, step=0.1)
         cost_of_capital_percent = st.number_input("Cost of Capital (%)", min_value=0.0, max_value=100.0, value=7.0, step=0.1)
+        useful_life = st.number_input("Useful Life (Years)", min_value=1, value=15, step=1)
+        salvage_value = st.number_input("Salvage Value per Point ($)", min_value=0.0, value=3.0, step=0.1)
         cost_of_capital = cost_of_capital_percent / 100
         st.caption(f"Cost calculation based on {discount_percent}% discount.")
 
@@ -690,9 +716,12 @@ try:
         - Maintenance rate: ${rate_per_point:.2f} per point
         - Capital cost per point: ${capital_cost_per_point:.2f}
         - Cost of capital: {cost_of_capital_percent:.1f}%
+        - Useful Life: {useful_life} years
+        - Salvage Value: ${salvage_value:.2f} per point
+        - Depreciation cost per point: ${(capital_cost_per_point - salvage_value) / useful_life:.2f} (calculated as (Capital Cost per Point - Salvage Value) / Useful Life)
         - Selected discount: {discount_percent}%
         - Cost of capital calculated as (points * capital cost per point * cost of capital percentage)
-        - Total cost is maintenance cost plus capital cost
+        - Total cost is maintenance cost plus capital cost plus depreciation cost
         """)
 
     resort_display = st.selectbox("Select Resort", options=display_resorts, index=display_resorts.index("Ko Olina Beach Club"), key="resort_select")
@@ -757,8 +786,9 @@ try:
     if st.button("Calculate"):
         st.session_state.debug_messages.append("Starting new calculation...")
         try:
-            breakdown, total_points, total_rent, total_capital_cost = calculate_stay(
-                resort, room_type, checkin_date, adjusted_nights, discount_percent, discount_multiplier, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital
+            breakdown, total_points, total_rent, total_capital_cost, total_depreciation_cost = calculate_stay(
+                resort, room_type, checkin_date, adjusted_nights, discount_percent, discount_multiplier, display_mode, 
+                rate_per_point, capital_cost_per_point, cost_of_capital, useful_life, salvage_value
             )
             st.subheader("Stay Breakdown")
             if not breakdown.empty:
@@ -770,6 +800,7 @@ try:
             if display_mode == "both":
                 st.success(f"Estimated Total Cost: ${total_rent}")
                 st.success(f"Total Capital Cost Component: ${total_capital_cost}")
+                st.success(f"Total Depreciation Cost: ${total_depreciation_cost}")
             
             if not breakdown.empty:
                 csv_data = breakdown.to_csv(index=False).encode('utf-8')
@@ -786,11 +817,12 @@ try:
                 all_rooms = [room_type] + compare_rooms
                 chart_df, compare_df_pivot, holiday_totals = compare_room_types(
                     resort, all_rooms, checkin_date, adjusted_nights, discount_multiplier, 
-                    discount_percent, ap_display_room_types, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital
+                    discount_percent, ap_display_room_types, display_mode, rate_per_point, 
+                    capital_cost_per_point, cost_of_capital, useful_life, salvage_value
                 )
                 
-                display_columns = ["Date"] + [col for col in compare_df_pivot.columns if "Points" in col or (display_mode == "both" and ("Rent" in col or "Maintenance Cost" in col or "Capital Cost" in col))]
-                st.write(f"### {'Points' if display_mode == 'points' else 'Points, Rent, Maintenance, and Capital Costs'} Comparison")
+                display_columns = ["Date"] + [col for col in compare_df_pivot.columns if "Points" in col or (display_mode == "both" and ("Rent" in col or "Maintenance Cost" in col or "Capital Cost" in col or "Depreciation Cost" in col))]
+                st.write(f"### {'Points' if display_mode == 'points' else 'Points, Rent, Maintenance, Capital, and Depreciation Costs'} Comparison")
                 st.dataframe(compare_df_pivot[display_columns], use_container_width=True)
                 
                 compare_csv = compare_df_pivot.to_csv(index=False).encode('utf-8')
@@ -804,7 +836,7 @@ try:
                 if not chart_df.empty:
                     required_columns = ["Date", "Room Type", "Points", "Holiday"]
                     if display_mode == "both":
-                        required_columns.extend(["Rent", "RentValue", "Maintenance Cost", "Capital Cost"])
+                        required_columns.extend(["Rent", "RentValue", "Maintenance Cost", "Capital Cost", "Depreciation Cost"])
                     if all(col in chart_df.columns for col in required_columns):
                         non_holiday_df = chart_df[chart_df["Holiday"] == "No"]
                         holiday_data = []
@@ -821,11 +853,13 @@ try:
                                     if display_mode == "both":
                                         maintenance_cost = math.ceil(totals["points"] * rate_per_point)
                                         capital_cost = math.ceil(totals["points"] * capital_cost_per_point * cost_of_capital)
-                                        total_holiday_cost = maintenance_cost + capital_cost
+                                        depreciation_cost = math.ceil(totals["points"] * ((capital_cost_per_point - salvage_value) / useful_life))
+                                        total_holiday_cost = maintenance_cost + capital_cost + depreciation_cost
                                         row["Rent"] = f"${total_holiday_cost}"
                                         row["RentValue"] = total_holiday_cost
                                         row["Maintenance Cost"] = f"${maintenance_cost}"
                                         row["Capital Cost"] = f"${capital_cost}"
+                                        row["Depreciation Cost"] = f"${depreciation_cost}"
                                     holiday_data.append(row)
                         holiday_df = pd.DataFrame(holiday_data)
                         
