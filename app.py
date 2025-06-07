@@ -404,23 +404,27 @@ def create_gantt_chart(resort, year):
 
 # Resort display name mapping
 resort_aliases = {
-    "Kauai Beach Club": "Kauai Beach Club",
-    "Ko Olina Beach Club": "Ko Olina Beach Club",
-    "Grande Vista": "Grande Vista",
-    "Newport Coast Villas": "Newport Coast Villas",
-    "Crystal Shores": "Crystal Shores",
-    "Maui Ocean Club": "Maui Ocean Club",
-    "Shadow Ridge": "Shadow Ridge",
-    "Desert Springs Villas II": "Desert Springs Villas II",
-    "Marriott's Bali Nusa Dua Terrace": "Marriott's Bali Nusa Dua Terrace",
-    "Marriott's Bali Nusa Dua Gardens": "Marriott's Bali Nusa Dua Gardens",
-    "Marriott's Phuket Beach Club": "Marriott's Phuket Beach Club",
-    "The Westin Ka'anapali Ocean Resort Villas": "The Westin Ka'anapali Ocean Resort Villas",
-    "Playa Andaluza": "Playa Andaluza",
-    "Marbella Beach": "Marbella Beach",
-    "Marriott's Beachplace Towers": "Marriott's Beachplace Towers",
-    "Sheraton Kauai Resort": "Sheraton Kauai Resort",
-    "Village Paris": "Village Paris"
+    "Aruba Ocean Club": "Aruba Ocean Club"		
+    "Aruba Surf Club": "Aruba Surf Club",		
+    "Bali Nusa Dua Gardens": "Bali Nusa Dua Gardens",		
+    "Bali Nusa Dua Terrace": "Bali Nusa Dua Terrace",		
+    "Beachplace Towers": "Marriott's Beachplace Towers",		
+    "Crystal Shores": "Crystal Shores",		
+    "Desert Springs Villas II": "Desert Springs Villas II",		
+    "Grande Vista": "Grande Vista",		
+    "Kauai Beach Club": "Kauai Beach Club",		
+    "Ko Olina Beach Club": "Ko Olina Beach Club",		
+    "Marbella Beach": "Marbella Beach",		
+    "Maui Ocean Club": "Maui Ocean Club",		
+    "Newport Coast Villas": "Newport Coast Villas",		
+    "Phuket Beach Club": "Phuket Beach Club",		
+    "Playa Andaluza": "Playa Andaluza",		
+    "Shadow Ridge": "Shadow Ridge",		
+    "Sheraton Kauai": "Sheraton Kauai",		
+    "Surfers Paradise": "Surfers Paradise",		
+    "Village Paris": "Village Paris",		
+    "Waikoloa Ocean Club": "Waikoloa Ocean Club",		
+    "Westin Ka'anapali": "Westin Ka'anapali"		
 }
 reverse_aliases = {v: k for k, v in resort_aliases.items()}
 display_resorts = list(resort_aliases.values())
