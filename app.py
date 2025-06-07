@@ -716,8 +716,7 @@ try:
         - Total cost is maintenance cost plus capital cost plus depreciation cost
         """)
 
-    resort_display = st.selectbox("Select Resort", options=display_resorts, index=display_resorts.index("Ko Olina Beach Club"), key="resort_select")
-    resort = reverse_aliases.get(resort_display, resort_display)
+    resort = st.selectbox("Select Resort", options=display_resorts, index=display_resorts.index("Ko Olina Beach Club"))
 
     # Track resort changes in session state
     if "last_resort" not in st.session_state:
