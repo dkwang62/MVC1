@@ -426,31 +426,7 @@ def create_gantt_chart(resort, year):
         return fig
 
 # Resort display name mapping
-resort_aliases = {
-    "Aruba Ocean Club": "Aruba Ocean Club",		
-    "Aruba Surf Club": "Aruba Surf Club",		
-    "Bali Nusa Dua Gardens": "Bali Nusa Dua Gardens",		
-    "Bali Nusa Dua Terrace": "Bali Nusa Dua Terrace",		
-    "Beachplace Towers": "Beachplace Towers",		
-    "Crystal Shores": "Crystal Shores",		
-    "Desert Springs Villas II": "Desert Springs Villas II",		
-    "Grande Vista": "Grande Vista",		
-    "Kauai Beach Club": "Kauai Beach Club",		
-    "Ko Olina Beach Club": "Ko Olina Beach Club",		
-    "Marbella Beach": "Marbella Beach",		
-    "Maui Ocean Club": "Maui Ocean Club",		
-    "Newport Coast Villas": "Newport Coast Villas",		
-    "Phuket Beach Club": "Phuket Beach Club",		
-    "Playa Andaluza": "Playa Andaluza",		
-    "Shadow Ridge": "Shadow Ridge",		
-    "Sheraton Kauai": "Sheraton Kauai",		
-    "Surfers Paradise": "Surfers Paradise",		
-    "Village Paris": "Village Paris",		
-    "Waikoloa Ocean Club": "Waikoloa Ocean Club",		
-    "Westin Ka'anapali": "Westin Ka'anapali"		
-}
-reverse_aliases = {v: k for k, v in resort_aliases.items()}
-display_resorts = list(resort_aliases.values())
+
 
 # Calculate stay function
 def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent, discount_multiplier, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital, useful_life, salvage_value):
