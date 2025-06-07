@@ -4652,15 +4652,15 @@
             "Studio SF": 1250,
             "2-BDRM GV": 2500,
             "2-BDRM SF": 3525,
-          "3-BDRM GV": 3125,
-          "3-BDRM SF": 4200
-        }
-      },
-      "Christmas": {
-        "Full Week": {
-          "Studio GV": 850,
-          "Studio SF": 850,
-          "2-BDRM GV": 1925,
+            "3-BDRM GV": 3125,
+            "3-BDRM SF": 4200
+          }
+        },
+        "Christmas": {
+          "Full Week": {
+            "Studio GV": 850,
+            "Studio SF": 850,
+            "2-BDRM GV": 1925,
           "2-BDRM SF": 2725,
           "3-BDRM GV": 2450,
           "3-BDRM SF": 3350
@@ -4731,45 +4731,34 @@
       },
       "Holiday Week": {
         "Week 1": {
-          "Full Week": {
-            "Studio": 900,
-            "2-BDRM": 1800,
-            "3-BDRM": 2250
-          }
+          "Studio": 900,
+          "2-BDRM": 1800,
+          "3-BDRM": 2250
         },
         "Mid\u2013Term": {
-          "Full Week": {
-            "Studio": 1575,
-            "2-BDRM": 3100,
-            "3-BDRM": 3825
-          }
+          "Studio": 1575,
+          "2-BDRM": 3100,
+          "3-BDRM": 3825
         },
         "Christmas": {
-          "Full Week": {
-            "Studio": 1525,
-            "2-BDRM": 2925,
-            "3-BDRM": 3600
-          }
+          "Studio": 1525,
+          "2-BDRM": 2925,
+          "3-BDRM": 3600
         },
         "New Year\u2019s Eve/Day": {
-          "Full Week": {
-            "Studio": 1750,
-            "2-BDRM": 3325,
-            "3-BDRM": 4050
-          }
+          "Studio": 1750,
+          "2-BDRM": 3325,
+          "3-BDRM": 4050
         },
         "Easter1": {
-          "Full Week": {
-            "Studio": 1575,
-            "2-BDRM": 3100,
-            "3-BDRM": 3825
-          }
+          "Studio": 1575,
+          "2-BDRM": 3100,
+          "3-BDRM": 3825
         },
         "Easter2": {
-          "Full Week": {
-            "Studio": 1575,
-            "2-BDRM": 3100,
-            "3-BDRM": 3825
+          "Studio": 1575,
+          "2-BDRM": 3100,
+          "3-BDRM": 3825
         }
       }
     },
@@ -4861,31 +4850,24 @@
       },
       "Holiday Week": {
         "Easter1": {
-          "Full Week": {
-            "1-BDRM": 2100,
-            "2-BDRM": 2900,
-            "3-BDRM": 3125
-          }
+          "1-BDRM": 2100,
+          "2-BDRM": 2900,
+          "3-BDRM": 3125
         },
         "Easter2": {
-          "Full Week": {
-            "1-BDRM": 2100,
-            "2-BDRM": 2900,
-            "3-BDRM": 3125
-          }
+          "1-BDRM": 2100,
+          "2-BDRM": 2900,
+          "3-BDRM": 3125
         },
         "Christmas": {
-          "Full Week": {
-            "1-BDRM": 1700,
-            "2-BDRM": 2275,
-            "3-BDRM": 2500
-          }
+          "1-BDRM": 1700,
+          "2-BDRM": 2275,
+          "3-BDRM": 2500
         },
         "New Year\u2019s Eve/Day": {
-          "Full Week": {
-            "1-BDRM": 1700,
-            "2-BDRM": 2275,
-            "3-BDRM": 2500
+          "1-BDRM": 1700,
+          "2-BDRM": 2275,
+          "3-BDRM": 2500
         }
       }
     },
@@ -5807,4 +5789,4 @@
       }
     }
   }
-},
+}
