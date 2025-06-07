@@ -1718,112 +1718,6 @@
         ]
       }
     },
-    "Surfers Paradise": {
-      "2025": {
-        "High Season": [
-          [
-            "2025-01-03",
-            "2025-01-30"
-          ],
-          [
-            "2025-07-04",
-            "2025-07-10"
-          ],
-          [
-            "2025-09-19",
-            "2025-10-09"
-          ],
-          [
-            "2025-10-17",
-            "2025-10-23"
-          ]
-        ],
-        "Mid Season": [
-          [
-            "2025-01-31",
-            "2025-02-27"
-          ],
-          [
-            "2025-08-01",
-            "2025-09-18"
-          ],
-          [
-            "2025-10-10",
-            "2025-10-16"
-          ],
-          [
-            "2025-10-24",
-            "2025-12-18"
-          ]
-        ],
-        "Low Season": [
-          [
-            "2025-02-28",
-            "2025-04-17"
-          ],
-          [
-            "2025-04-25",
-            "2025-07-03"
-          ],
-          [
-            "2025-07-11",
-            "2025-07-31"
-          ]
-        ]
-      },
-      "2026": {
-        "High Season": [
-          [
-            "2026-01-02",
-            "2026-01-29"
-          ],
-          [
-            "2026-07-03",
-            "2026-07-09"
-          ],
-          [
-            "2026-09-18",
-            "2026-10-08"
-          ],
-          [
-            "2026-10-23",
-            "2026-10-29"
-          ]
-        ],
-        "Mid Season": [
-          [
-            "2026-01-30",
-            "2026-02-26"
-          ],
-          [
-            "2026-07-31",
-            "2026-09-17"
-          ],
-          [
-            "2026-10-09",
-            "2026-10-22"
-          ],
-          [
-            "2026-10-30",
-            "2026-12-17"
-          ]
-        ],
-        "Low Season": [
-          [
-            "2026-02-27",
-            "2026-04-02"
-          ],
-          [
-            "2026-04-10",
-            "2026-07-02"
-          ],
-          [
-            "2026-07-10",
-            "2026-07-30"
-          ]
-        ]
-      }
-    },
     "Aruba Surf Club": {
       "2025": {
         "Mid Season": [
@@ -2000,6 +1894,92 @@
           [
             "2026-09-04",
             "2026-11-05"
+          ]
+        ]
+      }
+    },
+    "Mayflower Washington": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-02-21",
+            "2025-03-20"
+          ],
+          [
+            "2025-11-07",
+            "2025-11-20"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-03-21",
+            "2025-05-22"
+          ],
+          [
+            "2025-09-05",
+            "2025-11-06"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-05-30",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-02-20",
+            "2026-03-19"
+          ],
+          [
+            "2026-11-06",
+            "2026-11-19"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-03-20",
+            "2026-05-21"
+          ],
+          [
+            "2026-09-11",
+            "2026-11-05"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-05-29",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-09-03"
           ]
         ]
       }
@@ -2880,36 +2860,6 @@
         ]
       }
     },
-    "Surfers Paradise": {
-      "2025": {
-        "Easter": [
-          "2025-04-18",
-          "2025-04-24"
-        ],
-        "Christmas": [
-          "2025-12-19",
-          "2025-12-25"
-        ],
-        "New Year's Eve/Day": [
-          "2025-12-26",
-          "2026-01-01"
-        ]
-      },
-      "2026": {
-        "Easter": [
-          "2026-04-03",
-          "2026-04-09"
-        ],
-        "Christmas": [
-          "2026-12-18",
-          "2026-12-24"
-        ],
-        "New Year's Eve/Day": [
-          "2026-12-25",
-          "2026-12-31"
-        ]
-      }
-    },
     "Aruba Surf Club": {
       "2025": {
         "Presidents Day": [
@@ -3001,6 +2951,76 @@
           "2026-12-31"
         ]
       }
+    },
+    "Mayflower Washington": {
+      "2025": {
+        "Presidents Day": [
+          "2025-02-14",
+          "2025-02-20"
+        ],
+        "Memorial Day": [
+          "2025-05-23",
+          "2025-05-29"
+        ],
+        "Independence Day": [
+          "2025-07-04",
+          "2025-07-10"
+        ],
+        "Labor Day": [
+          "2025-08-29",
+          "2025-09-04"
+        ],
+        "Thanksgiving": [
+          "2025-11-21",
+          "2025-11-27"
+        ],
+        "Thanksgiving Alt": [
+          "2025-11-28",
+          "2025-12-03"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year's Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Presidents Day": [
+          "2026-02-13",
+          "2026-02-19"
+        ],
+        "Memorial Day": [
+          "2026-05-22",
+          "2026-05-28"
+        ],
+        "Independence Day": [
+          "2026-07-03",
+          "2026-07-09"
+        ],
+        "Labor Day": [
+          "2026-09-04",
+          "2026-09-10"
+        ],
+        "Thanksgiving": [
+          "2026-11-20",
+          "2026-11-26"
+        ],
+        "Thanksgiving Alt": [
+          "2026-11-27",
+          "2026-12-03"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year's Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
     }
   },
   "room_view_legend": {
@@ -3033,7 +3053,9 @@
     "CV": "Cityview",
     "LV": "Lagoon View",
     "PV": "Poolview",
-    "OS": "Oceanside"
+    "OS": "Oceanside",
+    "K": "King",
+    "DB": "Double Bed"
   },
   "reference_points": {
     "Kauai Beach Club": {
@@ -5262,112 +5284,6 @@
         }
       }
     },
-    "Surfers Paradise": {
-      "Low Season": {
-        "Fri-Sat": {
-          "Studio CV": 270,
-          "Studio LV": 290,
-          "1-BDRM CV": 380,
-          "1-BDRM LV": 420,
-          "2-BDRM CV": 620,
-          "2-BDRM LV": 675
-        },
-        "Sun-Thu": {
-          "Studio CV": 170,
-          "Studio LV": 180,
-          "1-BDRM CV": 240,
-          "1-BDRM LV": 260,
-          "2-BDRM CV": 385,
-          "2-BDRM LV": 415
-        },
-        "Full Week": {
-          "Studio CV": 1390,
-          "Studio LV": 1480,
-          "1-BDRM CV": 1960,
-          "1-BDRM LV": 2140,
-          "2-BDRM CV": 3165,
-          "2-BDRM LV": 3425
-        }
-      },
-      "Mid Season": {
-        "Fri-Sat": {
-          "Studio CV": 370,
-          "Studio LV": 400,
-          "1-BDRM CV": 560,
-          "1-BDRM LV": 670,
-          "2-BDRM CV": 875,
-          "2-BDRM LV": 1025
-        },
-        "Sun-Thu": {
-          "Studio CV": 230,
-          "Studio LV": 250,
-          "1-BDRM CV": 340,
-          "1-BDRM LV": 410,
-          "2-BDRM CV": 540,
-          "2-BDRM LV": 620
-        },
-        "Full Week": {
-          "Studio CV": 1890,
-          "Studio LV": 2050,
-          "1-BDRM CV": 2820,
-          "1-BDRM LV": 3390,
-          "2-BDRM CV": 4450,
-          "2-BDRM LV": 5150
-        }
-      },
-      "High Season": {
-        "Fri-Sat": {
-          "Studio CV": 520,
-          "Studio LV": 560,
-          "1-BDRM CV": 740,
-          "1-BDRM LV": 825,
-          "2-BDRM CV": 1200,
-          "2-BDRM LV": 1325
-        },
-        "Sun-Thu": {
-          "Studio CV": 320,
-          "Studio LV": 350,
-          "1-BDRM CV": 460,
-          "1-BDRM LV": 495,
-          "2-BDRM CV": 730,
-          "2-BDRM LV": 790
-        },
-        "Full Week": {
-          "Studio CV": 2640,
-          "Studio LV": 2870,
-          "1-BDRM CV": 3780,
-          "1-BDRM LV": 4125,
-          "2-BDRM CV": 6050,
-          "2-BDRM LV": 6600
-        }
-      },
-      "Holiday Week": {
-        "Easter": {
-          "Studio CV": 2640,
-          "Studio LV": 2870,
-          "1-BDRM CV": 3780,
-          "1-BDRM LV": 4125,
-          "2-BDRM CV": 6050,
-          "2-BDRM LV": 6600
-        },
-        "Christmas": {
-          "Studio CV": 2640,
-          "Studio LV": 2870,
-          "1-BDRM CV": 3780,
-          "1-BDRM LV": 4125,
-          "2-BDRM CV": 6050,
-          "2-BDRM LV": 6600
-        },
-        "New Year's Eve/Day": {
-          "Studio CV": 2640,
-          "Studio LV": 2870,
-          "1-BDRM CV": 3780,
-          "1-BDRM LV": 4125,
-          "2-BDRM CV": 6050,
-          "2-BDRM LV": 6600
-        }
-      }
-    },
     "Aruba Surf Club": {
       "Low Season": {
         "Fri-Sat": {
@@ -5559,80 +5475,80 @@
       },
       "Holiday Week": {
         "Presidents Day": {
-            "Studio GV": 2350,
-            "Studio OS": 2750,
-            "Studio OV": 2750,
-            "Studio OF": 3675,
-            "1-BDRM GV": 3500,
-            "1-BDRM OS": 4075,
-            "1-BDRM OV": 4075,
-            "1-BDRM OF": 5275,
-            "2-BDRM GV": 5275,
-            "2-BDRM OS": 6250,
-            "2-BDRM OV": 6250,
-            "2-BDRM OF": 8025,
-            "3-BDRM OV": 8025
-          },
-          "Easter": {
-            "Studio GV": 2350,
-            "Studio OS": 2750,
-            "Studio OV": 2750,
-            "Studio OF": 3675,
-            "1-BDRM GV": 3500,
-            "1-BDRM OS": 4075,
-            "1-BDRM OV": 4075,
-            "1-BDRM OF": 5275,
-            "2-BDRM GV": 5275,
-            "2-BDRM OS": 6250,
-            "2-BDRM OV": 6250,
-            "2-BDRM OF": 8025,
-            "3-BDRM OV": 8025
-          },
-          "Independence Day": {
-            "Studio GV": 1375,
-            "Studio OS": 1600,
-            "Studio OV": 1600,
-            "Studio OF": 2125,
-            "1-BDRM GV": 1950,
-            "1-BDRM OS": 2350,
-            "1-BDRM OV": 2350,
-            "1-BDRM OF": 2925,
-            "2-BDRM GV": 2925,
-            "2-BDRM OS": 3500,
-            "2-BDRM OV": 3500,
-            "2-BDRM OF": 4525,
-            "3-BDRM OV": 4525
-          },
-          "Christmas": {
-            "Studio GV": 2350,
-            "Studio OS": 2750,
-            "Studio OV": 2750,
-            "Studio OF": 3675,
-            "1-BDRM GV": 3500,
-            "1-BDRM OS": 4075,
-            "1-BDRM OV": 4075,
-            "1-BDRM OF": 5275,
-            "2-BDRM GV": 5275,
-            "2-BDRM OS": 6250,
-            "2-BDRM OV": 6250,
-            "2-BDRM OF": 8025,
-            "3-BDRM OV": 8025
-          },
-          "New Year's Eve/Day": {
-            "Studio GV": 2700,
-            "Studio OS": 3150,
-            "Studio OV": 3150,
-            "Studio OF": 4350,
-            "1-BDRM GV": 3900,
-            "1-BDRM OS": 4525,
-            "1-BDRM OV": 4525,
-            "1-BDRM OF": 5850,
-            "2-BDRM GV": 5850,
-            "2-BDRM OS": 6875,
-            "2-BDRM OV": 6875,
-            "2-BDRM OF": 8875,
-            "3-BDRM OV": 8875
-         }
+          "Studio GV": 2350,
+          "Studio OS": 2750,
+          "Studio OV": 2750,
+          "Studio OF": 3675,
+          "1-BDRM GV": 3500,
+          "1-BDRM OS": 4075,
+          "1-BDRM OV": 4075,
+          "1-BDRM OF": 5275,
+          "2-BDRM GV": 5275,
+          "2-BDRM OS": 6250,
+          "2-BDRM OV": 6250,
+          "2-BDRM OF": 8025,
+          "3-BDRM OV": 8025
+        },
+        "Easter": {
+          "Studio GV": 2350,
+          "Studio OS": 2750,
+          "Studio OV": 2750,
+          "Studio OF": 3675,
+          "1-BDRM GV": 3500,
+          "1-BDRM OS": 4075,
+          "1-BDRM OV": 4075,
+          "1-BDRM OF": 5275,
+          "2-BDRM GV": 5275,
+          "2-BDRM OS": 6250,
+          "2-BDRM OV": 6250,
+          "2-BDRM OF": 8025,
+          "3-BDRM OV": 8025
+        },
+        "Independence Day": {
+          "Studio GV": 1375,
+          "Studio OS": 1600,
+          "Studio OV": 1600,
+          "Studio OF": 2125,
+          "1-BDRM GV": 1950,
+          "1-BDRM OS": 2350,
+          "1-BDRM OV": 2350,
+          "1-BDRM OF": 2925,
+          "2-BDRM GV": 2925,
+          "2-BDRM OS": 3500,
+          "2-BDRM OV": 3500,
+          "2-BDRM OF": 4525,
+          "3-BDRM OV": 4525
+        },
+        "Christmas": {
+          "Studio GV": 2350,
+          "Studio OS": 2750,
+          "Studio OV": 2750,
+          "Studio OF": 3675,
+          "1-BDRM GV": 3500,
+          "1-BDRM OS": 4075,
+          "1-BDRM OV": 4075,
+          "1-BDRM OF": 5275,
+          "2-BDRM GV": 5275,
+          "2-BDRM OS": 6250,
+          "2-BDRM OV": 6250,
+          "2-BDRM OF": 8025,
+          "3-BDRM OV": 8025
+        },
+        "New Year's Eve/Day": {
+          "Studio GV": 2700,
+          "Studio OS": 3150,
+          "Studio OV": 3150,
+          "Studio OF": 4350,
+          "1-BDRM GV": 3900,
+          "1-BDRM OS": 4525,
+          "1-BDRM OV": 4525,
+          "1-BDRM OF": 5850,
+          "2-BDRM GV": 5850,
+          "2-BDRM OS": 6875,
+          "2-BDRM OV": 6875,
+          "2-BDRM OF": 8875,
+          "3-BDRM OV": 8875
+        }
       }
     },
     "Aruba Ocean Club": {
@@ -5782,6 +5698,182 @@
           "2-BDRM OF": 8875
         }
       }
+    },
+    "Mayflower Washington": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Guestroom K": 300,
+          "Guestroom DB": 300,
+          "Deluxe DB": 325,
+          "Junior Suite K": 400,
+          "Executive Suite K": 400
+        },
+        "Sun-Thu": {
+          "Guestroom K": 250,
+          "Guestroom DB": 250,
+          "Deluxe DB": 275,
+          "Junior Suite K": 300,
+          "Executive Suite K": 300
+        },
+        "Full Week": {
+          "Guestroom K": 1850,
+          "Guestroom DB": 1850,
+          "Deluxe DB": 2025,
+          "Junior Suite K": 2300,
+          "Executive Suite K": 2300
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Guestroom K": 400,
+          "Guestroom DB": 400,
+          "Deluxe DB": 450,
+          "Junior Suite K": 525,
+          "Executive Suite K": 525
+        },
+        "Sun-Thu": {
+          "Guestroom K": 300,
+          "Guestroom DB": 300,
+          "Deluxe DB": 325,
+          "Junior Suite K": 400,
+          "Executive Suite K": 400
+        },
+        "Full Week": {
+          "Guestroom K": 2300,
+          "Guestroom DB": 2300,
+          "Deluxe DB": 2525,
+          "Junior Suite K": 3050,
+          "Executive Suite K": 3050
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Guestroom K": 475,
+          "Guestroom DB": 475,
+          "Deluxe DB": 525,
+          "Junior Suite K": 625,
+          "Executive Suite K": 625
+        },
+        "Sun-Thu": {
+          "Guestroom K": 350,
+          "Guestroom DB": 350,
+          "Deluxe DB": 400,
+          "Junior Suite K": 450,
+          "Executive Suite K": 450
+        },
+        "Full Week": {
+          "Guestroom K": 2700,
+          "Guestroom DB": 2700,
+          "Deluxe DB": 3050,
+          "Junior Suite K": 3500,
+          "Executive Suite K": 3500
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "Guestroom K": 575,
+          "Guestroom DB": 575,
+          "Deluxe DB": 625,
+          "Junior Suite K": 750,
+          "Executive Suite K": 750
+        },
+        "Sun-Thu": {
+          "Guestroom K": 425,
+          "Guestroom DB": 425,
+          "Deluxe DB": 475,
+          "Junior Suite K": 550,
+          "Executive Suite K": 550
+        },
+        "Full Week": {
+          "Guestroom K": 3275,
+          "Guestroom DB": 3275,
+          "Deluxe DB": 3625,
+          "Junior Suite K": 4250,
+          "Executive Suite K": 4250
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Guestroom K": 2500,
+          "Guestroom DB": 2500,
+          "Deluxe DB": 2675,
+          "Junior Suite K": 3150,
+          "Executive Suite K": 3150
+        },
+        "Memorial Day": {
+          "Guestroom K": 3500,
+          "Guestroom DB": 3500,
+          "Deluxe DB": 3775,
+          "Junior Suite K": 4425,
+          "Executive Suite K": 4425
+        },
+        "Independence Day": {
+          "Guestroom K": 3625,
+          "Guestroom DB": 3625,
+          "Deluxe DB": 3925,
+          "Junior Suite K": 4600,
+          "Executive Suite K": 4600
+        },
+        "Labor Day": {
+          "Guestroom K": 3350,
+          "Guestroom DB": 3350,
+          "Deluxe DB": 3625,
+          "Junior Suite K": 4200,
+          "Executive Suite K": 4200
+        },
+        "Thanksgiving": {
+          "Guestroom K": 2300,
+          "Guestroom DB": 2300,
+          "Deluxe DB": 2525,
+          "Junior Suite K": 3000,
+          "Executive Suite K": 3000
+        },
+        "Thanksgiving Alt": {
+          "Guestroom K": 2300,
+          "Guestroom DB": 2300,
+          "Deluxe DB": 2525,
+          "Junior Suite K": 3000,
+          "Executive Suite K": 3000
+        },
+        "Christmas": {
+          "Guestroom K": 2350,
+          "Guestroom DB": 2350,
+          "Deluxe DB": 2575,
+          "Junior Suite K": 3000,
+          "Executive Suite K": 3000
+        },
+        "New Year's Eve/Day": {
+          "Guestroom K": 2800,
+          "Guestroom DB": 2800,
+          "Deluxe DB": 3025,
+          "Junior Suite K": 3550,
+          "Executive Suite K": 3550
+        }
+      }
     }
-  }
+  },
+  "resorts_list": [
+    "Aruba Ocean Club",
+    "Aruba Surf Club",
+    "Bali Nusa Dua Gardens",
+    "Bali Nusa Dua Terrace",
+    "Beachplace Towers",
+    "Crystal Shores",
+    "Desert Shoulders Villas II",
+    "Grande Vista",
+    "Kauai Beach Club",
+    "Ko Olina Beach Club",
+    "Marbella Beach",
+    "Maui Ocean Club",
+    "Mayflower Washington",
+    "Newport Coast Villas",
+    "Phuket Beach Club",
+    "Playa Andaluza",
+    "Shadow Ridge",
+    "Sheraton Kauai",
+    "Surfers Paradise",
+    "Village Paris",
+    "Waikoloa Ocean Club",
+    "Westin Ka'anapali"
+  ]
 }
