@@ -408,7 +408,7 @@ resort_aliases = {
     "Aruba Surf Club": "Aruba Surf Club",		
     "Bali Nusa Dua Gardens": "Bali Nusa Dua Gardens",		
     "Bali Nusa Dua Terrace": "Bali Nusa Dua Terrace",		
-    "Beachplace Towers": "Marriott's Beachplace Towers",		
+    "Beachplace Towers": "Beachplace Towers",		
     "Crystal Shores": "Crystal Shores",		
     "Desert Springs Villas II": "Desert Springs Villas II",		
     "Grande Vista": "Grande Vista",		
