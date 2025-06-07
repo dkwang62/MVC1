@@ -450,12 +450,6 @@
         ],
         "High Season": [
           [
-            "2025-01-31",
-            "2025-04-10"
-          ]
-        ],
-        "High Season": [
-          [
             "2025-06-06",
             "2025-07-03"
           ],
@@ -496,12 +490,6 @@
           [
             "2026-11-06",
             "2026-11-19"
-          ]
-        ],
-        "High Season": [
-          [
-            "2026-01-30",
-            "2026-04-09"
           ]
         ],
         "High Season": [
@@ -552,12 +540,6 @@
         ],
         "High Season": [
           [
-            "2025-01-31",
-            "2025-04-10"
-          ]
-        ],
-        "High Season": [
-          [
             "2025-06-06",
             "2025-07-03"
           ],
@@ -598,12 +580,6 @@
           [
             "2026-11-06",
             "2026-11-19"
-          ]
-        ],
-        "High Season": [
-          [
-            "2026-01-30",
-            "2026-04-09"
           ]
         ],
         "High Season": [
@@ -704,7 +680,7 @@
         ]
       }
     },
-    "The Westin Ka'anapali Ocean Resort Villas": {
+    "Westin Ka'anapali": {
       "2025": {
         "Low Season": [
           [
@@ -790,7 +766,7 @@
         ]
       }
     },
-    "Marriott's Phuket Beach Club": {
+    "Phuket Beach Club": {
       "2025": {
         "High Season": [
           [
@@ -852,7 +828,7 @@
         ]
       }
     },
-    "Marriott's Bali Nusa Dua Gardens": {
+    "Bali Nusa Dua Gardens": {
       "2025": {
         "Shoulder": [
           [
@@ -950,7 +926,7 @@
         ]
       }
     },
-    "Marriott's Bali Nusa Dua Terrace": {
+    "Bali Nusa Dua Terrace": {
       "2025": {
         "Shoulder": [
           [
@@ -1353,6 +1329,680 @@
           ]
         ]
       }
+    },
+    "Sheraton Kauai": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-01-30"
+          ],
+          [
+            "2025-03-28",
+            "2025-04-17"
+          ],
+          [
+            "2025-04-25",
+            "2025-06-05"
+          ],
+          [
+            "2025-08-29",
+            "2025-11-20"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-31",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-03-27"
+          ],
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-01-29"
+          ],
+          [
+            "2026-03-27",
+            "2026-04-02"
+          ],
+          [
+            "2026-04-10",
+            "2026-06-04"
+          ],
+          [
+            "2026-08-28",
+            "2026-11-19"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-30",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-03-26"
+          ],
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-27"
+          ]
+        ]
+      }
+    },
+    "Beachplace Towers": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-09-05",
+            "2025-10-02"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Shoulder Season": [
+          [
+            "2025-04-18",
+            "2025-06-05"
+          ],
+          [
+            "2025-08-29",
+            "2025-09-04"
+          ],
+          [
+            "2025-10-03",
+            "2025-12-04"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-01-03",
+            "2025-01-30"
+          ],
+          [
+            "2025-04-11",
+            "2025-04-17"
+          ],
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-31",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-04-10"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-09-04",
+            "2026-10-01"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Shoulder Season": [
+          [
+            "2026-04-17",
+            "2026-06-04"
+          ],
+          [
+            "2026-08-28",
+            "2026-09-03"
+          ],
+          [
+            "2026-10-02",
+            "2026-12-03"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-01-02",
+            "2026-01-29"
+          ],
+          [
+            "2026-03-10",
+            "2026-04-16"
+          ],
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-27"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-30",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-04-09"
+          ]
+        ]
+      }
+    },
+    "Surfers Paradise": {
+      "2025": {
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-01-30"
+          ],
+          [
+            "2025-07-04",
+            "2025-07-10"
+          ],
+          [
+            "2025-09-19",
+            "2025-10-09"
+          ],
+          [
+            "2025-10-17",
+            "2025-10-23"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-01-31",
+            "2025-02-27"
+          ],
+          [
+            "2025-08-01",
+            "2025-09-18"
+          ],
+          [
+            "2025-10-10",
+            "2025-10-16"
+          ],
+          [
+            "2025-10-24",
+            "2025-12-18"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2025-02-28",
+            "2025-04-17"
+          ],
+          [
+            "2025-04-25",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-07-31"
+          ]
+        ]
+      },
+      "2026": {
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-01-29"
+          ],
+          [
+            "2026-07-03",
+            "2026-07-09"
+          ],
+          [
+            "2026-09-18",
+            "2026-10-08"
+          ],
+          [
+            "2026-10-23",
+            "2026-10-29"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-01-30",
+            "2026-02-26"
+          ],
+          [
+            "2026-07-31",
+            "2026-09-17"
+          ],
+          [
+            "2026-10-09",
+            "2026-10-22"
+          ],
+          [
+            "2026-10-30",
+            "2026-12-17"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2026-02-27",
+            "2026-04-02"
+          ],
+          [
+            "2026-04-10",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-07-30"
+          ]
+        ]
+      }
+    },
+    "Waikoloa Ocean Club": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-01-30"
+          ],
+          [
+            "2025-03-28",
+            "2025-04-17"
+          ],
+          [
+            "2025-04-25",
+            "2025-06-05"
+          ],
+          [
+            "2025-08-29",
+            "2025-11-20"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-31",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-03-27"
+          ],
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-01-29"
+          ],
+          [
+            "2026-03-27",
+            "2026-04-02"
+          ],
+          [
+            "2026-04-10",
+            "2026-06-04"
+          ],
+          [
+            "2026-08-28",
+            "2026-11-19"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-30",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-03-26"
+          ],
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-27"
+          ]
+        ]
+      }
+    },
+    "Surfers Paradise": {
+      "2025": {
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-01-30"
+          ],
+          [
+            "2025-07-04",
+            "2025-07-10"
+          ],
+          [
+            "2025-09-19",
+            "2025-10-09"
+          ],
+          [
+            "2025-10-17",
+            "2025-10-23"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-01-31",
+            "2025-02-27"
+          ],
+          [
+            "2025-08-01",
+            "2025-09-18"
+          ],
+          [
+            "2025-10-10",
+            "2025-10-16"
+          ],
+          [
+            "2025-10-24",
+            "2025-12-18"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2025-02-28",
+            "2025-04-17"
+          ],
+          [
+            "2025-04-25",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-07-31"
+          ]
+        ]
+      },
+      "2026": {
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-01-29"
+          ],
+          [
+            "2026-07-03",
+            "2026-07-09"
+          ],
+          [
+            "2026-09-18",
+            "2026-10-08"
+          ],
+          [
+            "2026-10-23",
+            "2026-10-29"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-01-30",
+            "2026-02-26"
+          ],
+          [
+            "2026-07-31",
+            "2026-09-17"
+          ],
+          [
+            "2026-10-09",
+            "2026-10-22"
+          ],
+          [
+            "2026-10-30",
+            "2026-12-17"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2026-02-27",
+            "2026-04-02"
+          ],
+          [
+            "2026-04-10",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-07-30"
+          ]
+        ]
+      }
+    },
+    "Aruba Surf Club": {
+      "2025": {
+        "Mid Season": [
+          [
+            "2025-01-03",
+            "2025-02-06"
+          ],
+          [
+            "2025-04-04",
+            "2025-04-17"
+          ],
+          [
+            "2025-04-25",
+            "2025-05-01"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-02-07",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-04-03"
+          ]
+        ],
+        "Shoulder Season": [
+          [
+            "2025-05-02",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-09-04"
+          ],
+          [
+            "2025-11-07",
+            "2025-12-18"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2025-09-05",
+            "2025-11-06"
+          ]
+        ]
+      },
+      "2026": {
+        "Mid Season": [
+          [
+            "2026-01-02",
+            "2026-02-05"
+          ],
+          [
+            "2026-04-10",
+            "2026-04-30"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-02-06",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-04-09"
+          ]
+        ],
+        "Shoulder Season": [
+          [
+            "2026-05-01",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-09-03"
+          ],
+          [
+            "2026-11-06",
+            "2026-12-17"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2026-09-04",
+            "2026-11-05"
+          ]
+        ]
+      }
+    },
+    "Aruba Ocean Club": {
+      "2025": {
+        "Season A": [
+          [
+            "2025-01-03",
+            "2025-02-06"
+          ],
+          [
+            "2025-04-04",
+            "2025-04-17"
+          ],
+          [
+            "2025-04-25",
+            "2025-05-01"
+          ]
+        ],
+        "Season B": [
+          [
+            "2025-02-07",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-04-03"
+          ]
+        ],
+        "Season C": [
+          [
+            "2025-05-02",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-09-04"
+          ],
+          [
+            "2025-11-07",
+            "2025-12-18"
+          ]
+        ],
+        "Season D": [
+          [
+            "2025-09-05",
+            "2025-11-06"
+          ]
+        ]
+      },
+      "2026": {
+        "Season A": [
+          [
+            "2026-01-02",
+            "2026-02-05"
+          ],
+          [
+            "2026-04-10",
+            "2026-04-30"
+          ]
+        ],
+        "Season B": [
+          [
+            "2026-02-06",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-04-09"
+          ]
+        ],
+        "Season C": [
+          [
+            "2026-05-01",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-09-03"
+          ],
+          [
+            "2026-11-06",
+            "2026-12-17"
+          ]
+        ],
+        "Season D": [
+          [
+            "2026-09-04",
+            "2026-11-05"
+          ]
+        ]
+      }
     }
   },
   "holiday_weeks": {
@@ -1740,7 +2390,7 @@
         ]
       }
     },
-    "The Westin Ka'anapali Ocean Resort Villas": {
+    "Westin Ka'anapali": {
       "2025": {
         "Presidents Day": [
           "2025-02-14",
@@ -1802,7 +2452,7 @@
         ]
       }
     },
-    "Marriott's Phuket Beach Club": {
+    "Phuket Beach Club": {
       "2025": {
         "Chinese New Year": [
           "2025-01-24",
@@ -1832,7 +2482,7 @@
         ]
       }
     },
-    "Marriott's Bali Nusa Dua Gardens": {
+    "Bali Nusa Dua Gardens": {
       "2025": {
         "Chinese New Year": [
           "2025-01-24",
@@ -1870,7 +2520,7 @@
         ]
       }
     },
-    "Marriott's Bali Nusa Dua Terrace": {
+    "Bali Nusa Dua Terrace": {
       "2025": {
         "Chinese New Year": [
           "2025-01-24",
@@ -2037,10 +2687,324 @@
           "2026-04-09"
         ]
       }
+    },
+    "Sheraton Kauai": {
+      "2025": {
+        "Presidents Day": [
+          "2025-02-14",
+          "2025-02-20"
+        ],
+        "Easter": [
+          "2025-04-18",
+          "2025-04-24"
+        ],
+        "Independence Day": [
+          "2025-07-04",
+          "2025-07-10"
+        ],
+        "Thanksgiving": [
+          "2025-11-21",
+          "2025-11-27"
+        ],
+        "Thanksgiving 2": [
+          "2025-11-28",
+          "2025-12-04"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year's Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Presidents Day": [
+          "2026-02-13",
+          "2026-02-19"
+        ],
+        "Easter": [
+          "2026-04-03",
+          "2026-04-09"
+        ],
+        "Independence Day": [
+          "2026-07-03",
+          "2026-07-09"
+        ],
+        "Thanksgiving": [
+          "2026-11-20",
+          "2026-11-26"
+        ],
+        "Thanksgiving 2": [
+          "2026-11-27",
+          "2026-12-03"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year's Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
+    },
+    "Beachplace Towers": {
+      "2025": {
+        "Presidents Day": [
+          "2025-02-14",
+          "2025-02-20"
+        ],
+        "Independence Day": [
+          "2025-07-04",
+          "2025-07-10"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year's Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Presidents Day": [
+          "2026-02-13",
+          "2026-02-19"
+        ],
+        "Independence Day": [
+          "2026-07-03",
+          "2026-07-09"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year's Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
+    },
+    "Surfers Paradise": {
+      "2025": {
+        "Easter": [
+          "2025-04-18",
+          "2025-04-24"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year's Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Easter": [
+          "2026-04-03",
+          "2026-04-09"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year's Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
+    },
+    "Waikoloa Ocean Club": {
+      "2025": {
+        "Presidents Day": [
+          "2025-02-14",
+          "2025-02-20"
+        ],
+        "Easter": [
+          "2025-04-18",
+          "2025-04-24"
+        ],
+        "Independence Day": [
+          "2025-07-04",
+          "2025-07-10"
+        ],
+        "Thanksgiving": [
+          "2025-11-21",
+          "2025-11-27"
+        ],
+        "Thanksgiving 2": [
+          "2025-11-28",
+          "2025-12-04"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year's Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Presidents Day": [
+          "2026-02-13",
+          "2026-02-19"
+        ],
+        "Easter": [
+          "2026-04-03",
+          "2026-04-09"
+        ],
+        "Independence Day": [
+          "2026-07-03",
+          "2026-07-09"
+        ],
+        "Thanksgiving": [
+          "2026-11-20",
+          "2026-11-26"
+        ],
+        "Thanksgiving 2": [
+          "2026-11-27",
+          "2026-12-03"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year's Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
+    },
+    "Surfers Paradise": {
+      "2025": {
+        "Easter": [
+          "2025-04-18",
+          "2025-04-24"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year's Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Easter": [
+          "2026-04-03",
+          "2026-04-09"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year's Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
+    },
+    "Aruba Surf Club": {
+      "2025": {
+        "Presidents Day": [
+          "2025-02-14",
+          "2025-02-20"
+        ],
+        "Easter": [
+          "2025-04-18",
+          "2025-04-24"
+        ],
+        "Independence Day": [
+          "2025-07-04",
+          "2025-07-10"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year's Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Presidents Day": [
+          "2026-02-13",
+          "2026-02-19"
+        ],
+        "Easter": [
+          "2026-04-03",
+          "2026-04-09"
+        ],
+        "Independence Day": [
+          "2026-07-03",
+          "2026-07-09"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year's Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
+    },
+    "Aruba Ocean Club": {
+      "2025": {
+        "Presidents Day": [
+          "2025-02-14",
+          "2025-02-20"
+        ],
+        "Easter": [
+          "2025-04-18",
+          "2025-04-24"
+        ],
+        "Independence Day": [
+          "2025-07-04",
+          "2025-07-10"
+        ],
+        "Christmas": [
+          "2025-12-19",
+          "2025-12-25"
+        ],
+        "New Year's Eve/Day": [
+          "2025-12-26",
+          "2026-01-01"
+        ]
+      },
+      "2026": {
+        "Presidents Day": [
+          "2026-02-13",
+          "2026-02-19"
+        ],
+        "Easter": [
+          "2026-04-03",
+          "2026-04-09"
+        ],
+        "Independence Day": [
+          "2026-07-03",
+          "2026-07-09"
+        ],
+        "Christmas": [
+          "2026-12-18",
+          "2026-12-24"
+        ],
+        "New Year's Eve/Day": [
+          "2026-12-25",
+          "2026-12-31"
+        ]
+      }
     }
   },
   "room_view_legend": {
-    "GV": "Garden View",
+    "GV": "Gardenview",
     "OV": "Oceanview",
     "OF": "Oceanfront",
     "S": "Standard",
@@ -2065,7 +3029,11 @@
     "AP_1BR_MA": "AP 1BR Mountain",
     "AP_2BR_MA": "AP 2BR Mountain",
     "AP_2BR_MK": "AP 2BR Ocean",
-    "LO": "Lock-Off"
+    "LO": "Lock-Off",
+    "CV": "Cityview",
+    "LV": "Lagoon View",
+    "PV": "Poolview",
+    "OS": "Oceanside"
   },
   "reference_points": {
     "Kauai Beach Club": {
@@ -2914,23 +3882,6 @@
       },
       "High Season": {
         "Fri-Sat": {
-          "Studio": 400,
-          "1BR": 550,
-          "2BR": 950
-        },
-        "Sun-Thu": {
-          "Studio": 160,
-          "1BR": 225,
-          "2BR": 375
-        },
-        "Full Week": {
-          "Studio": 1600,
-          "1BR": 2225,
-          "2BR": 3775
-        }
-      },
-      "High Season": {
-        "Fri-Sat": {
           "Studio": 175,
           "1BR": 275,
           "2BR": 450
@@ -3007,23 +3958,6 @@
           "Studio": 1725,
           "1BR": 2000,
           "2BR": 3175
-        }
-      },
-      "High Season": {
-        "Fri-Sat": {
-          "Studio": 425,
-          "1BR": 625,
-          "2BR": 1000
-        },
-        "Sun-Thu": {
-          "Studio": 175,
-          "1BR": 250,
-          "2BR": 400
-        },
-        "Full Week": {
-          "Studio": 1725,
-          "1BR": 2500,
-          "2BR": 4000
         }
       },
       "High Season": {
@@ -3425,7 +4359,7 @@
         }
       }
     },
-    "Marriott's Phuket Beach Club": {
+    "Phuket Beach Club": {
       "Low Season": {
         "Mon-Thu": {
           "2 Bedroom": 230
@@ -3460,7 +4394,7 @@
         }
       }
     },
-    "Marriott's Bali Nusa Dua Gardens": {
+    "Bali Nusa Dua Gardens": {
       "Low Season": {
         "Sun-Thu": {
           "Guestroom": 110,
@@ -3520,7 +4454,7 @@
         }
       }
     },
-    "Marriott's Bali Nusa Dua Terrace": {
+    "Bali Nusa Dua Terrace": {
       "Shoulder": {
         "Sun-Thu": {
           "1 Bedroom": 270,
@@ -3949,6 +4883,1002 @@
           "1-BDRM": 1700,
           "2-BDRM": 2275,
           "3-BDRM": 2500
+        }
+      }
+    },
+    "Sheraton Kauai Resort": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio": 225,
+          "1-BDRM VILLA": 350,
+          "2-BDRM VILLA": 550
+        },
+        "Sun-Thu": {
+          "Studio": 175,
+          "1-BDRM VILLA": 250,
+          "2-BDRM VILLA": 375
+        },
+        "Full Week": {
+          "Studio": 1325,
+          "1-BDRM VILLA": 1950,
+          "2-BDRM VILLA": 2975
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio": 275,
+          "1-BDRM VILLA": 400,
+          "2-BDRM VILLA": 625
+        },
+        "Sun-Thu": {
+          "Studio": 200,
+          "1-BDRM VILLA": 275,
+          "2-BDRM VILLA": 450
+        },
+        "Full Week": {
+          "Studio": 1550,
+          "1-BDRM VILLA": 2175,
+          "2-BDRM VILLA": 3500
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Studio": 1600,
+          "1-BDRM VILLA": 2350,
+          "2-BDRM VILLA": 3675
+        },
+        "Easter": {
+          "Studio": 1600,
+          "1-BDRM VILLA": 2350,
+          "2-BDRM VILLA": 3675
+        },
+        "Independence Day": {
+          "Studio": 1550,
+          "1-BDRM VILLA": 2175,
+          "2-BDRM VILLA": 3500
+        },
+        "Thanksgiving": {
+          "Studio": 1325,
+          "1-BDRM VILLA": 1950,
+          "2-BDRM VILLA": 2975
+        },
+        "Thanksgiving 2": {
+          "Studio": 1600,
+          "1-BDRM VILLA": 2350,
+          "2-BDRM VILLA": 3675
+        },
+        "Christmas": {
+          "Studio": 1600,
+          "1-BDRM VILLA": 2350,
+          "2-BDRM VILLA": 3675
+        },
+        "New Year's Eve/Day": {
+          "Studio": 1775,
+          "1-BDRM VILLA": 2575,
+          "2-BDRM VILLA": 4100
+        }
+      }
+    },
+    "Beachplace Towers": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio": 200,
+          "1-BDRM": 275,
+          "2-BDRM": 425
+        },
+        "Sun-Thu": {
+          "Studio": 75,
+          "1-BDRM": 125,
+          "2-BDRM": 175
+        },
+        "Full Week": {
+          "Studio": 775,
+          "1-BDRM": 1175,
+          "2-BDRM": 1725
+        }
+      },
+      "Shoulder Season": {
+        "Fri-Sat": {
+          "Studio": 275,
+          "1-BDRM": 375,
+          "2-BDRM": 575
+        },
+        "Sun-Thu": {
+          "Studio": 125,
+          "1-BDRM": 150,
+          "2-BDRM": 250
+        },
+        "Full Week": {
+          "Studio": 1175,
+          "1-BDRM": 1500,
+          "2-BDRM": 2400
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio": 375,
+          "1-BDRM": 550,
+          "2-BDRM": 825
+        },
+        "Sun-Thu": {
+          "Studio": 150,
+          "1-BDRM": 225,
+          "2-BDRM": 350
+        },
+        "Full Week": {
+          "Studio": 1500,
+          "1-BDRM": 2225,
+          "2-BDRM": 3400
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio": 425,
+          "1-BDRM": 600,
+          "2-BDRM": 900
+        },
+        "Sun-Thu": {
+          "Studio": 175,
+          "1-BDRM": 250,
+          "2-BDRM": 375
+        },
+        "Full Week": {
+          "Studio": 1725,
+          "1-BDRM": 2450,
+          "2-BDRM": 3675
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Studio": 2175,
+          "1-BDRM": 3000,
+          "2-BDRM": 4675
+        },
+        "Independence Day": {
+          "Studio": 1500,
+          "1-BDRM": 2225,
+          "2-BDRM": 3400
+        },
+        "Christmas": {
+          "Studio": 1500,
+          "1-BDRM": 2225,
+          "2-BDRM": 3400
+        },
+        "New Year's Eve/Day": {
+          "Studio": 1950,
+          "1-BDRM": 2725,
+          "2-BDRM": 4175
+        }
+      }
+    },
+    "Surfers Paradise": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio CV": 270,
+          "Studio LV": 290,
+          "1-BDRM CV": 380,
+          "1-BDRM LV": 420,
+          "2-BDRM CV": 620,
+          "2-BDRM LV": 675
+        },
+        "Sun-Thu": {
+          "Studio CV": 170,
+          "Studio LV": 180,
+          "1-BDRM CV": 240,
+          "1-BDRM LV": 260,
+          "2-BDRM CV": 385,
+          "2-BDRM LV": 415
+        },
+        "Full Week": {
+          "Studio CV": 1390,
+          "Studio LV": 1480,
+          "1-BDRM CV": 1960,
+          "1-BDRM LV": 2140,
+          "2-BDRM CV": 3165,
+          "2-BDRM LV": 3425
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio CV": 370,
+          "Studio LV": 400,
+          "1-BDRM CV": 560,
+          "1-BDRM LV": 670,
+          "2-BDRM CV": 875,
+          "2-BDRM LV": 1025
+        },
+        "Sun-Thu": {
+          "Studio CV": 230,
+          "Studio LV": 250,
+          "1-BDRM CV": 340,
+          "1-BDRM LV": 410,
+          "2-BDRM CV": 540,
+          "2-BDRM LV": 620
+        },
+        "Full Week": {
+          "Studio CV": 1890,
+          "Studio LV": 2050,
+          "1-BDRM CV": 2820,
+          "1-BDRM LV": 3390,
+          "2-BDRM CV": 4450,
+          "2-BDRM LV": 5150
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio CV": 520,
+          "Studio LV": 560,
+          "1-BDRM CV": 740,
+          "1-BDRM LV": 825,
+          "2-BDRM CV": 1200,
+          "2-BDRM LV": 1325
+        },
+        "Sun-Thu": {
+          "Studio CV": 320,
+          "Studio LV": 350,
+          "1-BDRM CV": 460,
+          "1-BDRM LV": 495,
+          "2-BDRM CV": 730,
+          "2-BDRM LV": 790
+        },
+        "Full Week": {
+          "Studio CV": 2640,
+          "Studio LV": 2870,
+          "1-BDRM CV": 3780,
+          "1-BDRM LV": 4125,
+          "2-BDRM CV": 6050,
+          "2-BDRM LV": 6600
+        }
+      },
+      "Holiday Week": {
+        "Easter": {
+          "Studio CV": 2640,
+          "Studio LV": 2870,
+          "1-BDRM CV": 3780,
+          "1-BDRM LV": 4125,
+          "2-BDRM CV": 6050,
+          "2-BDRM LV": 6600
+        },
+        "Christmas": {
+          "Studio CV": 2640,
+          "Studio LV": 2870,
+          "1-BDRM CV": 3780,
+          "1-BDRM LV": 4125,
+          "2-BDRM CV": 6050,
+          "2-BDRM LV": 6600
+        },
+        "New Year's Eve/Day": {
+          "Studio CV": 2640,
+          "Studio LV": 2870,
+          "1-BDRM CV": 3780,
+          "1-BDRM LV": 4125,
+          "2-BDRM CV": 6050,
+          "2-BDRM LV": 6600
+        }
+      }
+    },
+    "Waikoloa Ocean Club": {
+      "Low Season": {
+        "Fri-Sat": {
+          "1-BDRM IV": 525,
+          "1-BDRM PV": 600,
+          "1-BDRM OV": 675,
+          "2-BDRM IV": 775,
+          "2-BDRM PV": 800,
+          "2-BDRM OV": 925,
+          "2-BDRM OF": 1075
+        },
+        "Sun-Thu": {
+          "1-BDRM IV": 375,
+          "1-BDRM PV": 425,
+          "1-BDRM OV": 475,
+          "2-BDRM IV": 525,
+          "2-BDRM PV": 600,
+          "2-BDRM OV": 675,
+          "2-BDRM OF": 800
+        },
+        "Full Week": {
+          "1-BDRM IV": 2925,
+          "1-BDRM PV": 3325,
+          "1-BDRM OV": 3725,
+          "2-BDRM IV": 4175,
+          "2-BDRM PV": 4600,
+          "2-BDRM OV": 5225,
+          "2-BDRM OF": 6150
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "1-BDRM IV": 625,
+          "1-BDRM PV": 675,
+          "1-BDRM OV": 750,
+          "2-BDRM IV": 850,
+          "2-BDRM PV": 925,
+          "2-BDRM OV": 1075,
+          "2-BDRM OF": 1250
+        },
+        "Sun-Thu": {
+          "1-BDRM IV": 425,
+          "1-BDRM PV": 475,
+          "1-BDRM OV": 550,
+          "2-BDRM IV": 625,
+          "2-BDRM PV": 700,
+          "2-BDRM OV": 775,
+          "2-BDRM OF": 925
+        },
+        "Full Week": {
+          "1-BDRM IV": 3375,
+          "1-BDRM PV": 3725,
+          "1-BDRM OV": 4250,
+          "2-BDRM IV": 4825,
+          "2-BDRM PV": 5350,
+          "2-BDRM OV": 6025,
+          "2-BDRM OF": 7125
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "1-BDRM IV": 3650,
+          "1-BDRM PV": 4050,
+          "1-BDRM OV": 4550,
+          "2-BDRM IV": 5225,
+          "2-BDRM PV": 5675,
+          "2-BDRM OV": 6450,
+          "2-BDRM OF": 7675
+        },
+        "Easter": {
+          "1-BDRM IV": 3675,
+          "1-BDRM PV": 4050,
+          "1-BDRM OV": 4550,
+          "2-BDRM IV": 5225,
+          "2-BDRM PV": 5675,
+          "2-BDRM OV": 6450,
+          "2-BDRM OF": 7675
+        },
+        "Independence Day": {
+          "1-BDRM IV": 3375,
+          "1-BDRM PV": 3725,
+          "1-BDRM OV": 4250,
+          "2-BDRM IV": 4825,
+          "2-BDRM PV": 5350,
+          "2-BDRM OV": 6025,
+          "2-BDRM OF": 7125
+        },
+        "Thanksgiving": {
+          "1-BDRM IV": 2925,
+          "1-BDRM PV": 3325,
+          "1-BDRM OV": 3725,
+          "2-BDRM IV": 4175,
+          "2-BDRM PV": 4600,
+          "2-BDRM OV": 5225,
+          "2-BDRM OF": 6150
+        },
+        "Thanksgiving 2": {
+          "1-BDRM IV": 3675,
+          "1-BDRM PV": 4050,
+          "1-BDRM OV": 4550,
+          "2-BDRM IV": 5225,
+          "2-BDRM PV": 5675,
+          "2-BDRM OV": 6450,
+          "2-BDRM OF": 7675
+        },
+        "Christmas": {
+          "1-BDRM IV": 3675,
+          "1-BDRM PV": 4050,
+          "1-BDRM OV": 4550,
+          "2-BDRM IV": 5225,
+          "2-BDRM PV": 5675,
+          "2-BDRM OV": 6450,
+          "2-BDRM OF": 7675
+        },
+        "New Year's Eve/Day": {
+          "1-BDRM IV": 4100,
+          "1-BDRM PV": 4500,
+          "1-BDRM OV": 5125,
+          "2-BDRM IV": 5825,
+          "2-BDRM PV": 6450,
+          "2-BDRM OV": 7250,
+          "2-BDRM OF": 8500
+        }
+      }
+    },
+    "Surfers Paradise": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio CV": 270,
+          "Studio LV": 290,
+          "1-BDRM CV": 380,
+          "1-BDRM LV": 420,
+          "2-BDRM CV": 620,
+          "2-BDRM LV": 675
+        },
+        "Sun-Thu": {
+          "Studio CV": 170,
+          "Studio LV": 180,
+          "1-BDRM CV": 240,
+          "1-BDRM LV": 260,
+          "2-BDRM CV": 385,
+          "2-BDRM LV": 415
+        },
+        "Full Week": {
+          "Studio CV": 1390,
+          "Studio LV": 1480,
+          "1-BDRM CV": 1960,
+          "1-BDRM LV": 2140,
+          "2-BDRM CV": 3165,
+          "2-BDRM LV": 3425
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio CV": 370,
+          "Studio LV": 400,
+          "1-BDRM CV": 560,
+          "1-BDRM LV": 670,
+          "2-BDRM CV": 875,
+          "2-BDRM LV": 1025
+        },
+        "Sun-Thu": {
+          "Studio CV": 230,
+          "Studio LV": 250,
+          "1-BDRM CV": 340,
+          "1-BDRM LV": 410,
+          "2-BDRM CV": 540,
+          "2-BDRM LV": 620
+        },
+        "Full Week": {
+          "Studio CV": 1890,
+          "Studio LV": 2050,
+          "1-BDRM CV": 2820,
+          "1-BDRM LV": 3390,
+          "2-BDRM CV": 4450,
+          "2-BDRM LV": 5150
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio CV": 520,
+          "Studio LV": 560,
+          "1-BDRM CV": 740,
+          "1-BDRM LV": 825,
+          "2-BDRM CV": 1200,
+          "2-BDRM LV": 1325
+        },
+        "Sun-Thu": {
+          "Studio CV": 320,
+          "Studio LV": 350,
+          "1-BDRM CV": 460,
+          "1-BDRM LV": 495,
+          "2-BDRM CV": 730,
+          "2-BDRM LV": 790
+        },
+        "Full Week": {
+          "Studio CV": 2640,
+          "Studio LV": 2870,
+          "1-BDRM CV": 3780,
+          "1-BDRM LV": 4125,
+          "2-BDRM CV": 6050,
+          "2-BDRM LV": 6600
+        }
+      },
+      "Holiday Week": {
+        "Easter": {
+          "Studio CV": 2640,
+          "Studio LV": 2870,
+          "1-BDRM CV": 3780,
+          "1-BDRM LV": 4125,
+          "2-BDRM CV": 6050,
+          "2-BDRM LV": 6600
+        },
+        "Christmas": {
+          "Studio CV": 2640,
+          "Studio LV": 2870,
+          "1-BDRM CV": 3780,
+          "1-BDRM LV": 4125,
+          "2-BDRM CV": 6050,
+          "2-BDRM LV": 6600
+        },
+        "New Year's Eve/Day": {
+          "Studio CV": 2640,
+          "Studio LV": 2870,
+          "1-BDRM CV": 3780,
+          "1-BDRM LV": 4125,
+          "2-BDRM CV": 6050,
+          "2-BDRM LV": 6600
+        }
+      }
+    },
+    "Aruba Surf Club": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio GV": 200,
+          "Studio OS": 225,
+          "Studio OV": 225,
+          "Studio OF": 300,
+          "1-BDRM GV": 275,
+          "1-BDRM OS": 325,
+          "1-BDRM OV": 325,
+          "1-BDRM OF": 425,
+          "2-BDRM GV": 425,
+          "2-BDRM OS": 500,
+          "2-BDRM OV": 500,
+          "2-BDRM OF": 650,
+          "3-BDRM OV": 650
+        },
+        "Sun-Thu": {
+          "Studio GV": 150,
+          "Studio OS": 175,
+          "Studio OV": 175,
+          "Studio OF": 225,
+          "1-BDRM GV": 200,
+          "1-BDRM OS": 225,
+          "1-BDRM OV": 225,
+          "1-BDRM OF": 300,
+          "2-BDRM GV": 300,
+          "2-BDRM OS": 350,
+          "2-BDRM OV": 350,
+          "2-BDRM OF": 450,
+          "3-BDRM OV": 450
+        },
+        "Full Week": {
+          "Studio GV": 1150,
+          "Studio OS": 1325,
+          "Studio OV": 1325,
+          "Studio OF": 1725,
+          "1-BDRM GV": 1550,
+          "1-BDRM OS": 1775,
+          "1-BDRM OV": 1775,
+          "1-BDRM OF": 2350,
+          "2-BDRM GV": 2350,
+          "2-BDRM OS": 2750,
+          "2-BDRM OV": 2750,
+          "2-BDRM OF": 3550,
+          "3-BDRM OV": 3550
+        }
+      },
+      "Shoulder Season": {
+        "Fri-Sat": {
+          "Studio GV": 250,
+          "Studio OS": 300,
+          "Studio OV": 300,
+          "Studio OF": 375,
+          "1-BDRM GV": 350,
+          "1-BDRM OS": 425,
+          "1-BDRM OV": 425,
+          "1-BDRM OF": 525,
+          "2-BDRM GV": 525,
+          "2-BDRM OS": 625,
+          "2-BDRM OV": 625,
+          "2-BDRM OF": 825,
+          "3-BDRM OV": 825
+        },
+        "Sun-Thu": {
+          "Studio GV": 175,
+          "Studio OS": 200,
+          "Studio OV": 200,
+          "Studio OF": 275,
+          "1-BDRM GV": 250,
+          "1-BDRM OS": 300,
+          "1-BDRM OV": 300,
+          "1-BDRM OF": 375,
+          "2-BDRM GV": 375,
+          "2-BDRM OS": 450,
+          "2-BDRM OV": 450,
+          "2-BDRM OF": 575,
+          "3-BDRM OV": 575
+        },
+        "Full Week": {
+          "Studio GV": 1375,
+          "Studio OS": 1600,
+          "Studio OV": 1600,
+          "Studio OF": 2125,
+          "1-BDRM GV": 1950,
+          "1-BDRM OS": 2350,
+          "1-BDRM OV": 2350,
+          "1-BDRM OF": 2925,
+          "2-BDRM GV": 2925,
+          "2-BDRM OS": 3500,
+          "2-BDRM OV": 3500,
+          "2-BDRM OF": 4525,
+          "3-BDRM OV": 4525
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio GV": 325,
+          "Studio OS": 375,
+          "Studio OV": 375,
+          "Studio OF": 500,
+          "1-BDRM GV": 425,
+          "1-BDRM OS": 550,
+          "1-BDRM OV": 550,
+          "1-BDRM OF": 700,
+          "2-BDRM GV": 700,
+          "2-BDRM OS": 825,
+          "2-BDRM OV": 825,
+          "2-BDRM OF": 1075,
+          "3-BDRM OV": 1075
+        },
+        "Sun-Thu": {
+          "Studio GV": 225,
+          "Studio OS": 275,
+          "Studio OV": 275,
+          "Studio OF": 350,
+          "1-BDRM GV": 325,
+          "1-BDRM OS": 375,
+          "1-BDRM OV": 375,
+          "1-BDRM OF": 500,
+          "2-BDRM GV": 500,
+          "2-BDRM OS": 600,
+          "2-BDRM OV": 600,
+          "2-BDRM OF": 750,
+          "3-BDRM OV": 750
+        },
+        "Full Week": {
+          "Studio GV": 1775,
+          "Studio OS": 2125,
+          "Studio OV": 2125,
+          "Studio OF": 2750,
+          "1-BDRM GV": 2575,
+          "1-BDRM OS": 2975,
+          "1-BDRM OV": 2975,
+          "1-BDRM OF": 3900,
+          "2-BDRM GV": 3900,
+          "2-BDRM OS": 4650,
+          "2-BDRM OV": 4650,
+          "2-BDRM OF": 5900,
+          "3-BDRM OV": 5900
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio GV": 300,
+          "Studio OS": 350,
+          "Studio OV": 350,
+          "Studio OF": 450,
+          "1-BDRM GV": 425,
+          "1-BDRM OS": 500,
+          "1-BDRM OV": 500,
+          "1-BDRM OF": 650,
+          "2-BDRM GV": 650,
+          "2-BDRM OS": 750,
+          "2-BDRM OV": 750,
+          "2-BDRM OF": 975,
+          "3-BDRM OV": 975
+        },
+        "Sun-Thu": {
+          "Studio GV": 200,
+          "Studio OS": 250,
+          "Studio OV": 250,
+          "Studio OF": 325,
+          "1-BDRM GV": 300,
+          "1-BDRM OS": 350,
+          "1-BDRM OV": 350,
+          "1-BDRM OF": 450,
+          "2-BDRM GV": 450,
+          "2-BDRM OS": 525,
+          "2-BDRM OV": 525,
+          "2-BDRM OF": 675,
+          "3-BDRM OV": 675
+        },
+        "Full Week": {
+          "Studio GV": 1600,
+          "Studio OS": 1950,
+          "Studio OV": 1950,
+          "Studio OF": 2525,
+          "1-BDRM GV": 2350,
+          "1-BDRM OS": 2750,
+          "1-BDRM OV": 2750,
+          "1-BDRM OF": 3550,
+          "2-BDRM GV": 3550,
+          "2-BDRM OS": 4125,
+          "2-BDRM OV": 4125,
+          "2-BDRM OF": 5325,
+          "3-BDRM OV": 5325
+        }
+      },
+      "Holiday Week": {
+        "2025": {
+          "Presidents Day": {
+            "Studio GV": 2350,
+            "Studio OS": 2750,
+            "Studio OV": 2750,
+            "Studio OF": 3675,
+            "1-BDRM GV": 3500,
+            "1-BDRM OS": 4075,
+            "1-BDRM OV": 4075,
+            "1-BDRM OF": 5275,
+            "2-BDRM GV": 5275,
+            "2-BDRM OS": 6250,
+            "2-BDRM OV": 6250,
+            "2-BDRM OF": 8025,
+            "3-BDRM OV": 8025
+          },
+          "Easter": {
+            "Studio GV": 2350,
+            "Studio OS": 2750,
+            "Studio OV": 2750,
+            "Studio OF": 3675,
+            "1-BDRM GV": 3500,
+            "1-BDRM OS": 4075,
+            "1-BDRM OV": 4075,
+            "1-BDRM OF": 5275,
+            "2-BDRM GV": 5275,
+            "2-BDRM OS": 6250,
+            "2-BDRM OV": 6250,
+            "2-BDRM OF": 8025,
+            "3-BDRM OV": 8025
+          },
+          "Independence Day": {
+            "Studio GV": 1375,
+            "Studio OS": 1600,
+            "Studio OV": 1600,
+            "Studio OF": 2125,
+            "1-BDRM GV": 1950,
+            "1-BDRM OS": 2350,
+            "1-BDRM OV": 2350,
+            "1-BDRM OF": 2925,
+            "2-BDRM GV": 2925,
+            "2-BDRM OS": 3500,
+            "2-BDRM OV": 3500,
+            "2-BDRM OF": 4525,
+            "3-BDRM OV": 4525
+          },
+          "Christmas": {
+            "Studio GV": 2350,
+            "Studio OS": 2750,
+            "Studio OV": 2750,
+            "Studio OF": 3675,
+            "1-BDRM GV": 3500,
+            "1-BDRM OS": 4075,
+            "1-BDRM OV": 4075,
+            "1-BDRM OF": 5275,
+            "2-BDRM GV": 5275,
+            "2-BDRM OS": 6250,
+            "2-BDRM OV": 6250,
+            "2-BDRM OF": 8025,
+            "3-BDRM OV": 8025
+          },
+          "New Year's Eve/Day": {
+            "Studio GV": 2700,
+            "Studio OS": 3150,
+            "Studio OV": 3150,
+            "Studio OF": 4350,
+            "1-BDRM GV": 3900,
+            "1-BDRM OS": 4525,
+            "1-BDRM OV": 4525,
+            "1-BDRM OF": 5850,
+            "2-BDRM GV": 5850,
+            "2-BDRM OS": 6875,
+            "2-BDRM OV": 6875,
+            "2-BDRM OF": 8875,
+            "3-BDRM OV": 8875
+          }
+        },
+        "2026": {
+          "Presidents Day": {
+            "Studio GV": 2350,
+            "Studio OS": 2750,
+            "Studio OV": 2750,
+            "Studio OF": 3675,
+            "1-BDRM GV": 3500,
+            "1-BDRM OS": 4075,
+            "1-BDRM OV": 4075,
+            "1-BDRM OF": 5275,
+            "2-BDRM GV": 5275,
+            "2-BDRM OS": 6250,
+            "2-BDRM OV": 6250,
+            "2-BDRM OF": 8025,
+            "3-BDRM OV": 8025
+          },
+          "Easter": {
+            "Studio GV": 2350,
+            "Studio OS": 2750,
+            "Studio OV": 2750,
+            "Studio OF": 3675,
+            "1-BDRM GV": 3500,
+            "1-BDRM OS": 4075,
+            "1-BDRM OV": 4075,
+            "1-BDRM OF": 5275,
+            "2-BDRM GV": 5275,
+            "2-BDRM OS": 6250,
+            "2-BDRM OV": 6250,
+            "2-BDRM OF": 8025,
+            "3-BDRM OV": 8025
+          },
+          "Independence Day": {
+            "Studio GV": 1375,
+            "Studio OS": 1600,
+            "Studio OV": 1600,
+            "Studio OF": 2125,
+            "1-BDRM GV": 1950,
+            "1-BDRM OS": 2350,
+            "1-BDRM OV": 2350,
+            "1-BDRM OF": 2925,
+            "2-BDRM GV": 2925,
+            "2-BDRM OS": 3500,
+            "2-BDRM OV": 3500,
+            "2-BDRM OF": 4525,
+            "3-BDRM OV": 4525
+          },
+          "Christmas": {
+            "Studio GV": 2350,
+            "Studio OS": 2750,
+            "Studio OV": 2750,
+            "Studio OF": 3675,
+            "1-BDRM GV": 3500,
+            "1-BDRM OS": 4075,
+            "1-BDRM OV": 4075,
+            "1-BDRM OF": 5275,
+            "2-BDRM GV": 5275,
+            "2-BDRM OS": 6250,
+            "2-BDRM OV": 6250,
+            "2-BDRM OF": 8025,
+            "3-BDRM OV": 8025
+          },
+          "New Year's Eve/Day": {
+            "Studio GV": 2700,
+            "Studio OS": 3150,
+            "Studio OV": 3150,
+            "Studio OF": 4350,
+            "1-BDRM GV": 3900,
+            "1-BDRM OS": 4525,
+            "1-BDRM OV": 4525,
+            "1-BDRM OF": 5850,
+            "2-BDRM GV": 5850,
+            "2-BDRM OS": 6875,
+            "2-BDRM OV": 6875,
+            "2-BDRM OF": 8875,
+            "3-BDRM OV": 8875
+          }
+        }
+      }
+    },
+    "Aruba Ocean Club": {
+      "Season A": {
+        "Fri-Sat": {
+          "Studio OV": 350,
+          "Studio OF": 450,
+          "1-BDRM OV": 500,
+          "1-BDRM OF": 650,
+          "2-BDRM OV": 750,
+          "2-BDRM OF": 975
+        },
+        "Sun-Thu": {
+          "Studio OV": 250,
+          "Studio OF": 325,
+          "1-BDRM OV": 350,
+          "1-BDRM OF": 450,
+          "2-BDRM OV": 525,
+          "2-BDRM OF": 675
+        },
+        "Full Week": {
+          "Studio OV": 1950,
+          "Studio OF": 2525,
+          "1-BDRM OV": 2750,
+          "1-BDRM OF": 3550,
+          "2-BDRM OV": 4125,
+          "2-BDRM OF": 5325
+        }
+      },
+      "Season B": {
+        "Fri-Sat": {
+          "Studio OV": 375,
+          "Studio OF": 500,
+          "1-BDRM OV": 550,
+          "1-BDRM OF": 700,
+          "2-BDRM OV": 825,
+          "2-BDRM OF": 1075
+        },
+        "Sun-Thu": {
+          "Studio OV": 275,
+          "Studio OF": 350,
+          "1-BDRM OV": 375,
+          "1-BDRM OF": 500,
+          "2-BDRM OV": 600,
+          "2-BDRM OF": 750
+        },
+        "Full Week": {
+          "Studio OV": 2125,
+          "Studio OF": 2750,
+          "1-BDRM OV": 2975,
+          "1-BDRM OF": 3900,
+          "2-BDRM OV": 4650,
+          "2-BDRM OF": 5900
+        }
+      },
+      "Season C": {
+        "Fri-Sat": {
+          "Studio OV": 300,
+          "Studio OF": 375,
+          "1-BDRM OV": 425,
+          "1-BDRM OF": 525,
+          "2-BDRM OV": 625,
+          "2-BDRM OF": 825
+        },
+        "Sun-Thu": {
+          "Studio OV": 200,
+          "Studio OF": 275,
+          "1-BDRM OV": 300,
+          "1-BDRM OF": 375,
+          "2-BDRM OV": 450,
+          "2-BDRM OF": 575
+        },
+        "Full Week": {
+          "Studio OV": 1600,
+          "Studio OF": 2125,
+          "1-BDRM OV": 2350,
+          "1-BDRM OF": 2925,
+          "2-BDRM OV": 3500,
+          "2-BDRM OF": 4525
+        }
+      },
+      "Season D": {
+        "Fri-Sat": {
+          "Studio OV": 225,
+          "Studio OF": 300,
+          "1-BDRM OV": 325,
+          "1-BDRM OF": 425,
+          "2-BDRM OV": 500,
+          "2-BDRM OF": 650
+        },
+        "Sun-Thu": {
+          "Studio OV": 175,
+          "Studio OF": 200,
+          "1-BDRM OV": 225,
+          "1-BDRM OF": 300,
+          "2-BDRM OV": 350,
+          "2-BDRM OF": 450
+        },
+        "Full Week": {
+          "Studio OV": 1325,
+          "Studio OF": 1600,
+          "1-BDRM OV": 1775,
+          "1-BDRM OF": 2350,
+          "2-BDRM OV": 2750,
+          "2-BDRM OF": 3550
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Studio OV": 2750,
+          "Studio OF": 3675,
+          "1-BDRM OV": 4075,
+          "1-BDRM OF": 5275,
+          "2-BDRM OV": 6250,
+          "2-BDRM OF": 8025
+        },
+        "Easter": {
+          "Studio OV": 2750,
+          "Studio OF": 3675,
+          "1-BDRM OV": 4075,
+          "1-BDRM OF": 5275,
+          "2-BDRM OV": 6250,
+          "2-BDRM OF": 8025
+        },
+        "Independence Day": {
+          "Studio OV": 1600,
+          "Studio OF": 2125,
+          "1-BDRM OV": 2350,
+          "1-BDRM OF": 2925,
+          "2-BDRM OV": 3500,
+          "2-BDRM OF": 4525
+        },
+        "Christmas": {
+          "Studio OV": 2750,
+          "Studio OF": 3675,
+          "1-BDRM OV": 4075,
+          "1-BDRM OF": 5275,
+          "2-BDRM OV": 6250,
+          "2-BDRM OF": 8025
+        },
+        "New Year's Eve/Day": {
+          "Studio OV": 3150,
+          "Studio OF": 4075,
+          "1-BDRM OV": 4525,
+          "1-BDRM OF": 5850,
+          "2-BDRM OV": 6875,
+          "2-BDRM OF": 8875
         }
       }
     }
