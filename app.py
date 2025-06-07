@@ -392,7 +392,7 @@ def create_gantt_chart(resort, year):
             y="Task",
             color="Type",
             color_discrete_map=colors,
-            title=f"{resort} Seasons and Holidays ({year})"
+            title=f"{resort} Seasons and Holidays ({year})",
             height=600
         )
         fig.update_yaxes(autorange="reversed")
