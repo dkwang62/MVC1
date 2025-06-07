@@ -404,7 +404,7 @@ def create_gantt_chart(resort, year):
 
 # Resort display name mapping
 resort_aliases = {
-    "Aruba Ocean Club": "Aruba Ocean Club"		
+    "Aruba Ocean Club": "Aruba Ocean Club",		
     "Aruba Surf Club": "Aruba Surf Club",		
     "Bali Nusa Dua Gardens": "Bali Nusa Dua Gardens",		
     "Bali Nusa Dua Terrace": "Bali Nusa Dua Terrace",		
