@@ -7,6 +7,29 @@ import json
 import traceback
 from collections import defaultdict
 
+# Load data and initialize
+try:
+    with open("data.json", "r") as f:
+        data = json.load(f)
+    season_blocks = data["season_blocks"]
+    holiday_weeks = data["holiday_weeks"]
+    room_view_legend = data["room_view_legend"]
+    reference_points = data["reference_points"]
+
+    # Automatically determine resorts with complete data
+    season_resorts = set(season_blocks.keys())
+    holiday_resorts = set(holiday_weeks.keys())
+    reference_resorts = set(reference_points.keys())
+    display_resorts = sorted(season_resorts & holiday_resorts & reference_resorts)
+except Exception as e:
+    st.error(f"Failed to load data.json: {str(e)}")
+    st.session_state.debug_messages = [f"Data load error: {str(e)}"]
+    st.stop()
+
+# Initialize session state
+if "debug_messages" not in st.session_state:
+    st.session_state.debug_messages = []
+
 # Helper functions
 def get_display_room_type(room_key):
     if room_key in room_view_legend:
@@ -662,22 +685,6 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
     
     return chart_df, compare_df_pivot, holiday_totals
 
-# Load data and initialize
-try:
-    with open("data.json", "r") as f:
-        data = json.load(f)
-    season_blocks = data["season_blocks"]
-    holiday_weeks = data["holiday_weeks"]
-    room_view_legend = data["room_view_legend"]
-    reference_points = data["reference_points"]
-except Exception as e:
-    st.error(f"Failed to load data.json: {str(e)}")
-    st.session_state.debug_messages = [f"Data load error: {str(e)}"]
-    st.stop()
-
-# Initialize session state
-if "debug_messages" not in st.session_state:
-    st.session_state.debug_messages = []
 
 # Main UI
 try:
