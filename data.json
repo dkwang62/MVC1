@@ -4208,7 +4208,7 @@
         }
       }
     },
-    "The Westin Ka'anapali Ocean Resort Villas": {
+    "Westin Ka'anapali": {
       "Low Season": {
         "Fri-Sat": {
           "Studio IV": 450,
@@ -4886,7 +4886,7 @@
         }
       }
     },
-    "Sheraton Kauai Resort": {
+    "Sheraton Kauai": {
       "Low Season": {
         "Fri-Sat": {
           "Studio": 225,
@@ -5578,8 +5578,7 @@
         }
       },
       "Holiday Week": {
-        "2025": {
-          "Presidents Day": {
+        "Presidents Day": {
             "Studio GV": 2350,
             "Studio OS": 2750,
             "Studio OV": 2750,
@@ -5653,85 +5652,7 @@
             "2-BDRM OV": 6875,
             "2-BDRM OF": 8875,
             "3-BDRM OV": 8875
-          }
-        },
-        "2026": {
-          "Presidents Day": {
-            "Studio GV": 2350,
-            "Studio OS": 2750,
-            "Studio OV": 2750,
-            "Studio OF": 3675,
-            "1-BDRM GV": 3500,
-            "1-BDRM OS": 4075,
-            "1-BDRM OV": 4075,
-            "1-BDRM OF": 5275,
-            "2-BDRM GV": 5275,
-            "2-BDRM OS": 6250,
-            "2-BDRM OV": 6250,
-            "2-BDRM OF": 8025,
-            "3-BDRM OV": 8025
-          },
-          "Easter": {
-            "Studio GV": 2350,
-            "Studio OS": 2750,
-            "Studio OV": 2750,
-            "Studio OF": 3675,
-            "1-BDRM GV": 3500,
-            "1-BDRM OS": 4075,
-            "1-BDRM OV": 4075,
-            "1-BDRM OF": 5275,
-            "2-BDRM GV": 5275,
-            "2-BDRM OS": 6250,
-            "2-BDRM OV": 6250,
-            "2-BDRM OF": 8025,
-            "3-BDRM OV": 8025
-          },
-          "Independence Day": {
-            "Studio GV": 1375,
-            "Studio OS": 1600,
-            "Studio OV": 1600,
-            "Studio OF": 2125,
-            "1-BDRM GV": 1950,
-            "1-BDRM OS": 2350,
-            "1-BDRM OV": 2350,
-            "1-BDRM OF": 2925,
-            "2-BDRM GV": 2925,
-            "2-BDRM OS": 3500,
-            "2-BDRM OV": 3500,
-            "2-BDRM OF": 4525,
-            "3-BDRM OV": 4525
-          },
-          "Christmas": {
-            "Studio GV": 2350,
-            "Studio OS": 2750,
-            "Studio OV": 2750,
-            "Studio OF": 3675,
-            "1-BDRM GV": 3500,
-            "1-BDRM OS": 4075,
-            "1-BDRM OV": 4075,
-            "1-BDRM OF": 5275,
-            "2-BDRM GV": 5275,
-            "2-BDRM OS": 6250,
-            "2-BDRM OV": 6250,
-            "2-BDRM OF": 8025,
-            "3-BDRM OV": 8025
-          },
-          "New Year's Eve/Day": {
-            "Studio GV": 2700,
-            "Studio OS": 3150,
-            "Studio OV": 3150,
-            "Studio OF": 4350,
-            "1-BDRM GV": 3900,
-            "1-BDRM OS": 4525,
-            "1-BDRM OV": 4525,
-            "1-BDRM OF": 5850,
-            "2-BDRM GV": 5850,
-            "2-BDRM OS": 6875,
-            "2-BDRM OV": 6875,
-            "2-BDRM OF": 8875,
-            "3-BDRM OV": 8875
-          }
-        }
+         }
       }
     },
     "Aruba Ocean Club": {
