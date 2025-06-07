@@ -418,6 +418,8 @@ resort_aliases = {
     "The Westin Ka'anapali Ocean Resort Villas": "The Westin Ka'anapali Ocean Resort Villas",
     "Playa Andaluza": "Playa Andaluza",
     "Marbella Beach": "Marbella Beach",
+    "Marriott's Beachplace Towers": "Marriott's Beachplace Towers",
+    "Sheraton Kauai Resort": "Sheraton Kauai Resort",
     "Village Paris": "Village Paris"
 }
 reverse_aliases = {v: k for k, v in resort_aliases.items()}
@@ -694,7 +696,7 @@ try:
             return f"{discount}% Discount ({level}, Cost)"
 
         display_mode_select = st.selectbox(
-            "Last Minute Points Discount",
+            "Display and Discount Settings",
             options=range(len(display_options)),
             format_func=format_discount,
             index=0
@@ -715,7 +717,7 @@ try:
 
     with st.expander("\U0001F334 How Cost Is Calculated"):
         st.markdown(f"""
-        - You can change the following cost parameters in the side panel
+        - Ordinary Membership: No last minute discounts
         - Maintenance rate: ${rate_per_point:.2f} per point
         - Capital cost per point: ${capital_cost_per_point:.2f}
         - Cost of capital: {cost_of_capital_percent:.1f}%
