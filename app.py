@@ -425,9 +425,6 @@ def create_gantt_chart(resort, year):
         fig.update_yaxes(autorange="reversed")
         return fig
 
-# Resort display name mapping
-
-
 # Calculate stay function
 def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent, discount_multiplier, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital, useful_life, salvage_value):
     breakdown = []
@@ -691,7 +688,7 @@ try:
 
         discount_percent, display_mode = display_options[display_mode_select]
         rate_per_point = st.number_input("Maintenance Rate per Point ($)", min_value=0.0, value=0.81, step=0.01)
-        capital_cost_per_point = st.number_input("Capital Cost per Point ($)", min_value=0.0, value=16.0, step=0.1)
+        capital_cost_per_point = st.number_input("Purchase Price per Point ($)", min_value=0.0, value=16.0, step=0.1)
         cost_of_capital_percent = st.number_input("Cost of Capital (%)", min_value=0.0, max_value=100.0, value=7.0, step=0.1)
         useful_life = st.number_input("Useful Life (Years)", min_value=1, value=15, step=1)
         salvage_value = st.number_input("Salvage Value per Point ($)", min_value=0.0, value=3.0, step=0.1)
@@ -706,7 +703,7 @@ try:
         st.markdown(f"""
         - Authored by Desmond Kwang https://www.facebook.com/dkwang62
         - Maintenance rate: ${rate_per_point:.2f} per point
-        - Capital cost per point: ${capital_cost_per_point:.2f}
+        - Purchase price per point: ${capital_cost_per_point:.2f}
         - Cost of capital: {cost_of_capital_percent:.1f}%
         - Useful Life: {useful_life} years
         - Salvage Value: ${salvage_value:.2f} per point
