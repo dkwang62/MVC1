@@ -707,9 +707,9 @@ try:
         - Cost of capital: {cost_of_capital_percent:.1f}%
         - Useful Life: {useful_life} years
         - Salvage Value: ${salvage_value:.2f} per point
-        - Depreciation cost per point: ${(capital_cost_per_point - salvage_value) / useful_life:.2f} (calculated as (Capital Cost per Point - Salvage Value) / Useful Life)
+        - Depreciation cost per point: ${(capital_cost_per_point - salvage_value) / useful_life:.2f} (calculated as (Purchase price per point - Salvage Value) / Useful Life)
         - Selected discount: {discount_percent}%
-        - Cost of capital calculated as (points * capital cost per point * cost of capital percentage)
+        - Cost of capital calculated as (points * purchase price per point * cost of capital percentage)
         - Total cost is maintenance cost plus capital cost plus depreciation cost
         """)
 
