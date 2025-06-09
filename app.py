@@ -429,7 +429,7 @@ def create_gantt_chart(resort, year):
 def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent, discount_multiplier, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital, useful_life, salvage_value):
     breakdown = []
     total_points = 0
-    total_rent = 0
+    total_cost = 0
     total_capital_cost = 0
     total_depreciation_cost = 0
     current_holiday = None
@@ -467,7 +467,7 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
                         row["Maintenance"] = f"${maintenance_cost}"
                         row["Capital Cost"] = f"${capital_cost}"
                         row["Depreciation"] = f"${depreciation_cost}"
-                        total_rent += total_day_cost
+                        total_cost += total_day_cost
                         total_capital_cost += capital_cost
                         total_depreciation_cost += depreciation_cost
                     breakdown.append(row)
@@ -488,7 +488,7 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
                     row["Maintenance"] = f"${maintenance_cost}"
                     row["Capital Cost"] = f"${capital_cost}"
                     row["Depreciation"] = f"${depreciation_cost}"
-                    total_rent += total_day_cost
+                    total_cost += total_day_cost
                     total_capital_cost += capital_cost
                     total_depreciation_cost += depreciation_cost
                 breakdown.append(row)
@@ -498,7 +498,7 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
             st.session_state.debug_messages.append(f"Error calculating for {resort}, {date_str}: {str(e)}")
             st.error(f"Failed to calculate for {resort}, {date_str}: {str(e)}")
             continue
-    return pd.DataFrame(breakdown), total_points, total_rent, total_capital_cost, total_depreciation_cost
+    return pd.DataFrame(breakdown), total_points, total_cost, total_capital_cost, total_depreciation_cost
 
 # Compare room types function
 def compare_room_types(resort, room_types, checkin_date, num_nights, discount_multiplier, discount_percent, ap_display_room_types, display_mode, rate_per_point, capital_cost_per_point, cost_of_capital, useful_life, salvage_value):
@@ -527,7 +527,7 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
             st.session_state.debug_messages.append(f"Invalid holiday date for {h_name} at {resort}: {e}")
     
     total_points_by_room = {room: 0 for room in room_types}
-    total_rent_by_room = {room: 0 for room in room_types}
+    total_cost_by_room = {room: 0 for room in room_types}
     holiday_totals = {room: defaultdict(dict) for room in room_types}
     
     # Calculate depreciation cost per point
@@ -574,7 +574,7 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                         depreciation_cost = math.ceil(discounted_points * depreciation_cost_per_point)
                         total_day_cost = maintenance_cost + capital_cost + depreciation_cost
                         row["Total Cost"] = f"${total_day_cost}"
-                        total_rent_by_room[room] += total_day_cost
+                        total_cost_by_room[room] += total_day_cost
                     compare_data.append(row)
                 
                 chart_row = {
@@ -626,7 +626,7 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
     if display_mode == "both":
         total_cost_row = {"Date": "Total Cost (Non-Holiday)"}
         for room in room_types:
-            total_cost_row[room] = f"${total_rent_by_room[room]}"
+            total_cost_row[room] = f"${total_cost_by_room[room]}"
         compare_data.append(total_cost_row)
     
     compare_df = pd.DataFrame(compare_data)
@@ -759,7 +759,7 @@ try:
     if st.button("Calculate"):
         st.session_state.debug_messages.append("Starting new calculation...")
         try:
-            breakdown, total_points, total_rent, total_capital_cost, total_depreciation_cost = calculate_stay(
+            breakdown, total_points, total_cost, total_capital_cost, total_depreciation_cost = calculate_stay(
                 resort, room_type, checkin_date, adjusted_nights, discount_percent, discount_multiplier, display_mode, 
                 rate_per_point, capital_cost_per_point, cost_of_capital, useful_life, salvage_value
             )
@@ -771,7 +771,7 @@ try:
             
             st.success(f"Total Points Used: {total_points}")
             if display_mode == "both":
-                st.success(f"Estimated Total Cost: ${total_rent}")
+                st.success(f"Estimated Total Cost: ${total_cost}")
                 st.success(f"Total Capital Cost Component: ${total_capital_cost}")
                 st.success(f"Total Depreciation Cost: ${total_depreciation_cost}")
             
