@@ -463,7 +463,7 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
                         capital_cost = math.ceil(holiday_points * capital_cost_per_point * cost_of_capital)
                         depreciation_cost = math.ceil(holiday_points * depreciation_cost_per_point)
                         total_day_cost = maintenance_cost + capital_cost + depreciation_cost
-                        row["Cost"] = f"${total_day_cost}"
+                        row["Total Cost"] = f"${total_day_cost}"
                         row["Maintenance"] = f"${maintenance_cost}"
                         row["Capital Cost"] = f"${capital_cost}"
                         row["Depreciation"] = f"${depreciation_cost}"
@@ -575,9 +575,9 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                         depreciation_cost = math.ceil(discounted_points * depreciation_cost_per_point)
                         total_day_cost = maintenance_cost + capital_cost + depreciation_cost
                         row["Rent"] = f"${total_day_cost}"
-                        row["Maintenance Cost"] = f"${maintenance_cost}"
+                        row["Maintenance"] = f"${maintenance_cost}"
                         row["Capital Cost"] = f"${capital_cost}"
-                        row["Depreciation Cost"] = f"${depreciation_cost}"
+                        row["Depreciation"] = f"${depreciation_cost}"
                         total_rent_by_room[room] += total_day_cost
                         total_depreciation_by_room[room] += depreciation_cost
                     compare_data.append(row)
@@ -597,9 +597,9 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                     total_day_cost = maintenance_cost + capital_cost + depreciation_cost
                     chart_row["Rent"] = f"${total_day_cost}"
                     chart_row["RentValue"] = total_day_cost
-                    chart_row["Maintenance Cost"] = f"${maintenance_cost}"
+                    chart_row["Maintenance"] = f"${maintenance_cost}"
                     chart_row["Capital Cost"] = f"${capital_cost}"
-                    chart_row["Depreciation Cost"] = f"${depreciation_cost}"
+                    chart_row["Depreciation"] = f"${depreciation_cost}"
                 chart_data.append(chart_row)
                 
                 if not current_holiday or is_ap_room:
