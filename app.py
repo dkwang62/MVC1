@@ -647,7 +647,7 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
     compare_df_pivot = compare_df.pivot_table(
         index="Date",
         columns="Room Type",
-        values=["Points"] if display_mode == "points" else ["Points", "Rent", "Maintenance Cost", "Capital Cost", "Depreciation Cost"],
+        values=["Points"] if display_mode == "points" else ["Points", "Rent", "Maintenance", "Capital Cost", "Depreciation"],
         aggfunc="first"
     ).reset_index()
     compare_df_pivot.columns = ['Date'] + [f"{col[1]} {col[0]}" for col in compare_df_pivot.columns[1:]]
