@@ -624,9 +624,9 @@ def compare_room_types(resort, room_types, checkin_date, num_nights, discount_mu
                     depreciation_cost = math.ceil(totals["points"] * depreciation_cost_per_point)
                     total_holiday_cost = maintenance_cost + capital_cost + depreciation_cost
                     row["Rent"] = f"${total_holiday_cost}"
-                    row["Maintenance Cost"] = f"${maintenance_cost}"
+                    row["Maintenance"] = f"${maintenance_cost}"
                     row["Capital Cost"] = f"${capital_cost}"
-                    row["Depreciation Cost"] = f"${depreciation_cost}"
+                    row["Depreciation"] = f"${depreciation_cost}"
                 compare_data.append(row)
     
     total_row = {"Date": "Total Points (Non-Holiday)"}
@@ -824,7 +824,7 @@ try:
                 if not chart_df.empty:
                     required_columns = ["Date", "Room Type", "Points", "Holiday"]
                     if display_mode == "both":
-                        required_columns.extend(["Rent", "RentValue", "Maintenance Cost", "Capital Cost", "Depreciation Cost"])
+                        required_columns.extend(["Rent", "RentValue", "Maintenance", "Capital Cost", "Depreciation"])
                     if all(col in chart_df.columns for col in required_columns):
                         non_holiday_df = chart_df[chart_df["Holiday"] == "No"]
                         holiday_data = []
@@ -845,9 +845,9 @@ try:
                                         total_holiday_cost = maintenance_cost + capital_cost + depreciation_cost
                                         row["Rent"] = f"${total_holiday_cost}"
                                         row["RentValue"] = total_holiday_cost
-                                        row["Maintenance Cost"] = f"${maintenance_cost}"
+                                        row["Maintenance"] = f"${maintenance_cost}"
                                         row["Capital Cost"] = f"${capital_cost}"
-                                        row["Depreciation Cost"] = f"${depreciation_cost}"
+                                        row["Depreciation"] = f"${depreciation_cost}"
                                     holiday_data.append(row)
                         holiday_df = pd.DataFrame(holiday_data)
                         
