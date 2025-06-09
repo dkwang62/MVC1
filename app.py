@@ -809,7 +809,7 @@ try:
                     capital_cost_per_point, cost_of_capital, useful_life, salvage_value
                 )
                 
-                display_columns = ["Date"] + [col for col in compare_df_pivot.columns if "Points" in col or (display_mode == "both" and ("Rent" in col or "Maintenance Cost" in col or "Capital Cost" in col or "Depreciation Cost" in col))]
+                display_columns = ["Date"] + [col for col in compare_df_pivot.columns if "Points" in col or (display_mode == "both" and ("Rent" in col or "Maintenance" in col or "Capital Cost" in col or "Depreciation" in col))]
                 st.write(f"### {'Points' if display_mode == 'points' else 'Points, Rent, Maintenance, Capital, and Depreciation Costs'} Comparison")
                 st.dataframe(compare_df_pivot[display_columns], use_container_width=True)
                 
