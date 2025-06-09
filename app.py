@@ -464,9 +464,9 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
                         depreciation_cost = math.ceil(holiday_points * depreciation_cost_per_point)
                         total_day_cost = maintenance_cost + capital_cost + depreciation_cost
                         row["Cost"] = f"${total_day_cost}"
-                        row["Maintenance Cost"] = f"${maintenance_cost}"
+                        row["Maintenance"] = f"${maintenance_cost}"
                         row["Capital Cost"] = f"${capital_cost}"
-                        row["Depreciation Cost"] = f"${depreciation_cost}"
+                        row["Depreciation"] = f"${depreciation_cost}"
                         total_rent += total_day_cost
                         total_capital_cost += capital_cost
                         total_depreciation_cost += depreciation_cost
@@ -484,10 +484,10 @@ def calculate_stay(resort, room_type, checkin_date, num_nights, discount_percent
                     capital_cost = math.ceil(discounted_points * capital_cost_per_point * cost_of_capital)
                     depreciation_cost = math.ceil(discounted_points * depreciation_cost_per_point)
                     total_day_cost = maintenance_cost + capital_cost + depreciation_cost
-                    row["Cost"] = f"${total_day_cost}"
-                    row["Maintenance Cost"] = f"${maintenance_cost}"
+                    row["Total Cost"] = f"${total_day_cost}"
+                    row["Maintenance"] = f"${maintenance_cost}"
                     row["Capital Cost"] = f"${capital_cost}"
-                    row["Depreciation Cost"] = f"${depreciation_cost}"
+                    row["Depreciation"] = f"${depreciation_cost}"
                     total_rent += total_day_cost
                     total_capital_cost += capital_cost
                     total_depreciation_cost += depreciation_cost
@@ -703,14 +703,14 @@ try:
         st.markdown(f"""
         - Authored by Desmond Kwang https://www.facebook.com/dkwang62
         - Maintenance rate: ${rate_per_point:.2f} per point
-        - Purchase price per point: ${capital_cost_per_point:.2f}
+        - Purchase price: ${capital_cost_per_point:.2f} per point
         - Cost of capital: {cost_of_capital_percent:.1f}%
         - Useful Life: {useful_life} years
         - Salvage Value: ${salvage_value:.2f} per point
-        - Depreciation cost per point: ${(capital_cost_per_point - salvage_value) / useful_life:.2f} (calculated as (Purchase price per point - Salvage Value) / Useful Life)
+        - Depreciation: ${(capital_cost_per_point - salvage_value) / useful_life:.2f} per point (calculated as (Purchase price per point - Salvage Value) / Useful Life)
         - Selected discount: {discount_percent}%
         - Cost of capital calculated as (points * purchase price per point * cost of capital percentage)
-        - Total cost is maintenance cost plus capital cost plus depreciation cost
+        - Total cost is maintenance plus capital cost plus depreciation
         """)
 
     resort = st.selectbox("Select Resort", options=display_resorts, index=display_resorts.index("Ko Olina Beach Club"))
