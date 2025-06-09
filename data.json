@@ -6473,192 +6473,253 @@
     "Canyon Villas Arizona": {
       "Low Season": {
         "Sun-Thu": {
-          "2BR": 1650,
-          "2BR OV": 1800,
-          "2BR GV": 1725
+          "Studio": 100,
+          "1-BDRM": 125,
+          "2-BDRM": 175
         },
         "Fri-Sat": {
-          "2BR": 2000,
-          "2BR OV": 2150,
-          "2BR GV": 2075
+          "Studio": 200,
+          "1-BDRM": 300,
+          "2-BDRM": 425
+        },
+        "Full Week": {
+          "Studio": 900,
+          "1-BDRM": 1225,
+          "2-BDRM": 1725
         }
       },
       "Mid Season": {
         "Sun-Thu": {
-          "2BR": 1800,
-          "2BR OV": 1950,
-          "2BR GV": 1875
+          "Studio": 125,
+          "1-BDRM": 150,
+          "2-BDRM": 225
         },
         "Fri-Sat": {
-          "2BR": 2200,
-          "2BR OV": 2350,
-          "2BR GV": 2275
+          "Studio": 250,
+          "1-BDRM": 350,
+          "2-BDRM": 550
+        },
+        "Full Week": {
+          "Studio": 1125,
+          "1-BDRM": 1450,
+          "2-BDRM": 2225
         }
       },
       "High Season": {
         "Sun-Thu": {
-          "2BR": 1950,
-          "2BR OV": 2100,
-          "2BR GV": 2025
+          "Studio": 150,
+          "1-BDRM": 200,
+          "2-BDRM": 300
         },
         "Fri-Sat": {
-          "2BR": 2400,
-          "2BR OV": 2550,
-          "2BR GV": 2475
+          "Studio": 325,
+          "1-BDRM": 475,
+          "2-BDRM": 700
+        },
+        "Full Week": {
+          "Studio": 1400,
+          "1-BDRM": 1950,
+          "2-BDRM": 2900
         }
       },
       "Peak Season": {
         "Sun-Thu": {
-          "2BR": 2100,
-          "2BR OV": 2250,
-          "2BR GV": 2175
+          "Studio": 200,
+          "1-BDRM": 275,
+          "2-BDRM": 425
         },
         "Fri-Sat": {
-          "2BR": 2600,
-          "2BR OV": 2750,
-          "2BR GV": 2675
+          "Studio": 475,
+          "1-BDRM": 675,
+          "2-BDRM": 1025
+        },
+        "Full Week": {
+          "Studio": 1950,
+          "1-BDRM": 2725,
+          "2-BDRM": 4175
         }
       },
       "Holiday Week": {
-        "Presidents Day": {
-          "2BR": 2450,
-          "2BR OV": 2600,
-          "2BR GV": 2525
+        "Independence Day": {
+          "Studio": 900,
+          "1-BDRM": 1225,
+          "2-BDRM": 1725
         },
-        "Spring Break": {
-          "2BR": 2600,
-          "2BR OV": 2750,
-          "2BR GV": 2675
+        "Thanksgiving Week": {
+          "Studio": 1400,
+          "1-BDRM": 1950,
+          "2-BDRM": 2900
         },
-        "Thanksgiving": {
-          "2BR": 2500,
-          "2BR OV": 2650,
-          "2BR GV": 2575
+        "Thanksgiving Weekend": {
+          "Studio": 1950,
+          "1-BDRM": 2725,
+          "2-BDRM": 4175
         },
         "Christmas": {
-          "2BR": 2700,
-          "2BR OV": 2850,
-          "2BR GV": 2775
+          "Studio": 1400,
+          "1-BDRM": 1950,
+          "2-BDRM": 2900
+        },
+        "New Year's Eve/Day": {
+          "Studio": 1950,
+          "1-BDRM": 2725,
+          "2-BDRM": 4175
         }
       }
     },
     "Ocean Pointe": {
       "Low Season": {
         "Sun-Thu": {
-          "2BR": 1800,
-          "2BR OV": 1950,
-          "2BR GV": 1875,
-          "3BR": 2200,
-          "3BR OV": 2350,
-          "3BR GV": 2275,
-          "Studio": 900
+          "Studio OS": 100,
+          "Studio OF": 125,
+          "1-BDRM OS": 150,
+          "1-BDRM OF": 175,
+          "2-BDRM OS": 200,
+          "2-BDRM OF": 275,
+          "3-BDRM OF": 300
         },
         "Fri-Sat": {
-          "2BR": 2200,
-          "2BR OV": 2350,
-          "2BR GV": 2275,
-          "3BR": 2600,
-          "3BR OV": 2750,
-          "3BR GV": 2675,
-          "Studio": 1100
+          "Studio OS": 225,
+          "Studio OF": 300,
+          "1-BDRM OS": 325,
+          "1-BDRM OF": 425,
+          "2-BDRM OS": 500,
+          "2-BDRM OF": 650,
+          "3-BDRM OF": 700
+        },
+        "Full Week": {
+          "Studio OS": 950,
+          "Studio OF": 1225,
+          "1-BDRM OS": 1400,
+          "1-BDRM OF": 1725,
+          "2-BDRM OS": 2000,
+          "2-BDRM OF": 2675,
+          "3-BDRM OF": 2900
         }
       },
-      "Mid Season": {
+      "Mid-Low Season": {
         "Sun-Thu": {
-          "2BR": 1950,
-          "2BR OV": 2100,
-          "2BR GV": 2025,
-          "3BR": 2350,
-          "3BR OV": 2500,
-          "3BR GV": 2425,
-          "Studio": 1000
+          "Studio OS": 200,
+          "Studio OF": 250,
+          "1-BDRM OS": 275,
+          "1-BDRM OF": 350,
+          "2-BDRM OS": 425,
+          "2-BDRM OF": 525,
+          "3-BDRM OF": 600
         },
         "Fri-Sat": {
-          "2BR": 2400,
-          "2BR OV": 2550,
-          "2BR GV": 2475,
-          "3BR": 2800,
-          "3BR OV": 2950,
-          "3BR GV": 2875,
-          "Studio": 1200
+          "Studio OS": 475,
+          "Studio OF": 575,
+          "1-BDRM OS": 675,
+          "1-BDRM OF": 850,
+          "2-BDRM OS": 1050,
+          "2-BDRM OF": 1300,
+          "3-BDRM OF": 1450
+        },
+        "Full Week": {
+          "Studio OS": 1950,
+          "Studio OF": 2400,
+          "1-BDRM OS": 2725,
+          "1-BDRM OF": 3450,
+          "2-BDRM OS": 4225,
+          "2-BDRM OF": 5225,
+          "3-BDRM OF": 5900
         }
       },
       "High Season": {
         "Sun-Thu": {
-          "2BR": 2100,
-          "2BR OV": 2250,
-          "2BR GV": 2175,
-          "3BR": 2500,
-          "3BR OV": 2650,
-          "3BR GV": 2575,
-          "Studio": 1100
+          "Studio OS": 225,
+          "Studio OF": 275,
+          "1-BDRM OS": 325,
+          "1-BDRM OF": 400,
+          "2-BDRM OS": 475,
+          "2-BDRM OF": 600,
+          "3-BDRM OF": 650
         },
         "Fri-Sat": {
-          "2BR": 2600,
-          "2BR OV": 2750,
-          "2BR GV": 2675,
-          "3BR": 3000,
-          "3BR OV": 3150,
-          "3BR GV": 3075,
-          "Studio": 1300
+          "Studio OS": 525,
+          "Studio OF": 675,
+          "1-BDRM OS": 775,
+          "1-BDRM OF": 950,
+          "2-BDRM OS": 1175,
+          "2-BDRM OF": 1450,
+          "3-BDRM OF": 1625
+        },
+        "Full Week": {
+          "Studio OS": 2175,
+          "Studio OF": 2725,
+          "1-BDRM OS": 3175,
+          "1-BDRM OF": 3900,
+          "2-BDRM OS": 4725,
+          "2-BDRM OF": 5900,
+          "3-BDRM OF": 6500
         }
       },
-      "Peak Season": {
+      "Shoulder Season": {
         "Sun-Thu": {
-          "2BR": 2250,
-          "2BR OV": 2400,
-          "2BR GV": 2325,
-          "3BR": 2650,
-          "3BR OV": 2800,
-          "3BR GV": 2725,
-          "Studio": 1200
+          "Studio OS": 150,
+          "Studio OF": 175,
+          "1-BDRM OS": 200,
+          "1-BDRM OF": 250,
+          "2-BDRM OS": 300,
+          "2-BDRM OF": 375,
+          "3-BDRM OF": 400
         },
         "Fri-Sat": {
-          "2BR": 2750,
-          "2BR OV": 2900,
-          "2BR GV": 2825,
-          "3BR": 3150,
-          "3BR OV": 3300,
-          "3BR GV": 3225,
-          "Studio": 1400
+          "Studio OS": 325,
+          "Studio OF": 400,
+          "1-BDRM OS": 475,
+          "1-BDRM OF": 575,
+          "2-BDRM OS": 725,
+          "2-BDRM OF": 900,
+          "3-BDRM OF": 1000
+        },
+        "Full Week": {
+          "Studio OS": 1400,
+          "Studio OF": 1675,
+          "1-BDRM OS": 1950,
+          "1-BDRM OF": 2400,
+          "2-BDRM OS": 2950,
+          "2-BDRM OF": 3675,
+          "3-BDRM OF": 4000
         }
       },
       "Holiday Week": {
         "Presidents Day": {
-          "2BR": 2550,
-          "2BR OV": 2700,
-          "2BR GV": 2625,
-          "3BR": 2950,
-          "3BR OV": 3100,
-          "3BR GV": 3025,
-          "Studio": 1350
+          "Studio OS": 2775,
+          "Studio OF": 3450,
+          "1-BDRM OS": 4000,
+          "1-BDRM OF": 4950,
+          "2-BDRM OS": 6175,
+          "2-BDRM OF": 7675,
+          "3-BDRM OF": 8500
         },
-        "Spring Break": {
-          "2BR": 2750,
-          "2BR OV": 2900,
-          "2BR GV": 2825,
-          "3BR": 3150,
-          "3BR OV": 3300,
-          "3BR GV": 3225,
-          "Studio": 1400
-        },
-        "Thanksgiving": {
-          "2BR": 2650,
-          "2BR OV": 2800,
-          "2BR GV": 2725,
-          "3BR": 3050,
-          "3BR OV": 3200,
-          "3BR GV": 3125,
-          "Studio": 1450
+        "Independence Day": {
+          "Studio OS": 1400,
+          "Studio OF": 1675,
+          "1-BDRM OS": 1950,
+          "1-BDRM OF": 2400,
+          "2-BDRM OS": 2950,
+          "2-BDRM OF": 3675,
+          "3-BDRM OF": 4000
         },
         "Christmas": {
-          "2BR": 2850,
-          "2BR OV": 3000,
-          "2BR GV": 2925,
-          "3BR": 3250,
-          "3BR OV": 3400,
-          "3BR GV": 3325,
-          "Studio": 1500
+          "Studio OS": 2175,
+          "Studio OF": 2725,
+          "1-BDRM OS": 3175,
+          "1-BDRM OF": 3900,
+          "2-BDRM OS": 4725,
+          "2-BDRM OF": 5900,
+          "3-BDRM OF": 6500
+        },
+        "New Year's Eve/Day": {
+          "Studio OS": 2400,
+          "Studio OF": 2950,
+          "1-BDRM OS": 3400,
+          "1-BDRM OF": 4175,
+          "2-BDRM OS": 5175,
+          "2-BDRM OF": 6400,
+          "3-BDRM OF": 7175
         }
       }
     }
