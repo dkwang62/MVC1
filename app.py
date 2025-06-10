@@ -412,13 +412,12 @@ def create_gantt_chart(resort, year):
     fig.update_layout(xaxis_title="Date", yaxis_title="Period", showlegend=True)
     return fig
 
-def calculate_stay_renter(resort, room_type, checkin_date, num_nights):
+def calculate_stay_renter(resort, room_type, checkin_date, num_nights, rate_per_point):
     breakdown = []
     total_points = 0
     total_rent = 0
     current_holiday = None
     holiday_end = None
-    rate_per_point = 0.81 if checkin_date.year == 2025 else 0.86
 
     for i in range(num_nights):
         date = checkin_date + timedelta(days=i)
@@ -533,13 +532,12 @@ def calculate_stay_owner(resort, room_type, checkin_date, num_nights, discount_p
 
     return pd.DataFrame(breakdown), total_points, total_cost, total_capital_cost, total_depreciation_cost
 
-def compare_room_types_renter(resort, room_types, checkin_date, num_nights):
+def compare_room_types_renter(resort, room_types, checkin_date, num_nights, rate_per_point):
     compare_data = []
     chart_data = []
     all_dates = [checkin_date + timedelta(days=i) for i in range(num_nights)]
     stay_start = checkin_date
     stay_end = checkin_date + timedelta(days=num_nights - 1)
-    rate_per_point = 0.81 if checkin_date.year == 2025 else 0.86
 
     holiday_ranges = []
     holiday_names = {}
@@ -561,64 +559,68 @@ def compare_room_types_renter(resort, room_types, checkin_date, num_nights):
 
     total_points_by_room = {room: 0 for room in room_types}
     total_rent_by_room = {room: 0 for room in room_types}
-    holiday_totals = {room: {} for room in room_types}
+    holiday_totals = {room: defaultdict(dict) for room in room_types}
 
-    for room in room_types:
-        internal_room = get_internal_room_key(room)
-        current_holiday = None
+    for date in all_dates:
+        date_str = date.strftime("%Y-%m-%d")
+        day_of_week = date.strftime("%a")
+        try:
+            entry, _ = generate_data(resort, date)
+            is_holiday_date = any(h_start <= date <= h_end for h_start, h_end in holiday_ranges)
+            holiday_name = holiday_names.get(date, None)
+            is_holiday_start = entry.get("HolidayWeekStart", False)
 
-        for date in all_dates:
-            date_str = date.strftime("%Y-%m-%d")
-            day_of_week = date.strftime("%a")
-            try:
-                entry, _ = generate_data(resort, date)
+            for room in room_types:
+                internal_room = get_internal_room_key(room)
+                is_ap_room = internal_room in ap_room_types
                 points = entry.get(room, 0)
                 rent = math.ceil(points * rate_per_point)
-                is_holiday_date = any(h_start <= date <= h_end for h_start, h_end in holiday_ranges)
-                holiday_name = holiday_names.get(date, None)
 
-                if is_holiday_date and entry.get("HolidayWeekStart", False):
-                    current_holiday = holiday_name
-                    if current_holiday not in holiday_totals[room]:
-                        h_start = min(h for h, _ in holiday_ranges if holiday_names.get(date) == current_holiday)
-                        h_end = max(e for _, e in holiday_ranges if holiday_names.get(date) == current_holiday)
-                        holiday_totals[room][current_holiday] = {"points": points, "rent": rent, "start": h_start, "end": h_end}
-                elif is_holiday_date and current_holiday:
+                if is_holiday_date and not is_ap_room:
+                    if is_holiday_start:
+                        if holiday_name not in holiday_totals[room]:
+                            h_start = min(h for h, _ in holiday_ranges if holiday_names.get(date) == holiday_name)
+                            h_end = max(e for _, e in holiday_ranges if holiday_names.get(date) == holiday_name)
+                            holiday_totals[room][holiday_name] = {
+                                "points": points,
+                                "rent": rent,
+                                "start": h_start,
+                                "end": h_end
+                            }
+                        start_str = holiday_totals[room][holiday_name]["start"].strftime("%b %d")
+                        end_str = holiday_totals[room][holiday_name]["end"].strftime("%b %d, %Y")
+                        compare_data.append({
+                            "Date": f"{holiday_name} ({start_str} - {end_str})",
+                            "Room Type": room,
+                            "Points": points,
+                            "Rent": f"${rent}"
+                        })
+                    # Skip non-start holiday dates for non-AP rooms
                     continue
-
-                if not current_holiday:
+                else:
                     compare_data.append({
                         "Date": date_str,
                         "Room Type": room,
                         "Points": points,
                         "Rent": f"${rent}"
                     })
-                    chart_data.append({
-                        "Date": date,
-                        "DateStr": date_str,
-                        "Day": day_of_week,
-                        "Room Type": room,
-                        "Points": points,
-                        "Rent": f"${rent}",
-                        "RentValue": rent,
-                        "Holiday": entry.get("holiday_name", "No")
-                    })
                     total_points_by_room[room] += points
                     total_rent_by_room[room] += rent
-            except Exception as e:
-                st.session_state.debug_messages.append(f"Error in compare for {date_str} at {resort}: {str(e)}")
-                continue
 
-        for holiday_name, totals in holiday_totals[room].items():
-            if totals["points"] > 0:
-                start_str = totals["start"].strftime("%b %d")
-                end_str = totals["end"].strftime("%b %d, %Y")
-                compare_data.append({
-                    "Date": f"{holiday_name} ({start_str} - {end_str})",
+                chart_data.append({
+                    "Date": date,
+                    "DateStr": date_str,
+                    "Day": day_of_week,
                     "Room Type": room,
-                    "Points": totals["points"],
-                    "Rent": f"${totals['rent']}"
+                    "Points": points,
+                    "Rent": f"${rent}",
+                    "RentValue": rent,
+                    "Holiday": entry.get("holiday_name", "No")
                 })
+
+        except Exception as e:
+            st.session_state.debug_messages.append(f"Error in compare for {date_str} at {resort}: {str(e)}")
+            continue
 
     total_points_row = {"Date": "Total Points (Non-Holiday)"}
     for room in room_types:
@@ -672,32 +674,48 @@ def compare_room_types_owner(resort, room_types, checkin_date, num_nights, disco
     holiday_totals = {room: defaultdict(dict) for room in room_types}
     depreciation_cost_per_point = (capital_cost_per_point - salvage_value) / useful_life
 
-    for room in room_types:
-        internal_room = get_internal_room_key(room)
-        is_ap_room = room in ap_display_room_types
-        current_holiday = None
+    for date in all_dates:
+        date_str = date.strftime("%Y-%m-%d")
+        day_of_week = date.strftime("%a")
+        try:
+            entry, _ = generate_data(resort, date)
+            is_holiday_date = any(h_start <= date <= h_end for h_start, h_end in holiday_ranges)
+            holiday_name = holiday_names.get(date, None)
+            is_holiday_start = entry.get("HolidayWeekStart", False)
 
-        for date in all_dates:
-            date_str = date.strftime("%Y-%m-%d")
-            day_of_week = date.strftime("%a")
-            try:
-                entry, _ = generate_data(resort, date)
+            for room in room_types:
+                internal_room = get_internal_room_key(room)
+                is_ap_room = room in ap_display_room_types
                 points = entry.get(room, 0)
                 discounted_points = math.floor(points * discount_multiplier)
-                is_holiday_date = any(h_start <= date <= h_end for h_start, h_end in holiday_ranges)
-                holiday_name = holiday_names.get(date, None)
 
-                if is_holiday_date and entry.get("HolidayWeekStart", False):
-                    current_holiday = holiday_name
-                    if current_holiday not in holiday_totals[room]:
-                        h_start = min(h for h, _ in holiday_ranges if holiday_names.get(date) == current_holiday)
-                        h_end = max(e for _, e in holiday_ranges if holiday_names.get(date) == current_holiday)
-                        holiday_totals[room][current_holiday] = {"points": 0, "start": h_start, "end": h_end}
-                    holiday_totals[room][current_holiday]["points"] = discounted_points
-                elif is_holiday_date and current_holiday and not is_ap_room:
+                if is_holiday_date and not is_ap_room:
+                    if is_holiday_start:
+                        if holiday_name not in holiday_totals[room]:
+                            h_start = min(h for h, _ in holiday_ranges if holiday_names.get(date) == holiday_name)
+                            h_end = max(e for _, e in holiday_ranges if holiday_names.get(date) == holiday_name)
+                            holiday_totals[room][holiday_name] = {
+                                "points": discounted_points,
+                                "start": h_start,
+                                "end": h_end
+                            }
+                        start_str = holiday_totals[room][holiday_name]["start"].strftime("%b %d")
+                        end_str = holiday_totals[room][holiday_name]["end"].strftime("%b %d, %Y")
+                        row = {
+                            "Date": f"{holiday_name} ({start_str} - {end_str})",
+                            "Room Type": room,
+                            "Points": discounted_points
+                        }
+                        if display_mode == "both":
+                            maintenance_cost = math.ceil(discounted_points * rate_per_point)
+                            capital_cost = math.ceil(discounted_points * capital_cost_per_point * cost_of_capital)
+                            depreciation_cost = math.ceil(discounted_points * depreciation_cost_per_point)
+                            total_holiday_cost = maintenance_cost + capital_cost + depreciation_cost
+                            row["Total Cost"] = f"${total_holiday_cost}"
+                        compare_data.append(row)
+                    # Skip non-start holiday dates for non-AP rooms
                     continue
-
-                if not current_holiday or is_ap_room:
+                else:
                     row = {
                         "Date": date_str,
                         "Room Type": room,
@@ -711,6 +729,7 @@ def compare_room_types_owner(resort, room_types, checkin_date, num_nights, disco
                         row["Total Cost"] = f"${total_day_cost}"
                         total_cost_by_room[room] += total_day_cost
                     compare_data.append(row)
+                    total_points_by_room[room] += discounted_points
 
                 chart_row = {
                     "Date": date,
@@ -729,28 +748,9 @@ def compare_room_types_owner(resort, room_types, checkin_date, num_nights, disco
                     chart_row["TotalCostValue"] = total_day_cost
                 chart_data.append(chart_row)
 
-                if not current_holiday or is_ap_room:
-                    total_points_by_room[room] += discounted_points
-            except Exception as e:
-                st.session_state.debug_messages.append(f"Error in compare for {date_str} at {resort}: {str(e)}")
-                continue
-
-        for holiday_name, totals in holiday_totals[room].items():
-            if totals["points"] > 0:
-                start_str = totals["start"].strftime("%b %d")
-                end_str = totals["end"].strftime("%b %d, %Y")
-                row = {
-                    "Date": f"{holiday_name} ({start_str} - {end_str})",
-                    "Room Type": room,
-                    "Points": totals["points"]
-                }
-                if display_mode == "both":
-                    maintenance_cost = math.ceil(totals["points"] * rate_per_point)
-                    capital_cost = math.ceil(totals["points"] * capital_cost_per_point * cost_of_capital)
-                    depreciation_cost = math.ceil(totals["points"] * depreciation_cost_per_point)
-                    total_holiday_cost = maintenance_cost + capital_cost + depreciation_cost
-                    row["Total Cost"] = f"${total_holiday_cost}"
-                compare_data.append(row)
+        except Exception as e:
+            st.session_state.debug_messages.append(f"Error in compare for {date_str} at {resort}: {str(e)}")
+            continue
 
     total_points_row = {"Date": "Total Points (Non-Holiday)"}
     for room in room_types:
@@ -813,7 +813,11 @@ try:
             cost_of_capital = cost_of_capital_percent / 100
             st.caption(f"Cost calculation based on {discount_percent}% discount.")
         else:
-            rate_per_point = 0.81  # Default for 2025, adjusted in functions for 2026
+            rate_option = st.radio("Rate Option", ["Based on Maintenance Rate", "Custom Rate"])
+            if rate_option == "Based on Maintenance Rate":
+                rate_per_point = 0.81 if datetime.now().year == 2025 else 0.86
+            else:
+                rate_per_point = st.number_input("Custom Rate per Point ($)", min_value=0.0, value=0.81, step=0.01)
             discount_percent, display_mode, capital_cost_per_point, cost_of_capital, useful_life, salvage_value = 0, "both", 0, 0, 0, 0
 
     discount_multiplier = 1 - (discount_percent / 100)
@@ -824,9 +828,9 @@ try:
         if user_mode == "Renter":
             st.markdown("""
             - Authored by Desmond Kwang https://www.facebook.com/dkwang62
-            - Rental Rate per Point based on MVC Abound maintenance fees
-            - $0.81 for 2025 stays (actual rate)
-            - $0.86 for 2026 stays (forecasted rate)
+            - Rental Rate per Point can be based on MVC Abound maintenance fees or custom input
+            - Default: $0.81 for 2025 stays (actual rate)
+            - Default: $0.86 for 2026 stays (forecasted rate)
             - Rent = Points × Rate per Point
             """)
         else:
@@ -923,7 +927,7 @@ try:
     if st.button("Calculate"):
         st.session_state.debug_messages.append("Starting new calculation...")
         if user_mode == "Renter":
-            breakdown, total_points, total_rent = calculate_stay_renter(resort, room_type, checkin_date, adjusted_nights)
+            breakdown, total_points, total_rent = calculate_stay_renter(resort, room_type, checkin_date, adjusted_nights, rate_per_point)
             st.subheader("Stay Breakdown")
             if not breakdown.empty:
                 st.dataframe(breakdown, use_container_width=True)
@@ -946,7 +950,7 @@ try:
                 st.subheader("Room Type Comparison")
                 st.info("Note: Non-holiday weeks are compared day-by-day; holiday weeks are compared as total points for the week.")
                 all_rooms = [room_type] + compare_rooms
-                chart_df, compare_df_pivot, holiday_totals = compare_room_types_renter(resort, all_rooms, checkin_date, adjusted_nights)
+                chart_df, compare_df_pivot, holiday_totals = compare_room_types_renter(resort, all_rooms, checkin_date, adjusted_nights, rate_per_point)
 
                 st.write("### Points and Rent Comparison")
                 st.dataframe(compare_df_pivot, use_container_width=True)
