@@ -815,7 +815,7 @@ try:
         else:
             rate_option = st.radio("Rate Option", ["Based on Maintenance Rate", "Custom Rate"])
             if rate_option == "Based on Maintenance Rate":
-                rate_per_point = 0.81 if datetime.now().year == 2025 else 0.86
+                rate_per_point = 0.81 if datetime.now().year == 2025 else 0.83
             else:
                 rate_per_point = st.number_input("Custom Rate per Point ($)", min_value=0.0, value=0.81, step=0.01)
             discount_percent, display_mode, capital_cost_per_point, cost_of_capital, useful_life, salvage_value = 0, "both", 0, 0, 0, 0
@@ -830,7 +830,7 @@ try:
             - Authored by Desmond Kwang https://www.facebook.com/dkwang62
             - Rental Rate per Point can be based on MVC Abound maintenance fees or custom input
             - Default: $0.81 for 2025 stays (actual rate)
-            - Default: $0.86 for 2026 stays (forecasted rate)
+            - Default: $0.83 for 2026 stays (forecasted rate)
             - Rent = Points × Rate per Point
             """)
         else:
