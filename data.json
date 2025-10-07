@@ -1,6 +1,5 @@
 {
   "$schema": "./schema.json",
-
   "season_blocks": {
     "Kauai Beach Club": {
       "2025": {
@@ -96,7 +95,15 @@
             "2025-01-30"
           ],
           [
+            "2025-03-28",
+            "2025-04-17"
+          ],
+          [
             "2025-04-25",
+            "2025-05-01"
+          ],
+          [
+            "2025-05-09",
             "2025-06-05"
           ],
           [
@@ -123,6 +130,10 @@
           ],
           [
             "2025-07-11",
+            "2025-08-07"
+          ],
+          [
+            "2025-08-15",
             "2025-08-28"
           ]
         ]
@@ -139,6 +150,10 @@
           ],
           [
             "2026-04-10",
+            "2026-04-30"
+          ],
+          [
+            "2026-05-08",
             "2026-06-04"
           ],
           [
@@ -165,6 +180,10 @@
           ],
           [
             "2026-07-10",
+            "2026-08-13"
+          ],
+          [
+            "2026-08-21",
             "2026-08-27"
           ]
         ]
@@ -324,7 +343,7 @@
     },
     "Crystal Shores": {
       "2025": {
-        "High Season": [
+        "Shoulder": [
           [
             "2025-01-03",
             "2025-01-30"
@@ -344,7 +363,7 @@
             "2025-04-10"
           ]
         ],
-        "Shoulder": [
+        "High Season": [
           [
             "2025-05-02",
             "2025-07-03"
@@ -370,7 +389,7 @@
         ]
       },
       "2026": {
-        "High Season": [
+        "Shoulder": [
           [
             "2026-01-02",
             "2026-01-29"
@@ -390,7 +409,7 @@
             "2026-04-09"
           ]
         ],
-        "Shoulder": [
+        "High Season": [
           [
             "2026-05-01",
             "2026-07-02"
@@ -2984,6 +3003,10 @@
     "Ko Olina Beach Club": {
       "Low Season": {
         "Fri-Sat": {
+          "AP_Studio_MA": 440,
+          "AP_1BR_MA": 630,
+          "AP_2BR_MA": 960,
+          "AP_2BR_MK": 1160,
           "Studio MA": 340,
           "Studio MK": 360,
           "Studio PHMA": 340,
@@ -2999,7 +3022,31 @@
           "3BR MA": 925,
           "3BR MK": 1175
         },
-        "Sun-Thu": {
+        "Sun": {
+          "AP_Studio_MA": 350,
+          "AP_1BR_MA": 510,
+          "AP_2BR_MA": 770,
+          "AP_2BR_MK": 910,
+          "Studio MA": 205,
+          "Studio MK": 270,
+          "Studio PHMA": 205,
+          "Studio PHMK": 295,
+          "1BR MA": 355,
+          "1BR MK": 465,
+          "1BR PHMA": 355,
+          "1BR PHMK": 550,
+          "2BR MA": 500,
+          "2BR MK": 625,
+          "2BR PHMA": 500,
+          "2BR PHMK": 750,
+          "3BR MA": 650,
+          "3BR MK": 825
+        },
+        "Mon-Thu": {
+          "AP_Studio_MA": 250,
+          "AP_1BR_MA": 360,
+          "AP_2BR_MA": 550,
+          "AP_2BR_MK": 660,
           "Studio MA": 205,
           "Studio MK": 270,
           "Studio PHMA": 205,
@@ -3018,6 +3065,10 @@
       },
       "High Season": {
         "Fri-Sat": {
+          "AP_Studio_MA": 440,
+          "AP_1BR_MA": 630,
+          "AP_2BR_MA": 960,
+          "AP_2BR_MK": 1160,      
           "Studio MA": 360,
           "Studio MK": 430,
           "Studio PHMA": 360,
@@ -3033,7 +3084,31 @@
           "3BR MA": 1075,
           "3BR MK": 1375
         },
-        "Sun-Thu": {
+        "Sun": {
+          "AP_Studio_MA": 350,
+          "AP_1BR_MA": 510,
+          "AP_2BR_MA": 770,
+          "AP_2BR_MK": 910,
+          "Studio MA": 250,
+          "Studio MK": 295,
+          "Studio PHMA": 250,
+          "Studio PHMK": 340,
+          "1BR MA": 415,
+          "1BR MK": 525,
+          "1BR PHMA": 415,
+          "1BR PHMK": 625,
+          "2BR MA": 575,
+          "2BR MK": 725,
+          "2BR PHMA": 575,
+          "2BR PHMK": 875,
+          "3BR MA": 750,
+          "3BR MK": 975
+        },
+        "Mon-Thu": {
+          "AP_Studio_MA": 250,
+          "AP_1BR_MA": 360,
+          "AP_2BR_MA": 550,
+          "AP_2BR_MK": 660,
           "Studio MA": 250,
           "Studio MK": 295,
           "Studio PHMA": 250,
@@ -3072,6 +3147,10 @@
       },
       "Holiday Week": {
         "Presidents Day": {
+          "AP_Studio_MA": 2160,
+          "AP_1BR_MA": 3525,
+          "AP_2BR_MA": 4800,
+          "AP_2BR_MK": 6025,
           "Studio MA": 2160,
           "Studio MK": 2475,
           "Studio PHMA": 2160,
@@ -3088,6 +3167,10 @@
           "3BR MK": 8025
         },
         "Easter": {
+          "AP_Studio_MA": 2160,
+          "AP_1BR_MA": 3525,
+          "AP_2BR_MA": 4800,
+          "AP_2BR_MK": 6025,
           "Studio MA": 2160,
           "Studio MK": 2475,
           "Studio PHMA": 2160,
@@ -3104,6 +3187,10 @@
           "3BR MK": 8025
         },
         "Independence Day": {
+          "AP_Studio_MA": 1960,
+          "AP_1BR_MA": 3525,
+          "AP_2BR_MA": 4575,
+          "AP_2BR_MK": 5725,
           "Studio MA": 1960,
           "Studio MK": 2320,
           "Studio PHMA": 1960,
@@ -3120,6 +3207,10 @@
           "3BR MK": 7625
         },
         "Thanksgiving": {
+          "AP_Studio_MA": 1690,
+          "AP_1BR_MA": 2950,
+          "AP_2BR_MA": 4050,
+          "AP_2BR_MK": 4925,
           "Studio MA": 1690,
           "Studio MK": 2070,
           "Studio PHMA": 1690,
@@ -3136,6 +3227,10 @@
           "3BR MK": 6475
         },
         "Thanksgiving 2": {
+          "AP_Studio_MA": 2160,
+          "AP_1BR_MA": 3525,
+          "AP_2BR_MA": 4800,
+          "AP_2BR_MK": 6025,
           "Studio MA": 2160,
           "Studio MK": 2475,
           "Studio PHMA": 2160,
@@ -3152,6 +3247,10 @@
           "3BR MK": 8025
         },
         "Christmas": {
+          "AP_Studio_MA": 2160,
+          "AP_1BR_MA": 3525,
+          "AP_2BR_MA": 4800,
+          "AP_2BR_MK": 6025,
           "Studio MA": 2160,
           "Studio MK": 2475,
           "Studio PHMA": 2160,
@@ -3168,6 +3267,10 @@
           "3BR MK": 8025
         },
         "New Year's Eve/Day": {
+          "AP_Studio_MA": 2365,
+          "AP_1BR_MA": 4075,
+          "AP_2BR_MA": 5500,
+          "AP_2BR_MK": 6875,
           "Studio MA": 2365,
           "Studio MK": 2835,
           "Studio PHMA": 2365,
@@ -5505,8 +5608,8 @@
         "2025-02-20"
       ],
       "Easter": [
-        "2025-04-11",
-        "2025-04-17"
+        "2025-04-18",
+        "2025-04-24"
       ],
       "Independence Day": [
         "2025-07-04",
@@ -5555,8 +5658,8 @@
         "2026-02-19"
       ],
       "Easter": [
-        "2026-03-27",
-        "2026-04-02"
+        "2026-04-03",
+        "2026-04-09"
       ],
       "Independence Day": [
         "2026-07-03",
