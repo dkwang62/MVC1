@@ -2029,6 +2029,76 @@
         ]
       }
     },
+    "Pulse New York": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-02-27"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-02-28",
+            "2025-05-22"
+          ],
+          [
+            "2025-05-30",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ],
+          [
+            "2025-09-05",
+            "2025-11-20"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-02-26"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-02-27",
+            "2026-05-21"
+          ],
+          [
+            "2026-05-29",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-03"
+          ],
+          [
+            "2026-09-11",
+            "2026-11-19"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ]
+      }
+    },
     "Grand Chateau Las Vegas": {
       "2025": {
         "High Season": [
@@ -2738,7 +2808,29 @@
         "Independence Day": "global:Independence Day",
         "Labor Day": "global:Labor Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Memorial Day": "global:Memorial Day",
+        "Independence Day": "global:Independence Day",
+        "Labor Day": "global:Labor Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Pulse New York": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Memorial Day": "global:Memorial Day",
+        "Independence Day": "global:Independence Day",
+        "Labor Day": "global:Labor Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       },
@@ -5243,6 +5335,122 @@
         }
       }
     },
+    "Pulse New York": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Guestroom Queen": 450,
+          "Guestroom King": 525,
+          "Guestroom King City": 625,
+          "Guestroom Double City": 625,
+          "Guestroom King Empire": 725,
+          "Deluxe King": 575,
+          "Deluxe Double": 575
+        },
+        "Sun-Thu": {
+          "Guestroom Queen": 525,
+          "Guestroom King": 375,
+          "Guestroom King City": 450,
+          "Guestroom Double City": 450,
+          "Guestroom King Empire": 525,
+          "Deluxe King": 425,
+          "Deluxe Double": 425
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Guestroom Queen": 650,
+          "Guestroom King": 725,
+          "Guestroom King City": 900,
+          "Guestroom Double City": 900,
+          "Guestroom King Empire": 1025,
+          "Deluxe King": 800,
+          "Deluxe Double": 800
+        },
+        "Sun-Thu": {
+          "Guestroom Queen": 450,
+          "Guestroom King": 525,
+          "Guestroom King City": 625,
+          "Guestroom Double City": 625,
+          "Guestroom King Empire": 725,
+          "Deluxe King": 575,
+          "Deluxe Double": 575
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Guestroom Queen": 2725,
+          "Guestroom King": 3150,
+          "Guestroom King City": 3900,
+          "Guestroom Double City": 3900,
+          "Guestroom King Empire": 4575,
+          "Deluxe King": 3575,
+          "Deluxe Double": 3575
+        },
+        "Memorial Day": {
+          "Guestroom Queen": 3825,
+          "Guestroom King": 4350,
+          "Guestroom King City": 5425,
+          "Guestroom Double City": 5425,
+          "Guestroom King Empire": 6275,
+          "Deluxe King": 4850,
+          "Deluxe Double": 4850
+        },
+        "Independence Day": {
+          "Guestroom Queen": 3825,
+          "Guestroom King": 4350,
+          "Guestroom King City": 5425,
+          "Guestroom Double City": 5425,
+          "Guestroom King Empire": 6275,
+          "Deluxe King": 4850,
+          "Deluxe Double": 4850
+        },
+        "Labor Day": {
+          "Guestroom Queen": 3825,
+          "Guestroom King": 4350,
+          "Guestroom King City": 5425,
+          "Guestroom Double City": 5425,
+          "Guestroom King Empire": 6275,
+          "Deluxe King": 4850,
+          "Deluxe Double": 4850
+        },
+        "Thanksgiving": {
+          "Guestroom Queen": 4050,
+          "Guestroom King": 4725,
+          "Guestroom King City": 5625,
+          "Guestroom Double City": 5625,
+          "Guestroom King Empire": 6525,
+          "Deluxe King": 5175,
+          "Deluxe Double": 5175
+        },
+        "Thanksgiving Alt": {
+          "Guestroom Queen": 4050,
+          "Guestroom King": 4725,
+          "Guestroom King City": 5625,
+          "Guestroom Double City": 5625,
+          "Guestroom King Empire": 6525,
+          "Deluxe King": 5175,
+          "Deluxe Double": 5175
+        },
+        "Christmas": {
+          "Guestroom Queen": 3825,
+          "Guestroom King": 4350,
+          "Guestroom King City": 5425,
+          "Guestroom Double City": 5425,
+          "Guestroom King Empire": 6275,
+          "Deluxe King": 4850,
+          "Deluxe Double": 4850
+        },
+        "New Year's Eve/Day": {
+          "Guestroom Queen": 4250,
+          "Guestroom King": 4875,
+          "Guestroom King City": 5850,
+          "Guestroom Double City": 5850,
+          "Guestroom King Empire": 6825,
+          "Deluxe King": 5375,
+          "Deluxe Double": 5375
+        }
+      }
+    },
     "Grand Chateau Las Vegas": {
       "High Season": {
         "Fri-Sat": {
@@ -5589,6 +5797,7 @@
     "Marbella Beach",
     "Maui Ocean Club",
     "Mayflower Washington",
+    "Pulse New York",
     "Mountainside Utah",
     "Newport Coast Villas",
     "Ocean Pointe",
