@@ -189,7 +189,7 @@
         ]
       }
     },
-    "Newport Coast Villas": {
+    "Newport Coast": {
       "2025": {
         "Low Season": [
           [
@@ -255,7 +255,7 @@
         ]
       }
     },
-    "Grande Vista": {
+    "Grande Vista Orlando": {
       "2025": {
         "High Season": [
           [
@@ -291,7 +291,7 @@
             "2025-12-18"
           ]
         ],
-        "Shoulder": [
+        "Mid Season": [
           [
             "2025-08-29",
             "2025-12-04"
@@ -333,7 +333,7 @@
             "2026-12-17"
           ]
         ],
-        "Shoulder": [
+        "Mid Season": [
           [
             "2026-08-28",
             "2026-12-03"
@@ -343,7 +343,7 @@
     },
     "Crystal Shores": {
       "2025": {
-        "Shoulder": [
+        "High Season": [
           [
             "2025-01-03",
             "2025-01-30"
@@ -363,7 +363,7 @@
             "2025-04-10"
           ]
         ],
-        "High Season": [
+        "Mid Season": [
           [
             "2025-05-02",
             "2025-07-03"
@@ -389,7 +389,7 @@
         ]
       },
       "2026": {
-        "Shoulder": [
+        "High Season": [
           [
             "2026-01-02",
             "2026-01-29"
@@ -409,7 +409,7 @@
             "2026-04-09"
           ]
         ],
-        "High Season": [
+        "Mid Season": [
           [
             "2026-05-01",
             "2026-07-02"
@@ -435,7 +435,7 @@
         ]
       }
     },
-    "Desert Springs Villas II": {
+    "Desert Springs II": {
       "2025": {
         "Low Season": [
           [
@@ -875,7 +875,7 @@
     },
     "Bali Nusa Dua Gardens": {
       "2025": {
-        "Shoulder": [
+        "Mid Season": [
           [
             "2025-01-03",
             "2025-01-09"
@@ -923,7 +923,7 @@
         ]
       },
       "2026": {
-        "Shoulder": [
+        "Mid Season": [
           [
             "2026-01-02",
             "2026-01-08"
@@ -973,7 +973,7 @@
     },
     "Bali Nusa Dua Terrace": {
       "2025": {
-        "Shoulder": [
+        "Mid Season": [
           [
             "2025-01-03",
             "2025-01-09"
@@ -1021,7 +1021,7 @@
         ]
       },
       "2026": {
-        "Shoulder": [
+        "Mid Season": [
           [
             "2026-01-02",
             "2026-01-08"
@@ -1199,7 +1199,7 @@
             "2025-12-18"
           ]
         ],
-        "Shoulder": [
+        "Mid Season": [
           [
             "2025-03-28",
             "2025-04-10"
@@ -1235,7 +1235,7 @@
             "2026-12-17"
           ]
         ],
-        "Shoulder": [
+        "Mid Season": [
           [
             "2026-04-10",
             "2026-05-14"
@@ -1765,7 +1765,7 @@
     },
     "Aruba Surf Club": {
       "2025": {
-        "Mid Season": [
+        "High Season": [
           [
             "2025-01-03",
             "2025-02-06"
@@ -1779,7 +1779,7 @@
             "2025-05-01"
           ]
         ],
-        "High Season": [
+        "Peak Season": [
           [
             "2025-02-07",
             "2025-02-13"
@@ -1789,7 +1789,7 @@
             "2025-04-03"
           ]
         ],
-        "Shoulder Season": [
+        "Mid Season": [
           [
             "2025-05-02",
             "2025-07-03"
@@ -1811,7 +1811,7 @@
         ]
       },
       "2026": {
-        "Mid Season": [
+        "High Season": [
           [
             "2026-01-02",
             "2026-02-05"
@@ -1821,7 +1821,7 @@
             "2026-04-30"
           ]
         ],
-        "High Season": [
+        "Peak Season": [
           [
             "2026-02-06",
             "2026-02-12"
@@ -1831,7 +1831,7 @@
             "2026-04-09"
           ]
         ],
-        "Shoulder Season": [
+        "Mid Season": [
           [
             "2026-05-01",
             "2026-07-02"
@@ -1855,7 +1855,7 @@
     },
     "Aruba Ocean Club": {
       "2025": {
-        "Season A": [
+        "High Season": [
           [
             "2025-01-03",
             "2025-02-06"
@@ -1869,7 +1869,7 @@
             "2025-05-01"
           ]
         ],
-        "Season B": [
+        "Peak Season": [
           [
             "2025-02-07",
             "2025-02-13"
@@ -1879,7 +1879,7 @@
             "2025-04-03"
           ]
         ],
-        "Season C": [
+        "Mid Season": [
           [
             "2025-05-02",
             "2025-07-03"
@@ -1893,7 +1893,7 @@
             "2025-12-18"
           ]
         ],
-        "Season D": [
+        "Low Season": [
           [
             "2025-09-05",
             "2025-11-06"
@@ -1901,7 +1901,7 @@
         ]
       },
       "2026": {
-        "Season A": [
+        "High Season": [
           [
             "2026-01-02",
             "2026-02-05"
@@ -1911,7 +1911,7 @@
             "2026-04-30"
           ]
         ],
-        "Season B": [
+        "Peak Season": [
           [
             "2026-02-06",
             "2026-02-12"
@@ -1921,7 +1921,7 @@
             "2026-04-09"
           ]
         ],
-        "Season C": [
+        "Mid Season": [
           [
             "2026-05-01",
             "2026-07-02"
@@ -1935,7 +1935,7 @@
             "2026-12-17"
           ]
         ],
-        "Season D": [
+        "Low Season": [
           [
             "2026-09-04",
             "2026-11-05"
@@ -2099,7 +2099,93 @@
         ]
       }
     },
-    "Grand Chateau Las Vegas": {
+    "Pulse San Diego": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-03-06"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-10-03",
+            "2025-11-20"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-03-07",
+            "2025-05-22"
+          ],
+          [
+            "2025-09-05",
+            "2025-10-02"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-05-30",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-03-05"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-10-02",
+            "2026-11-19"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-03-06",
+            "2026-05-21"
+          ],
+          [
+            "2026-09-11",
+            "2026-10-01"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-05-29",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-09-03"
+          ]
+        ]
+      }
+    },
+    "Grand Chateau Vegas": {
       "2025": {
         "High Season": [
           [
@@ -2205,7 +2291,7 @@
             "2025-11-20"
           ]
         ],
-        "Shoulder": [
+        "Mid Season": [
           [
             "2025-06-13",
             "2025-06-26"
@@ -2255,7 +2341,7 @@
             "2026-11-19"
           ]
         ],
-        "Shoulder": [
+        "Mid Season": [
           [
             "2026-06-12",
             "2026-07-02"
@@ -2269,7 +2355,7 @@
     },
     "Ocean Pointe": {
       "2025": {
-        "Mid Season": [
+        "High Season": [
           [
             "2025-01-03",
             "2025-01-30"
@@ -2283,7 +2369,7 @@
             "2025-12-18"
           ]
         ],
-        "High Season": [
+        "Peak Season": [
           [
             "2025-01-31",
             "2025-02-13"
@@ -2293,7 +2379,7 @@
             "2025-04-10"
           ]
         ],
-        "Value Season": [
+        "Mid Season": [
           [
             "2025-05-16",
             "2025-07-03"
@@ -2315,7 +2401,7 @@
         ]
       },
       "2026": {
-        "Mid Season": [
+        "High Season": [
           [
             "2026-01-02",
             "2026-01-29"
@@ -2329,7 +2415,7 @@
             "2026-12-17"
           ]
         ],
-        "High Season": [
+        "Peak Season": [
           [
             "2026-01-30",
             "2026-02-12"
@@ -2339,7 +2425,7 @@
             "2026-04-09"
           ]
         ],
-        "Value Season": [
+        "Mid Season": [
           [
             "2026-05-15",
             "2026-07-02"
@@ -2505,7 +2591,7 @@
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
     },
-    "Newport Coast Villas": {
+    "Newport Coast": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
@@ -2517,7 +2603,7 @@
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
     },
-    "Grande Vista": {
+    "Grande Vista Orlando": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
@@ -2545,7 +2631,7 @@
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
     },
-    "Desert Springs Villas II": {
+    "Desert Springs II": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
@@ -2845,7 +2931,29 @@
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
     },
-    "Grand Chateau Las Vegas": {
+    "Pulse San Diego": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Memorial Day": "global:Memorial Day",
+        "Independence Day": "global:Independence Day",
+        "Labor Day": "global:Labor Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Memorial Day": "global:Memorial Day",
+        "Independence Day": "global:Independence Day",
+        "Labor Day": "global:Labor Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Grand Chateau Vegas": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
@@ -3380,7 +3488,7 @@
         }
       }
     },
-    "Newport Coast Villas": {
+    "Newport Coast": {
       "Low Season": {
         "Fri-Sat": {
           "2BR": 700
@@ -3417,7 +3525,7 @@
         }
       }
     },
-    "Grande Vista": {
+    "Grande Vista Orlando": {
       "High Season": {
         "Fri-Sat": {
           "Studio": 300,
@@ -3460,7 +3568,7 @@
           "3-BDRM": 250
         }
       },
-      "Shoulder": {
+      "Mid Season": {
         "Fri-Sat": {
           "Studio": 250,
           "1-BDRM": 375,
@@ -3502,7 +3610,7 @@
       }
     },
     "Crystal Shores": {
-      "Shoulder": {
+      "High Season": {
         "Fri-Sat": {
           "2BR S": 925,
           "2BR IS": 1025,
@@ -3562,7 +3670,7 @@
           "3BR PHUF": 950
         }
       },
-      "High Season": {
+      "Mid Season": {
         "Fri-Sat": {
           "2BR S": 550,
           "2BR IS": 625,
@@ -3681,7 +3789,7 @@
         }
       }
     },
-    "Desert Springs Villas II": {
+    "Desert Springs II": {
       "Low Season": {
         "Fri-Sat": {
           "Studio": 175,
@@ -4185,7 +4293,7 @@
           "2 Bedroom": 425
         }
       },
-      "Shoulder": {
+      "Mid Season": {
         "Sun-Thu": {
           "Guestroom": 160,
           "1 Bedroom": 230,
@@ -4233,7 +4341,7 @@
       }
     },
     "Bali Nusa Dua Terrace": {
-      "Shoulder": {
+      "Mid Season": {
         "Sun-Thu": {
           "1 Bedroom": 270,
           "2 Bedroom": 440,
@@ -4423,7 +4531,7 @@
           "3-BDRM": 250
         }
       },
-      "Shoulder": {
+      "Mid Season": {
         "Fri-Sat": {
           "Studio": 300,
           "2-BDRM": 600,
@@ -4921,7 +5029,7 @@
           "3-BDRM OV": 450
         }
       },
-      "Shoulder Season": {
+      "Mid Season": {
         "Fri-Sat": {
           "Studio GV": 250,
           "Studio OS": 300,
@@ -4953,7 +5061,7 @@
           "3-BDRM OV": 575
         }
       },
-      "High Season": {
+      "Peak Season": {
         "Fri-Sat": {
           "Studio GV": 325,
           "Studio OS": 375,
@@ -4985,7 +5093,7 @@
           "3-BDRM OV": 750
         }
       },
-      "Mid Season": {
+      "High Season": {
         "Fri-Sat": {
           "Studio GV": 300,
           "Studio OS": 350,
@@ -5096,7 +5204,7 @@
       }
     },
     "Aruba Ocean Club": {
-      "Season A": {
+      "High Season": {
         "Fri-Sat": {
           "Studio OV": 350,
           "Studio OF": 450,
@@ -5114,7 +5222,7 @@
           "2-BDRM OF": 675
         }
       },
-      "Season B": {
+      "Peak Season": {
         "Fri-Sat": {
           "Studio OV": 375,
           "Studio OF": 500,
@@ -5132,7 +5240,7 @@
           "2-BDRM OF": 750
         }
       },
-      "Season C": {
+      "Mid Season": {
         "Fri-Sat": {
           "Studio OV": 300,
           "Studio OF": 375,
@@ -5150,7 +5258,7 @@
           "2-BDRM OF": 575
         }
       },
-      "Season D": {
+      "Low Season": {
         "Fri-Sat": {
           "Studio OV": 225,
           "Studio OF": 300,
@@ -5312,7 +5420,7 @@
           "Junior Suite K": 3000,
           "Executive Suite K": 3000
         },
-        "Thanksgiving Alt": {
+        "Thanksgiving 2": {
           "Guestroom K": 2300,
           "Guestroom DB": 2300,
           "Deluxe DB": 2525,
@@ -5422,7 +5530,7 @@
           "Deluxe King": 5175,
           "Deluxe Double": 5175
         },
-        "Thanksgiving Alt": {
+        "Thanksgiving 2": {
           "Guestroom Queen": 4050,
           "Guestroom King": 4725,
           "Guestroom King City": 5625,
@@ -5451,7 +5559,115 @@
         }
       }
     },
-    "Grand Chateau Las Vegas": {
+    "Pulse San Diego": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Doubles": 225,
+          "King": 225,
+          "King City": 250,
+          "2-Bedroom": 450
+        },
+        "Sun-Thu": {
+          "Doubles": 175,
+          "King": 175,
+          "King City": 200,
+          "2-Bedroom": 350
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Doubles": 275,
+          "King": 275,
+          "King City": 300,
+          "2-Bedroom": 550
+        },
+        "Sun-Thu": {
+          "Doubles": 200,
+          "King": 200,
+          "King City": 225,
+          "2-Bedroom": 4000
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Doubles": 325,
+          "King": 325,
+          "King City": 350,
+          "2-Bedroom": 650
+        },
+        "Sun-Thu": {
+          "Doubles": 225,
+          "King": 225,
+          "King City": 250,
+          "2-Bedroom": 450
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "Doubles": 375,
+          "King": 375,
+          "King City": 425,
+          "2-Bedroom": 750
+        },
+        "Sun-Thu": {
+          "Doubles": 300,
+          "King": 300,
+          "King City": 325,
+          "2-Bedroom": 600
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Doubles": 1750,
+          "King": 1750,
+          "King City": 1925,
+          "2-Bedroom": 3500
+        },
+        "Memorial Day": {
+          "Doubles": 2025,
+          "King": 2025,
+          "King City": 2275,
+          "2-Bedroom": 4050
+        },
+        "Independence Day": {
+          "Doubles": 2500,
+          "King": 2500,
+          "King City": 2775,
+          "2-Bedroom": 5000
+        },
+        "Labor Day": {
+          "Doubles": 2025,
+          "King": 2025,
+          "King City": 2275,
+          "2-Bedroom": 4050
+        },
+        "Thanksgiving": {
+          "Doubles": 1750,
+          "King": 1750,
+          "King City": 1925,
+          "2-Bedroom": 3500
+        },
+        "Thanksgiving 2": {
+          "Doubles": 1600,
+          "King": 1600,
+          "King City": 1775,
+          "2-Bedroom": 3200
+        },
+        "Christmas": {
+          "Doubles": 2125,
+          "King": 2125,
+          "King City": 2400,
+          "2-Bedroom": 4250
+        },
+        "New Year's Eve/Day": {
+          "Doubles": 2325,
+          "King": 2325,
+          "King City": 2600,
+          "2-Bedroom": 4650
+        }
+      }
+    },
+    "Grand Chateau Vegas": {
       "High Season": {
         "Fri-Sat": {
           "Guestroom": 375,
@@ -5538,7 +5754,7 @@
           "2-BDRM": 125
         }
       },
-      "Shoulder": {
+      "Mid Season": {
         "Fri-Sat": {
           "Studio": 225,
           "1-BDRM": 325,
@@ -5681,7 +5897,7 @@
           "3-BDRM OF": 700
         }
       },
-      "Mid Season": {
+      "High Season": {
         "Sun-Thu": {
           "Studio OS": 200,
           "Studio OF": 250,
@@ -5701,7 +5917,7 @@
           "3-BDRM OF": 1450
         }
       },
-      "High Season": {
+      "Peak Season": {
         "Sun-Thu": {
           "Studio OS": 225,
           "Studio OF": 275,
@@ -5721,7 +5937,7 @@
           "3-BDRM OF": 1625
         }
       },
-      "Value Season": {
+      "Mid Season": {
         "Sun-Thu": {
           "Studio OS": 150,
           "Studio OF": 175,
@@ -5789,17 +6005,18 @@
     "BeachPlace Towers",
     "Canyon Villas Arizona",
     "Crystal Shores",
-    "Desert Springs Villas II",
-    "Grand Chateau Las Vegas",
-    "Grande Vista",
+    "Desert Springs II",
+    "Grand Chateau Vegas",
+    "Grande Vista Orlando",
     "Kauai Beach Club",
     "Ko Olina Beach Club",
     "Marbella Beach",
     "Maui Ocean Club",
     "Mayflower Washington",
     "Pulse New York",
+    "Pulse San Diego",
     "Mountainside Utah",
-    "Newport Coast Villas",
+    "Newport Coast",
     "Ocean Pointe",
     "Phuket Beach Club",
     "Playa Andaluza",
