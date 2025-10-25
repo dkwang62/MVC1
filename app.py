@@ -710,8 +710,8 @@ try:
                 st.markdown("""
                 - Authored by Desmond Kwang https://www.facebook.com/dkwang62
                 - Rental Rate per Point is based on MVC AP maintenance fees or custom input
-                - Default: $0.52 for 2025 stays (approx AP rate)
-                - Default: $0.60 for 2026 stays (forecasted AP rate)
+                - Default: 52 cents (2025 approx AP rate)
+                - Default: 60 cents (2026 forecasted AP rate)
                 - **Booked within 60 days**: 30% discount on points required, only for Presidential-level owners, applies to stays within 60 days from today
                 - **Booked within 30 days**: 25% discount on points required, only for Executive-level owners, applies to stays within 30 days from today
                 - Rent = (Points × Discount Multiplier) × Rate per Point
@@ -728,7 +728,7 @@ try:
             depreciation_rate = (capital_cost_per_point - salvage_value) / useful_life if include_depreciation else 0
             st.markdown(f"""
             - Authored by Desmond Kwang https://www.facebook.com/dkwang62
-            - Maintenance Rate per Point: $0.52 (2025) $0.60 (2026) Estimated AP rates
+            - Maintenance: 52 cents (2025 Approx AP rates); 60 cents (2026 forecasted AP rates)
             - Cost of capital = Points × Purchase Price per Point × Cost of Capital Percentage
             - Depreciation = Points × [(Purchase Price per Point − Salvage Value) ÷ Useful Life]
             - Total cost = Maintenance + Capital Cost + Depreciation
