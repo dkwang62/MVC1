@@ -728,7 +728,7 @@ try:
             depreciation_rate = (capital_cost_per_point - salvage_value) / useful_life if include_depreciation else 0
             st.markdown(f"""
             - Authored by Desmond Kwang https://www.facebook.com/dkwang62
-            - Maintenance Rate per Point: $0.52 for 2025 stays (actual rate), $0.60 for 2026 stays (estimated)
+            - Maintenance Rate per Point: $0.52 for 2025 stays (approx AP rate), $0.60 for 2026 stays (estimated)
             - Cost of capital = Points × Purchase Price per Point × Cost of Capital Percentage
             - Depreciation = Points × [(Purchase Price per Point − Salvage Value) ÷ Useful Life]
             - Total cost = Maintenance + Capital Cost + Depreciation
