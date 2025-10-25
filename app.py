@@ -709,9 +709,9 @@ try:
             if st.session_state.get("allow_renter_modifications", False):
                 st.markdown("""
                 - Authored by Desmond Kwang https://www.facebook.com/dkwang62
-                - Rental Rate per Point is based on MVC Abound maintenance fees or custom input
-                - Default: $0.81 for 2025 stays (actual rate)
-                - Default: $0.86 for 2026 stays (forecasted rate)
+                - Rental Rate per Point is based on MVC AP maintenance fees or custom input
+                - Default: $0.52 for 2025 stays (actual rate)
+                - Default: $0.60 for 2026 stays (forecasted rate)
                 - **Booked within 60 days**: 30% discount on points required, only for Presidential-level owners, applies to stays within 60 days from today
                 - **Booked within 30 days**: 25% discount on points required, only for Executive-level owners, applies to stays within 30 days from today
                 - Rent = (Points × Discount Multiplier) × Rate per Point
@@ -719,11 +719,10 @@ try:
             else:
                 st.markdown("""
                 - Authored by Desmond Kwang https://www.facebook.com/dkwang62
-                - Rental Rate per Point is based on MVC Abound maintenance fees
-                - Default: $0.81 for 2025 stays (actual rate)
-                - Default: $0.86 for 2026 stays (forecasted rate)
+                - Rental Rate per Point is based on MVC AP maintenance fees (with GST included)
+                - Default: $0.52 for 2025 stays (actual rate)
+                - Default: $0.60 for 2026 stays (forecasted rate)
                 - Rent = Points × Rate per Point
-                - Note: Rate modifications are disabled by the owner.
                 """)
         else:
             depreciation_rate = (capital_cost_per_point - salvage_value) / useful_life if include_depreciation else 0
@@ -789,7 +788,7 @@ try:
         elif user_mode == "Renter":
             st.session_state.allow_renter_modifications = st.checkbox(
                 "More Options",
-                value=st.session_state.get("allow_renter_modifications", False),
+                value=st.session_state.get("allow_renter_modifications", True),
                 help="When checked, you can modify rate options and apply discounts. When unchecked, rates are based on standard maintenance fees."
             )
             if not st.session_state.allow_renter_modifications:
@@ -800,24 +799,24 @@ try:
                     ["Based on Maintenance Rate", "Custom Rate", "Booked within 60 days", "Booked within 30 days"]
                 )
                 if rate_option == "Based on Maintenance Rate":
-                    rate_per_point = 0.81 if checkin_date.year == 2025 else 0.86
+                    rate_per_point = 0.52 if checkin_date.year == 2025 else 0.60
                     booking_discount = None
                 elif rate_option == "Booked within 60 days":
-                    rate_per_point = 0.81 if checkin_date.year == 2025 else 0.86
+                    rate_per_point = 0.52 if checkin_date.year == 2025 else 0.60*0.70
                     booking_discount = "within_60_days"
                 elif rate_option == "within_30_days":
-                    rate_per_point = 0.81 if checkin_date.year == 2025 else 0.86
+                    rate_per_point = 0.52 if checkin_date.year == 2025 else 0.60*0.75
                     booking_discount = "within_30_days"
                 else:
                     rate_per_point = st.number_input(
                         "Custom Rate per Point ($)",
                         min_value=0.0,
-                        value=0.81,
+                        value=0.52,
                         step=0.01
                     )
                     booking_discount = None
     if user_mode == "Renter" and not st.session_state.get("allow_renter_modifications", False):
-        rate_per_point = 0.81 if checkin_date.year == 2025 else 0.86
+        rate_per_point = 0.52 if checkin_date.year == 2025 else 0.60
         booking_discount = None
     discount_multiplier = 1 - (discount_percent / 100)
     cost_of_capital = cost_of_capital_percent / 100
