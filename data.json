@@ -2754,14 +2754,14 @@
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day",
         "Easter": "global:Easter",
-        "Easter2": "global:Easter"
+        "Easter1": "global:Easter1"
       }
     },
     "Village Paris": {
       "2025": {
         "Week 1": "global:Week 1",
         "Easter": "global:Easter",
-        "Easter2": "global:Easter",
+        "Easter1": "global:Easter1",
         "Mid-Term": "global:Mid-Term",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
@@ -2769,7 +2769,7 @@
       "2026": {
         "Week 1": "global:Week 1",
         "Easter": "global:Easter",
-        "Easter2": "global:Easter",
+        "Easter1": "global:Easter1",
         "Mid-Term": "global:Mid-Term",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
@@ -2780,13 +2780,13 @@
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day",
         "Easter": "global:Easter",
-        "Easter2": "global:Easter"
+        "Easter1": "global:Easter1"
       },
       "2026": {
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day",
         "Easter": "global:Easter",
-        "Easter2": "global:Easter"
+        "Easter1": "global:Easter1"
       }
     },
     "Sheraton Kauai": {
@@ -4492,6 +4492,14 @@
         }
       },
       "Holiday Week": {
+        "Easter1": {
+          "Studio GV": 1250,
+          "Studio SF": 1250,
+          "2-BDRM GV": 2500,
+          "2-BDRM SF": 3525,
+          "3-BDRM GV": 3125,
+          "3-BDRM SF": 4200
+        },
         "Easter": {
           "Studio GV": 1250,
           "Studio SF": 1250,
@@ -4581,7 +4589,7 @@
           "2-BDRM": 3100,
           "3-BDRM": 3825
         },
-        "Easter2": {
+        "Easter": {
           "Studio": 1575,
           "2-BDRM": 3100,
           "3-BDRM": 3825
@@ -4655,7 +4663,7 @@
           "2-BDRM": 2900,
           "3-BDRM": 3125
         },
-        "Easter2": {
+        "Easter": {
           "1-BDRM": 2100,
           "2-BDRM": 2900,
           "3-BDRM": 3125
@@ -6033,6 +6041,10 @@
         "2025-02-14",
         "2025-02-20"
       ],
+      "Easter1": [
+        "2025-04-11",
+        "2025-04-17"
+      ],
       "Easter": [
         "2025-04-18",
         "2025-04-24"
@@ -6082,6 +6094,10 @@
       "Presidents Day": [
         "2026-02-13",
         "2026-02-19"
+      ],
+      "Easter1": [
+        "2026-03-27",
+        "2026-04-02"
       ],
       "Easter": [
         "2026-04-03",
