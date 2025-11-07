@@ -462,7 +462,7 @@ if adjusted:
     end_date = checkin_adj + timedelta(days=nights_adj-1)
     st.info(f"Extended to full holiday week: **{fmt_date(checkin_adj)} - {fmt_date(end_date)}** ({nights_adj} nights)")  # ← CHANGED
 
-if st.button("Calculate", type="primary):
+if st.button("Calculate", type="primary"):
     gantt = gantt_chart(resort, checkin.year)
 
     if user_mode == "Owner":
