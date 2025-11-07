@@ -59,18 +59,6 @@ def display_room(key: str) -> str:
     view = parts[-1] if len(parts) > 1 and parts[-1] in ROOM_VIEW_LEGEND else ""
     return f"{parts[0]} {ROOM_VIEW_LEGEND.get(view, view)}" if view else key
 
-def internal_room(display: str) -> str:
-    rev = {v: k for k, v in ROOM_VIEW_LEGEND.items()}
-    if display in rev:
-        return rev[display]
-    if display.startswith("AP "):
-        return {"AP Studio Mountain": "AP_Studio_MA",
-                "AP 1BR Mountain": "AP_1BR_MA",
-                "AP 2BR Mountain": "AP_2BR_MA",
-                "AP 2BR Ocean": "AP_2BR_MK"}[display]
-    base, *view = display.rsplit(maxsplit=1)
-    return f"{base} {rev.get(view[0], view[0])}" if view else display
-
 def resolve_global(year: str, key: str) -> list:
     return data.get("global_dates", {}).get(year, {}).get(key, [])
 
@@ -207,12 +195,13 @@ def renter_breakdown(resort, room, checkin, nights, rate, discount):
     for i in range(nights):
         d = checkin + timedelta(days=i)
         entry, _ = generate_data(resort, d)
-        pts = entry.get(room, 0)
-        eff_pts, disc = apply_discount(pts, discount, d)
+        raw_pts = entry.get(room, 0)                    # FULL points
+        eff_pts, disc = apply_discount(raw_pts, discount, d)
         if disc:
             applied = True
             disc_days.append(fmt_date(d))
-        rent = math.ceil(pts * rate)
+        rent = math.ceil(raw_pts * rate)                # RENT BASED ON FULL POINTS
+        
         if entry.get("HolidayWeek"):
             if entry.get("HolidayWeekStart"):
                 cur_h = entry["holiday_name"]
@@ -307,12 +296,13 @@ def compare_renter(resort, rooms, checkin, nights, rate, discount):
         h_name = next((n for s, e, n in holiday_ranges if s <= d <= e), None)
         is_h_start = entry.get("HolidayWeekStart")
         for room in rooms:
-            pts = entry.get(room, 0)
-            eff_pts, disc = apply_discount(pts, discount, d)
+            raw_pts = entry.get(room, 0)
+            eff_pts, disc = apply_discount(raw_pts, discount, d)
             if disc:
                 applied = True
                 disc_days.append(fmt_date(d))
-            rent = math.ceil(pts * rate)
+            rent = math.ceil(raw_pts * rate)  # FULL RENT
+            
             if is_holiday and is_h_start:
                 if h_name not in holiday_totals[room]:
                     h_start = min(s for s, _, n in holiday_ranges if n == h_name)
@@ -437,50 +427,39 @@ def adjust_date_range(resort, start, nights):
 user_mode = st.sidebar.selectbox("User Mode", ["Renter", "Owner"], index=1, key="mode")
 st.title(f"Marriott Vacation Club {'Rent' if user_mode=='Renter' else 'Cost'} Calculator")
 
-with st.expander("How " + ("Rent" if user_mode=="Renter" else "Cost") + " Is Calculated"):
-    if user_mode == "Renter":
-        if st.session_state.allow_renter_modifications:
-            st.markdown("""
-            - Authored by Desmond Kwang https://www.facebook.com/dkwang62
-            - Rental Rate per Point is based on MVC Abound maintenance fees or custom input
-            - Default: $0.81 for 2025 stays (actual rate)
-            - Default: $0.86 for 2026 stays (forecasted rate)
-            - **Booked within 60 days**: 30% discount on points required (Presidential)
-            - **Booked within 30 days**: 25% discount on points required (Executive)
-            - Rent = (Points × Discount Multiplier) × Rate per Point
-            """)
-        else:
-            st.markdown("""
-            - Authored by Desmond Kwang https://www.facebook.com/dkwang62
-            - Rental Rate per Point is based on MVC Abound maintenance fees
-            - Default: $0.81 for 2025 stays (actual rate)
-            - Default: $0.86 for 2026 stays (forecasted rate)
-            - Rent = Points × Rate per Point
-            - Note: Rate modifications are disabled by the owner.
-            """)
-    else:
-        st.markdown("""
-        - Authored by Desmond Kwang https://www.facebook.com/dkwang62
-        - Cost of capital = Points × Purchase Price per Point × Cost of Capital %
-        - Depreciation = Points × [(Purchase Price – Salvage) ÷ Useful Life]
-        - Total cost = Maintenance + Capital Cost + Depreciation
-        - If no cost components are selected, only points are displayed
-        """)
-
-# DATE INPUT - NO `format=` (works everywhere)
+# DATE INPUT
 checkin = st.date_input(
     "Check-in Date",
     min_value=datetime(2025,1,3).date(),
     max_value=datetime(2026,12,31).date(),
     value=datetime(2026,6,12).date()
 )
-
-# SHOW FORMATTED DATE
 st.markdown(f"**Selected Check-in:** `{fmt_date(checkin)}`")
-
 nights = st.number_input("Number of Nights", 1, 30, 7)
 
-rate_per_point = 0.81
+# SMART MAINTENANCE RATE FROM data.json
+maintenance_rates = data.get("maintenance_rates", {})
+default_rate = maintenance_rates.get(str(checkin.year), 0.86)
+
+with st.expander("How " + ("Rent" if user_mode=="Renter" else "Cost") + " Is Calculated"):
+    if user_mode == "Renter":
+        st.markdown(f"""
+        - Authored by Desmond Kwang https://www.facebook.com/dkwang62
+        - Rental Rate per Point is based on MVC Abound maintenance fees
+        - Default: **${default_rate:.2f}/point** for {checkin.year} stays (from data.json)
+        - **Booked within 60 days**: 30% discount on points required (Presidential)
+        - **Booked within 30 days**: 25% discount on points required (Executive)
+        - **Rent = Full Points × Rate** (discount does NOT reduce rent)
+        """)
+    else:
+        st.markdown("""
+        - Authored by Desmond Kwang https://www.facebook.com/dkwang62
+        - Cost of capital = Points × Purchase Price per Point × Cost of Capital %
+        - Depreciation = Points × [(Purchase Price – Salvage) ÷ Useful Life]
+        - Total cost = Maintenance + Capital Cost + Depreciation
+        """)
+
+rate_per_point = default_rate
 discount_opt = None
 disc_mul = 1.0
 coc = 0.07
@@ -499,7 +478,7 @@ with st.sidebar:
         disc_mul = 1 - disc_lvl/100
         inc_maint = st.checkbox("Include Maintenance Cost", True)
         if inc_maint:
-            rate_per_point = st.number_input("Maintenance Rate per Point ($)", 0.0, step=0.01, value=0.81)
+            rate_per_point = st.number_input("Maintenance Rate per Point ($)", 0.0, step=0.01, value=default_rate)
         inc_cap = st.checkbox("Include Capital Cost", True)
         if inc_cap:
             coc = st.number_input("Cost of Capital (%)", 0.0, 100.0, 7.0, 0.1) / 100
@@ -515,27 +494,22 @@ with st.sidebar:
             opt = st.radio("Rate Option",
                            ["Based on Maintenance Rate", "Custom Rate",
                             "Booked within 60 days", "Booked within 30 days"])
-            base = 0.81 if checkin.year == 2025 else 0.86
             if opt == "Based on Maintenance Rate":
-                rate_per_point, discount_opt = base, None
+                rate_per_point, discount_opt = default_rate, None
             elif opt == "Booked within 60 days":
-                rate_per_point, discount_opt = base, "within_60_days"
+                rate_per_point, discount_opt = default_rate, "within_60_days"
             elif opt == "Booked within 30 days":
-                rate_per_point, discount_opt = base, "within_30_days"
+                rate_per_point, discount_opt = default_rate, "within_30_days"
             else:
-                rate_per_point = st.number_input("Custom Rate per Point ($)", 0.0, step=0.01, value=base)
+                rate_per_point = st.number_input("Custom Rate per Point ($)", 0.0, step=0.01, value=default_rate)
                 discount_opt = None
         else:
-            rate_per_point = 0.81 if checkin.year == 2025 else 0.86
-
-if user_mode == "Renter" and not st.session_state.allow_renter_modifications:
-    rate_per_point = 0.81 if checkin.year == 2025 else 0.86
-    discount_opt = None
+            rate_per_point = default_rate
+            discount_opt = None
 
 # Resort & room selection
 st.subheader("Select Resort")
-st.session_state.setdefault("selected_resort",
-    data["resorts_list"][0] if data["resorts_list"] else "")
+st.session_state.setdefault("selected_resort", data["resorts_list"][0])
 selected = st.multiselect("Type to filter", data["resorts_list"],
                           default=None, max_selections=1, key="resort_sel")
 resort = selected[0] if selected else st.session_state.selected_resort
@@ -566,9 +540,8 @@ room = st.selectbox("Select Room Type", room_types, key="room_sel")
 compare = st.multiselect("Compare With Other Room Types",
                          [r for r in room_types if r != room])
 
-# ADJUST HOLIDAY RANGE - NOW DEFINED BEFORE USE
+# ADJUST HOLIDAY RANGE
 checkin_adj, nights_adj, adjusted = adjust_date_range(resort, checkin, nights)
-
 if adjusted:
     end_date = checkin_adj + timedelta(days=nights_adj-1)
     st.info(f"Adjusted to full holiday: **{fmt_date(checkin_adj)}** to **{fmt_date(end_date)}** ({nights_adj} nights)")
@@ -578,7 +551,6 @@ if adjusted:
 # ----------------------------------------------------------------------
 if st.button("Calculate"):
     gantt = gantt_chart(resort, checkin.year)
-
     if user_mode == "Renter":
         df, pts, rent, disc_ap, disc_days = renter_breakdown(
             resort, room, checkin_adj, nights_adj, rate_per_point, discount_opt)
@@ -588,7 +560,7 @@ if st.button("Calculate"):
             disc_pct = 30 if discount_opt == "within_60_days" else 25
             st.success(f"Discount Applied: {disc_pct}% off points "
                        f"({len(disc_days)} day(s): {', '.join(disc_days)})")
-        st.success(f"Total Points: {pts} | Total Rent: ${rent}")
+        st.success(f"Total Points Required: {pts:,} | Total Rent: ${rent:,}")
         st.download_button("Download CSV", df.to_csv(index=False).encode(),
                            f"{resort}_{fmt_date(checkin_adj).replace(' ', '_')}_breakdown.csv", "text/csv")
     else:
@@ -604,10 +576,10 @@ if st.button("Calculate"):
             cols.append("Total Cost")
         st.subheader(f"{resort} Stay Breakdown")
         st.dataframe(df[cols], use_container_width=True)
-        st.success(f"Total Points: {pts} | Total Cost: ${cost}")
-        if inc_maint and m_cost: st.success(f"Maintenance: ${m_cost}")
-        if inc_cap and c_cost: st.success(f"Capital Cost: ${c_cost}")
-        if inc_dep and d_cost: st.success(f"Depreciation: ${d_cost}")
+        st.success(f"Total Points Used: {pts:,} | Total Cost: ${cost:,}")
+        if inc_maint and m_cost: st.success(f"Maintenance: ${m_cost:,}")
+        if inc_cap and c_cost: st.success(f"Capital Cost: ${c_cost:,}")
+        if inc_dep and d_cost: st.success(f"Depreciation: ${d_cost:,}")
         st.download_button("Download CSV", df.to_csv(index=False).encode(),
                            f"{resort}_{fmt_date(checkin_adj).replace(' ', '_')}_breakdown.csv", "text/csv")
 
