@@ -6035,6 +6035,12 @@
     "Waikoloa Ocean Club",
     "Westin Ka'anapali"
   ],
+  "maintenance_rates": {
+    "2025": 0.81,
+    "2026": 0.86,
+    "2027": 0.91,
+    "2028": 0.96
+  },
   "global_dates": {
     "2025": {
       "Presidents Day": [
