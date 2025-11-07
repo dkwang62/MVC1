@@ -2747,29 +2747,29 @@
       "2025": {
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Easter": "global:Easter",
-        "Easter2": "global:Easter"
+        "Easter1": "global:Easter1",
+        "Easter": "global:Easter"
       },
       "2026": {
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Easter": "global:Easter",
-        "Easter1": "global:Easter1"
+        "Easter1": "global:Easter1",
+        "Easter": "global:Easter"
       }
     },
     "Village Paris": {
       "2025": {
         "Week 1": "global:Week 1",
-        "Easter": "global:Easter",
         "Easter1": "global:Easter1",
+        "Easter": "global:Easter",
         "Mid-Term": "global:Mid-Term",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       },
       "2026": {
         "Week 1": "global:Week 1",
-        "Easter": "global:Easter",
         "Easter1": "global:Easter1",
+        "Easter": "global:Easter",
         "Mid-Term": "global:Mid-Term",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
@@ -2779,14 +2779,14 @@
       "2025": {
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Easter": "global:Easter",
-        "Easter1": "global:Easter1"
+        "Easter1": "global:Easter1",
+        "Easter": "global:Easter"
       },
       "2026": {
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Easter": "global:Easter",
-        "Easter1": "global:Easter1"
+        "Easter1": "global:Easter1",
+        "Easter": "global:Easter"
       }
     },
     "Sheraton Kauai": {
