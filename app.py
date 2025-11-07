@@ -399,7 +399,7 @@ def compare_owner(resort, rooms, checkin, nights, rate, disc_lvl,
 # ----------------------------------------------------------------------
 # UI
 # ----------------------------------------------------------------------
-user_mode = st.sidebar.selectbox("User Mode", ["Renter", "Owner"], index=0, key="mode")
+user_mode = st.sidebar.selectbox("User Mode", ["Renter", "Owner"], index=1, key="mode")
 st.title(f"Marriott Vacation Club {'Rent' if user_mode=='Renter' else 'Cost'} Calculator")
 
 with st.expander("How " + ("Rent" if user_mode=="Renter" else "Cost") + " Is Calculated"):
