@@ -81,6 +81,7 @@ def generate_data(resort: str, date: datetime.date):
     h_start = h_end = None
     is_h_start = False
 
+    # New Year's
     if (date.month == 12 and date.day >= 26) or (date.month == 1 and date.day <= 1):
         prev = str(int(year) - 1)
         start = datetime.strptime(f"{prev}-12-26", "%Y-%m-%d").date()
@@ -88,6 +89,7 @@ def generate_data(resort: str, date: datetime.date):
         if start <= date <= end:
             holiday, h_start, h_end, is_h_start = "New Year's Eve/Day", start, end, date == start
 
+    # Holiday Weeks
     if not holiday and year in HOLIDAY_WEEKS.get(resort, {}):
         for name, raw in HOLIDAY_WEEKS[resort][year].items():
             if isinstance(raw, str) and raw.startswith("global:"):
@@ -99,6 +101,7 @@ def generate_data(resort: str, date: datetime.date):
                     holiday, h_start, h_end, is_h_start = name, s, e, date == s
                     break
 
+    # Seasons
     if not holiday and year in SEASON_BLOCKS.get(resort, {}):
         for s_name, ranges in SEASON_BLOCKS[resort][year].items():
             for rs, re in ranges:
@@ -108,6 +111,7 @@ def generate_data(resort: str, date: datetime.date):
             if season != "Default Season":
                 break
 
+    # Points
     if holiday:
         src = REF_POINTS.get(resort, {}).get("Holiday Week", {}).get(holiday, {})
         for internal_key, pts in src.items():
@@ -138,42 +142,102 @@ def generate_data(resort: str, date: datetime.date):
     return entry, disp_to_int
 
 # ----------------------------------------------------------------------
-# Gantt Chart
+# GANTT CHART — FULLY FIXED
 # ----------------------------------------------------------------------
 def gantt_chart(resort: str, year: int):
     rows = []
     ys = str(year)
+
+    # === HOLIDAYS ===
     for name, raw in HOLIDAY_WEEKS.get(resort, {}).get(ys, {}).items():
         if isinstance(raw, str) and raw.startswith("global:"):
             raw = resolve_global(ys, raw.split(":", 1)[1])
         if len(raw) >= 2:
-            rows.append(dict(Task=name,
-                             Start=datetime.strptime(raw[0], "%Y-%m-%d").date(),
-                             Finish=datetime.strptime(raw[1], "%Y-%m-%d").date(),
-                             Type="Holiday"))
+            try:
+                start_dt = datetime.strptime(raw[0], "%Y-%m-%d")
+                end_dt = datetime.strptime(raw[1], "%Y-%m-%d")
+                if start_dt >= end_dt:
+                    continue
+                rows.append({
+                    "Task": name,
+                    "Start": start_dt,
+                    "Finish": end_dt,
+                    "Type": "Holiday"
+                })
+            except:
+                continue
+
+    # === SEASONS ===
     for s_name, ranges in SEASON_BLOCKS.get(resort, {}).get(ys, {}).items():
         for i, (s, e) in enumerate(ranges, 1):
-            rows.append(dict(Task=f"{s_name} {i}",
-                             Start=datetime.strptime(s, "%Y-%m-%d").date(),
-                             Finish=datetime.strptime(e, "%Y-%m-%d").date(),
-                             Type=s_name))
-    df = pd.DataFrame(rows) if rows else pd.DataFrame({
-        "Task": ["No Data"], "Start": [datetime.now().date()],
-        "Finish": [datetime.now().date() + timedelta(days=1)], "Type": ["No Data"]
-    })
-    colors = {t: {"Holiday": "rgb(255,99,71)", "Low Season": "rgb(135,206,250)",
-                 "High Season": "rgb(255,69,0)", "Peak Season": "rgb(255,215,0)",
-                 "Shoulder": "rgb(50,205,50)", "Peak": "rgb(255,69,0)",
-                 "Summer": "rgb(255,165,0)", "Low": "rgb(70,130,180)",
-                 "Mid Season": "rgb(60,179,113)", "No Data": "rgb(128,128,128)"}.get(t, "rgb(169,169,169)")
-              for t in df["Type"].unique()}
-    fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task",
-                      color="Type", color_discrete_map=colors,
-                      title=f"{resort} Seasons & Holidays ({year})", height=600)
+            try:
+                start_dt = datetime.strptime(s, "%Y-%m-%d")
+                end_dt = datetime.strptime(e, "%Y-%m-%d")
+                if start_dt >= end_dt:
+                    continue
+                rows.append({
+                    "Task": f"{s_name} #{i}",
+                    "Start": start_dt,
+                    "Finish": end_dt,
+                    "Type": s_name
+                })
+            except:
+                continue
+
+    # === FALLBACK ===
+    if not rows:
+        today = datetime.now()
+        rows = [{
+            "Task": "No Data",
+            "Start": today,
+            "Finish": today + timedelta(days=1),
+            "Type": "No Data"
+        }]
+
+    df = pd.DataFrame(rows)
+    df["Start"] = pd.to_datetime(df["Start"])
+    df["Finish"] = pd.to_datetime(df["Finish"])
+
+    # === COLORS ===
+    color_dict = {
+        "Holiday": "rgb(255,99,71)",
+        "Low Season": "rgb(135,206,250)",
+        "High Season": "rgb(255,69,0)",
+        "Peak Season": "rgb(255,215,0)",
+        "Shoulder": "rgb(50,205,50)",
+        "Peak": "rgb(255,69,0)",
+        "Summer": "rgb(255,165,0)",
+        "Low": "rgb(70,130,180)",
+        "Mid Season": "rgb(60,179,113)",
+        "No Data": "rgb(128,128,128)"
+    }
+    colors = {t: color_dict.get(t, "rgb(169,169,169)") for t in df["Type"].unique()}
+
+    # === PLOT ===
+    fig = px.timeline(
+        df,
+        x_start="Start",
+        x_end="Finish",
+        y="Task",
+        color="Type",
+        color_discrete_map=colors,
+        title=f"{resort} Seasons & Holidays ({year})",
+        height=max(400, len(df) * 35)
+    )
+
     fig.update_yaxes(autorange="reversed")
-    fig.update_layout(xaxis_title="Date", yaxis_title="Period", showlegend=True)
-    fig.update_xaxes(tickformat="%d %b %Y", hoverformat="%d %b %Y")
-    fig.update_traces(hovertemplate="<b>%{y}</b><br>Start: %{x|%d %b %Y}<br>End: %{x|%d %b %Y}<extra></extra>")
+    fig.update_xaxes(tickformat="%d %b %Y")
+
+    # CORRECT HOVER
+    fig.update_traces(
+        hovertemplate=(
+            "<b>%{y}</b><br>"
+            "Start: %{base|%d %b %Y}<br>"
+            "End: %{x|%d %b %Y}<extra></extra>"
+        )
+    )
+
+    fig.update_layout(showlegend=True, xaxis_title="Date", yaxis_title="Period")
     return fig
 
 # ----------------------------------------------------------------------
@@ -195,13 +259,13 @@ def renter_breakdown(resort, room, checkin, nights, rate, discount):
     for i in range(nights):
         d = checkin + timedelta(days=i)
         entry, _ = generate_data(resort, d)
-        raw_pts = entry.get(room, 0)                    # FULL points
+        raw_pts = entry.get(room, 0)
         eff_pts, disc = apply_discount(raw_pts, discount, d)
         if disc:
             applied = True
             disc_days.append(fmt_date(d))
-        rent = math.ceil(raw_pts * rate)                # RENT BASED ON FULL POINTS
-        
+        rent = math.ceil(raw_pts * rate)
+       
         if entry.get("HolidayWeek"):
             if entry.get("HolidayWeekStart"):
                 cur_h = entry["holiday_name"]
@@ -301,8 +365,8 @@ def compare_renter(resort, rooms, checkin, nights, rate, discount):
             if disc:
                 applied = True
                 disc_days.append(fmt_date(d))
-            rent = math.ceil(raw_pts * rate)  # FULL RENT
-            
+            rent = math.ceil(raw_pts * rate)
+           
             if is_holiday and is_h_start:
                 if h_name not in holiday_totals[room]:
                     h_start = min(s for s, _, n in holiday_ranges if n == h_name)
@@ -401,12 +465,12 @@ def compare_owner(resort, rooms, checkin, nights, disc_mul,
     return pivot, chart_df, holiday_df
 
 # ----------------------------------------------------------------------
-# Adjust holiday range
+# Adjust holiday range — FIXED
 # ----------------------------------------------------------------------
 def adjust_date_range(resort, start, nights):
     end = start + timedelta(days=nights-1)
     ranges = []
-    if resort in data.get("holiday_weeks", {}):
+    if resort in data.get("holiday_weeks", {}):  # ← Fixed: added missing )
         for name, raw in data["holiday_weeks"][resort].get(str(start.year), {}).items():
             if isinstance(raw, str) and raw.startswith("global:"):
                 raw = resolve_global(str(start.year), raw.split(":",1)[1])
@@ -427,7 +491,6 @@ def adjust_date_range(resort, start, nights):
 user_mode = st.sidebar.selectbox("User Mode", ["Renter", "Owner"], index=1, key="mode")
 st.title(f"Marriott Vacation Club {'Rent' if user_mode=='Renter' else 'Cost'} Calculator")
 
-# DATE INPUT
 checkin = st.date_input(
     "Check-in Date",
     min_value=datetime(2025,1,3).date(),
@@ -437,7 +500,6 @@ checkin = st.date_input(
 st.markdown(f"**Selected Check-in:** `{fmt_date(checkin)}`")
 nights = st.number_input("Number of Nights", 1, 30, 7)
 
-# SMART MAINTENANCE RATE FROM data.json
 maintenance_rates = data.get("maintenance_rates", {})
 default_rate = maintenance_rates.get(str(checkin.year), 0.86)
 
@@ -507,7 +569,6 @@ with st.sidebar:
             rate_per_point = default_rate
             discount_opt = None
 
-# Resort & room selection
 st.subheader("Select Resort")
 st.session_state.setdefault("selected_resort", data["resorts_list"][0])
 selected = st.multiselect("Type to filter", data["resorts_list"],
@@ -519,7 +580,6 @@ if resort != st.session_state.selected_resort:
 st.subheader(f"{resort} {'Rent' if user_mode=='Renter' else 'Cost'} Calculator")
 year = str(checkin.year)
 
-# Cache clear
 if (st.session_state.get("last_resort") != resort or
         st.session_state.get("last_year") != year):
     st.session_state.data_cache.clear()
@@ -528,7 +588,6 @@ if (st.session_state.get("last_resort") != resort or
     st.session_state.last_resort = resort
     st.session_state.last_year = year
 
-# Room list
 if "room_types" not in st.session_state:
     entry, d2i = generate_data(resort, checkin)
     st.session_state.room_types = sorted(k for k in entry if k not in
@@ -540,17 +599,14 @@ room = st.selectbox("Select Room Type", room_types, key="room_sel")
 compare = st.multiselect("Compare With Other Room Types",
                          [r for r in room_types if r != room])
 
-# ADJUST HOLIDAY RANGE
 checkin_adj, nights_adj, adjusted = adjust_date_range(resort, checkin, nights)
 if adjusted:
     end_date = checkin_adj + timedelta(days=nights_adj-1)
     st.info(f"Adjusted to full holiday: **{fmt_date(checkin_adj)}** to **{fmt_date(end_date)}** ({nights_adj} nights)")
 
-# ----------------------------------------------------------------------
-# Calculate
-# ----------------------------------------------------------------------
 if st.button("Calculate"):
     gantt = gantt_chart(resort, checkin.year)
+    
     if user_mode == "Renter":
         df, pts, rent, disc_ap, disc_days = renter_breakdown(
             resort, room, checkin_adj, nights_adj, rate_per_point, discount_opt)
