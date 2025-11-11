@@ -2548,6 +2548,100 @@
           ]
         ]
       }
+    },
+    "Pulse San Francisco": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-03-13"
+          ],
+          [
+            "2025-11-14",
+            "2025-11-20"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-03-14",
+            "2025-04-17"
+          ],
+          [
+            "2025-04-25",
+            "2025-06-12"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-06-13",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-09-25"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-09-26",
+            "2025-11-13"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-03-12"
+          ],
+          [
+            "2026-11-13",
+            "2026-11-19"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-03-13",
+            "2026-04-02"
+          ],
+          [
+            "2026-04-10",
+            "2026-06-11"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-06-12",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-09-24"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-09-25",
+            "2026-11-12"
+          ]
+        ]
+      }
     }
   },
   "holiday_weeks": {
@@ -3012,6 +3106,26 @@
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
+    },
+    "Pulse San Francisco": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Easter": "global:Easter",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Easter": "global:Easter",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
     }
   },
   "room_view_legend": {
@@ -3268,7 +3382,7 @@
           "AP_Studio_MA": 440,
           "AP_1BR_MA": 630,
           "AP_2BR_MA": 960,
-          "AP_2BR_MK": 1160,      
+          "AP_2BR_MK": 1160,
           "Studio MA": 360,
           "Studio MK": 430,
           "Studio PHMA": 360,
@@ -4516,7 +4630,7 @@
           "3-BDRM GV": 2450,
           "3-BDRM SF": 3350
         },
-        "New Year’s Eve/Day": {
+        "New Year\u2019s Eve/Day": {
           "Studio GV": 850,
           "Studio SF": 850,
           "2-BDRM GV": 1925,
@@ -4569,7 +4683,7 @@
           "2-BDRM": 1800,
           "3-BDRM": 2250
         },
-        "Mid–Term": {
+        "Mid\u2013Term": {
           "Studio": 1575,
           "2-BDRM": 3100,
           "3-BDRM": 3825
@@ -4579,7 +4693,7 @@
           "2-BDRM": 2925,
           "3-BDRM": 3600
         },
-        "New Year’s Eve/Day": {
+        "New Year\u2019s Eve/Day": {
           "Studio": 1750,
           "2-BDRM": 3325,
           "3-BDRM": 4050
@@ -4673,7 +4787,7 @@
           "2-BDRM": 2275,
           "3-BDRM": 2500
         },
-        "New Year’s Eve/Day": {
+        "New Year\u2019s Eve/Day": {
           "1-BDRM": 1700,
           "2-BDRM": 2275,
           "3-BDRM": 2500
@@ -6003,10 +6117,112 @@
           "3-BDRM OF": 7175
         }
       }
+    },
+    "Pulse San Francisco": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Guest No-View": 400,
+          "Guest Courtyard": 475,
+          "Guest Urban": 425,
+          "Guest ConnectUrban": 850
+        },
+        "Sun-Thu": {
+          "Guest No-View": 250,
+          "Guest Courtyard": 300,
+          "Guest Urban": 275,
+          "Guest ConnectUrban": 550
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Guest No-View": 525,
+          "Guest Courtyard": 650,
+          "Guest Urban": 575,
+          "Guest ConnectUrban": 1150
+        },
+        "Sun-Thu": {
+          "Guest No-View": 300,
+          "Guest Courtyard": 375,
+          "Guest Urban": 350,
+          "Guest ConnectUrban": 700
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Guest No-View": 625,
+          "Guest Courtyard": 750,
+          "Guest Urban": 675,
+          "Guest ConnectUrban": 1350
+        },
+        "Sun-Thu": {
+          "Guest No-View": 350,
+          "Guest Courtyard": 450,
+          "Guest Urban": 400,
+          "Guest ConnectUrban": 800
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "Guest No-View": 775,
+          "Guest Courtyard": 900,
+          "Guest Urban": 825,
+          "Guest ConnectUrban": 1650
+        },
+        "Sun-Thu": {
+          "Guest No-View": 450,
+          "Guest Courtyard": 550,
+          "Guest Urban": 500,
+          "Guest ConnectUrban": 1000
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Guest No-View": 2575,
+          "Guest Courtyard": 3175,
+          "Guest Urban": 2925,
+          "Guest ConnectUrban": 5850
+        },
+        "Independence Day": {
+          "Guest No-View": 3000,
+          "Guest Courtyard": 3750,
+          "Guest Urban": 3350,
+          "Guest ConnectUrban": 6700
+        },
+        "Easter": {
+          "Guest ConnectUrban": 3000,
+          "Guest Courtyard": 3750,
+          "Guest No-View": 3350,
+          "Guest Urban": 6700
+        },
+        "Thanksgiving": {
+          "Guest No-View": 2050,
+          "Guest Courtyard": 2450,
+          "Guest Urban": 2225,
+          "Guest ConnectUrban": 4450
+        },
+        "Thanksgiving 2": {
+          "Guest No-View": 2550,
+          "Guest Courtyard": 3175,
+          "Guest Urban": 2900,
+          "Guest ConnectUrban": 5800
+        },
+        "Christmas": {
+          "Guest No-View": 3575,
+          "Guest Courtyard": 4325,
+          "Guest Urban": 3925,
+          "Guest ConnectUrban": 7850
+        },
+        "New Year's Eve/Day": {
+          "Guest No-View": 3800,
+          "Guest Courtyard": 4550,
+          "Guest Urban": 4150,
+          "Guest ConnectUrban": 8300
+        }
+      }
     }
   },
   "resorts_list": [
-    "Phuket Beach Club",
+    "Ko Olina Beach Club",
     "Aruba Ocean Club",
     "Aruba Surf Club",
     "Bali Nusa Dua Gardens",
@@ -6018,15 +6234,16 @@
     "Grand Chateau Vegas",
     "Grande Vista Orlando",
     "Kauai Beach Club",
-    "Ko Olina Beach Club",
     "Marbella Beach",
     "Maui Ocean Club",
     "Mayflower Washington",
     "Pulse New York",
     "Pulse San Diego",
+    "Pulse San Francisco",
     "Mountainside Utah",
     "Newport Coast",
     "Ocean Pointe",
+    "Phuket Beach Club",
     "Playa Andaluza",
     "Shadow Ridge",
     "Sheraton Kauai",
@@ -6150,5 +6367,36 @@
         "2026-09-10"
       ]
     }
+  },
+  "point_costs": {
+    "Ko Olina Beach Club": {},
+    "Aruba Ocean Club": {},
+    "Aruba Surf Club": {},
+    "Bali Nusa Dua Gardens": {},
+    "Bali Nusa Dua Terrace": {},
+    "BeachPlace Towers": {},
+    "Canyon Villas Arizona": {},
+    "Crystal Shores": {},
+    "Desert Springs II": {},
+    "Grand Chateau Vegas": {},
+    "Grande Vista Orlando": {},
+    "Kauai Beach Club": {},
+    "Marbella Beach": {},
+    "Maui Ocean Club": {},
+    "Mayflower Washington": {},
+    "Pulse New York": {},
+    "Pulse San Diego": {},
+    "Mountainside Utah": {},
+    "Newport Coast": {},
+    "Ocean Pointe": {},
+    "Phuket Beach Club": {},
+    "Playa Andaluza": {},
+    "Shadow Ridge": {},
+    "Sheraton Kauai": {},
+    "Surfers Paradise": {},
+    "Village Paris": {},
+    "Waikoloa Ocean Club": {},
+    "Westin Ka'anapali": {},
+    "Pulse San Francisco": {}
   }
 }
