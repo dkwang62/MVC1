@@ -6325,7 +6325,7 @@
     }
   },
   "resorts_list": [
-    "Ko Olina Beach Club",
+    "Phuket Khao Lak",
     "Aruba Ocean Club",
     "Aruba Surf Club",
     "Bali Nusa Dua Gardens",
@@ -6337,6 +6337,7 @@
     "Grand Chateau Vegas",
     "Grande Vista Orlando",
     "Kauai Beach Club",
+    "Ko Olina Beach Club",
     "Marbella Beach",
     "Maui Ocean Club",
     "Mayflower Washington",
@@ -6353,8 +6354,7 @@
     "Surfers Paradise",
     "Village Paris",
     "Waikoloa Ocean Club",
-    "Westin Ka'anapali",
-    "Phuket Khao Lak"
+    "Westin Ka'anapali"
   ],
   "maintenance_rates": {
     "2025": 0.81,
