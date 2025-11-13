@@ -816,11 +816,11 @@
         "High Season": [
           [
             "2025-01-03",
-            "2025-01-23"
+            "2025-01-30"
           ],
           [
-            "2025-01-31",
-            "2025-05-22"
+            "2025-03-28",
+            "2025-04-17"
           ],
           [
             "2025-07-04",
@@ -833,12 +833,12 @@
         ],
         "Low Season": [
           [
-            "2025-05-23",
-            "2025-07-03"
+            "2025-01-31",
+            "2025-02-13"
           ],
           [
-            "2025-08-15",
-            "2025-09-25"
+            "2025-02-21",
+            "2025-03-27"
           ]
         ]
       },
@@ -846,11 +846,11 @@
         "High Season": [
           [
             "2026-01-02",
-            "2026-02-12"
+            "2026-01-29"
           ],
           [
-            "2026-02-20",
-            "2026-05-21"
+            "2026-03-27",
+            "2026-04-02"
           ],
           [
             "2026-07-03",
@@ -863,12 +863,12 @@
         ],
         "Low Season": [
           [
-            "2026-05-22",
-            "2026-07-02"
+            "2026-01-30",
+            "2026-02-12"
           ],
           [
-            "2026-08-14",
-            "2026-09-24"
+            "2026-02-20",
+            "2026-03-26"
           ]
         ]
       }
@@ -2642,6 +2642,44 @@
           ]
         ]
       }
+    },
+    "Phuket Khao Lak": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-08-28",
+            "2025-09-25"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-09-26",
+            "2025-12-18"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-05-22",
+            "2026-09-24"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-04-02"
+          ],
+          [
+            "2026-04-10",
+            "2026-05-21"
+          ],
+          [
+            "2026-09-25",
+            "2026-12-17"
+          ]
+        ]
+      }
     }
   },
   "holiday_weeks": {
@@ -3123,6 +3161,18 @@
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
         "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Phuket Khao Lak": {
+      "2025": {
+        "Easter": "global:Easter",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Easter": "global:Easter",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
@@ -6219,6 +6269,59 @@
           "Guest ConnectUrban": 8300
         }
       }
+    },
+    "Phuket Khao Lak": {
+      "Low Season": {
+        "Fri-Sat": {
+          "1BR": 270,
+          "2BR Pool": 470,
+          "2BR": 410
+        },
+        "Sun": {
+          "1BR": 210,
+          "2BR Pool": 380,
+          "2BR": 330
+        },
+        "Mon-Thu": {
+          "1BR": 150,
+          "2BR Pool": 260,
+          "2BR": 230
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "1BR": 460,
+          "2BR Pool": 810,
+          "2BR": 700
+        },
+        "Sun": {
+          "1BR": 360,
+          "2BR Pool": 640,
+          "2BR": 560
+        },
+        "Mon-Thu": {
+          "1BR": 260,
+          "2BR Pool": 460,
+          "2BR": 400
+        }
+      },
+      "Holiday Week": {
+        "Easter": {
+          "1BR": 4270,
+          "2BR Pool": 7540,
+          "2BR": 6570
+        },
+        "Christmas": {
+          "1BR": 4270,
+          "2BR Pool": 7540,
+          "2BR": 6570
+        },
+        "New Year's Eve/Day": {
+          "1BR": 4270,
+          "2BR Pool": 7540,
+          "2BR": 6570
+        }
+      }
     }
   },
   "resorts_list": [
@@ -6250,7 +6353,8 @@
     "Surfers Paradise",
     "Village Paris",
     "Waikoloa Ocean Club",
-    "Westin Ka'anapali"
+    "Westin Ka'anapali",
+    "Phuket Khao Lak"
   ],
   "maintenance_rates": {
     "2025": 0.81,
@@ -6397,6 +6501,7 @@
     "Village Paris": {},
     "Waikoloa Ocean Club": {},
     "Westin Ka'anapali": {},
-    "Pulse San Francisco": {}
+    "Pulse San Francisco": {},
+    "Phuket Khao Lak": {}
   }
 }
