@@ -3285,16 +3285,14 @@
         "Thanksgiving": "global:Thanksgiving",
         "Thanksgiving 2": "global:Thanksgiving 2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Presidents Day": "global:Presidents Day"
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
         "Thanksgiving 2": "global:Thanksgiving 2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Presidents Day": "global:Presidents Day"
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
     }
   },
@@ -6517,11 +6515,6 @@
           "Studio": 1725,
           "1BR": 2500,
           "2BR": 3775
-        },
-        "Presidents Day": {
-          "1BR": 1500,
-          "2BR": 1500,
-          "Studio": 1500
         }
       }
     }
@@ -6560,7 +6553,7 @@
     "Westin Ka'anapali"
   ],
   "maintenance_rates": {
-    "2025": 0.50,
+    "2025": 0.5,
     "2026": 0.56,
     "2027": 0.91,
     "2028": 0.96
