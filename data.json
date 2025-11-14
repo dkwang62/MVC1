@@ -6560,8 +6560,8 @@
     "Westin Ka'anapali"
   ],
   "maintenance_rates": {
-    "2025": 0.81,
-    "2026": 0.86,
+    "2025": 0.50,
+    "2026": 0.56,
     "2027": 0.91,
     "2028": 0.96
   },
@@ -6673,47 +6673,6 @@
         "2026-09-04",
         "2026-09-10"
       ]
-    }
-  },
-  "point_costs": {
-    "Aruba Ocean Club": {},
-    "Aruba Surf Club": {},
-    "Bali Nusa Dua Gardens": {},
-    "Bali Nusa Dua Terrace": {},
-    "BeachPlace Towers": {},
-    "Canyon Villas Arizona": {},
-    "Crystal Shores": {},
-    "Desert Springs II": {},
-    "Grand Chateau Vegas": {},
-    "Grande Vista Orlando": {},
-    "Kauai Beach Club": {},
-    "Ko Olina Beach Club": {},
-    "Marbella Beach": {},
-    "Maui Ocean Club": {},
-    "Mayflower Washington": {},
-    "Mountainside Utah": {},
-    "Newport Coast": {},
-    "Ocean Pointe": {},
-    "Phuket Beach Club": {},
-    "Phuket Khao Lak": {},
-    "Playa Andaluza": {},
-    "Pulse New York": {},
-    "Pulse San Diego": {},
-    "Pulse San Francisco": {},
-    "Shadow Ridge": {},
-    "Sheraton Kauai": {},
-    "Surfers Paradise": {},
-    "Village Paris": {},
-    "Waikoloa Ocean Club": {},
-    "Westin Ka'anapali": {},
-    "Grand Residence Tahoe": {
-      "Holiday Week": {
-        "Presidents Day": {
-          "1BR": 1500,
-          "2BR": 1500,
-          "Studio": 1500
-        }
-      }
     }
   }
 }
