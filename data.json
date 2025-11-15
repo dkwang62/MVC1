@@ -439,22 +439,22 @@
       "2025": {
         "Low Season": [
           [
-            "2025-04-18",
-            "2025-06-05"
+            "2025-07-06",
+            "2025-07-03"
           ],
           [
-            "2025-10-10",
-            "2025-11-20"
+            "2025-07-11",
+            "2025-09-04"
           ]
         ],
         "Mid Season": [
           [
-            "2025-06-06",
-            "2025-07-03"
+            "2025-01-03",
+            "2025-01-23"
           ],
           [
-            "2025-08-22",
-            "2025-10-09"
+            "2025-05-02",
+            "2025-06-05"
           ],
           [
             "2025-09-05",
@@ -467,44 +467,44 @@
         ],
         "High Season": [
           [
-            "2025-01-03",
+            "2025-01-24",
             "2025-01-30"
           ],
           [
-            "2025-04-04",
-            "2025-04-17"
+            "2025-04-11",
+            "2025-05-01"
           ],
           [
-            "2025-07-11",
-            "2025-08-21"
+            "2025-11-07",
+            "2025-11-20"
           ]
         ],
         "Peak Season": [
           [
             "2025-01-31",
-            "2025-02-13"
+            "2025-04-10"
           ]
         ]
       },
       "2026": {
         "Low Season": [
           [
-            "2026-04-17",
-            "2026-06-04"
-          ],
-          [
-            "2026-10-09",
-            "2026-11-19"
-          ]
-        ],
-        "Mid Season": [
-          [
             "2026-06-05",
             "2026-07-02"
           ],
           [
-            "2026-08-21",
-            "2026-10-08"
+            "2026-07-10",
+            "2026-09-03"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-01-02",
+            "2026-01-22"
+          ],
+          [
+            "2026-05-01",
+            "2026-06-04"
           ],
           [
             "2026-09-04",
@@ -517,22 +517,22 @@
         ],
         "High Season": [
           [
-            "2026-01-02",
+            "2026-01-23",
             "2026-01-29"
           ],
           [
-            "2026-04-03",
-            "2026-04-16"
+            "2026-04-10",
+            "2026-04-30"
           ],
           [
-            "2026-07-10",
-            "2026-08-20"
+            "2026-11-06",
+            "2026-11-19"
           ]
         ],
         "Peak Season": [
           [
             "2026-01-30",
-            "2026-02-12"
+            "2026-04-09"
           ]
         ]
       }
@@ -2548,240 +2548,6 @@
           ]
         ]
       }
-    },
-    "Pulse San Francisco": {
-      "2025": {
-        "Low Season": [
-          [
-            "2025-01-03",
-            "2025-02-13"
-          ],
-          [
-            "2025-02-21",
-            "2025-03-13"
-          ],
-          [
-            "2025-11-14",
-            "2025-11-20"
-          ],
-          [
-            "2025-12-05",
-            "2025-12-18"
-          ]
-        ],
-        "Mid Season": [
-          [
-            "2025-03-14",
-            "2025-04-17"
-          ],
-          [
-            "2025-04-25",
-            "2025-06-12"
-          ]
-        ],
-        "High Season": [
-          [
-            "2025-06-13",
-            "2025-07-03"
-          ],
-          [
-            "2025-07-11",
-            "2025-09-25"
-          ]
-        ],
-        "Peak Season": [
-          [
-            "2025-09-26",
-            "2025-11-13"
-          ]
-        ]
-      },
-      "2026": {
-        "Low Season": [
-          [
-            "2026-01-02",
-            "2026-02-12"
-          ],
-          [
-            "2026-02-20",
-            "2026-03-12"
-          ],
-          [
-            "2026-11-13",
-            "2026-11-19"
-          ],
-          [
-            "2026-12-04",
-            "2026-12-17"
-          ]
-        ],
-        "Mid Season": [
-          [
-            "2026-03-13",
-            "2026-04-02"
-          ],
-          [
-            "2026-04-10",
-            "2026-06-11"
-          ]
-        ],
-        "High Season": [
-          [
-            "2026-06-12",
-            "2026-07-02"
-          ],
-          [
-            "2026-07-10",
-            "2026-09-24"
-          ]
-        ],
-        "Peak Season": [
-          [
-            "2026-09-25",
-            "2026-11-12"
-          ]
-        ]
-      }
-    },
-    "Phuket Khao Lak": {
-      "2025": {
-        "Low Season": [
-          [
-            "2025-08-28",
-            "2025-09-25"
-          ]
-        ],
-        "High Season": [
-          [
-            "2025-09-26",
-            "2025-12-18"
-          ]
-        ]
-      },
-      "2026": {
-        "Low Season": [
-          [
-            "2026-05-22",
-            "2026-09-24"
-          ]
-        ],
-        "High Season": [
-          [
-            "2026-01-02",
-            "2026-04-02"
-          ],
-          [
-            "2026-04-10",
-            "2026-05-21"
-          ],
-          [
-            "2026-09-25",
-            "2026-12-17"
-          ]
-        ]
-      }
-    },
-    "Grand Residence Tahoe": {
-      "2025": {
-        "Low Season": [
-          [
-            "2025-04-18",
-            "2025-06-05"
-          ],
-          [
-            "2025-10-10",
-            "2025-11-20"
-          ]
-        ],
-        "Mid Season": [
-          [
-            "2025-06-06",
-            "2025-07-03"
-          ],
-          [
-            "2025-08-22",
-            "2025-10-09"
-          ]
-        ],
-        "High Season": [
-          [
-            "2025-01-03",
-            "2025-01-30"
-          ],
-          [
-            "2025-04-04",
-            "2025-04-17"
-          ],
-          [
-            "2025-07-11",
-            "2025-08-21"
-          ],
-          [
-            "2025-12-05",
-            "2025-12-18"
-          ]
-        ],
-        "Peak Season": [
-          [
-            "2025-01-31",
-            "2025-02-13"
-          ],
-          [
-            "2025-02-21",
-            "2025-04-03"
-          ]
-        ]
-      },
-      "2026": {
-        "Low Season": [
-          [
-            "2026-04-17",
-            "2026-06-04"
-          ],
-          [
-            "2026-10-09",
-            "2026-11-19"
-          ]
-        ],
-        "Mid Season": [
-          [
-            "2026-06-05",
-            "2026-07-02"
-          ],
-          [
-            "2026-08-21",
-            "2026-10-08"
-          ]
-        ],
-        "High Season": [
-          [
-            "2026-01-02",
-            "2026-01-29"
-          ],
-          [
-            "2026-04-03",
-            "2026-04-16"
-          ],
-          [
-            "2026-07-10",
-            "2026-08-20"
-          ],
-          [
-            "2026-12-04",
-            "2026-12-17"
-          ]
-        ],
-        "Peak Season": [
-          [
-            "2026-01-30",
-            "2026-02-12"
-          ],
-          [
-            "2026-02-20",
-            "2026-04-02"
-          ]
-        ]
-      }
     }
   },
   "holiday_weeks": {
@@ -3246,56 +3012,6 @@
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
-    },
-    "Pulse San Francisco": {
-      "2025": {
-        "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
-        "Independence Day": "global:Independence Day",
-        "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
-        "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
-      },
-      "2026": {
-        "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
-        "Independence Day": "global:Independence Day",
-        "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
-        "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
-      }
-    },
-    "Phuket Khao Lak": {
-      "2025": {
-        "Easter": "global:Easter",
-        "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
-      },
-      "2026": {
-        "Easter": "global:Easter",
-        "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
-      }
-    },
-    "Grand Residence Tahoe": {
-      "2025": {
-        "Independence Day": "global:Independence Day",
-        "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
-        "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Presidents Day": "global:Presidents Day"
-      },
-      "2026": {
-        "Independence Day": "global:Independence Day",
-        "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
-        "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Presidents Day": "global:Presidents Day"
-      }
     }
   },
   "room_view_legend": {
@@ -3552,7 +3268,7 @@
           "AP_Studio_MA": 440,
           "AP_1BR_MA": 630,
           "AP_2BR_MA": 960,
-          "AP_2BR_MK": 1160,
+          "AP_2BR_MK": 1160,      
           "Studio MA": 360,
           "Studio MK": 430,
           "Studio PHMA": 360,
@@ -6287,246 +6003,10 @@
           "3-BDRM OF": 7175
         }
       }
-    },
-    "Pulse San Francisco": {
-      "Low Season": {
-        "Fri-Sat": {
-          "Guest No-View": 400,
-          "Guest Courtyard": 475,
-          "Guest Urban": 425,
-          "Guest ConnectUrban": 850
-        },
-        "Sun-Thu": {
-          "Guest No-View": 250,
-          "Guest Courtyard": 300,
-          "Guest Urban": 275,
-          "Guest ConnectUrban": 550
-        }
-      },
-      "Mid Season": {
-        "Fri-Sat": {
-          "Guest No-View": 525,
-          "Guest Courtyard": 650,
-          "Guest Urban": 575,
-          "Guest ConnectUrban": 1150
-        },
-        "Sun-Thu": {
-          "Guest No-View": 300,
-          "Guest Courtyard": 375,
-          "Guest Urban": 350,
-          "Guest ConnectUrban": 700
-        }
-      },
-      "High Season": {
-        "Fri-Sat": {
-          "Guest No-View": 625,
-          "Guest Courtyard": 750,
-          "Guest Urban": 675,
-          "Guest ConnectUrban": 1350
-        },
-        "Sun-Thu": {
-          "Guest No-View": 350,
-          "Guest Courtyard": 450,
-          "Guest Urban": 400,
-          "Guest ConnectUrban": 800
-        }
-      },
-      "Peak Season": {
-        "Fri-Sat": {
-          "Guest No-View": 775,
-          "Guest Courtyard": 900,
-          "Guest Urban": 825,
-          "Guest ConnectUrban": 1650
-        },
-        "Sun-Thu": {
-          "Guest No-View": 450,
-          "Guest Courtyard": 550,
-          "Guest Urban": 500,
-          "Guest ConnectUrban": 1000
-        }
-      },
-      "Holiday Week": {
-        "Presidents Day": {
-          "Guest No-View": 2575,
-          "Guest Courtyard": 3175,
-          "Guest Urban": 2925,
-          "Guest ConnectUrban": 5850
-        },
-        "Independence Day": {
-          "Guest No-View": 3000,
-          "Guest Courtyard": 3750,
-          "Guest Urban": 3350,
-          "Guest ConnectUrban": 6700
-        },
-        "Easter": {
-          "Guest ConnectUrban": 3000,
-          "Guest Courtyard": 3750,
-          "Guest No-View": 3350,
-          "Guest Urban": 6700
-        },
-        "Thanksgiving": {
-          "Guest No-View": 2050,
-          "Guest Courtyard": 2450,
-          "Guest Urban": 2225,
-          "Guest ConnectUrban": 4450
-        },
-        "Thanksgiving 2": {
-          "Guest No-View": 2550,
-          "Guest Courtyard": 3175,
-          "Guest Urban": 2900,
-          "Guest ConnectUrban": 5800
-        },
-        "Christmas": {
-          "Guest No-View": 3575,
-          "Guest Courtyard": 4325,
-          "Guest Urban": 3925,
-          "Guest ConnectUrban": 7850
-        },
-        "New Year's Eve/Day": {
-          "Guest No-View": 3800,
-          "Guest Courtyard": 4550,
-          "Guest Urban": 4150,
-          "Guest ConnectUrban": 8300
-        }
-      }
-    },
-    "Phuket Khao Lak": {
-      "Low Season": {
-        "Fri-Sat": {
-          "1BR": 270,
-          "2BR Pool": 470,
-          "2BR": 410
-        },
-        "Sun": {
-          "1BR": 210,
-          "2BR Pool": 380,
-          "2BR": 330
-        },
-        "Mon-Thu": {
-          "1BR": 150,
-          "2BR Pool": 260,
-          "2BR": 230
-        }
-      },
-      "High Season": {
-        "Fri-Sat": {
-          "1BR": 460,
-          "2BR Pool": 810,
-          "2BR": 700
-        },
-        "Sun": {
-          "1BR": 360,
-          "2BR Pool": 640,
-          "2BR": 560
-        },
-        "Mon-Thu": {
-          "1BR": 260,
-          "2BR Pool": 460,
-          "2BR": 400
-        }
-      },
-      "Holiday Week": {
-        "Easter": {
-          "1BR": 4270,
-          "2BR Pool": 7540,
-          "2BR": 6570
-        },
-        "Christmas": {
-          "1BR": 4270,
-          "2BR Pool": 7540,
-          "2BR": 6570
-        },
-        "New Year's Eve/Day": {
-          "1BR": 4270,
-          "2BR Pool": 7540,
-          "2BR": 6570
-        }
-      }
-    },
-    "Grand Residence Tahoe": {
-      "Low Season": {
-        "Fri-Sat": {
-          "Studio": 175,
-          "1BR": 275,
-          "2BR": 450
-        },
-        "Sun-Thu": {
-          "Studio": 80,
-          "1BR": 110,
-          "2BR": 175
-        }
-      },
-      "Mid Season": {
-        "Fri-Sat": {
-          "Studio": 250,
-          "1BR": 325,
-          "2BR": 575
-        },
-        "Sun-Thu": {
-          "Studio": 110,
-          "1BR": 135,
-          "2BR": 225
-        }
-      },
-      "High Season": {
-        "Fri-Sat": {
-          "Studio": 300,
-          "1BR": 450,
-          "2BR": 750
-        },
-        "Sun-Thu": {
-          "Studio": 135,
-          "1BR": 175,
-          "2BR": 300
-        }
-      },
-      "Peak Season": {
-        "Fri-Sat": {
-          "Studio": 400,
-          "1BR": 550,
-          "2BR": 950
-        },
-        "Sun-Thu": {
-          "Studio": 160,
-          "1BR": 225,
-          "2BR": 375
-        }
-      },
-      "Holiday Week": {
-        "Independence Day": {
-          "Studio": 900,
-          "1BR": 1225,
-          "2BR": 1775
-        },
-        "Thanksgiving": {
-          "Studio": 1400,
-          "1BR": 2000,
-          "2BR": 3000
-        },
-        "Thanksgiving 2": {
-          "Studio": 1725,
-          "1BR": 2500,
-          "2BR": 3775
-        },
-        "Christmas": {
-          "Studio": 1400,
-          "1BR": 2000,
-          "2BR": 3000
-        },
-        "New Year's Eve/Day": {
-          "Studio": 1725,
-          "1BR": 2500,
-          "2BR": 3775
-        },
-        "Presidents Day": {
-          "1BR": 1500,
-          "2BR": 1500,
-          "Studio": 1500
-        }
-      }
     }
   },
   "resorts_list": [
+    "Ko Olina Beach Club",
     "Aruba Ocean Club",
     "Aruba Surf Club",
     "Bali Nusa Dua Gardens",
@@ -6536,22 +6016,18 @@
     "Crystal Shores",
     "Desert Springs II",
     "Grand Chateau Vegas",
-    "Grand Residence Tahoe",
     "Grande Vista Orlando",
     "Kauai Beach Club",
-    "Ko Olina Beach Club",
     "Marbella Beach",
     "Maui Ocean Club",
     "Mayflower Washington",
+    "Pulse New York",
+    "Pulse San Diego",
     "Mountainside Utah",
     "Newport Coast",
     "Ocean Pointe",
     "Phuket Beach Club",
-    "Phuket Khao Lak",
     "Playa Andaluza",
-    "Pulse New York",
-    "Pulse San Diego",
-    "Pulse San Francisco",
     "Shadow Ridge",
     "Sheraton Kauai",
     "Surfers Paradise",
@@ -6560,10 +6036,10 @@
     "Westin Ka'anapali"
   ],
   "maintenance_rates": {
-    "2025": 0.5,
+    "2025": 0.50,
     "2026": 0.56,
-    "2027": 0.91,
-    "2028": 0.96
+    "2027": 0.60,
+    "2028": 0.65
   },
   "global_dates": {
     "2025": {
