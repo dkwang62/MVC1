@@ -2684,6 +2684,108 @@
           ]
         ]
       }
+    },
+    "Grand Residence Tahoe": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-04-18",
+            "2025-06-05"
+          ],
+          [
+            "2025-10-10",
+            "2025-11-20"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-08-22",
+            "2025-10-09"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-01-30"
+          ],
+          [
+            "2025-04-04",
+            "2025-04-17"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-21"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-01-31",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-04-03"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-04-17",
+            "2026-06-04"
+          ],
+          [
+            "2026-10-09",
+            "2026-11-19"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-08-21",
+            "2026-10-08"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-01-29"
+          ],
+          [
+            "2026-04-03",
+            "2026-04-16"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-20"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-01-30",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-04-02"
+          ]
+        ]
+      }
     }
   },
   "holiday_weeks": {
@@ -3183,6 +3285,24 @@
         "Easter": "global:Easter",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Grand Residence Tahoe": {
+      "2025": {
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "Presidents Day": "global:Presidents Day"
+      },
+      "2026": {
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "Presidents Day": "global:Presidents Day"
       }
     }
   },
@@ -6320,6 +6440,88 @@
           "2BR": 6570
         }
       }
+    },
+    "Grand Residence Tahoe": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio": 175,
+          "1BR": 275,
+          "2BR": 450
+        },
+        "Sun-Thu": {
+          "Studio": 80,
+          "1BR": 110,
+          "2BR": 175
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio": 250,
+          "1BR": 325,
+          "2BR": 575
+        },
+        "Sun-Thu": {
+          "Studio": 110,
+          "1BR": 135,
+          "2BR": 225
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio": 300,
+          "1BR": 450,
+          "2BR": 750
+        },
+        "Sun-Thu": {
+          "Studio": 135,
+          "1BR": 175,
+          "2BR": 300
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "Studio": 400,
+          "1BR": 550,
+          "2BR": 950
+        },
+        "Sun-Thu": {
+          "Studio": 160,
+          "1BR": 225,
+          "2BR": 375
+        }
+      },
+      "Holiday Week": {
+        "Independence Day": {
+          "Studio": 900,
+          "1BR": 1225,
+          "2BR": 1775
+        },
+        "Thanksgiving": {
+          "Studio": 1400,
+          "1BR": 2000,
+          "2BR": 3000
+        },
+        "Thanksgiving 2": {
+          "Studio": 1725,
+          "1BR": 2500,
+          "2BR": 3775
+        },
+        "Christmas": {
+          "Studio": 1400,
+          "1BR": 2000,
+          "2BR": 3000
+        },
+        "New Year's Eve/Day": {
+          "Studio": 1725,
+          "1BR": 2500,
+          "2BR": 3775
+        },
+        "Presidents Day": {
+          "1BR": 1500,
+          "2BR": 1500,
+          "Studio": 1500
+        }
+      }
     }
   },
   "resorts_list": [
@@ -6352,7 +6554,8 @@
     "Waikoloa Ocean Club",
     "Westin Ka'anapali",
     "Pulse San Francisco",
-    "Phuket Khao Lak"
+    "Phuket Khao Lak",
+    "Grand Residence Tahoe"
   ],
   "maintenance_rates": {
     "2025": 0.5,
