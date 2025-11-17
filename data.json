@@ -2888,6 +2888,178 @@
           ]
         ]
       }
+    },
+    "Cypress Harbour Orlando": {
+      "2025": {
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-04-11",
+            "2025-05-01"
+          ],
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-02-21",
+            "2025-04-10"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2025-05-02",
+            "2025-06-05"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-08-29",
+            "2025-12-04"
+          ]
+        ]
+      },
+      "2026": {
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-04-10",
+            "2026-04-30"
+          ],
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-27"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-02-20",
+            "2026-04-09"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2026-05-01",
+            "2026-06-04"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-08-28",
+            "2026-12-03"
+          ]
+        ]
+      }
+    },
+    "Lakeshore Reserve Orlando": {
+      "2025": {
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-04-11",
+            "2025-05-01"
+          ],
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-02-21",
+            "2025-04-10"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2025-05-02",
+            "2025-06-05"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-08-29",
+            "2025-12-04"
+          ]
+        ]
+      },
+      "2026": {
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-04-10",
+            "2026-04-30"
+          ],
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-27"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-02-20",
+            "2026-04-09"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2026-05-01",
+            "2026-06-04"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-08-28",
+            "2026-12-03"
+          ]
+        ]
+      }
     }
   },
   "holiday_weeks": {
@@ -3419,6 +3591,34 @@
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
         "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Cypress Harbour Orlando": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Lakeshore Reserve Orlando": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
       }
@@ -6717,6 +6917,174 @@
           "2-BR Villa": 3125
         }
       }
+    },
+    "Cypress Harbour Orlando": {
+      "High Season": {
+        "Fri-Sat": {
+          "2BR": 650
+        },
+        "Sun-Thu": {
+          "2BR": 275
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "2BR": 700
+        },
+        "Sun-Thu": {
+          "2BR": 300
+        }
+      },
+      "Low Season": {
+        "Fri-Sat": {
+          "2BR": 425
+        },
+        "Sun-Thu": {
+          "2BR": 175
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "2BR": 550
+        },
+        "Sun-Thu": {
+          "2BR": 225
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "2BR": 3225
+        },
+        "Independence Day": {
+          "2BR": 2675
+        },
+        "Christmas": {
+          "2BR": 2900
+        },
+        "New Year's Eve/Day": {
+          "2BR": 3225
+        }
+      }
+    },
+    "Lakeshore Reserve Orlando": {
+      "High Season": {
+        "Fri-Sat": {
+          "Studio S": 350,
+          "Studio D": 425,
+          "1-BDRM S": 570,
+          "1-BDRM D": 570,
+          "2-BDRM S": 800,
+          "2-BDRM D": 925,
+          "3-BDRM S": 1025
+        },
+        "Sun-Thu": {
+          "Studio S": 150,
+          "Studio D": 175,
+          "1-BDRM S": 245,
+          "1-BDRM D": 245,
+          "2-BDRM S": 325,
+          "2-BDRM D": 375,
+          "3-BDRM S": 425
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "Studio S": 400,
+          "Studio D": 475,
+          "1-BDRM S": 635,
+          "1-BDRM D": 635,
+          "2-BDRM S": 875,
+          "2-BDRM D": 1025,
+          "3-BDRM S": 1125
+        },
+        "Sun-Thu": {
+          "Studio S": 175,
+          "Studio D": 200,
+          "1-BDRM S": 275,
+          "1-BDRM D": 275,
+          "2-BDRM S": 350,
+          "2-BDRM D": 425,
+          "3-BDRM S": 450
+        }
+      },
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio S": 250,
+          "Studio D": 275,
+          "1-BDRM S": 380,
+          "1-BDRM D": 380,
+          "2-BDRM S": 525,
+          "2-BDRM D": 600,
+          "3-BDRM S": 675
+        },
+        "Sun-Thu": {
+          "Studio S": 100,
+          "Studio D": 125,
+          "1-BDRM S": 165,
+          "1-BDRM D": 165,
+          "2-BDRM S": 225,
+          "2-BDRM D": 250,
+          "3-BDRM S": 275
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio S": 325,
+          "Studio D": 375,
+          "1-BDRM S": 490,
+          "1-BDRM D": 490,
+          "2-BDRM S": 675,
+          "2-BDRM D": 800,
+          "3-BDRM S": 900
+        },
+        "Sun-Thu": {
+          "Studio S": 125,
+          "Studio D": 150,
+          "1-BDRM S": 190,
+          "1-BDRM D": 190,
+          "2-BDRM S": 275,
+          "2-BDRM D": 325,
+          "3-BDRM S": 375
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Studio S": 1900,
+          "Studio D": 2175,
+          "1-BDRM S": 2950,
+          "1-BDRM D": 2950,
+          "2-BDRM S": 4000,
+          "2-BDRM D": 4675,
+          "3-BDRM S": 5175
+        },
+        "Independence Day": {
+          "Studio S": 1450,
+          "Studio D": 1725,
+          "1-BDRM S": 2400,
+          "1-BDRM D": 2400,
+          "2-BDRM S": 3225,
+          "2-BDRM D": 3725,
+          "3-BDRM S": 4175
+        },
+        "Christmas": {
+          "Studio S": 1675,
+          "Studio D": 1950,
+          "1-BDRM S": 2650,
+          "1-BDRM D": 2650,
+          "2-BDRM S": 3500,
+          "2-BDRM D": 4175,
+          "3-BDRM S": 4500
+        },
+        "New Year's Eve/Day": {
+          "Studio S": 1900,
+          "Studio D": 2175,
+          "1-BDRM S": 2950,
+          "1-BDRM D": 2950,
+          "2-BDRM S": 4000,
+          "2-BDRM D": 4675,
+          "3-BDRM S": 5225
+        }
+      }
     }
   },
   "resorts_list": [
@@ -6751,7 +7119,9 @@
     "Pulse San Francisco",
     "Phuket Khao Lak",
     "Grand Residence Tahoe",
-    "Sheraton Scottsdale Arizona"
+    "Sheraton Scottsdale Arizona",
+    "Cypress Harbour Orlando",
+    "Lakeshore Reserve Orlando"
   ],
   "maintenance_rates": {
     "2025": 0.5,
