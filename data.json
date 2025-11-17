@@ -3060,6 +3060,1050 @@
           ]
         ]
       }
+    },
+    "Streamside Birch Vail": {
+      "2025": {
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-01-16"
+          ],
+          [
+            "2025-03-28",
+            "2025-04-17"
+          ],
+          [
+            "2025-06-27",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-07-24"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-01-17",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-03-27"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2025-04-18",
+            "2025-06-12"
+          ],
+          [
+            "2025-09-26",
+            "2025-11-20"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-06-13",
+            "2025-06-26"
+          ],
+          [
+            "2025-07-25",
+            "2025-09-25"
+          ]
+        ]
+      },
+      "2026": {
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-01-15"
+          ],
+          [
+            "2026-03-27",
+            "2026-04-16"
+          ],
+          [
+            "2026-07-10",
+            "2026-07-30"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-01-16",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-03-26"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2026-04-17",
+            "2026-06-11"
+          ],
+          [
+            "2026-09-25",
+            "2026-11-19"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-06-12",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-31",
+            "2026-09-24"
+          ]
+        ]
+      }
+    },
+    "Los Suenos Costa Rica": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-08-22",
+            "2025-11-13"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-05-02",
+            "2025-08-21"
+          ],
+          [
+            "2025-11-14",
+            "2025-12-18"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-01-23"
+          ],
+          [
+            "2025-04-04",
+            "2025-04-10"
+          ],
+          [
+            "2025-04-18",
+            "2025-05-01"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-01-24",
+            "2025-04-03"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-08-21",
+            "2026-11-12"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-05-01",
+            "2026-08-20"
+          ],
+          [
+            "2026-11-13",
+            "2026-12-17"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-01-22"
+          ],
+          [
+            "2026-04-03",
+            "2026-04-30"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-01-23",
+            "2026-03-26"
+          ]
+        ]
+      }
+    },
+    "Ritz-Carlton Club Lake Tahoe": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-04-18",
+            "2025-06-05"
+          ],
+          [
+            "2025-10-10",
+            "2025-11-20"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-08-22",
+            "2025-10-09"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-01-30"
+          ],
+          [
+            "2025-04-04",
+            "2025-04-17"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-01-31",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-04-03"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2025-07-11",
+            "2025-08-21"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-04-17",
+            "2026-06-04"
+          ],
+          [
+            "2026-10-09",
+            "2026-11-19"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-08-21",
+            "2026-10-08"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-01-29"
+          ],
+          [
+            "2026-04-03",
+            "2026-04-16"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-01-30",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-04-02"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2026-07-10",
+            "2026-08-20"
+          ]
+        ]
+      }
+    },
+    "Ritz-Carlton Club Vail": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-04-18",
+            "2025-06-12"
+          ],
+          [
+            "2025-09-26",
+            "2025-11-20"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-06-13",
+            "2025-06-26"
+          ],
+          [
+            "2025-07-25",
+            "2025-09-25"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-01-16"
+          ],
+          [
+            "2025-03-28",
+            "2025-04-17"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-01-17",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-03-27"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2025-06-27",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-07-24"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-04-17",
+            "2026-06-11"
+          ],
+          [
+            "2026-09-25",
+            "2026-11-19"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-06-12",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-31",
+            "2026-09-24"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-01-15"
+          ],
+          [
+            "2026-03-27",
+            "2026-04-16"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-01-16",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-03-26"
+          ]
+        ],
+        "Shoulder": [
+          [
+            "2026-07-10",
+            "2026-07-30"
+          ]
+        ]
+      }
+    },
+    "Ritz-Carlton Club & Residences San Francisco": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-03-13"
+          ],
+          [
+            "2025-11-14",
+            "2025-11-20"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-03-14",
+            "2025-04-17"
+          ],
+          [
+            "2025-04-25",
+            "2025-06-12"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-06-13",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-09-25"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-09-26",
+            "2025-11-13"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-03-12"
+          ],
+          [
+            "2026-11-13",
+            "2026-11-19"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-03-13",
+            "2026-04-02"
+          ],
+          [
+            "2026-04-10",
+            "2026-06-11"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-06-12",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-09-24"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-09-25",
+            "2026-11-12"
+          ]
+        ]
+      }
+    },
+    "Frenchman's Cove": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-09-05",
+            "2025-11-06"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-05-02",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-09-04"
+          ],
+          [
+            "2025-11-07",
+            "2025-12-18"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-02-06"
+          ],
+          [
+            "2025-04-11",
+            "2025-05-01"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-02-07",
+            "2025-02-13"
+          ],
+          [
+            "2025-02-21",
+            "2025-04-10"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-09-04",
+            "2026-11-05"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-05-01",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-09-03"
+          ],
+          [
+            "2026-11-06",
+            "2026-12-17"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-02-05"
+          ],
+          [
+            "2026-04-10",
+            "2026-04-30"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-02-06",
+            "2026-02-12"
+          ],
+          [
+            "2026-02-20",
+            "2026-04-09"
+          ]
+        ]
+      }
+    },
+    "Imperial Palms Orlando": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-05-02",
+            "2025-06-05"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-08-29",
+            "2025-12-04"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-04-11",
+            "2025-05-01"
+          ],
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-02-21",
+            "2025-04-10"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-05-01",
+            "2026-06-04"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-08-28",
+            "2026-12-03"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-04-10",
+            "2026-04-30"
+          ],
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-27"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-02-20",
+            "2026-04-09"
+          ]
+        ]
+      }
+    },
+    "Sabal Palms Orlando": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-05-02",
+            "2025-06-05"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-08-29",
+            "2025-12-04"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-02-13"
+          ],
+          [
+            "2025-04-11",
+            "2025-05-01"
+          ],
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2025-02-21",
+            "2025-04-10"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-05-01",
+            "2026-06-04"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-08-28",
+            "2026-12-03"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-02-12"
+          ],
+          [
+            "2026-04-10",
+            "2026-04-30"
+          ],
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-27"
+          ]
+        ],
+        "Peak Season": [
+          [
+            "2026-02-20",
+            "2026-04-09"
+          ]
+        ]
+      }
+    },
+    "Villas at Doral": {
+      "2025": {
+        "High Season": [
+          [
+            "2025-01-03",
+            "2025-05-08"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-05-09",
+            "2025-05-29"
+          ],
+          [
+            "2025-08-29",
+            "2025-12-04"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2025-05-30",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-28"
+          ],
+          [
+            "2025-12-05",
+            "2025-12-18"
+          ]
+        ]
+      },
+      "2026": {
+        "High Season": [
+          [
+            "2026-01-02",
+            "2026-05-07"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-05-08",
+            "2026-05-28"
+          ],
+          [
+            "2026-08-28",
+            "2026-12-03"
+          ]
+        ],
+        "Low Season": [
+          [
+            "2026-05-29",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-27"
+          ],
+          [
+            "2026-12-04",
+            "2026-12-17"
+          ]
+        ]
+      }
+    },
+    "Custom House Boston": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-01-30"
+          ],
+          [
+            "2025-11-21",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-01-31",
+            "2025-05-29"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-05-30",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-11-20"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-01-29"
+          ],
+          [
+            "2026-11-20",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-01-30",
+            "2026-05-28"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-05-29",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-11-19"
+          ]
+        ]
+      }
+    },
+    "Legends Edge at Bay Point": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-03-06"
+          ],
+          [
+            "2025-04-18",
+            "2025-05-01"
+          ],
+          [
+            "2025-05-30",
+            "2025-06-05"
+          ],
+          [
+            "2025-09-05",
+            "2025-10-02"
+          ],
+          [
+            "2025-11-07",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-03-07",
+            "2025-04-17"
+          ],
+          [
+            "2025-05-02",
+            "2025-05-29"
+          ],
+          [
+            "2025-08-15",
+            "2025-09-04"
+          ],
+          [
+            "2025-10-03",
+            "2025-11-06"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-06-06",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-08-14"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-03-05"
+          ],
+          [
+            "2026-04-17",
+            "2026-04-30"
+          ],
+          [
+            "2026-05-29",
+            "2026-06-04"
+          ],
+          [
+            "2026-09-04",
+            "2026-10-01"
+          ],
+          [
+            "2026-11-06",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-03-06",
+            "2026-04-16"
+          ],
+          [
+            "2026-05-01",
+            "2026-05-28"
+          ],
+          [
+            "2026-08-14",
+            "2026-09-03"
+          ],
+          [
+            "2026-10-02",
+            "2026-11-05"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-06-05",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-08-13"
+          ]
+        ]
+      }
+    },
+    "Willow Ridge Lodge Branson": {
+      "2025": {
+        "Low Season": [
+          [
+            "2025-01-03",
+            "2025-03-06"
+          ],
+          [
+            "2025-11-28",
+            "2025-12-18"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2025-03-07",
+            "2025-05-15"
+          ],
+          [
+            "2025-09-05",
+            "2025-11-27"
+          ]
+        ],
+        "High Season": [
+          [
+            "2025-05-16",
+            "2025-07-03"
+          ],
+          [
+            "2025-07-11",
+            "2025-09-04"
+          ]
+        ]
+      },
+      "2026": {
+        "Low Season": [
+          [
+            "2026-01-02",
+            "2026-03-05"
+          ],
+          [
+            "2026-11-27",
+            "2026-12-17"
+          ]
+        ],
+        "Mid Season": [
+          [
+            "2026-03-06",
+            "2026-05-14"
+          ],
+          [
+            "2026-09-04",
+            "2026-11-26"
+          ]
+        ],
+        "High Season": [
+          [
+            "2026-05-15",
+            "2026-07-02"
+          ],
+          [
+            "2026-07-10",
+            "2026-09-03"
+          ]
+        ]
+      }
     }
   },
   "holiday_weeks": {
@@ -3618,6 +4662,182 @@
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Streamside Birch Vail": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Los Suenos Costa Rica": {
+      "2025": {
+        "Easter1": "global:Easter1",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Easter1": "global:Easter1",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Ritz-Carlton Club Lake Tahoe": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Ritz-Carlton Club Vail": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Ritz-Carlton Club & Residences San Francisco": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "Easter": "global:Easter"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Thanksgiving": "global:Thanksgiving",
+        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "Easter": "global:Easter"
+      }
+    },
+    "Frenchman's Cove": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Imperial Palms Orlando": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Sabal Palms Orlando": {
+      "2025": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Presidents Day": "global:Presidents Day",
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Villas at Doral": {
+      "2025": {
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Custom House Boston": {
+      "2025": {
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Legends Edge at Bay Point": {
+      "2025": {
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      }
+    },
+    "Willow Ridge Lodge Branson": {
+      "2025": {
+        "Independence Day": "global:Independence Day",
+        "Christmas": "global:Christmas",
+        "New Year's Eve/Day": "global:New Year's Eve/Day"
+      },
+      "2026": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
         "New Year's Eve/Day": "global:New Year's Eve/Day"
@@ -7085,10 +8305,771 @@
           "0-Studio": 1900
         }
       }
+    },
+    "Streamside Birch Vail": {
+      "High Season": {
+        "Fri-Sat": {
+          "Suite": 175,
+          "1-BDRM": 250,
+          "2-BDRM": 350
+        },
+        "Sun-Thu": {
+          "Suite": 75,
+          "1-BDRM": 100,
+          "2-BDRM": 150
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "Suite": 225,
+          "1-BDRM": 300,
+          "2-BDRM": 450
+        },
+        "Sun-Thu": {
+          "Suite": 100,
+          "1-BDRM": 125,
+          "2-BDRM": 200
+        }
+      },
+      "Low Season": {
+        "Fri-Sat": {
+          "Suite": 50,
+          "1-BDRM": 75,
+          "2-BDRM": 100
+        },
+        "Sun-Thu": {
+          "Suite": 50,
+          "1-BDRM": 50,
+          "2-BDRM": 75
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Suite": 100,
+          "1-BDRM": 125,
+          "2-BDRM": 175
+        },
+        "Sun-Thu": {
+          "Suite": 50,
+          "1-BDRM": 75,
+          "2-BDRM": 100
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "Suite": 1125,
+          "1-BDRM": 1500,
+          "2-BDRM": 2225
+        },
+        "Independence Day": {
+          "Suite": 725,
+          "1-BDRM": 1000,
+          "2-BDRM": 1450
+        },
+        "Thanksgiving": {
+          "Suite": 350,
+          "1-BDRM": 400,
+          "2-BDRM": 575
+        },
+        "Thanksgiving Weekend": {
+          "Suite": 725,
+          "1-BDRM": 1000,
+          "2-BDRM": 1450
+        },
+        "Christmas": {
+          "Suite": 1300,
+          "1-BDRM": 1675,
+          "2-BDRM": 2400
+        },
+        "New Year's Eve/Day": {
+          "Suite": 1275,
+          "1-BDRM": 1900,
+          "2-BDRM": 2725
+        }
+      }
+    },
+    "Los Suenos Costa Rica": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio": 150,
+          "1-BDRM": 250,
+          "2-BDRM": 350
+        },
+        "Sun-Thu": {
+          "Studio": 100,
+          "1-BDRM": 150,
+          "2-BDRM": 225
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio": 225,
+          "1-BDRM": 350,
+          "2-BDRM": 500
+        },
+        "Sun-Thu": {
+          "Studio": 150,
+          "1-BDRM": 250,
+          "2-BDRM": 350
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio": 325,
+          "1-BDRM": 500,
+          "2-BDRM": 700
+        },
+        "Sun-Thu": {
+          "Studio": 225,
+          "1-BDRM": 350,
+          "2-BDRM": 500
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "Studio": 350,
+          "1-BDRM": 575,
+          "2-BDRM": 800
+        },
+        "Sun-Thu": {
+          "Studio": 250,
+          "1-BDRM": 400,
+          "2-BDRM": 575
+        }
+      },
+      "Holiday Week": {
+        "Easter1": {
+          "Studio": 2575,
+          "1-BDRM": 3950,
+          "2-BDRM": 5725
+        },
+        "Christmas": {
+          "Studio": 2575,
+          "1-BDRM": 3950,
+          "2-BDRM": 5725
+        },
+        "New Year's Eve/Day": {
+          "Studio": 2850,
+          "1-BDRM": 4450,
+          "2-BDRM": 6400
+        }
+      }
+    },
+    "Ritz-Carlton Club Lake Tahoe": {
+      "Low Season": {
+        "Fri-Sat": {
+          "2-BDRM": 625,
+          "3-BDRM": 800,
+          "4-BDRM": 1050
+        },
+        "Sun-Thu": {
+          "2-BDRM": 250,
+          "3-BDRM": 325,
+          "4-BDRM": 425
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "2-BDRM": 975,
+          "3-BDRM": 1275,
+          "4-BDRM": 1650
+        },
+        "Sun-Thu": {
+          "2-BDRM": 375,
+          "3-BDRM": 525,
+          "4-BDRM": 675
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "2-BDRM": 1450,
+          "3-BDRM": 1825,
+          "4-BDRM": 2325
+        },
+        "Sun-Thu": {
+          "2-BDRM": 600,
+          "3-BDRM": 750,
+          "4-BDRM": 925
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "2-BDRM": 1750,
+          "3-BDRM": 2225,
+          "4-BDRM": 2850
+        },
+        "Sun-Thu": {
+          "2-BDRM": 675,
+          "3-BDRM": 925,
+          "4-BDRM": 1125
+        }
+      },
+      "Shoulder": {
+        "Fri-Sat": {
+          "2-BDRM": 1275,
+          "3-BDRM": 1650,
+          "4-BDRM": 2150
+        },
+        "Sun-Thu": {
+          "2-BDRM": 525,
+          "3-BDRM": 650,
+          "4-BDRM": 850
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "2-BDRM": 8325,
+          "3-BDRM": 13225,
+          "4-BDRM": 17225
+        },
+        "Independence Day": {
+          "2-BDRM": 6050,
+          "3-BDRM": 7850,
+          "4-BDRM": 9225
+        },
+        "Thanksgiving": {
+          "2-BDRM": 2500,
+          "3-BDRM": 3225,
+          "4-BDRM": 4225
+        },
+        "Thanksgiving Weekend": {
+          "2-BDRM": 5900,
+          "3-BDRM": 7400,
+          "4-BDRM": 9275
+        },
+        "Christmas": {
+          "2-BDRM": 9225,
+          "3-BDRM": 15825,
+          "4-BDRM": 20600
+        },
+        "New Year's Eve/Day": {
+          "2-BDRM": 11225,
+          "3-BDRM": 17275,
+          "4-BDRM": 22500
+        }
+      }
+    },
+    "Ritz-Carlton Club Vail": {
+      "Low Season": {
+        "Fri-Sat": {
+          "2-BDRM": 625,
+          "2-BDRM Den": 675,
+          "3-BDRM": 800,
+          "4-BDRM": 1050
+        },
+        "Sun-Thu": {
+          "2-BDRM": 250,
+          "2-BDRM Den": 275,
+          "3-BDRM": 325,
+          "4-BDRM": 425
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "2-BDRM": 975,
+          "2-BDRM Den": 1025,
+          "3-BDRM": 1275,
+          "4-BDRM": 1650
+        },
+        "Sun-Thu": {
+          "2-BDRM": 375,
+          "2-BDRM Den": 400,
+          "3-BDRM": 525,
+          "4-BDRM": 675
+        }
+      },
+      "Shoulder": {
+        "Fri-Sat": {
+          "2-BDRM": 1275,
+          "2-BDRM Den": 1325,
+          "3-BDRM": 1650,
+          "4-BDRM": 2150
+        },
+        "Sun-Thu": {
+          "2-BDRM": 525,
+          "2-BDRM Den": 550,
+          "3-BDRM": 650,
+          "4-BDRM": 850
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "2-BDRM": 1625,
+          "2-BDRM Den": 1675,
+          "3-BDRM": 2100,
+          "4-BDRM": 2500
+        },
+        "Sun-Thu": {
+          "2-BDRM": 650,
+          "2-BDRM Den": 675,
+          "3-BDRM": 825,
+          "4-BDRM": 975
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "2-BDRM": 1925,
+          "2-BDRM Den": 1975,
+          "3-BDRM": 2600,
+          "4-BDRM": 3025
+        },
+        "Sun-Thu": {
+          "2-BDRM": 775,
+          "2-BDRM Den": 800,
+          "3-BDRM": 1025,
+          "4-BDRM": 1200
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "2-BDRM": 8325,
+          "2-BDRM Den": 8550,
+          "3-BDRM": 13225,
+          "4-BDRM": 17225
+        },
+        "Independence Day": {
+          "2-BDRM": 5175,
+          "2-BDRM Den": 5400,
+          "3-BDRM": 6550,
+          "4-BDRM": 8575
+        },
+        "Thanksgiving": {
+          "2-BDRM": 2500,
+          "2-BDRM Den": 2725,
+          "3-BDRM": 3225,
+          "4-BDRM": 4225
+        },
+        "Thanksgiving Weekend": {
+          "2-BDRM": 6500,
+          "2-BDRM Den": 6725,
+          "3-BDRM": 8325,
+          "4-BDRM": 9875
+        },
+        "Christmas": {
+          "2-BDRM": 9225,
+          "2-BDRM Den": 9450,
+          "3-BDRM": 15825,
+          "4-BDRM": 20600
+        },
+        "New Year's Eve/Day": {
+          "2-BDRM": 11225,
+          "2-BDRM Den": 11450,
+          "3-BDRM": 17275,
+          "4-BDRM": 22500
+        }
+      }
+    },
+    "Ritz-Carlton Club & Residences San Francisco": {
+      "Low Season": {
+        "Fri-Sat": {
+          "1-BDRM": 575,
+          "2-BDRM": 750,
+          "3-BDRM": 950
+        },
+        "Sun-Thu": {
+          "1-BDRM": 350,
+          "2-BDRM": 450,
+          "3-BDRM": 575
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "1-BDRM": 750,
+          "2-BDRM": 975,
+          "3-BDRM": 1225
+        },
+        "Sun-Thu": {
+          "1-BDRM": 450,
+          "2-BDRM": 600,
+          "3-BDRM": 750
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "1-BDRM": 875,
+          "2-BDRM": 1125,
+          "3-BDRM": 1425
+        },
+        "Sun-Thu": {
+          "1-BDRM": 525,
+          "2-BDRM": 675,
+          "3-BDRM": 850
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "1-BDRM": 1050,
+          "2-BDRM": 1375,
+          "3-BDRM": 1725
+        },
+        "Sun-Thu": {
+          "1-BDRM": 625,
+          "2-BDRM": 825,
+          "3-BDRM": 1050
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "1-BDRM": 3750,
+          "2-BDRM": 4950,
+          "3-BDRM": 6200
+        },
+        "Independence Day": {
+          "1-BDRM": 4375,
+          "2-BDRM": 5625,
+          "3-BDRM": 7100
+        },
+        "Thanksgiving": {
+          "1-BDRM": 2900,
+          "2-BDRM": 3750,
+          "3-BDRM": 4775
+        },
+        "Thanksgiving Weekend": {
+          "1-BDRM": 3750,
+          "2-BDRM": 4950,
+          "3-BDRM": 6200
+        },
+        "Christmas": {
+          "1-BDRM": 5000,
+          "2-BDRM": 6475,
+          "3-BDRM": 8300
+        },
+        "New Year's Eve/Day": {
+          "1-BDRM": 5225,
+          "2-BDRM": 6875,
+          "3-BDRM": 8700
+        },
+        "Easter": {
+          "1-BDRM": 4375,
+          "2-BDRM": 5625,
+          "3-BDRM": 7100
+        }
+      }
+    },
+    "Frenchman's Cove": {
+      "Low Season": {
+        "Fri-Sat": {
+          "2-BDRM": 425,
+          "3-BDRM": 575
+        },
+        "Sun-Thu": {
+          "2-BDRM": 300,
+          "3-BDRM": 400
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "2-BDRM": 550,
+          "3-BDRM": 750
+        },
+        "Sun-Thu": {
+          "2-BDRM": 375,
+          "3-BDRM": 525
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "2-BDRM": 675,
+          "3-BDRM": 925
+        },
+        "Sun-Thu": {
+          "2-BDRM": 475,
+          "3-BDRM": 650
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "2-BDRM": 750,
+          "3-BDRM": 1025
+        },
+        "Sun-Thu": {
+          "2-BDRM": 525,
+          "3-BDRM": 725
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "2-BDRM": 5275,
+          "3-BDRM": 7050
+        },
+        "Independence Day": {
+          "2-BDRM": 2975,
+          "3-BDRM": 4125
+        },
+        "Christmas": {
+          "2-BDRM": 4925,
+          "3-BDRM": 6700
+        },
+        "New Year's Eve/Day": {
+          "2-BDRM": 6250,
+          "3-BDRM": 8425
+        }
+      }
+    },
+    "Imperial Palms Orlando": {
+      "High Season": {
+        "Fri-Sat": {
+          "3-BDRM": 600
+        },
+        "Sun-Thu": {
+          "3-BDRM": 250
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "3-BDRM": 650
+        },
+        "Sun-Thu": {
+          "3-BDRM": 275
+        }
+      },
+      "Low Season": {
+        "Fri-Sat": {
+          "3-BDRM": 400
+        },
+        "Sun-Thu": {
+          "3-BDRM": 150
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "3-BDRM": 525
+        },
+        "Sun-Thu": {
+          "3-BDRM": 200
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "3-BDRM": 3000
+        },
+        "Independence Day": {
+          "3-BDRM": 2450
+        },
+        "Christmas": {
+          "3-BDRM": 2675
+        },
+        "New Year's Eve/Day": {
+          "3-BDRM": 3000
+        }
+      }
+    },
+    "Sabal Palms Orlando": {
+      "Low Season": {
+        "Fri-Sat": {
+          "2-BDRM": 350
+        },
+        "Sun-Thu": {
+          "2-BDRM": 150
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "2-BDRM": 475
+        },
+        "Sun-Thu": {
+          "2-BDRM": 200
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "2-BDRM": 550
+        },
+        "Sun-Thu": {
+          "2-BDRM": 225
+        }
+      },
+      "Peak Season": {
+        "Fri-Sat": {
+          "2-BDRM": 600
+        },
+        "Sun-Thu": {
+          "2-BDRM": 250
+        }
+      },
+      "Holiday Week": {
+        "Presidents Day": {
+          "2-BDRM": 2725
+        },
+        "Independence Day": {
+          "2-BDRM": 2225
+        },
+        "Christmas": {
+          "2-BDRM": 2450
+        },
+        "New Year's Eve/Day": {
+          "2-BDRM": 2725
+        }
+      }
+    },
+    "Villas at Doral": {
+      "High Season": {
+        "Fri-Sat": {
+          "2-BDRM": 575
+        },
+        "Sun-Thu": {
+          "2-BDRM": 225
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "2-BDRM": 450
+        },
+        "Sun-Thu": {
+          "2-BDRM": 200
+        }
+      },
+      "Low Season": {
+        "Fri-Sat": {
+          "2-BDRM": 300
+        },
+        "Sun-Thu": {
+          "2-BDRM": 125
+        }
+      },
+      "Holiday Week": {
+        "Independence Day": {
+          "2-BDRM": 1225
+        },
+        "Christmas": {
+          "2-BDRM": 2275
+        },
+        "New Year's Eve/Day": {
+          "2-BDRM": 2675
+        }
+      }
+    },
+    "Custom House Boston": {
+      "Low Season": {
+        "Fri-Sat": {
+          "1-BDRM": 500
+        },
+        "Sun-Thu": {
+          "1-BDRM": 200
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "1-BDRM": 700
+        },
+        "Sun-Thu": {
+          "1-BDRM": 300
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "1-BDRM": 775
+        },
+        "Sun-Thu": {
+          "1-BDRM": 325
+        }
+      },
+      "Holiday Week": {
+        "Independence Day": {
+          "1-BDRM": 3175
+        },
+        "Christmas": {
+          "1-BDRM": 3275
+        },
+        "New Year's Eve/Day": {
+          "1-BDRM": 3450
+        }
+      }
+    },
+    "Legends Edge at Bay Point": {
+      "Low Season": {
+        "Fri-Sat": {
+          "2-BDRM": 300
+        },
+        "Sun-Thu": {
+          "2-BDRM": 125
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "2-BDRM": 650
+        },
+        "Sun-Thu": {
+          "2-BDRM": 275
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "2-BDRM": 725
+        },
+        "Sun-Thu": {
+          "2-BDRM": 300
+        }
+      },
+      "Holiday Week": {
+        "Independence Day": {
+          "2-BDRM": 2950
+        },
+        "Christmas": {
+          "2-BDRM": 2675
+        },
+        "New Year's Eve/Day": {
+          "2-BDRM": 2675
+        }
+      }
+    },
+    "Willow Ridge Lodge Branson": {
+      "Low Season": {
+        "Fri-Sat": {
+          "Studio": 100,
+          "1-BDRM": 150,
+          "2-BDRM": 200
+        },
+        "Sun-Thu": {
+          "Studio": 50,
+          "1-BDRM": 75,
+          "2-BDRM": 100
+        }
+      },
+      "Mid Season": {
+        "Fri-Sat": {
+          "Studio": 200,
+          "1-BDRM": 275,
+          "2-BDRM": 400
+        },
+        "Sun-Thu": {
+          "Studio": 75,
+          "1-BDRM": 125,
+          "2-BDRM": 175
+        }
+      },
+      "High Season": {
+        "Fri-Sat": {
+          "Studio": 275,
+          "1-BDRM": 375,
+          "2-BDRM": 575
+        },
+        "Sun-Thu": {
+          "Studio": 125,
+          "1-BDRM": 150,
+          "2-BDRM": 250
+        }
+      },
+      "Holiday Week": {
+        "Independence Day": {
+          "Studio": 1175,
+          "1-BDRM": 1500,
+          "2-BDRM": 2400
+        },
+        "Christmas": {
+          "Studio": 775,
+          "1-BDRM": 1175,
+          "2-BDRM": 1675
+        },
+        "New Year's Eve/Day": {
+          "Studio": 1175,
+          "1-BDRM": 1500,
+          "2-BDRM": 2400
+        }
+      }
     }
   },
   "resorts_list": [
-    "Ko Olina Beach Club",
     "Aruba Ocean Club",
     "Aruba Surf Club",
     "Bali Nusa Dua Gardens",
@@ -7096,32 +9077,45 @@
     "BeachPlace Towers",
     "Canyon Villas Arizona",
     "Crystal Shores",
+    "Custom House Boston",
+    "Cypress Harbour Orlando",
     "Desert Springs II",
+    "Frenchman's Cove",
     "Grand Chateau Vegas",
+    "Grand Residence Tahoe",
     "Grande Vista Orlando",
+    "Imperial Palms Orlando",
     "Kauai Beach Club",
+    "Ko Olina Beach Club",
+    "Lakeshore Reserve Orlando",
+    "Legends Edge at Bay Point",
+    "Los Suenos Costa Rica",
     "Marbella Beach",
     "Maui Ocean Club",
     "Mayflower Washington",
-    "Pulse New York",
-    "Pulse San Diego",
     "Mountainside Utah",
     "Newport Coast",
     "Ocean Pointe",
     "Phuket Beach Club",
+    "Phuket Khao Lak",
     "Playa Andaluza",
+    "Pulse New York",
+    "Pulse San Diego",
+    "Pulse San Francisco",
+    "Ritz-Carlton Club & Residences San Francisco",
+    "Ritz-Carlton Club Lake Tahoe",
+    "Ritz-Carlton Club Vail",
+    "Sabal Palms Orlando",
     "Shadow Ridge",
     "Sheraton Kauai",
+    "Sheraton Scottsdale Arizona",
+    "Streamside Birch Vail",
     "Surfers Paradise",
     "Village Paris",
+    "Villas at Doral",
     "Waikoloa Ocean Club",
     "Westin Ka'anapali",
-    "Pulse San Francisco",
-    "Phuket Khao Lak",
-    "Grand Residence Tahoe",
-    "Sheraton Scottsdale Arizona",
-    "Cypress Harbour Orlando",
-    "Lakeshore Reserve Orlando"
+    "Willow Ridge Lodge Branson"
   ],
   "maintenance_rates": {
     "2025": 0.5,
