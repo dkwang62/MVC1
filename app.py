@@ -582,7 +582,7 @@ if st.session_state.data is None:
     try:
         with open("data.json", "r") as f:
             st.session_state.data = json.load(f)
-            st.info(f"Loaded {len(st.session_state.data.get('resorts_list', []))} resorts from data.json")
+#           st.info(f"Loaded {len(st.session_state.data.get('resorts_list', []))} resorts from data.json")
     except FileNotFoundError:
         st.info("No data.json found. Please upload a file.")
     except Exception as e:
