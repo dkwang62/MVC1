@@ -636,8 +636,8 @@ resorts = data.get("resorts_list", [])
 # --- SIDEBAR: User Mode & Parameters (Always Visible) ---
 with st.sidebar:
     st.header("Mode & Parameters")
-    user_mode = st.selectbox("User Mode", ["Renter", "Owner"], key="mode", index=0)
-    
+    user_mode = st.selectbox("User Mode", ["Renter", "Owner"], key="mode", index=1)
+    # index=1 means default to owner mode
     default_rate = data.get("maintenance_rates", {}).get("2026", 0.86)
     rate_per_point, discount_opt = default_rate, None # Initialize renter variables
 
