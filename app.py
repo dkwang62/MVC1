@@ -832,6 +832,22 @@ else:
     if inc_maint and m_cost: st.info(f"Maintenance Cost Included: ${m_cost:,}")
     if inc_cap and c_cost: st.info(f"Capital Cost Included: ${c_cost:,}")
     if inc_dep and d_cost: st.info(f"Depreciation Cost Included: ${d_cost:,}")
+    with st.expander("How are these costs calculated?"):
+        st.markdown(
+            """
+    **Maintenance Cost**  
+    Maintenance rate per point × number of points used that day.
+
+    **Capital Cost**  
+    Purchase price per point × capital cost rate × number of points used that day.  
+    *(This represents the “cost of tying up your money.”)*
+
+    **Depreciation Cost**  
+    (Purchase price − salvage value) ÷ useful life × number of points used that day.  
+    *(This spreads out your ownership cost over the years.)*
+            """
+        )
+
     st.download_button("Download Breakdown CSV", df[cols].to_csv(index=False),
                        f"{resort}_{fmt_date(checkin_adj)}_owner_cost.csv", "text/csv")
 
