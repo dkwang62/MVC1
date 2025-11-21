@@ -4111,12 +4111,12 @@
       "2025": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Grande Vista Orlando": {
@@ -4124,13 +4124,13 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Crystal Shores": {
@@ -4138,155 +4138,155 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Desert Springs II": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Shadow Ridge": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Westin Ka'anapali": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Phuket Beach Club": {
       "2025": {
         "Chinese New Year": "global:Chinese New Year",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Chinese New Year": "global:Chinese New Year",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Playa Andaluza": {
       "2025": {
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "NewYear": "global:NewYear",
         "Easter1": "global:Easter1",
-        "Easter": "global:Easter"
+        "Easter2": "global:Easter2"
       },
       "2026": {
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "NewYear": "global:NewYear",
         "Easter1": "global:Easter1",
-        "Easter": "global:Easter"
+        "Easter2": "global:Easter2"
       }
     },
     "Village Paris": {
       "2025": {
-        "Week 1": "global:Week 1",
+        "Week1": "global:Week1",
         "Easter1": "global:Easter1",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Mid-Term": "global:Mid-Term",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
-        "Week 1": "global:Week 1",
+        "Week1": "global:Week1",
         "Easter1": "global:Easter1",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Mid-Term": "global:Mid-Term",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Marbella Beach": {
       "2025": {
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "NewYear": "global:NewYear",
         "Easter1": "global:Easter1",
-        "Easter": "global:Easter"
+        "Easter2": "global:Easter2"
       },
       "2026": {
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "NewYear": "global:NewYear",
         "Easter1": "global:Easter1",
-        "Easter": "global:Easter"
+        "Easter2": "global:Easter2"
       }
     },
     "Sheraton Kauai": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Surfers Paradise": {
       "2025": {
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Pulse New York": {
@@ -4296,9 +4296,9 @@
         "Independence Day": "global:Independence Day",
         "Labor Day": "global:Labor Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
@@ -4306,9 +4306,9 @@
         "Independence Day": "global:Independence Day",
         "Labor Day": "global:Labor Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Pulse San Diego": {
@@ -4318,9 +4318,9 @@
         "Independence Day": "global:Independence Day",
         "Labor Day": "global:Labor Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
@@ -4328,9 +4328,9 @@
         "Independence Day": "global:Independence Day",
         "Labor Day": "global:Labor Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Mountainside Utah": {
@@ -4338,33 +4338,33 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Canyon Villas Arizona": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Ocean Pointe": {
@@ -4372,33 +4372,33 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Pulse San Francisco": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Frenchman's Cove": {
@@ -4406,13 +4406,13 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Ritz San Francisco": {
@@ -4420,35 +4420,35 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Easter": "global:Easter"
+        "NewYear": "global:NewYear",
+        "Easter2": "global:Easter2"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
-        "Easter": "global:Easter"
+        "NewYear": "global:NewYear",
+        "Easter2": "global:Easter2"
       }
     },
     "Sheraton Scottsdale": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Ritz Vail": {
@@ -4456,39 +4456,39 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Ko Olina Beach": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "NewYear": "global:NewYear",
         "AP1": "global:AP1",
         "AP2": "global:AP2"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "NewYear": "global:NewYear",
         "AP1": "global:AP1",
         "AP2": "global:AP2"
       }
@@ -4497,12 +4497,12 @@
       "2025": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Pulse DC": {
@@ -4512,9 +4512,9 @@
         "Independence Day": "global:Independence Day",
         "Labor Day": "global:Labor Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
@@ -4522,29 +4522,29 @@
         "Independence Day": "global:Independence Day",
         "Labor Day": "global:Labor Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Waikoloa Ocean": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Lakeshore Orlando": {
@@ -4552,25 +4552,25 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Khao Lak": {
       "2025": {
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Birch Vail": {
@@ -4578,29 +4578,29 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Doral Miami": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Fort Lauderdale": {
@@ -4608,13 +4608,13 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Imperial Orlando": {
@@ -4622,13 +4622,13 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Sabal Orlando": {
@@ -4636,109 +4636,109 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Boston": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Suenos CostaRica": {
       "2025": {
         "Easter1": "global:Easter1",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Easter1": "global:Easter1",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Bali Gardens": {
       "2025": {
         "Chinese New Year": "global:Chinese New Year",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Chinese New Year": "global:Chinese New Year",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Bali Terrace": {
       "2025": {
         "Chinese New Year": "global:Chinese New Year",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Chinese New Year": "global:Chinese New Year",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Aruba Ocean": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Aruba Surf": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Willow Branson": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Ritz Tahoe": {
@@ -4746,55 +4746,55 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Residence Tahoe": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "NewYear": "global:NewYear",
         "Presidents Day": "global:Presidents Day"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day",
+        "NewYear": "global:NewYear",
         "Presidents Day": "global:Presidents Day"
       }
     },
     "Maui Ocean": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Cypress Orlando": {
@@ -4802,45 +4802,45 @@
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Chateau Vegas": {
       "2025": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Independence Day": "global:Independence Day",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     },
     "Kauai Beach": {
       "2025": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       },
       "2026": {
         "Presidents Day": "global:Presidents Day",
-        "Easter": "global:Easter",
+        "Easter2": "global:Easter2",
         "Independence Day": "global:Independence Day",
         "Thanksgiving": "global:Thanksgiving",
-        "Thanksgiving 2": "global:Thanksgiving 2",
+        "Thanksgiving2": "global:Thanksgiving2",
         "Christmas": "global:Christmas",
-        "New Year's Eve/Day": "global:New Year's Eve/Day"
+        "NewYear": "global:NewYear"
       }
     }
   },
@@ -4911,7 +4911,7 @@
         "Christmas": {
           "2BR": 4725
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2BR": 4950
         }
       }
@@ -4992,7 +4992,7 @@
           "2-BDRM": 3175,
           "3-BDRM": 4225
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 1800,
           "1-BDRM": 2400,
           "2-BDRM": 3500,
@@ -5134,7 +5134,7 @@
           "3BR PSH": 8000,
           "3BR PHUF": 9450
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2BR S": 4375,
           "2BR IS": 4875,
           "2BR PS": 5550,
@@ -5210,7 +5210,7 @@
           "1BR": 2000,
           "2BR": 3000
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Studio": 1725,
           "1BR": 2500,
           "2BR": 3775
@@ -5220,7 +5220,7 @@
           "1BR": 2000,
           "2BR": 3000
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 1725,
           "1BR": 2500,
           "2BR": 3775
@@ -5287,7 +5287,7 @@
           "1BR": 2175,
           "2BR": 3175
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Studio": 1900,
           "1BR": 2675,
           "2BR": 4000
@@ -5297,7 +5297,7 @@
           "1BR": 2175,
           "2BR": 3175
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 1900,
           "1BR": 2675,
           "2BR": 4000
@@ -5365,7 +5365,7 @@
           "2-BDRM LO OV": 7400,
           "2-BDRM LO OF": 9975
         },
-        "Easter": {
+        "Easter2": {
           "Studio IV": 3100,
           "Studio OV": 3100,
           "Studio OF": 4350,
@@ -5398,7 +5398,7 @@
           "2-BDRM LO OV": 6075,
           "2-BDRM LO OF": 8200
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Studio IV": 3100,
           "Studio OV": 3100,
           "Studio OF": 4350,
@@ -5420,7 +5420,7 @@
           "2-BDRM LO OV": 7400,
           "2-BDRM LO OF": 9975
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio IV": 3500,
           "Studio OV": 3500,
           "Studio OF": 5100,
@@ -5463,7 +5463,7 @@
         "Christmas": {
           "2 Bedroom": 6030
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2 Bedroom": 6030
         }
       }
@@ -5568,7 +5568,7 @@
           "3-BDRM GV": 3125,
           "3-BDRM SF": 4200
         },
-        "Easter": {
+        "Easter2": {
           "Studio GV": 1250,
           "Studio SF": 1250,
           "2-BDRM GV": 2500,
@@ -5584,7 +5584,7 @@
           "3-BDRM GV": 2450,
           "3-BDRM SF": 3350
         },
-        "New Year’s Eve/Day": {
+        "NewYear": {
           "Studio GV": 850,
           "Studio SF": 850,
           "2-BDRM GV": 1925,
@@ -5632,7 +5632,7 @@
         }
       },
       "Holiday Week": {
-        "Week 1": {
+        "Week1": {
           "Studio": 900,
           "2-BDRM": 1800,
           "3-BDRM": 2250
@@ -5647,7 +5647,7 @@
           "2-BDRM": 2925,
           "3-BDRM": 3600
         },
-        "New Year’s Eve/Day": {
+        "NewYear": {
           "Studio": 1750,
           "2-BDRM": 3325,
           "3-BDRM": 4050
@@ -5657,7 +5657,7 @@
           "2-BDRM": 3100,
           "3-BDRM": 3825
         },
-        "Easter": {
+        "Easter2": {
           "Studio": 1575,
           "2-BDRM": 3100,
           "3-BDRM": 3825
@@ -5731,7 +5731,7 @@
           "2-BDRM": 2900,
           "3-BDRM": 3125
         },
-        "Easter": {
+        "Easter2": {
           "1-BDRM": 2100,
           "2-BDRM": 2900,
           "3-BDRM": 3125
@@ -5741,7 +5741,7 @@
           "2-BDRM": 2275,
           "3-BDRM": 2500
         },
-        "New Year’s Eve/Day": {
+        "NewYear": {
           "1-BDRM": 1700,
           "2-BDRM": 2275,
           "3-BDRM": 2500
@@ -5779,7 +5779,7 @@
           "1-BDRM VILLA": 2350,
           "2-BDRM VILLA": 3675
         },
-        "Easter": {
+        "Easter2": {
           "Studio": 1600,
           "1-BDRM VILLA": 2350,
           "2-BDRM VILLA": 3675
@@ -5794,7 +5794,7 @@
           "1-BDRM VILLA": 1950,
           "2-BDRM VILLA": 2975
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Studio": 1600,
           "1-BDRM VILLA": 2350,
           "2-BDRM VILLA": 3675
@@ -5804,7 +5804,7 @@
           "1-BDRM VILLA": 2350,
           "2-BDRM VILLA": 3675
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 1775,
           "1-BDRM VILLA": 2575,
           "2-BDRM VILLA": 4100
@@ -5867,7 +5867,7 @@
         }
       },
       "Holiday Week": {
-        "Easter": {
+        "Easter2": {
           "Studio CV": 2640,
           "Studio LV": 2870,
           "1-BDRM CV": 3780,
@@ -5883,7 +5883,7 @@
           "2-BDRM CV": 6050,
           "2-BDRM LV": 6600
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio CV": 2640,
           "Studio LV": 2870,
           "1-BDRM CV": 3780,
@@ -5980,7 +5980,7 @@
           "Deluxe King": 5175,
           "Deluxe Double": 5175
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Guestroom Queen": 4050,
           "Guestroom King": 4725,
           "Guestroom King City": 5625,
@@ -5998,7 +5998,7 @@
           "Deluxe King": 4850,
           "Deluxe Double": 4850
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Guestroom Queen": 4250,
           "Guestroom King": 4875,
           "Guestroom King City": 5850,
@@ -6097,7 +6097,7 @@
           "King City": 1925,
           "2-Bedroom": 3500
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Doubles": 1600,
           "King": 1600,
           "King City": 1775,
@@ -6109,7 +6109,7 @@
           "King City": 2400,
           "2-Bedroom": 4250
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Doubles": 2325,
           "King": 2325,
           "King City": 2600,
@@ -6182,7 +6182,7 @@
           "1-BDRM": 900,
           "2-BDRM": 1225
         },
-        "Thanksgiving Weekend": {
+        "Thanksgiving2": {
           "Studio": 2000,
           "1-BDRM": 2900,
           "2-BDRM": 4450
@@ -6192,7 +6192,7 @@
           "1-BDRM": 5225,
           "2-BDRM": 8000
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 3950,
           "1-BDRM": 5675,
           "2-BDRM": 8675
@@ -6254,12 +6254,12 @@
           "1-BDRM": 1225,
           "2-BDRM": 1725
         },
-        "Thanksgiving Week": {
+        "Thanksgiving": {
           "Studio": 1400,
           "1-BDRM": 1950,
           "2-BDRM": 2900
         },
-        "Thanksgiving Weekend": {
+        "Thanksgiving2": {
           "Studio": 1950,
           "1-BDRM": 2725,
           "2-BDRM": 4175
@@ -6269,7 +6269,7 @@
           "1-BDRM": 1950,
           "2-BDRM": 2900
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 1950,
           "1-BDRM": 2725,
           "2-BDRM": 4175
@@ -6385,7 +6385,7 @@
           "2-BDRM OF": 5900,
           "3-BDRM OF": 6500
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio OS": 2400,
           "Studio OF": 2950,
           "1-BDRM OS": 3400,
@@ -6466,7 +6466,7 @@
           "Guest Urban": 3350,
           "Guest ConnectUrban": 6700
         },
-        "Easter": {
+        "Easter2": {
           "Guest ConnectUrban": 3000,
           "Guest Courtyard": 3750,
           "Guest No-View": 3350,
@@ -6478,7 +6478,7 @@
           "Guest Urban": 2225,
           "Guest ConnectUrban": 4450
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Guest No-View": 2550,
           "Guest Courtyard": 3175,
           "Guest Urban": 2900,
@@ -6490,7 +6490,7 @@
           "Guest Urban": 3925,
           "Guest ConnectUrban": 7850
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Guest No-View": 3800,
           "Guest Courtyard": 4550,
           "Guest Urban": 4150,
@@ -6552,7 +6552,7 @@
           "2-BDRM": 4925,
           "3-BDRM": 6700
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2-BDRM": 6250,
           "3-BDRM": 8425
         }
@@ -6623,7 +6623,7 @@
           "2-BDRM": 3750,
           "3-BDRM": 4775
         },
-        "Thanksgiving Weekend": {
+        "Thanksgiving2": {
           "1-BDRM": 3750,
           "2-BDRM": 4950,
           "3-BDRM": 6200
@@ -6633,12 +6633,12 @@
           "2-BDRM": 6475,
           "3-BDRM": 8300
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "1-BDRM": 5225,
           "2-BDRM": 6875,
           "3-BDRM": 8700
         },
-        "Easter": {
+        "Easter2": {
           "1-BDRM": 4375,
           "2-BDRM": 5625,
           "3-BDRM": 7100
@@ -6700,12 +6700,12 @@
           "1-BR Villa": 900,
           "2-BR Villa": 1450
         },
-        "Thanksgiving Week": {
+        "Thanksgiving": {
           "1-BR Small": 1225,
           "1-BR Villa": 1400,
           "2-BR Villa": 2300
         },
-        "Thanksgiving Weekend": {
+        "Thanksgiving2": {
           "1-BR Small": 1775,
           "1-BR Villa": 1950,
           "2-BR Villa": 3125
@@ -6715,7 +6715,7 @@
           "1-BR Villa": 1400,
           "2-BR Villa": 2300
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "1-BR Small": 1775,
           "1-BR Villa": 1950,
           "2-BR Villa": 3125
@@ -6812,7 +6812,7 @@
           "3-BDRM": 3225,
           "4-BDRM": 4225
         },
-        "Thanksgiving Weekend": {
+        "Thanksgiving2": {
           "2-BDRM": 6500,
           "2-BDRM Den": 6725,
           "3-BDRM": 8325,
@@ -6824,7 +6824,7 @@
           "3-BDRM": 15825,
           "4-BDRM": 20600
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2-BDRM": 11225,
           "2-BDRM Den": 11450,
           "3-BDRM": 17275,
@@ -6978,7 +6978,7 @@
           "3BR MA": 6250,
           "3BR MK": 8025
         },
-        "Easter": {
+        "Easter2": {
           "AP_Studio_MA": 2160,
           "AP_1BR_MA": 3525,
           "AP_2BR_MA": 4800,
@@ -7038,7 +7038,7 @@
           "3BR MA": 5100,
           "3BR MK": 6475
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "AP_Studio_MA": 2160,
           "AP_1BR_MA": 3525,
           "AP_2BR_MA": 4800,
@@ -7078,7 +7078,7 @@
           "3BR MA": 6250,
           "3BR MK": 8025
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "AP_Studio_MA": 2365,
           "AP_1BR_MA": 4075,
           "AP_2BR_MA": 5500,
@@ -7172,7 +7172,7 @@
         "Christmas": {
           "2-BDRM": 2675
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2-BDRM": 2675
         }
       }
@@ -7278,7 +7278,7 @@
           "Junior Suite K": 3000,
           "Executive Suite K": 3000
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Guestroom K": 2300,
           "Guestroom DB": 2300,
           "Deluxe DB": 2525,
@@ -7292,7 +7292,7 @@
           "Junior Suite K": 3000,
           "Executive Suite K": 3000
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Guestroom K": 2800,
           "Guestroom DB": 2800,
           "Deluxe DB": 3025,
@@ -7352,7 +7352,7 @@
           "2-BDRM OV": 6450,
           "2-BDRM OF": 7675
         },
-        "Easter": {
+        "Easter2": {
           "1-BDRM IV": 3675,
           "1-BDRM PV": 4050,
           "1-BDRM OV": 4550,
@@ -7379,7 +7379,7 @@
           "2-BDRM OV": 5225,
           "2-BDRM OF": 6150
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "1-BDRM IV": 3675,
           "1-BDRM PV": 4050,
           "1-BDRM OV": 4550,
@@ -7397,7 +7397,7 @@
           "2-BDRM OV": 6450,
           "2-BDRM OF": 7675
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "1-BDRM IV": 4100,
           "1-BDRM PV": 4500,
           "1-BDRM OV": 5125,
@@ -7517,7 +7517,7 @@
           "0-Studio Deluxe": 1950,
           "0-Studio": 1675
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "1-BR": 2950,
           "1-BR Deluxe": 2950,
           "2-BR": 4000,
@@ -7564,7 +7564,7 @@
         }
       },
       "Holiday Week": {
-        "Easter": {
+        "Easter2": {
           "1BR": 4270,
           "2BR Pool": 7540,
           "2BR": 6570
@@ -7574,7 +7574,7 @@
           "2BR Pool": 7540,
           "2BR": 6570
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "1BR": 4270,
           "2BR Pool": 7540,
           "2BR": 6570
@@ -7646,7 +7646,7 @@
           "1-BDRM": 400,
           "2-BDRM": 575
         },
-        "Thanksgiving Weekend": {
+        "Thanksgiving2": {
           "Suite": 725,
           "1-BDRM": 1000,
           "2-BDRM": 1450
@@ -7656,7 +7656,7 @@
           "1-BDRM": 1675,
           "2-BDRM": 2400
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Suite": 1275,
           "1-BDRM": 1900,
           "2-BDRM": 2725
@@ -7695,7 +7695,7 @@
         "Christmas": {
           "2-BDRM": 2275
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2-BDRM": 2675
         }
       }
@@ -7765,7 +7765,7 @@
           "1-BDRM": 2225,
           "2-BDRM": 3400
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 1950,
           "1-BDRM": 2725,
           "2-BDRM": 4175
@@ -7815,7 +7815,7 @@
         "Christmas": {
           "3-BDRM": 2675
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "3-BDRM": 3000
         }
       }
@@ -7863,7 +7863,7 @@
         "Christmas": {
           "2-BDRM": 2450
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2-BDRM": 2725
         }
       }
@@ -7900,7 +7900,7 @@
         "Christmas": {
           "1-BDRM": 3275
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "1-BDRM": 3450
         }
       }
@@ -7965,7 +7965,7 @@
           "1-BDRM": 3950,
           "2-BDRM": 5725
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 2850,
           "1-BDRM": 4450,
           "2-BDRM": 6400
@@ -8015,7 +8015,7 @@
           "1 Bedroom": 2920,
           "2 Bedroom": 4700
         },
-        "Easter": {
+        "Easter2": {
           "Guestroom": 2070,
           "1 Bedroom": 2920,
           "2 Bedroom": 4700
@@ -8025,7 +8025,7 @@
           "1 Bedroom": 2920,
           "2 Bedroom": 4700
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Guestroom": 2070,
           "1 Bedroom": 2920,
           "2 Bedroom": 4700
@@ -8075,7 +8075,7 @@
           "2 Bedroom": 5750,
           "3 Bedroom": 9250
         },
-        "Easter": {
+        "Easter2": {
           "1 Bedroom": 3500,
           "2 Bedroom": 5750,
           "3 Bedroom": 9250
@@ -8085,7 +8085,7 @@
           "2 Bedroom": 5750,
           "3 Bedroom": 9250
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "1 Bedroom": 3500,
           "2 Bedroom": 5750,
           "3 Bedroom": 9250
@@ -8174,7 +8174,7 @@
           "2-BDRM OV": 6250,
           "2-BDRM OF": 8025
         },
-        "Easter": {
+        "Easter2": {
           "Studio OV": 2750,
           "Studio OF": 3675,
           "1-BDRM OV": 4075,
@@ -8198,7 +8198,7 @@
           "2-BDRM OV": 6250,
           "2-BDRM OF": 8025
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio OV": 3150,
           "Studio OF": 4075,
           "1-BDRM OV": 4525,
@@ -8353,7 +8353,7 @@
           "2-BDRM OF": 8025,
           "3-BDRM OV": 8025
         },
-        "Easter": {
+        "Easter2": {
           "Studio GV": 2350,
           "Studio OS": 2750,
           "Studio OV": 2750,
@@ -8398,7 +8398,7 @@
           "2-BDRM OF": 8025,
           "3-BDRM OV": 8025
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio GV": 2700,
           "Studio OS": 3150,
           "Studio OV": 3150,
@@ -8463,7 +8463,7 @@
           "1-BDRM": 1175,
           "2-BDRM": 1675
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 1175,
           "1-BDRM": 1500,
           "2-BDRM": 2400
@@ -8547,7 +8547,7 @@
           "3-BDRM": 3225,
           "4-BDRM": 4225
         },
-        "Thanksgiving Weekend": {
+        "Thanksgiving2": {
           "2-BDRM": 5900,
           "3-BDRM": 7400,
           "4-BDRM": 9275
@@ -8557,7 +8557,7 @@
           "3-BDRM": 15825,
           "4-BDRM": 20600
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2-BDRM": 11225,
           "3-BDRM": 17275,
           "4-BDRM": 22500
@@ -8624,7 +8624,7 @@
           "1BR": 2000,
           "2BR": 3000
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Studio": 1725,
           "1BR": 2500,
           "2BR": 3775
@@ -8634,7 +8634,7 @@
           "1BR": 2000,
           "2BR": 3000
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio": 1725,
           "1BR": 2500,
           "2BR": 3775
@@ -8727,7 +8727,7 @@
           "2BR OF": 9050,
           "3BR OF": 12375
         },
-        "Easter": {
+        "Easter2": {
           "Studio IV": 2700,
           "Studio MG": 3100,
           "Studio OV": 3675,
@@ -8772,7 +8772,7 @@
           "2BR OF": 7450,
           "3BR OF": 10200
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Studio IV": 2700,
           "Studio MG": 3100,
           "Studio OV": 3675,
@@ -8802,7 +8802,7 @@
           "2BR OF": 9050,
           "3BR OF": 12375
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Studio IV": 2975,
           "Studio MG": 3500,
           "Studio OV": 4125,
@@ -8862,7 +8862,7 @@
         "Christmas": {
           "2BR": 2900
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "2BR": 3225
         }
       }
@@ -8909,7 +8909,7 @@
           "2-BDRM": 3850,
           "3-BDRM": 5400
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Guestroom": 2225,
           "1-BDRM": 3175,
           "2-BDRM": 4625,
@@ -8988,7 +8988,7 @@
           "2BR OV": 5100,
           "2BR OF": 6250
         },
-        "Easter": {
+        "Easter2": {
           "Parlor GV": 1375,
           "Parlor OV": 1600,
           "Parlor OF": 1900,
@@ -9027,7 +9027,7 @@
           "2BR OV": 4125,
           "2BR OF": 5100
         },
-        "Thanksgiving 2": {
+        "Thanksgiving2": {
           "Parlor GV": 1375,
           "Parlor OV": 1600,
           "Parlor OF": 1900,
@@ -9053,7 +9053,7 @@
           "2BR OV": 5100,
           "2BR OF": 6250
         },
-        "New Year's Eve/Day": {
+        "NewYear": {
           "Parlor GV": 1550,
           "Parlor OV": 1750,
           "Parlor OF": 2125,
@@ -9133,7 +9133,7 @@
         "2025-04-11",
         "2025-04-17"
       ],
-      "Easter": [
+      "Easter2": [
         "2025-04-18",
         "2025-04-24"
       ],
@@ -9145,7 +9145,7 @@
         "2025-11-21",
         "2025-11-27"
       ],
-      "Thanksgiving 2": [
+      "Thanksgiving2": [
         "2025-11-28",
         "2025-12-04"
       ],
@@ -9153,7 +9153,7 @@
         "2025-12-19",
         "2025-12-25"
       ],
-      "New Year's Eve/Day": [
+      "NewYear": [
         "2025-12-26",
         "2026-01-01"
       ],
@@ -9161,7 +9161,7 @@
         "2025-01-24",
         "2025-01-30"
       ],
-      "Week 1": [
+      "Week1": [
         "2025-01-03",
         "2025-01-09"
       ],
@@ -9195,7 +9195,7 @@
         "2026-03-27",
         "2026-04-02"
       ],
-      "Easter": [
+      "Easter2": [
         "2026-04-03",
         "2026-04-09"
       ],
@@ -9207,7 +9207,7 @@
         "2026-11-20",
         "2026-11-26"
       ],
-      "Thanksgiving 2": [
+      "Thanksgiving2": [
         "2026-11-27",
         "2026-12-03"
       ],
@@ -9215,7 +9215,7 @@
         "2026-12-18",
         "2026-12-24"
       ],
-      "New Year's Eve/Day": [
+      "NewYear": [
         "2026-12-25",
         "2026-12-31"
       ],
@@ -9223,7 +9223,7 @@
         "2026-02-13",
         "2026-02-19"
       ],
-      "Week 1": [
+      "Week1": [
         "2026-01-02",
         "2026-01-08"
       ],
