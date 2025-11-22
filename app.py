@@ -673,21 +673,44 @@ def main():
     # Display results with metrics
     st.subheader(f"📊 {r_name} - {room_sel}")
     
-    metric_cols = st.columns(4)
-    with metric_cols[0]:
-        st.metric("Total Points", f"{res.total_points:,}")
-    with metric_cols[1]:
-        st.metric(f"Total {'Cost' if mode == UserMode.OWNER else 'Rent'}", f"${res.financial_total:,.2f}")
-    with metric_cols[2]:
-        if mode == UserMode.OWNER and owner_params.get('inc_m'):
-            st.metric("Maintenance", f"${res.m_cost:,.2f}")
-    with metric_cols[3]:
-        if mode == UserMode.OWNER:
-            if owner_params.get('inc_c'):
+    if mode == UserMode.OWNER:
+        # Owner mode: show 4 metrics
+        metric_cols = st.columns(4)
+        with metric_cols[0]:
+            st.metric("Total Points", f"{res.total_points:,}")
+        with metric_cols[1]:
+            st.metric("Total Cost", f"${res.financial_total:,.2f}")
+        with metric_cols[2]:
+            if owner_params.get('inc_m'):
+                st.metric("Maintenance", f"${res.m_cost:,.2f}")
+            elif owner_params.get('inc_c'):
                 st.metric("Capital Cost", f"${res.c_cost:,.2f}")
-        elif res.discount_applied:
-            pct = "30%" if policy == DiscountPolicy.PRESIDENTIAL else "25%"
-            st.metric("Discount Applied", pct)
+            elif owner_params.get('inc_d'):
+                st.metric("Depreciation", f"${res.d_cost:,.2f}")
+        with metric_cols[3]:
+            if owner_params.get('inc_c') and owner_params.get('inc_m'):
+                st.metric("Capital Cost", f"${res.c_cost:,.2f}")
+            elif owner_params.get('inc_d'):
+                st.metric("Depreciation", f"${res.d_cost:,.2f}")
+        
+        # Additional metric row if all three components are included
+        if owner_params.get('inc_m') and owner_params.get('inc_c') and owner_params.get('inc_d'):
+            metric_cols2 = st.columns(4)
+            with metric_cols2[2]:
+                st.metric("Depreciation", f"${res.d_cost:,.2f}")
+    else:
+        # Renter mode
+        metric_cols = st.columns(4)
+        with metric_cols[0]:
+            st.metric("Total Points", f"{res.total_points:,}")
+        with metric_cols[1]:
+            st.metric("Total Rent", f"${res.financial_total:,.2f}")
+        with metric_cols[2]:
+            if res.discount_applied:
+                pct = "30%" if policy == DiscountPolicy.PRESIDENTIAL else "25%"
+                st.metric("Discount Applied", pct)
+        with metric_cols[3]:
+            pass
     
     if res.discount_applied:
         st.success(f"✅ Discount Applied: {pct} off points ({len(res.discounted_days)} day(s))")
