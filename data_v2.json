@@ -271,8 +271,8 @@
       "id": "aruba-ocean",
       "display_name": "Aruba Ocean",
       "code": "AO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Aruba Ocean Club",
+      "timezone": "America/Aruba",
       "years": {
         "2025": {
           "seasons": [
@@ -784,8 +784,8 @@
       "id": "aruba-surf",
       "display_name": "Aruba Surf",
       "code": "AS",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Aruba Surf Club",
+      "timezone": "America/Aruba",
       "years": {
         "2025": {
           "seasons": [
@@ -1479,8 +1479,8 @@
       "id": "bali-gardens",
       "display_name": "Bali Gardens",
       "code": "BG",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Bali Nusa Dua Gardens",
+      "timezone": "Asia/Bali",
       "years": {
         "2025": {
           "seasons": [
@@ -1844,8 +1844,8 @@
       "id": "bali-terrace",
       "display_name": "Bali Terrace",
       "code": "BT",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Bali Nusa Dua Terrace",
+      "timezone": "Asia/Bali",
       "years": {
         "2025": {
           "seasons": [
@@ -2209,8 +2209,8 @@
       "id": "birch-vail",
       "display_name": "Birch Vail",
       "code": "BV",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's StreamSide Birch at Vail",
+      "timezone": "America/Denver",
       "years": {
         "2025": {
           "seasons": [
@@ -2678,8 +2678,8 @@
       "id": "boston",
       "display_name": "Boston",
       "code": "B",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott Vacation Club at Custom House, Boston",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -2949,8 +2949,8 @@
       "id": "canyon-villas-arizona",
       "display_name": "Canyon Villas Arizona",
       "code": "CVA",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Canyon Villas",
+      "timezone": "America/Phoenix",
       "years": {
         "2025": {
           "seasons": [
@@ -3396,7 +3396,7 @@
       "id": "chateau-vegas",
       "display_name": "Chateau Vegas",
       "code": "CV",
-      "region": "Unknown",
+      "resort_name": "Marriott's Grand Chateau",
       "timezone": "UTC",
       "years": {
         "2025": {
@@ -3661,7 +3661,7 @@
       "id": "crystal-shores",
       "display_name": "Crystal Shores",
       "code": "CS",
-      "region": "Unknown",
+      "resort_name": "Marriott's Crystal Shores",
       "timezone": "UTC",
       "years": {
         "2025": {
@@ -4298,8 +4298,8 @@
       "id": "cypress-orlando",
       "display_name": "Cypress Orlando",
       "code": "CO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Cypress Harbour",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -4663,8 +4663,8 @@
       "id": "desert-springs-ii",
       "display_name": "Desert Springs II",
       "code": "DSI",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Desert Springs Villas II",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -5110,8 +5110,8 @@
       "id": "doral-miami",
       "display_name": "Doral Miami",
       "code": "DM",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Villas at Doral",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -5389,8 +5389,8 @@
       "id": "fort-lauderdale",
       "display_name": "Fort Lauderdale",
       "code": "FL",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's BeachPlace Towers",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -5826,8 +5826,8 @@
       "id": "frenchman-s-cove",
       "display_name": "Frenchman's Cove",
       "code": "FC",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Frenchman's Cove",
+      "timezone": "America/Virgin",
       "years": {
         "2025": {
           "seasons": [
@@ -6215,8 +6215,8 @@
       "id": "grande-vista-orlando",
       "display_name": "Grande Vista Orlando",
       "code": "GVO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Grande Vista",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -6652,8 +6652,8 @@
       "id": "imperial-orlando",
       "display_name": "Imperial Orlando",
       "code": "IO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Imperial Palms Villas",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -7017,8 +7017,8 @@
       "id": "kauai-beach",
       "display_name": "Kauai Beach",
       "code": "KB",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Kaua'i Beach Club",
+      "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
           "seasons": [
@@ -7540,8 +7540,8 @@
       "id": "khao-lak",
       "display_name": "Khao Lak",
       "code": "KL",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott Vacation Club, Khao Lak Beach Resort",
+      "timezone": "Asia/Bangkok",
       "years": {
         "2025": {
           "seasons": [
@@ -7807,8 +7807,8 @@
       "id": "ko-olina-beach",
       "display_name": "Ko Olina Beach",
       "code": "KOB",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Ko Olina Beach Club",
+      "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
           "seasons": [
@@ -8692,8 +8692,8 @@
       "id": "lakeshore-orlando",
       "display_name": "Lakeshore Orlando",
       "code": "LO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Lakeshore Reserve",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -9201,8 +9201,8 @@
       "id": "maui-ocean",
       "display_name": "Maui Ocean",
       "code": "MO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Maui Ocean Club",
+      "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
           "seasons": [
@@ -9768,8 +9768,8 @@
       "id": "marbella-beach",
       "display_name": "Marbella Beach",
       "code": "MB",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Marbella Beach Resort",
+      "timezone": "Europe/Madrid",
       "years": {
         "2025": {
           "seasons": [
@@ -10273,8 +10273,8 @@
       "id": "mountainside-utah",
       "display_name": "Mountainside Utah",
       "code": "MU",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's MountainSide",
+      "timezone": "America/Denver",
       "years": {
         "2025": {
           "seasons": [
@@ -10742,8 +10742,8 @@
       "id": "newport-coast",
       "display_name": "Newport Coast",
       "code": "NC",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Newport Coast Villas",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -11021,8 +11021,8 @@
       "id": "ocean-pointe",
       "display_name": "Ocean Pointe",
       "code": "OP",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Ocean Pointe",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -11538,8 +11538,8 @@
       "id": "panama-florida",
       "display_name": "Panama Florida",
       "code": "PF",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Legends Edge at Bay Point",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -11857,8 +11857,8 @@
       "id": "phuket-beach-club",
       "display_name": "Phuket Beach Club",
       "code": "PBC",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Phuket Beach Club",
+      "timezone": "Asia/Bangkok",
       "years": {
         "2025": {
           "seasons": [
@@ -12108,8 +12108,8 @@
       "id": "playa-andaluza",
       "display_name": "Playa Andaluza",
       "code": "PA",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Playa Andaluza",
+      "timezone": "Europe/Madrid",
       "years": {
         "2025": {
           "seasons": [
@@ -12694,560 +12694,11 @@
       }
     },
     {
-      "id": "pulse-dc",
-      "display_name": "Pulse DC",
-      "code": "PD",
-      "region": "Unknown",
-      "timezone": "UTC",
-      "years": {
-        "2025": {
-          "seasons": [
-            {
-              "name": "Low Season",
-              "periods": [
-                {
-                  "start": "2025-01-03",
-                  "end": "2025-02-13"
-                },
-                {
-                  "start": "2025-12-05",
-                  "end": "2025-12-18"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 250,
-                    "Guestroom DB": 250,
-                    "Deluxe DB": 275,
-                    "Junior Suite K": 300,
-                    "Executive Suite K": 300
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 300,
-                    "Guestroom DB": 300,
-                    "Deluxe DB": 325,
-                    "Junior Suite K": 400,
-                    "Executive Suite K": 400
-                  }
-                }
-              }
-            },
-            {
-              "name": "Mid Season",
-              "periods": [
-                {
-                  "start": "2025-02-21",
-                  "end": "2025-03-20"
-                },
-                {
-                  "start": "2025-11-07",
-                  "end": "2025-11-20"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 300,
-                    "Guestroom DB": 300,
-                    "Deluxe DB": 325,
-                    "Junior Suite K": 400,
-                    "Executive Suite K": 400
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 400,
-                    "Guestroom DB": 400,
-                    "Deluxe DB": 450,
-                    "Junior Suite K": 525,
-                    "Executive Suite K": 525
-                  }
-                }
-              }
-            },
-            {
-              "name": "High Season",
-              "periods": [
-                {
-                  "start": "2025-03-21",
-                  "end": "2025-05-22"
-                },
-                {
-                  "start": "2025-09-05",
-                  "end": "2025-11-06"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 350,
-                    "Guestroom DB": 350,
-                    "Deluxe DB": 400,
-                    "Junior Suite K": 450,
-                    "Executive Suite K": 450
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 475,
-                    "Guestroom DB": 475,
-                    "Deluxe DB": 525,
-                    "Junior Suite K": 625,
-                    "Executive Suite K": 625
-                  }
-                }
-              }
-            },
-            {
-              "name": "Peak Season",
-              "periods": [
-                {
-                  "start": "2025-05-30",
-                  "end": "2025-07-03"
-                },
-                {
-                  "start": "2025-07-11",
-                  "end": "2025-08-28"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 425,
-                    "Guestroom DB": 425,
-                    "Deluxe DB": 475,
-                    "Junior Suite K": 550,
-                    "Executive Suite K": 550
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 575,
-                    "Guestroom DB": 575,
-                    "Deluxe DB": 625,
-                    "Junior Suite K": 750,
-                    "Executive Suite K": 750
-                  }
-                }
-              }
-            }
-          ],
-          "holidays": [
-            {
-              "name": "Presidents Day",
-              "global_reference": "Presidents Day",
-              "room_points": {
-                "Guestroom K": 2500,
-                "Guestroom DB": 2500,
-                "Deluxe DB": 2675,
-                "Junior Suite K": 3150,
-                "Executive Suite K": 3150
-              }
-            },
-            {
-              "name": "Memorial Day",
-              "global_reference": "Memorial Day",
-              "room_points": {
-                "Guestroom K": 3500,
-                "Guestroom DB": 3500,
-                "Deluxe DB": 3775,
-                "Junior Suite K": 4425,
-                "Executive Suite K": 4425
-              }
-            },
-            {
-              "name": "Independence Day",
-              "global_reference": "Independence Day",
-              "room_points": {
-                "Guestroom K": 3625,
-                "Guestroom DB": 3625,
-                "Deluxe DB": 3925,
-                "Junior Suite K": 4600,
-                "Executive Suite K": 4600
-              }
-            },
-            {
-              "name": "Labor Day",
-              "global_reference": "Labor Day",
-              "room_points": {
-                "Guestroom K": 3350,
-                "Guestroom DB": 3350,
-                "Deluxe DB": 3625,
-                "Junior Suite K": 4200,
-                "Executive Suite K": 4200
-              }
-            },
-            {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
-              "room_points": {
-                "Guestroom K": 2300,
-                "Guestroom DB": 2300,
-                "Deluxe DB": 2525,
-                "Junior Suite K": 3000,
-                "Executive Suite K": 3000
-              }
-            },
-            {
-              "name": "Thanksgiving2",
-              "global_reference": "Thanksgiving2",
-              "room_points": {
-                "Guestroom K": 2300,
-                "Guestroom DB": 2300,
-                "Deluxe DB": 2525,
-                "Junior Suite K": 3000,
-                "Executive Suite K": 3000
-              }
-            },
-            {
-              "name": "Christmas",
-              "global_reference": "Christmas",
-              "room_points": {
-                "Guestroom K": 2350,
-                "Guestroom DB": 2350,
-                "Deluxe DB": 2575,
-                "Junior Suite K": 3000,
-                "Executive Suite K": 3000
-              }
-            },
-            {
-              "name": "NewYear",
-              "global_reference": "NewYear",
-              "room_points": {
-                "Guestroom K": 2800,
-                "Guestroom DB": 2800,
-                "Deluxe DB": 3025,
-                "Junior Suite K": 3550,
-                "Executive Suite K": 3550
-              }
-            }
-          ]
-        },
-        "2026": {
-          "seasons": [
-            {
-              "name": "Low Season",
-              "periods": [
-                {
-                  "start": "2026-01-02",
-                  "end": "2026-02-12"
-                },
-                {
-                  "start": "2026-12-04",
-                  "end": "2026-12-17"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 250,
-                    "Guestroom DB": 250,
-                    "Deluxe DB": 275,
-                    "Junior Suite K": 300,
-                    "Executive Suite K": 300
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 300,
-                    "Guestroom DB": 300,
-                    "Deluxe DB": 325,
-                    "Junior Suite K": 400,
-                    "Executive Suite K": 400
-                  }
-                }
-              }
-            },
-            {
-              "name": "Mid Season",
-              "periods": [
-                {
-                  "start": "2026-02-20",
-                  "end": "2026-03-19"
-                },
-                {
-                  "start": "2026-11-06",
-                  "end": "2026-11-19"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 300,
-                    "Guestroom DB": 300,
-                    "Deluxe DB": 325,
-                    "Junior Suite K": 400,
-                    "Executive Suite K": 400
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 400,
-                    "Guestroom DB": 400,
-                    "Deluxe DB": 450,
-                    "Junior Suite K": 525,
-                    "Executive Suite K": 525
-                  }
-                }
-              }
-            },
-            {
-              "name": "High Season",
-              "periods": [
-                {
-                  "start": "2026-03-20",
-                  "end": "2026-05-21"
-                },
-                {
-                  "start": "2026-09-11",
-                  "end": "2026-11-05"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 350,
-                    "Guestroom DB": 350,
-                    "Deluxe DB": 400,
-                    "Junior Suite K": 450,
-                    "Executive Suite K": 450
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 475,
-                    "Guestroom DB": 475,
-                    "Deluxe DB": 525,
-                    "Junior Suite K": 625,
-                    "Executive Suite K": 625
-                  }
-                }
-              }
-            },
-            {
-              "name": "Peak Season",
-              "periods": [
-                {
-                  "start": "2026-05-29",
-                  "end": "2026-07-02"
-                },
-                {
-                  "start": "2026-07-10",
-                  "end": "2026-09-03"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 425,
-                    "Guestroom DB": 425,
-                    "Deluxe DB": 475,
-                    "Junior Suite K": 550,
-                    "Executive Suite K": 550
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom K": 575,
-                    "Guestroom DB": 575,
-                    "Deluxe DB": 625,
-                    "Junior Suite K": 750,
-                    "Executive Suite K": 750
-                  }
-                }
-              }
-            }
-          ],
-          "holidays": [
-            {
-              "name": "Presidents Day",
-              "global_reference": "Presidents Day",
-              "room_points": {
-                "Guestroom K": 2500,
-                "Guestroom DB": 2500,
-                "Deluxe DB": 2675,
-                "Junior Suite K": 3150,
-                "Executive Suite K": 3150
-              }
-            },
-            {
-              "name": "Memorial Day",
-              "global_reference": "Memorial Day",
-              "room_points": {
-                "Guestroom K": 3500,
-                "Guestroom DB": 3500,
-                "Deluxe DB": 3775,
-                "Junior Suite K": 4425,
-                "Executive Suite K": 4425
-              }
-            },
-            {
-              "name": "Independence Day",
-              "global_reference": "Independence Day",
-              "room_points": {
-                "Guestroom K": 3625,
-                "Guestroom DB": 3625,
-                "Deluxe DB": 3925,
-                "Junior Suite K": 4600,
-                "Executive Suite K": 4600
-              }
-            },
-            {
-              "name": "Labor Day",
-              "global_reference": "Labor Day",
-              "room_points": {
-                "Guestroom K": 3350,
-                "Guestroom DB": 3350,
-                "Deluxe DB": 3625,
-                "Junior Suite K": 4200,
-                "Executive Suite K": 4200
-              }
-            },
-            {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
-              "room_points": {
-                "Guestroom K": 2300,
-                "Guestroom DB": 2300,
-                "Deluxe DB": 2525,
-                "Junior Suite K": 3000,
-                "Executive Suite K": 3000
-              }
-            },
-            {
-              "name": "Thanksgiving2",
-              "global_reference": "Thanksgiving2",
-              "room_points": {
-                "Guestroom K": 2300,
-                "Guestroom DB": 2300,
-                "Deluxe DB": 2525,
-                "Junior Suite K": 3000,
-                "Executive Suite K": 3000
-              }
-            },
-            {
-              "name": "Christmas",
-              "global_reference": "Christmas",
-              "room_points": {
-                "Guestroom K": 2350,
-                "Guestroom DB": 2350,
-                "Deluxe DB": 2575,
-                "Junior Suite K": 3000,
-                "Executive Suite K": 3000
-              }
-            },
-            {
-              "name": "NewYear",
-              "global_reference": "NewYear",
-              "room_points": {
-                "Guestroom K": 2800,
-                "Guestroom DB": 2800,
-                "Deluxe DB": 3025,
-                "Junior Suite K": 3550,
-                "Executive Suite K": 3550
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "id": "pulse-new-york",
       "display_name": "Pulse New York",
       "code": "PNY",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott Vacation Club, New York City",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -13691,8 +13142,8 @@
       "id": "pulse-san-diego",
       "display_name": "Pulse San Diego",
       "code": "PSD",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott Vacation Club, San Diego",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -14208,8 +13659,8 @@
       "id": "pulse-san-francisco",
       "display_name": "Pulse San Francisco",
       "code": "PSF",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott Vacation Club, San Francisco",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -14713,8 +14164,8 @@
       "id": "residence-tahoe",
       "display_name": "Residence Tahoe",
       "code": "RT",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott Grand Residence Club, Lake Tahoe",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -15178,8 +14629,8 @@
       "id": "ritz-san-francisco",
       "display_name": "Ritz San Francisco",
       "code": "RSF",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "The Ritz-Carlton Club, San Francisco",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -15653,8 +15104,8 @@
       "id": "ritz-tahoe",
       "display_name": "Ritz Tahoe",
       "code": "RT",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "The Ritz-Carlton Club, Lake Tahoe",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -16182,8 +15633,8 @@
       "id": "ritz-vail",
       "display_name": "Ritz Vail",
       "code": "RV",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "The Ritz-Carlton Club, Vail",
+      "timezone": "America/Denver",
       "years": {
         "2025": {
           "seasons": [
@@ -16747,8 +16198,8 @@
       "id": "sabal-orlando",
       "display_name": "Sabal Orlando",
       "code": "SO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Sabal Palms",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -17112,8 +16563,8 @@
       "id": "shadow-ridge",
       "display_name": "Shadow Ridge",
       "code": "SR",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Shadow Ridge",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -17559,8 +17010,8 @@
       "id": "sheraton-kauai",
       "display_name": "Sheraton Kauai",
       "code": "SK",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Sheraton Kauai Resort Villas",
+      "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
           "seasons": [
@@ -17906,8 +17357,8 @@
       "id": "sheraton-scottsdale",
       "display_name": "Sheraton Scottsdale",
       "code": "SS",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Sheraton Desert Oasis, Scottsdale",
+      "timezone": "America/Phoenix",
       "years": {
         "2025": {
           "seasons": [
@@ -18353,7 +17804,7 @@
       "id": "suenos-costarica",
       "display_name": "Suenos CostaRica",
       "code": "SC",
-      "region": "Unknown",
+      "resort_name": "Marriott Vacation Club at Los Sueños",
       "timezone": "UTC",
       "years": {
         "2025": {
@@ -18736,8 +18187,8 @@
       "id": "surfers-paradise",
       "display_name": "Surfers Paradise",
       "code": "SP",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott Vacation Club at Surfers Paradise",
+      "timezone": "Australia/Brisbane",
       "years": {
         "2025": {
           "seasons": [
@@ -19145,8 +18596,8 @@
       "id": "village-paris",
       "display_name": "Village Paris",
       "code": "VP",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Village d'Ile-de-France",
+      "timezone": "Europe/Paris",
       "years": {
         "2025": {
           "seasons": [
@@ -19306,7 +18757,11 @@
             {
               "name": "Mid-Term",
               "global_reference": "Mid-Term",
-              "room_points": {}
+              "room_points": {
+                "2-BDRM": 0,
+                "3-BDRM": 0,
+                "Studio": 0
+              }
             },
             {
               "name": "Christmas",
@@ -19482,7 +18937,11 @@
             {
               "name": "Mid-Term",
               "global_reference": "Mid-Term",
-              "room_points": {}
+              "room_points": {
+                "2-BDRM": 0,
+                "3-BDRM": 0,
+                "Studio": 0
+              }
             },
             {
               "name": "Christmas",
@@ -19510,8 +18969,8 @@
       "id": "waikoloa-ocean",
       "display_name": "Waikoloa Ocean",
       "code": "WO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Waikoloa Ocean Club",
+      "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
           "seasons": [
@@ -19945,8 +19404,8 @@
       "id": "westin-ka-anapali",
       "display_name": "Westin Ka'anapali",
       "code": "WK",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "The Westin Kā'anapali Ocean Resort Villas",
+      "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
           "seasons": [
@@ -20424,8 +19883,8 @@
       "id": "willow-branson",
       "display_name": "Willow Branson",
       "code": "WB",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Willow Ridge Lodge",
+      "timezone": "America/Chicago",
       "years": {
         "2025": {
           "seasons": [
@@ -20739,8 +20198,8 @@
       "id": "harbour-lake-orlando",
       "display_name": "Harbour Lake Orlando",
       "code": "HLO",
-      "region": "Unknown",
-      "timezone": "UTC",
+      "resort_name": "Marriott's Harbour Lake",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -21142,6 +20601,555 @@
                 "1-BR": 2175,
                 "2-BR": 3234,
                 "0-Studio": 1625
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "washington-dc",
+      "display_name": "Washington DC",
+      "code": "WD",
+      "resort_name": "Marriott Vacation Club at The Mayflower, Washington, D.C.",
+      "timezone": "UTC",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-02-13"
+                },
+                {
+                  "start": "2025-12-05",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 250,
+                    "Guestroom DB": 250,
+                    "Deluxe DB": 275,
+                    "Junior Suite K": 300,
+                    "Executive Suite K": 300
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 300,
+                    "Guestroom DB": 300,
+                    "Deluxe DB": 325,
+                    "Junior Suite K": 400,
+                    "Executive Suite K": 400
+                  }
+                }
+              }
+            },
+            {
+              "name": "Mid Season",
+              "periods": [
+                {
+                  "start": "2025-02-21",
+                  "end": "2025-03-20"
+                },
+                {
+                  "start": "2025-11-07",
+                  "end": "2025-11-20"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 300,
+                    "Guestroom DB": 300,
+                    "Deluxe DB": 325,
+                    "Junior Suite K": 400,
+                    "Executive Suite K": 400
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 400,
+                    "Guestroom DB": 400,
+                    "Deluxe DB": 450,
+                    "Junior Suite K": 525,
+                    "Executive Suite K": 525
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-03-21",
+                  "end": "2025-05-22"
+                },
+                {
+                  "start": "2025-09-05",
+                  "end": "2025-11-06"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 350,
+                    "Guestroom DB": 350,
+                    "Deluxe DB": 400,
+                    "Junior Suite K": 450,
+                    "Executive Suite K": 450
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 475,
+                    "Guestroom DB": 475,
+                    "Deluxe DB": 525,
+                    "Junior Suite K": 625,
+                    "Executive Suite K": 625
+                  }
+                }
+              }
+            },
+            {
+              "name": "Peak Season",
+              "periods": [
+                {
+                  "start": "2025-05-30",
+                  "end": "2025-07-03"
+                },
+                {
+                  "start": "2025-07-11",
+                  "end": "2025-08-28"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 425,
+                    "Guestroom DB": 425,
+                    "Deluxe DB": 475,
+                    "Junior Suite K": 550,
+                    "Executive Suite K": 550
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 575,
+                    "Guestroom DB": 575,
+                    "Deluxe DB": 625,
+                    "Junior Suite K": 750,
+                    "Executive Suite K": 750
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "Guestroom K": 2500,
+                "Guestroom DB": 2500,
+                "Deluxe DB": 2675,
+                "Junior Suite K": 3150,
+                "Executive Suite K": 3150
+              }
+            },
+            {
+              "name": "Memorial Day",
+              "global_reference": "Memorial Day",
+              "room_points": {
+                "Guestroom K": 3500,
+                "Guestroom DB": 3500,
+                "Deluxe DB": 3775,
+                "Junior Suite K": 4425,
+                "Executive Suite K": 4425
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "Guestroom K": 3625,
+                "Guestroom DB": 3625,
+                "Deluxe DB": 3925,
+                "Junior Suite K": 4600,
+                "Executive Suite K": 4600
+              }
+            },
+            {
+              "name": "Labor Day",
+              "global_reference": "Labor Day",
+              "room_points": {
+                "Guestroom K": 3350,
+                "Guestroom DB": 3350,
+                "Deluxe DB": 3625,
+                "Junior Suite K": 4200,
+                "Executive Suite K": 4200
+              }
+            },
+            {
+              "name": "Thanksgiving",
+              "global_reference": "Thanksgiving",
+              "room_points": {
+                "Guestroom K": 2300,
+                "Guestroom DB": 2300,
+                "Deluxe DB": 2525,
+                "Junior Suite K": 3000,
+                "Executive Suite K": 3000
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "Guestroom K": 2300,
+                "Guestroom DB": 2300,
+                "Deluxe DB": 2525,
+                "Junior Suite K": 3000,
+                "Executive Suite K": 3000
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "Guestroom K": 2350,
+                "Guestroom DB": 2350,
+                "Deluxe DB": 2575,
+                "Junior Suite K": 3000,
+                "Executive Suite K": 3000
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "Guestroom K": 2800,
+                "Guestroom DB": 2800,
+                "Deluxe DB": 3025,
+                "Junior Suite K": 3550,
+                "Executive Suite K": 3550
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-12-04",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 250,
+                    "Guestroom DB": 250,
+                    "Deluxe DB": 275,
+                    "Junior Suite K": 300,
+                    "Executive Suite K": 300
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 300,
+                    "Guestroom DB": 300,
+                    "Deluxe DB": 325,
+                    "Junior Suite K": 400,
+                    "Executive Suite K": 400
+                  }
+                }
+              }
+            },
+            {
+              "name": "Mid Season",
+              "periods": [
+                {
+                  "start": "2026-02-20",
+                  "end": "2026-03-19"
+                },
+                {
+                  "start": "2026-11-06",
+                  "end": "2026-11-19"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 300,
+                    "Guestroom DB": 300,
+                    "Deluxe DB": 325,
+                    "Junior Suite K": 400,
+                    "Executive Suite K": 400
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 400,
+                    "Guestroom DB": 400,
+                    "Deluxe DB": 450,
+                    "Junior Suite K": 525,
+                    "Executive Suite K": 525
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-03-20",
+                  "end": "2026-05-21"
+                },
+                {
+                  "start": "2026-09-11",
+                  "end": "2026-11-05"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 350,
+                    "Guestroom DB": 350,
+                    "Deluxe DB": 400,
+                    "Junior Suite K": 450,
+                    "Executive Suite K": 450
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 475,
+                    "Guestroom DB": 475,
+                    "Deluxe DB": 525,
+                    "Junior Suite K": 625,
+                    "Executive Suite K": 625
+                  }
+                }
+              }
+            },
+            {
+              "name": "Peak Season",
+              "periods": [
+                {
+                  "start": "2026-05-29",
+                  "end": "2026-07-02"
+                },
+                {
+                  "start": "2026-07-10",
+                  "end": "2026-09-03"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 425,
+                    "Guestroom DB": 425,
+                    "Deluxe DB": 475,
+                    "Junior Suite K": 550,
+                    "Executive Suite K": 550
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Guestroom K": 575,
+                    "Guestroom DB": 575,
+                    "Deluxe DB": 625,
+                    "Junior Suite K": 750,
+                    "Executive Suite K": 750
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "Guestroom K": 2500,
+                "Guestroom DB": 2500,
+                "Deluxe DB": 2675,
+                "Junior Suite K": 3150,
+                "Executive Suite K": 3150
+              }
+            },
+            {
+              "name": "Memorial Day",
+              "global_reference": "Memorial Day",
+              "room_points": {
+                "Guestroom K": 3500,
+                "Guestroom DB": 3500,
+                "Deluxe DB": 3775,
+                "Junior Suite K": 4425,
+                "Executive Suite K": 4425
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "Guestroom K": 3625,
+                "Guestroom DB": 3625,
+                "Deluxe DB": 3925,
+                "Junior Suite K": 4600,
+                "Executive Suite K": 4600
+              }
+            },
+            {
+              "name": "Labor Day",
+              "global_reference": "Labor Day",
+              "room_points": {
+                "Guestroom K": 3350,
+                "Guestroom DB": 3350,
+                "Deluxe DB": 3625,
+                "Junior Suite K": 4200,
+                "Executive Suite K": 4200
+              }
+            },
+            {
+              "name": "Thanksgiving",
+              "global_reference": "Thanksgiving",
+              "room_points": {
+                "Guestroom K": 2300,
+                "Guestroom DB": 2300,
+                "Deluxe DB": 2525,
+                "Junior Suite K": 3000,
+                "Executive Suite K": 3000
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "Guestroom K": 2300,
+                "Guestroom DB": 2300,
+                "Deluxe DB": 2525,
+                "Junior Suite K": 3000,
+                "Executive Suite K": 3000
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "Guestroom K": 2350,
+                "Guestroom DB": 2350,
+                "Deluxe DB": 2575,
+                "Junior Suite K": 3000,
+                "Executive Suite K": 3000
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "Guestroom K": 2800,
+                "Guestroom DB": 2800,
+                "Deluxe DB": 3025,
+                "Junior Suite K": 3550,
+                "Executive Suite K": 3550
               }
             }
           ]
