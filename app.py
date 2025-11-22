@@ -674,43 +674,54 @@ def main():
     st.subheader(f"📊 {r_name} - {room_sel}")
     
     if mode == UserMode.OWNER:
-        # Owner mode: show 4 metrics
-        metric_cols = st.columns(4)
-        with metric_cols[0]:
-            st.metric("Total Points", f"{res.total_points:,}")
-        with metric_cols[1]:
-            st.metric("Total Cost", f"${res.financial_total:,.2f}")
-        with metric_cols[2]:
-            if owner_params.get('inc_m'):
-                st.metric("Maintenance", f"${res.m_cost:,.2f}")
-            elif owner_params.get('inc_c'):
-                st.metric("Capital Cost", f"${res.c_cost:,.2f}")
-            elif owner_params.get('inc_d'):
-                st.metric("Depreciation", f"${res.d_cost:,.2f}")
-        with metric_cols[3]:
-            if owner_params.get('inc_c') and owner_params.get('inc_m'):
-                st.metric("Capital Cost", f"${res.c_cost:,.2f}")
-            elif owner_params.get('inc_d'):
-                st.metric("Depreciation", f"${res.d_cost:,.2f}")
+        # Count how many components are enabled
+        num_components = sum([
+            owner_params.get('inc_m', False),
+            owner_params.get('inc_c', False),
+            owner_params.get('inc_d', False)
+        ])
         
-        # Additional metric row if all three components are included
-        if owner_params.get('inc_m') and owner_params.get('inc_c') and owner_params.get('inc_d'):
-            metric_cols2 = st.columns(4)
-            with metric_cols2[2]:
+        # Create columns: 2 for points/total + number of enabled components
+        metric_cols = st.columns(2 + num_components)
+        
+        col_idx = 0
+        with metric_cols[col_idx]:
+            st.metric("Total Points", f"{res.total_points:,}")
+            col_idx += 1
+        with metric_cols[col_idx]:
+            st.metric("Total Cost", f"${res.financial_total:,.2f}")
+            col_idx += 1
+        
+        if owner_params.get('inc_m'):
+            with metric_cols[col_idx]:
+                st.metric("Maintenance", f"${res.m_cost:,.2f}")
+                col_idx += 1
+        
+        if owner_params.get('inc_c'):
+            with metric_cols[col_idx]:
+                st.metric("Capital Cost", f"${res.c_cost:,.2f}")
+                col_idx += 1
+        
+        if owner_params.get('inc_d'):
+            with metric_cols[col_idx]:
                 st.metric("Depreciation", f"${res.d_cost:,.2f}")
     else:
         # Renter mode
-        metric_cols = st.columns(4)
-        with metric_cols[0]:
-            st.metric("Total Points", f"{res.total_points:,}")
-        with metric_cols[1]:
-            st.metric("Total Rent", f"${res.financial_total:,.2f}")
-        with metric_cols[2]:
-            if res.discount_applied:
+        if res.discount_applied:
+            metric_cols = st.columns(3)
+            with metric_cols[0]:
+                st.metric("Total Points", f"{res.total_points:,}")
+            with metric_cols[1]:
+                st.metric("Total Rent", f"${res.financial_total:,.2f}")
+            with metric_cols[2]:
                 pct = "30%" if policy == DiscountPolicy.PRESIDENTIAL else "25%"
                 st.metric("Discount Applied", pct)
-        with metric_cols[3]:
-            pass
+        else:
+            metric_cols = st.columns(2)
+            with metric_cols[0]:
+                st.metric("Total Points", f"{res.total_points:,}")
+            with metric_cols[1]:
+                st.metric("Total Rent", f"${res.financial_total:,.2f}")
     
     if res.discount_applied:
         st.success(f"✅ Discount Applied: {pct} off points ({len(res.discounted_days)} day(s))")
