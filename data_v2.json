@@ -7804,891 +7804,6 @@
       }
     },
     {
-      "id": "ko-olina-beach",
-      "display_name": "Ko Olina Beach",
-      "code": "KOB",
-      "resort_name": "Marriott's Ko Olina Beach Club",
-      "timezone": "Pacific/Honolulu",
-      "years": {
-        "2025": {
-          "seasons": [
-            {
-              "name": "Low Season",
-              "periods": [
-                {
-                  "start": "2025-01-03",
-                  "end": "2025-01-30"
-                },
-                {
-                  "start": "2025-03-28",
-                  "end": "2025-04-17"
-                },
-                {
-                  "start": "2025-04-25",
-                  "end": "2025-05-01"
-                },
-                {
-                  "start": "2025-05-09",
-                  "end": "2025-06-05"
-                },
-                {
-                  "start": "2025-08-29",
-                  "end": "2025-11-20"
-                },
-                {
-                  "start": "2025-12-05",
-                  "end": "2025-12-18"
-                }
-              ],
-              "day_categories": {
-                "sun": {
-                  "day_pattern": [
-                    "Sun"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 350,
-                    "AP_1BR_MA": 510,
-                    "AP_2BR_MA": 770,
-                    "AP_2BR_MK": 910,
-                    "Studio MA": 205,
-                    "Studio MK": 270,
-                    "Studio PHMA": 205,
-                    "Studio PHMK": 295,
-                    "1BR MA": 355,
-                    "1BR MK": 465,
-                    "1BR PHMA": 355,
-                    "1BR PHMK": 550,
-                    "2BR MA": 500,
-                    "2BR MK": 625,
-                    "2BR PHMA": 500,
-                    "2BR PHMK": 750,
-                    "3BR MA": 650,
-                    "3BR MK": 825
-                  }
-                },
-                "mon_thu": {
-                  "day_pattern": [
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 250,
-                    "AP_1BR_MA": 360,
-                    "AP_2BR_MA": 550,
-                    "AP_2BR_MK": 660,
-                    "Studio MA": 205,
-                    "Studio MK": 270,
-                    "Studio PHMA": 205,
-                    "Studio PHMK": 295,
-                    "1BR MA": 355,
-                    "1BR MK": 465,
-                    "1BR PHMA": 355,
-                    "1BR PHMK": 550,
-                    "2BR MA": 500,
-                    "2BR MK": 625,
-                    "2BR PHMA": 500,
-                    "2BR PHMK": 750,
-                    "3BR MA": 650,
-                    "3BR MK": 825
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 440,
-                    "AP_1BR_MA": 630,
-                    "AP_2BR_MA": 960,
-                    "AP_2BR_MK": 1160,
-                    "Studio MA": 340,
-                    "Studio MK": 360,
-                    "Studio PHMA": 340,
-                    "Studio PHMK": 475,
-                    "1BR MA": 575,
-                    "1BR MK": 625,
-                    "1BR PHMA": 575,
-                    "1BR PHMK": 850,
-                    "2BR MA": 775,
-                    "2BR MK": 900,
-                    "2BR PHMA": 775,
-                    "2BR PHMK": 1075,
-                    "3BR MA": 925,
-                    "3BR MK": 1175
-                  }
-                }
-              }
-            },
-            {
-              "name": "High Season",
-              "periods": [
-                {
-                  "start": "2025-01-31",
-                  "end": "2025-02-13"
-                },
-                {
-                  "start": "2025-02-21",
-                  "end": "2025-03-27"
-                },
-                {
-                  "start": "2025-06-06",
-                  "end": "2025-07-03"
-                },
-                {
-                  "start": "2025-07-11",
-                  "end": "2025-08-08"
-                },
-                {
-                  "start": "2025-08-16",
-                  "end": "2025-08-28"
-                }
-              ],
-              "day_categories": {
-                "sun": {
-                  "day_pattern": [
-                    "Sun"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 350,
-                    "AP_1BR_MA": 510,
-                    "AP_2BR_MA": 770,
-                    "AP_2BR_MK": 910,
-                    "Studio MA": 250,
-                    "Studio MK": 295,
-                    "Studio PHMA": 250,
-                    "Studio PHMK": 340,
-                    "1BR MA": 415,
-                    "1BR MK": 525,
-                    "1BR PHMA": 415,
-                    "1BR PHMK": 625,
-                    "2BR MA": 575,
-                    "2BR MK": 725,
-                    "2BR PHMA": 575,
-                    "2BR PHMK": 875,
-                    "3BR MA": 750,
-                    "3BR MK": 975
-                  }
-                },
-                "mon_thu": {
-                  "day_pattern": [
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 250,
-                    "AP_1BR_MA": 360,
-                    "AP_2BR_MA": 550,
-                    "AP_2BR_MK": 660,
-                    "Studio MA": 250,
-                    "Studio MK": 295,
-                    "Studio PHMA": 250,
-                    "Studio PHMK": 340,
-                    "1BR MA": 415,
-                    "1BR MK": 525,
-                    "1BR PHMA": 415,
-                    "1BR PHMK": 625,
-                    "2BR MA": 575,
-                    "2BR MK": 725,
-                    "2BR PHMA": 575,
-                    "2BR PHMK": 875,
-                    "3BR MA": 750,
-                    "3BR MK": 975
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 440,
-                    "AP_1BR_MA": 630,
-                    "AP_2BR_MA": 960,
-                    "AP_2BR_MK": 1160,
-                    "Studio MA": 360,
-                    "Studio MK": 430,
-                    "Studio PHMA": 360,
-                    "Studio PHMK": 520,
-                    "1BR MA": 625,
-                    "1BR MK": 725,
-                    "1BR PHMA": 625,
-                    "1BR PHMK": 925,
-                    "2BR MA": 850,
-                    "2BR MK": 1050,
-                    "2BR PHMA": 850,
-                    "2BR PHMK": 1250,
-                    "3BR MA": 1075,
-                    "3BR MK": 1375
-                  }
-                }
-              }
-            }
-          ],
-          "holidays": [
-            {
-              "name": "Presidents Day",
-              "global_reference": "Presidents Day",
-              "room_points": {
-                "AP_Studio_MA": 2160,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4800,
-                "AP_2BR_MK": 6025,
-                "Studio MA": 2160,
-                "Studio MK": 2475,
-                "Studio PHMA": 2160,
-                "Studio PHMK": 2800,
-                "1BR MA": 3525,
-                "1BR MK": 4300,
-                "1BR PHMA": 3525,
-                "1BR PHMK": 5275,
-                "2BR MA": 4800,
-                "2BR MK": 6025,
-                "2BR PHMA": 4800,
-                "2BR PHMK": 7225,
-                "3BR MA": 6250,
-                "3BR MK": 8025
-              }
-            },
-            {
-              "name": "Easter2",
-              "global_reference": "Easter2",
-              "room_points": {
-                "AP_Studio_MA": 2160,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4800,
-                "AP_2BR_MK": 6025,
-                "Studio MA": 2160,
-                "Studio MK": 2475,
-                "Studio PHMA": 2160,
-                "Studio PHMK": 2800,
-                "1BR MA": 3525,
-                "1BR MK": 4300,
-                "1BR PHMA": 3525,
-                "1BR PHMK": 5275,
-                "2BR MA": 4800,
-                "2BR MK": 6025,
-                "2BR PHMA": 4800,
-                "2BR PHMK": 7225,
-                "3BR MA": 6250,
-                "3BR MK": 8025
-              }
-            },
-            {
-              "name": "Independence Day",
-              "global_reference": "Independence Day",
-              "room_points": {
-                "AP_Studio_MA": 1960,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4575,
-                "AP_2BR_MK": 5725,
-                "Studio MA": 1960,
-                "Studio MK": 2320,
-                "Studio PHMA": 1960,
-                "Studio PHMK": 2725,
-                "1BR MA": 3325,
-                "1BR MK": 4100,
-                "1BR PHMA": 3325,
-                "1BR PHMK": 5025,
-                "2BR MA": 4575,
-                "2BR MK": 5725,
-                "2BR PHMA": 4575,
-                "2BR PHMK": 6875,
-                "3BR MA": 5900,
-                "3BR MK": 7625
-              }
-            },
-            {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
-              "room_points": {
-                "AP_Studio_MA": 1690,
-                "AP_1BR_MA": 2950,
-                "AP_2BR_MA": 4050,
-                "AP_2BR_MK": 4925,
-                "Studio MA": 1690,
-                "Studio MK": 2070,
-                "Studio PHMA": 1690,
-                "Studio PHMK": 2410,
-                "1BR MA": 2950,
-                "1BR MK": 3600,
-                "1BR PHMA": 2950,
-                "1BR PHMK": 4450,
-                "2BR MA": 4050,
-                "2BR MK": 4925,
-                "2BR PHMA": 4050,
-                "2BR PHMK": 5900,
-                "3BR MA": 5100,
-                "3BR MK": 6475
-              }
-            },
-            {
-              "name": "Thanksgiving2",
-              "global_reference": "Thanksgiving2",
-              "room_points": {
-                "AP_Studio_MA": 2160,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4800,
-                "AP_2BR_MK": 6025,
-                "Studio MA": 2160,
-                "Studio MK": 2475,
-                "Studio PHMA": 2160,
-                "Studio PHMK": 2880,
-                "1BR MA": 3525,
-                "1BR MK": 4300,
-                "1BR PHMA": 3525,
-                "1BR PHMK": 5275,
-                "2BR MA": 4800,
-                "2BR MK": 6025,
-                "2BR PHMA": 4800,
-                "2BR PHMK": 7225,
-                "3BR MA": 6250,
-                "3BR MK": 8025
-              }
-            },
-            {
-              "name": "Christmas",
-              "global_reference": "Christmas",
-              "room_points": {
-                "AP_Studio_MA": 2160,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4800,
-                "AP_2BR_MK": 6025,
-                "Studio MA": 2160,
-                "Studio MK": 2475,
-                "Studio PHMA": 2160,
-                "Studio PHMK": 2880,
-                "1BR MA": 3525,
-                "1BR MK": 4300,
-                "1BR PHMA": 3525,
-                "1BR PHMK": 5275,
-                "2BR MA": 4800,
-                "2BR MK": 6025,
-                "2BR PHMA": 4800,
-                "2BR PHMK": 7225,
-                "3BR MA": 6250,
-                "3BR MK": 8025
-              }
-            },
-            {
-              "name": "NewYear",
-              "global_reference": "NewYear",
-              "room_points": {
-                "AP_Studio_MA": 2365,
-                "AP_1BR_MA": 4075,
-                "AP_2BR_MA": 5500,
-                "AP_2BR_MK": 6875,
-                "Studio MA": 2365,
-                "Studio MK": 2835,
-                "Studio PHMA": 2365,
-                "Studio PHMK": 3330,
-                "1BR MA": 4075,
-                "1BR MK": 4975,
-                "1BR PHMA": 4075,
-                "1BR PHMK": 6100,
-                "2BR MA": 5550,
-                "2BR MK": 6875,
-                "2BR PHMA": 5550,
-                "2BR PHMK": 8250,
-                "3BR MA": 7100,
-                "3BR MK": 9175
-              }
-            },
-            {
-              "name": "AP1",
-              "global_reference": "AP1",
-              "room_points": {
-                "1BR MA": 1500,
-                "1BR MK": 1500,
-                "1BR PHMA": 1500,
-                "1BR PHMK": 1500,
-                "2BR MA": 1500,
-                "2BR MK": 1500,
-                "2BR PHMA": 1500,
-                "2BR PHMK": 1500,
-                "3BR MA": 1500,
-                "3BR MK": 1500,
-                "AP_1BR_MA": 1500,
-                "AP_2BR_MA": 1500,
-                "AP_2BR_MK": 1500,
-                "AP_Studio_MA": 1500,
-                "Studio MA": 1500,
-                "Studio MK": 1500,
-                "Studio PHMA": 1500,
-                "Studio PHMK": 1500
-              }
-            },
-            {
-              "name": "AP2",
-              "global_reference": "AP2",
-              "room_points": {
-                "1BR MA": 1500,
-                "1BR MK": 1500,
-                "1BR PHMA": 1500,
-                "1BR PHMK": 1500,
-                "2BR MA": 1500,
-                "2BR MK": 1500,
-                "2BR PHMA": 1500,
-                "2BR PHMK": 1500,
-                "3BR MA": 1500,
-                "3BR MK": 1500,
-                "AP_1BR_MA": 1500,
-                "AP_2BR_MA": 1500,
-                "AP_2BR_MK": 1500,
-                "AP_Studio_MA": 1500,
-                "Studio MA": 1500,
-                "Studio MK": 1500,
-                "Studio PHMA": 1500,
-                "Studio PHMK": 1500
-              }
-            }
-          ]
-        },
-        "2026": {
-          "seasons": [
-            {
-              "name": "Low Season",
-              "periods": [
-                {
-                  "start": "2026-01-02",
-                  "end": "2026-01-29"
-                },
-                {
-                  "start": "2026-03-27",
-                  "end": "2026-04-02"
-                },
-                {
-                  "start": "2026-04-10",
-                  "end": "2026-04-30"
-                },
-                {
-                  "start": "2026-05-08",
-                  "end": "2026-06-04"
-                },
-                {
-                  "start": "2026-08-28",
-                  "end": "2026-11-19"
-                },
-                {
-                  "start": "2026-12-04",
-                  "end": "2026-12-17"
-                }
-              ],
-              "day_categories": {
-                "sun": {
-                  "day_pattern": [
-                    "Sun"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 350,
-                    "AP_1BR_MA": 510,
-                    "AP_2BR_MA": 770,
-                    "AP_2BR_MK": 910,
-                    "Studio MA": 205,
-                    "Studio MK": 270,
-                    "Studio PHMA": 205,
-                    "Studio PHMK": 295,
-                    "1BR MA": 355,
-                    "1BR MK": 465,
-                    "1BR PHMA": 355,
-                    "1BR PHMK": 550,
-                    "2BR MA": 500,
-                    "2BR MK": 625,
-                    "2BR PHMA": 500,
-                    "2BR PHMK": 750,
-                    "3BR MA": 650,
-                    "3BR MK": 825
-                  }
-                },
-                "mon_thu": {
-                  "day_pattern": [
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 250,
-                    "AP_1BR_MA": 360,
-                    "AP_2BR_MA": 550,
-                    "AP_2BR_MK": 660,
-                    "Studio MA": 205,
-                    "Studio MK": 270,
-                    "Studio PHMA": 205,
-                    "Studio PHMK": 295,
-                    "1BR MA": 355,
-                    "1BR MK": 465,
-                    "1BR PHMA": 355,
-                    "1BR PHMK": 550,
-                    "2BR MA": 500,
-                    "2BR MK": 625,
-                    "2BR PHMA": 500,
-                    "2BR PHMK": 750,
-                    "3BR MA": 650,
-                    "3BR MK": 825
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 440,
-                    "AP_1BR_MA": 630,
-                    "AP_2BR_MA": 960,
-                    "AP_2BR_MK": 1160,
-                    "Studio MA": 340,
-                    "Studio MK": 360,
-                    "Studio PHMA": 340,
-                    "Studio PHMK": 475,
-                    "1BR MA": 575,
-                    "1BR MK": 625,
-                    "1BR PHMA": 575,
-                    "1BR PHMK": 850,
-                    "2BR MA": 775,
-                    "2BR MK": 900,
-                    "2BR PHMA": 775,
-                    "2BR PHMK": 1075,
-                    "3BR MA": 925,
-                    "3BR MK": 1175
-                  }
-                }
-              }
-            },
-            {
-              "name": "High Season",
-              "periods": [
-                {
-                  "start": "2026-01-30",
-                  "end": "2026-02-12"
-                },
-                {
-                  "start": "2026-02-20",
-                  "end": "2026-03-26"
-                },
-                {
-                  "start": "2026-06-05",
-                  "end": "2026-07-02"
-                },
-                {
-                  "start": "2026-07-10",
-                  "end": "2026-08-13"
-                },
-                {
-                  "start": "2026-08-21",
-                  "end": "2026-08-27"
-                }
-              ],
-              "day_categories": {
-                "sun": {
-                  "day_pattern": [
-                    "Sun"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 350,
-                    "AP_1BR_MA": 510,
-                    "AP_2BR_MA": 770,
-                    "AP_2BR_MK": 910,
-                    "Studio MA": 250,
-                    "Studio MK": 295,
-                    "Studio PHMA": 250,
-                    "Studio PHMK": 340,
-                    "1BR MA": 415,
-                    "1BR MK": 525,
-                    "1BR PHMA": 415,
-                    "1BR PHMK": 625,
-                    "2BR MA": 575,
-                    "2BR MK": 725,
-                    "2BR PHMA": 575,
-                    "2BR PHMK": 875,
-                    "3BR MA": 750,
-                    "3BR MK": 975
-                  }
-                },
-                "mon_thu": {
-                  "day_pattern": [
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 250,
-                    "AP_1BR_MA": 360,
-                    "AP_2BR_MA": 550,
-                    "AP_2BR_MK": 660,
-                    "Studio MA": 250,
-                    "Studio MK": 295,
-                    "Studio PHMA": 250,
-                    "Studio PHMK": 340,
-                    "1BR MA": 415,
-                    "1BR MK": 525,
-                    "1BR PHMA": 415,
-                    "1BR PHMK": 625,
-                    "2BR MA": 575,
-                    "2BR MK": 725,
-                    "2BR PHMA": 575,
-                    "2BR PHMK": 875,
-                    "3BR MA": 750,
-                    "3BR MK": 975
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "AP_Studio_MA": 440,
-                    "AP_1BR_MA": 630,
-                    "AP_2BR_MA": 960,
-                    "AP_2BR_MK": 1160,
-                    "Studio MA": 360,
-                    "Studio MK": 430,
-                    "Studio PHMA": 360,
-                    "Studio PHMK": 520,
-                    "1BR MA": 625,
-                    "1BR MK": 725,
-                    "1BR PHMA": 625,
-                    "1BR PHMK": 925,
-                    "2BR MA": 850,
-                    "2BR MK": 1050,
-                    "2BR PHMA": 850,
-                    "2BR PHMK": 1250,
-                    "3BR MA": 1075,
-                    "3BR MK": 1375
-                  }
-                }
-              }
-            }
-          ],
-          "holidays": [
-            {
-              "name": "Presidents Day",
-              "global_reference": "Presidents Day",
-              "room_points": {
-                "AP_Studio_MA": 2160,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4800,
-                "AP_2BR_MK": 6025,
-                "Studio MA": 2160,
-                "Studio MK": 2475,
-                "Studio PHMA": 2160,
-                "Studio PHMK": 2800,
-                "1BR MA": 3525,
-                "1BR MK": 4300,
-                "1BR PHMA": 3525,
-                "1BR PHMK": 5275,
-                "2BR MA": 4800,
-                "2BR MK": 6025,
-                "2BR PHMA": 4800,
-                "2BR PHMK": 7225,
-                "3BR MA": 6250,
-                "3BR MK": 8025
-              }
-            },
-            {
-              "name": "Easter2",
-              "global_reference": "Easter2",
-              "room_points": {
-                "AP_Studio_MA": 2160,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4800,
-                "AP_2BR_MK": 6025,
-                "Studio MA": 2160,
-                "Studio MK": 2475,
-                "Studio PHMA": 2160,
-                "Studio PHMK": 2800,
-                "1BR MA": 3525,
-                "1BR MK": 4300,
-                "1BR PHMA": 3525,
-                "1BR PHMK": 5275,
-                "2BR MA": 4800,
-                "2BR MK": 6025,
-                "2BR PHMA": 4800,
-                "2BR PHMK": 7225,
-                "3BR MA": 6250,
-                "3BR MK": 8025
-              }
-            },
-            {
-              "name": "Independence Day",
-              "global_reference": "Independence Day",
-              "room_points": {
-                "AP_Studio_MA": 1960,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4575,
-                "AP_2BR_MK": 5725,
-                "Studio MA": 1960,
-                "Studio MK": 2320,
-                "Studio PHMA": 1960,
-                "Studio PHMK": 2725,
-                "1BR MA": 3325,
-                "1BR MK": 4100,
-                "1BR PHMA": 3325,
-                "1BR PHMK": 5025,
-                "2BR MA": 4575,
-                "2BR MK": 5725,
-                "2BR PHMA": 4575,
-                "2BR PHMK": 6875,
-                "3BR MA": 5900,
-                "3BR MK": 7625
-              }
-            },
-            {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
-              "room_points": {
-                "AP_Studio_MA": 1690,
-                "AP_1BR_MA": 2950,
-                "AP_2BR_MA": 4050,
-                "AP_2BR_MK": 4925,
-                "Studio MA": 1690,
-                "Studio MK": 2070,
-                "Studio PHMA": 1690,
-                "Studio PHMK": 2410,
-                "1BR MA": 2950,
-                "1BR MK": 3600,
-                "1BR PHMA": 2950,
-                "1BR PHMK": 4450,
-                "2BR MA": 4050,
-                "2BR MK": 4925,
-                "2BR PHMA": 4050,
-                "2BR PHMK": 5900,
-                "3BR MA": 5100,
-                "3BR MK": 6475
-              }
-            },
-            {
-              "name": "Thanksgiving2",
-              "global_reference": "Thanksgiving2",
-              "room_points": {
-                "AP_Studio_MA": 2160,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4800,
-                "AP_2BR_MK": 6025,
-                "Studio MA": 2160,
-                "Studio MK": 2475,
-                "Studio PHMA": 2160,
-                "Studio PHMK": 2880,
-                "1BR MA": 3525,
-                "1BR MK": 4300,
-                "1BR PHMA": 3525,
-                "1BR PHMK": 5275,
-                "2BR MA": 4800,
-                "2BR MK": 6025,
-                "2BR PHMA": 4800,
-                "2BR PHMK": 7225,
-                "3BR MA": 6250,
-                "3BR MK": 8025
-              }
-            },
-            {
-              "name": "Christmas",
-              "global_reference": "Christmas",
-              "room_points": {
-                "AP_Studio_MA": 2160,
-                "AP_1BR_MA": 3525,
-                "AP_2BR_MA": 4800,
-                "AP_2BR_MK": 6025,
-                "Studio MA": 2160,
-                "Studio MK": 2475,
-                "Studio PHMA": 2160,
-                "Studio PHMK": 2880,
-                "1BR MA": 3525,
-                "1BR MK": 4300,
-                "1BR PHMA": 3525,
-                "1BR PHMK": 5275,
-                "2BR MA": 4800,
-                "2BR MK": 6025,
-                "2BR PHMA": 4800,
-                "2BR PHMK": 7225,
-                "3BR MA": 6250,
-                "3BR MK": 8025
-              }
-            },
-            {
-              "name": "NewYear",
-              "global_reference": "NewYear",
-              "room_points": {
-                "AP_Studio_MA": 2365,
-                "AP_1BR_MA": 4075,
-                "AP_2BR_MA": 5500,
-                "AP_2BR_MK": 6875,
-                "Studio MA": 2365,
-                "Studio MK": 2835,
-                "Studio PHMA": 2365,
-                "Studio PHMK": 3330,
-                "1BR MA": 4075,
-                "1BR MK": 4975,
-                "1BR PHMA": 4075,
-                "1BR PHMK": 6100,
-                "2BR MA": 5550,
-                "2BR MK": 6875,
-                "2BR PHMA": 5550,
-                "2BR PHMK": 8250,
-                "3BR MA": 7100,
-                "3BR MK": 9175
-              }
-            },
-            {
-              "name": "AP1",
-              "global_reference": "AP1",
-              "room_points": {
-                "1BR MA": 1500,
-                "1BR MK": 1500,
-                "1BR PHMA": 1500,
-                "1BR PHMK": 1500,
-                "2BR MA": 1500,
-                "2BR MK": 1500,
-                "2BR PHMA": 1500,
-                "2BR PHMK": 1500,
-                "3BR MA": 1500,
-                "3BR MK": 1500,
-                "AP_1BR_MA": 1500,
-                "AP_2BR_MA": 1500,
-                "AP_2BR_MK": 1500,
-                "AP_Studio_MA": 1500,
-                "Studio MA": 1500,
-                "Studio MK": 1500,
-                "Studio PHMA": 1500,
-                "Studio PHMK": 1500
-              }
-            },
-            {
-              "name": "AP2",
-              "global_reference": "AP2",
-              "room_points": {
-                "1BR MA": 1500,
-                "1BR MK": 1500,
-                "1BR PHMA": 1500,
-                "1BR PHMK": 1500,
-                "2BR MA": 1500,
-                "2BR MK": 1500,
-                "2BR PHMA": 1500,
-                "2BR PHMK": 1500,
-                "3BR MA": 1500,
-                "3BR MK": 1500,
-                "AP_1BR_MA": 1500,
-                "AP_2BR_MA": 1500,
-                "AP_2BR_MK": 1500,
-                "AP_Studio_MA": 1500,
-                "Studio MA": 1500,
-                "Studio MK": 1500,
-                "Studio PHMA": 1500,
-                "Studio PHMK": 1500
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "id": "lakeshore-orlando",
       "display_name": "Lakeshore Orlando",
       "code": "LO",
@@ -12687,451 +11802,6 @@
                 "2-BDRM SF": 3525,
                 "3-BDRM GV": 3125,
                 "3-BDRM SF": 4200
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "pulse-new-york",
-      "display_name": "Pulse New York",
-      "code": "PNY",
-      "resort_name": "Marriott Vacation Club, New York City",
-      "timezone": "America/New_York",
-      "years": {
-        "2025": {
-          "seasons": [
-            {
-              "name": "Low Season",
-              "periods": [
-                {
-                  "start": "2025-01-03",
-                  "end": "2025-02-13"
-                },
-                {
-                  "start": "2025-02-21",
-                  "end": "2025-02-27"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom Queen": 525,
-                    "Guestroom King": 375,
-                    "Guestroom King City": 450,
-                    "Guestroom Double City": 450,
-                    "Guestroom King Empire": 525,
-                    "Deluxe King": 425,
-                    "Deluxe Double": 425
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom Queen": 450,
-                    "Guestroom King": 525,
-                    "Guestroom King City": 625,
-                    "Guestroom Double City": 625,
-                    "Guestroom King Empire": 725,
-                    "Deluxe King": 575,
-                    "Deluxe Double": 575
-                  }
-                }
-              }
-            },
-            {
-              "name": "High Season",
-              "periods": [
-                {
-                  "start": "2025-02-28",
-                  "end": "2025-05-22"
-                },
-                {
-                  "start": "2025-05-30",
-                  "end": "2025-07-03"
-                },
-                {
-                  "start": "2025-07-11",
-                  "end": "2025-08-28"
-                },
-                {
-                  "start": "2025-09-05",
-                  "end": "2025-11-20"
-                },
-                {
-                  "start": "2025-12-05",
-                  "end": "2025-12-18"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom Queen": 450,
-                    "Guestroom King": 525,
-                    "Guestroom King City": 625,
-                    "Guestroom Double City": 625,
-                    "Guestroom King Empire": 725,
-                    "Deluxe King": 575,
-                    "Deluxe Double": 575
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom Queen": 650,
-                    "Guestroom King": 725,
-                    "Guestroom King City": 900,
-                    "Guestroom Double City": 900,
-                    "Guestroom King Empire": 1025,
-                    "Deluxe King": 800,
-                    "Deluxe Double": 800
-                  }
-                }
-              }
-            }
-          ],
-          "holidays": [
-            {
-              "name": "Presidents Day",
-              "global_reference": "Presidents Day",
-              "room_points": {
-                "Guestroom Queen": 2725,
-                "Guestroom King": 3150,
-                "Guestroom King City": 3900,
-                "Guestroom Double City": 3900,
-                "Guestroom King Empire": 4575,
-                "Deluxe King": 3575,
-                "Deluxe Double": 3575
-              }
-            },
-            {
-              "name": "Memorial Day",
-              "global_reference": "Memorial Day",
-              "room_points": {
-                "Guestroom Queen": 3825,
-                "Guestroom King": 4350,
-                "Guestroom King City": 5425,
-                "Guestroom Double City": 5425,
-                "Guestroom King Empire": 6275,
-                "Deluxe King": 4850,
-                "Deluxe Double": 4850
-              }
-            },
-            {
-              "name": "Independence Day",
-              "global_reference": "Independence Day",
-              "room_points": {
-                "Guestroom Queen": 3825,
-                "Guestroom King": 4350,
-                "Guestroom King City": 5425,
-                "Guestroom Double City": 5425,
-                "Guestroom King Empire": 6275,
-                "Deluxe King": 4850,
-                "Deluxe Double": 4850
-              }
-            },
-            {
-              "name": "Labor Day",
-              "global_reference": "Labor Day",
-              "room_points": {
-                "Guestroom Queen": 3825,
-                "Guestroom King": 4350,
-                "Guestroom King City": 5425,
-                "Guestroom Double City": 5425,
-                "Guestroom King Empire": 6275,
-                "Deluxe King": 4850,
-                "Deluxe Double": 4850
-              }
-            },
-            {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
-              "room_points": {
-                "Guestroom Queen": 4050,
-                "Guestroom King": 4725,
-                "Guestroom King City": 5625,
-                "Guestroom Double City": 5625,
-                "Guestroom King Empire": 6525,
-                "Deluxe King": 5175,
-                "Deluxe Double": 5175
-              }
-            },
-            {
-              "name": "Thanksgiving2",
-              "global_reference": "Thanksgiving2",
-              "room_points": {
-                "Guestroom Queen": 4050,
-                "Guestroom King": 4725,
-                "Guestroom King City": 5625,
-                "Guestroom Double City": 5625,
-                "Guestroom King Empire": 6525,
-                "Deluxe King": 5175,
-                "Deluxe Double": 5175
-              }
-            },
-            {
-              "name": "Christmas",
-              "global_reference": "Christmas",
-              "room_points": {
-                "Guestroom Queen": 3825,
-                "Guestroom King": 4350,
-                "Guestroom King City": 5425,
-                "Guestroom Double City": 5425,
-                "Guestroom King Empire": 6275,
-                "Deluxe King": 4850,
-                "Deluxe Double": 4850
-              }
-            },
-            {
-              "name": "NewYear",
-              "global_reference": "NewYear",
-              "room_points": {
-                "Guestroom Queen": 4250,
-                "Guestroom King": 4875,
-                "Guestroom King City": 5850,
-                "Guestroom Double City": 5850,
-                "Guestroom King Empire": 6825,
-                "Deluxe King": 5375,
-                "Deluxe Double": 5375
-              }
-            }
-          ]
-        },
-        "2026": {
-          "seasons": [
-            {
-              "name": "Low Season",
-              "periods": [
-                {
-                  "start": "2026-01-02",
-                  "end": "2026-02-12"
-                },
-                {
-                  "start": "2026-02-20",
-                  "end": "2026-02-26"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom Queen": 525,
-                    "Guestroom King": 375,
-                    "Guestroom King City": 450,
-                    "Guestroom Double City": 450,
-                    "Guestroom King Empire": 525,
-                    "Deluxe King": 425,
-                    "Deluxe Double": 425
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom Queen": 450,
-                    "Guestroom King": 525,
-                    "Guestroom King City": 625,
-                    "Guestroom Double City": 625,
-                    "Guestroom King Empire": 725,
-                    "Deluxe King": 575,
-                    "Deluxe Double": 575
-                  }
-                }
-              }
-            },
-            {
-              "name": "High Season",
-              "periods": [
-                {
-                  "start": "2026-02-27",
-                  "end": "2026-05-21"
-                },
-                {
-                  "start": "2026-05-29",
-                  "end": "2026-07-02"
-                },
-                {
-                  "start": "2026-07-10",
-                  "end": "2026-09-03"
-                },
-                {
-                  "start": "2026-09-11",
-                  "end": "2026-11-19"
-                },
-                {
-                  "start": "2026-12-04",
-                  "end": "2026-12-17"
-                }
-              ],
-              "day_categories": {
-                "sun_thu": {
-                  "day_pattern": [
-                    "Sun",
-                    "Mon",
-                    "Tue",
-                    "Wed",
-                    "Thu"
-                  ],
-                  "room_points": {
-                    "Guestroom Queen": 450,
-                    "Guestroom King": 525,
-                    "Guestroom King City": 625,
-                    "Guestroom Double City": 625,
-                    "Guestroom King Empire": 725,
-                    "Deluxe King": 575,
-                    "Deluxe Double": 575
-                  }
-                },
-                "fri_sat": {
-                  "day_pattern": [
-                    "Fri",
-                    "Sat"
-                  ],
-                  "room_points": {
-                    "Guestroom Queen": 650,
-                    "Guestroom King": 725,
-                    "Guestroom King City": 900,
-                    "Guestroom Double City": 900,
-                    "Guestroom King Empire": 1025,
-                    "Deluxe King": 800,
-                    "Deluxe Double": 800
-                  }
-                }
-              }
-            }
-          ],
-          "holidays": [
-            {
-              "name": "Presidents Day",
-              "global_reference": "Presidents Day",
-              "room_points": {
-                "Guestroom Queen": 2725,
-                "Guestroom King": 3150,
-                "Guestroom King City": 3900,
-                "Guestroom Double City": 3900,
-                "Guestroom King Empire": 4575,
-                "Deluxe King": 3575,
-                "Deluxe Double": 3575
-              }
-            },
-            {
-              "name": "Memorial Day",
-              "global_reference": "Memorial Day",
-              "room_points": {
-                "Guestroom Queen": 3825,
-                "Guestroom King": 4350,
-                "Guestroom King City": 5425,
-                "Guestroom Double City": 5425,
-                "Guestroom King Empire": 6275,
-                "Deluxe King": 4850,
-                "Deluxe Double": 4850
-              }
-            },
-            {
-              "name": "Independence Day",
-              "global_reference": "Independence Day",
-              "room_points": {
-                "Guestroom Queen": 3825,
-                "Guestroom King": 4350,
-                "Guestroom King City": 5425,
-                "Guestroom Double City": 5425,
-                "Guestroom King Empire": 6275,
-                "Deluxe King": 4850,
-                "Deluxe Double": 4850
-              }
-            },
-            {
-              "name": "Labor Day",
-              "global_reference": "Labor Day",
-              "room_points": {
-                "Guestroom Queen": 3825,
-                "Guestroom King": 4350,
-                "Guestroom King City": 5425,
-                "Guestroom Double City": 5425,
-                "Guestroom King Empire": 6275,
-                "Deluxe King": 4850,
-                "Deluxe Double": 4850
-              }
-            },
-            {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
-              "room_points": {
-                "Guestroom Queen": 4050,
-                "Guestroom King": 4725,
-                "Guestroom King City": 5625,
-                "Guestroom Double City": 5625,
-                "Guestroom King Empire": 6525,
-                "Deluxe King": 5175,
-                "Deluxe Double": 5175
-              }
-            },
-            {
-              "name": "Thanksgiving2",
-              "global_reference": "Thanksgiving2",
-              "room_points": {
-                "Guestroom Queen": 4050,
-                "Guestroom King": 4725,
-                "Guestroom King City": 5625,
-                "Guestroom Double City": 5625,
-                "Guestroom King Empire": 6525,
-                "Deluxe King": 5175,
-                "Deluxe Double": 5175
-              }
-            },
-            {
-              "name": "Christmas",
-              "global_reference": "Christmas",
-              "room_points": {
-                "Guestroom Queen": 3825,
-                "Guestroom King": 4350,
-                "Guestroom King City": 5425,
-                "Guestroom Double City": 5425,
-                "Guestroom King Empire": 6275,
-                "Deluxe King": 4850,
-                "Deluxe Double": 4850
-              }
-            },
-            {
-              "name": "NewYear",
-              "global_reference": "NewYear",
-              "room_points": {
-                "Guestroom Queen": 4250,
-                "Guestroom King": 4875,
-                "Guestroom King City": 5850,
-                "Guestroom Double City": 5850,
-                "Guestroom King Empire": 6825,
-                "Deluxe King": 5375,
-                "Deluxe Double": 5375
               }
             }
           ]
@@ -21150,6 +19820,891 @@
                 "Deluxe DB": 3025,
                 "Junior Suite K": 3550,
                 "Executive Suite K": 3550
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ko-olina-beach",
+      "display_name": "Ko Olina Beach",
+      "code": "KOB",
+      "resort_name": "Marriott's Ko Olina Beach Club",
+      "timezone": "Pacific/Honolulu",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-01-30"
+                },
+                {
+                  "start": "2025-03-28",
+                  "end": "2025-04-17"
+                },
+                {
+                  "start": "2025-04-25",
+                  "end": "2025-05-01"
+                },
+                {
+                  "start": "2025-05-09",
+                  "end": "2025-06-05"
+                },
+                {
+                  "start": "2025-08-29",
+                  "end": "2025-11-20"
+                },
+                {
+                  "start": "2025-12-05",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 355,
+                    "1BR Ocean": 465,
+                    "1BR PentMountain": 355,
+                    "1BR PentOcean": 550,
+                    "2BR Mountain": 500,
+                    "2BR Ocean": 625,
+                    "Studio Mountain": 205,
+                    "Studio Ocean": 270,
+                    "Studio PentMountain": 205,
+                    "Studio PentOcean": 295,
+                    "3BR Mountain": 650,
+                    "3BR Ocean": 825,
+                    "2BR PentMountain": 500,
+                    "2BR PentOcean": 750,
+                    "Studio MountainAP": 350,
+                    "1BR MountainAP": 510,
+                    "2BR MountainAP": 770,
+                    "2BR OceanAP": 910
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 355,
+                    "1BR Ocean": 465,
+                    "1BR PentMountain": 355,
+                    "1BR PentOcean": 550,
+                    "2BR Mountain": 500,
+                    "2BR Ocean": 625,
+                    "Studio Mountain": 205,
+                    "Studio Ocean": 270,
+                    "Studio PentMountain": 205,
+                    "Studio PentOcean": 295,
+                    "3BR Mountain": 650,
+                    "3BR Ocean": 825,
+                    "2BR PentMountain": 500,
+                    "2BR PentOcean": 750,
+                    "Studio MountainAP": 250,
+                    "1BR MountainAP": 360,
+                    "2BR MountainAP": 550,
+                    "2BR OceanAP": 660
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 575,
+                    "1BR Ocean": 625,
+                    "1BR PentMountain": 575,
+                    "1BR PentOcean": 850,
+                    "2BR Mountain": 775,
+                    "2BR Ocean": 900,
+                    "Studio Mountain": 340,
+                    "Studio Ocean": 360,
+                    "Studio PentMountain": 340,
+                    "Studio PentOcean": 475,
+                    "3BR Mountain": 925,
+                    "3BR Ocean": 1175,
+                    "2BR PentMountain": 775,
+                    "2BR PentOcean": 1075,
+                    "Studio MountainAP": 440,
+                    "1BR MountainAP": 630,
+                    "2BR MountainAP": 960,
+                    "2BR OceanAP": 1160
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-01-31",
+                  "end": "2025-02-13"
+                },
+                {
+                  "start": "2025-02-21",
+                  "end": "2025-03-27"
+                },
+                {
+                  "start": "2025-06-06",
+                  "end": "2025-07-03"
+                },
+                {
+                  "start": "2025-07-11",
+                  "end": "2025-08-08"
+                },
+                {
+                  "start": "2025-08-16",
+                  "end": "2025-08-28"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 415,
+                    "1BR Ocean": 525,
+                    "1BR PentMountain": 415,
+                    "1BR PentOcean": 625,
+                    "2BR Mountain": 575,
+                    "2BR Ocean": 725,
+                    "Studio Mountain": 250,
+                    "Studio Ocean": 295,
+                    "Studio PentMountain": 250,
+                    "Studio PentOcean": 340,
+                    "3BR Mountain": 750,
+                    "3BR Ocean": 975,
+                    "2BR PentMountain": 575,
+                    "2BR PentOcean": 875,
+                    "Studio MountainAP": 350,
+                    "1BR MountainAP": 510,
+                    "2BR MountainAP": 770,
+                    "2BR OceanAP": 910
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 415,
+                    "1BR Ocean": 525,
+                    "1BR PentMountain": 415,
+                    "1BR PentOcean": 625,
+                    "2BR Mountain": 575,
+                    "2BR Ocean": 725,
+                    "Studio Mountain": 250,
+                    "Studio Ocean": 295,
+                    "Studio PentMountain": 250,
+                    "Studio PentOcean": 340,
+                    "3BR Mountain": 750,
+                    "3BR Ocean": 975,
+                    "2BR PentMountain": 575,
+                    "2BR PentOcean": 875,
+                    "Studio MountainAP": 250,
+                    "1BR MountainAP": 360,
+                    "2BR MountainAP": 550,
+                    "2BR OceanAP": 660
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 625,
+                    "1BR Ocean": 725,
+                    "1BR PentMountain": 625,
+                    "1BR PentOcean": 925,
+                    "2BR Mountain": 850,
+                    "2BR Ocean": 1050,
+                    "Studio Mountain": 360,
+                    "Studio Ocean": 430,
+                    "Studio PentMountain": 360,
+                    "Studio PentOcean": 520,
+                    "3BR Mountain": 1075,
+                    "3BR Ocean": 1375,
+                    "2BR PentMountain": 850,
+                    "2BR PentOcean": 1250,
+                    "Studio MountainAP": 440,
+                    "1BR MountainAP": 630,
+                    "2BR MountainAP": 960,
+                    "2BR OceanAP": 1160
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "1BR Mountain": 3525,
+                "1BR Ocean": 4300,
+                "1BR PentMountain": 3525,
+                "1BR PentOcean": 5275,
+                "2BR Mountain": 4800,
+                "2BR Ocean": 6025,
+                "Studio Mountain": 2160,
+                "Studio Ocean": 2475,
+                "Studio PentMountain": 2160,
+                "Studio PentOcean": 2800,
+                "3BR Mountain": 6250,
+                "3BR Ocean": 8025,
+                "2BR PentMountain": 4800,
+                "2BR PentOcean": 7225,
+                "Studio MountainAP": 2160,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4800,
+                "2BR OceanAP": 6025
+              }
+            },
+            {
+              "name": "Easter2",
+              "global_reference": "Easter2",
+              "room_points": {
+                "1BR Mountain": 3525,
+                "1BR Ocean": 4300,
+                "1BR PentMountain": 3525,
+                "1BR PentOcean": 5275,
+                "2BR Mountain": 4800,
+                "2BR Ocean": 6025,
+                "Studio Mountain": 2160,
+                "Studio Ocean": 2475,
+                "Studio PentMountain": 2160,
+                "Studio PentOcean": 2800,
+                "3BR Mountain": 6250,
+                "3BR Ocean": 8025,
+                "2BR PentMountain": 4800,
+                "2BR PentOcean": 7225,
+                "Studio MountainAP": 2160,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4800,
+                "2BR OceanAP": 6025
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "1BR Mountain": 3325,
+                "1BR Ocean": 4100,
+                "1BR PentMountain": 3325,
+                "1BR PentOcean": 5025,
+                "2BR Mountain": 4575,
+                "2BR Ocean": 5725,
+                "Studio Mountain": 1960,
+                "Studio Ocean": 2320,
+                "Studio PentMountain": 1960,
+                "Studio PentOcean": 2725,
+                "3BR Mountain": 5900,
+                "3BR Ocean": 7625,
+                "2BR PentMountain": 4575,
+                "2BR PentOcean": 6875,
+                "Studio MountainAP": 1960,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4575,
+                "2BR OceanAP": 5725
+              }
+            },
+            {
+              "name": "Thanksgiving",
+              "global_reference": "Thanksgiving",
+              "room_points": {
+                "1BR Mountain": 2950,
+                "1BR Ocean": 3600,
+                "1BR PentMountain": 2950,
+                "1BR PentOcean": 4450,
+                "2BR Mountain": 4050,
+                "2BR Ocean": 4925,
+                "Studio Mountain": 1690,
+                "Studio Ocean": 2070,
+                "Studio PentMountain": 1690,
+                "Studio PentOcean": 2410,
+                "3BR Mountain": 5100,
+                "3BR Ocean": 6475,
+                "2BR PentMountain": 4050,
+                "2BR PentOcean": 5900,
+                "Studio MountainAP": 1690,
+                "1BR MountainAP": 2950,
+                "2BR MountainAP": 4050,
+                "2BR OceanAP": 4925
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "1BR Mountain": 3525,
+                "1BR Ocean": 4300,
+                "1BR PentMountain": 3525,
+                "1BR PentOcean": 5275,
+                "2BR Mountain": 4800,
+                "2BR Ocean": 6025,
+                "Studio Mountain": 2160,
+                "Studio Ocean": 2475,
+                "Studio PentMountain": 2160,
+                "Studio PentOcean": 2880,
+                "3BR Mountain": 6250,
+                "3BR Ocean": 8025,
+                "2BR PentMountain": 4800,
+                "2BR PentOcean": 7225,
+                "Studio MountainAP": 2160,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4800,
+                "2BR OceanAP": 6025
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "1BR Mountain": 3525,
+                "1BR Ocean": 4300,
+                "1BR PentMountain": 3525,
+                "1BR PentOcean": 5275,
+                "2BR Mountain": 4800,
+                "2BR Ocean": 6025,
+                "Studio Mountain": 2160,
+                "Studio Ocean": 2475,
+                "Studio PentMountain": 2160,
+                "Studio PentOcean": 2880,
+                "3BR Mountain": 6250,
+                "3BR Ocean": 8025,
+                "2BR PentMountain": 4800,
+                "2BR PentOcean": 7225,
+                "Studio MountainAP": 2160,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4800,
+                "2BR OceanAP": 6025
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "1BR Mountain": 4075,
+                "1BR Ocean": 4975,
+                "1BR PentMountain": 4075,
+                "1BR PentOcean": 6100,
+                "2BR Mountain": 5550,
+                "2BR Ocean": 6875,
+                "Studio Mountain": 2365,
+                "Studio Ocean": 2835,
+                "Studio PentMountain": 2365,
+                "Studio PentOcean": 3330,
+                "3BR Mountain": 7100,
+                "3BR Ocean": 9175,
+                "2BR PentMountain": 5550,
+                "2BR PentOcean": 8250,
+                "Studio MountainAP": 2365,
+                "1BR MountainAP": 4075,
+                "2BR MountainAP": 5500,
+                "2BR OceanAP": 6875
+              }
+            },
+            {
+              "name": "AP1",
+              "global_reference": "AP1",
+              "room_points": {
+                "1BR Mountain": 1500,
+                "1BR Ocean": 1500,
+                "1BR PentMountain": 1500,
+                "1BR PentOcean": 1500,
+                "2BR Mountain": 1500,
+                "2BR Ocean": 1500,
+                "Studio Mountain": 1500,
+                "Studio Ocean": 1500,
+                "Studio PentMountain": 1500,
+                "Studio PentOcean": 1500,
+                "3BR Mountain": 1500,
+                "3BR Ocean": 1500,
+                "2BR PentMountain": 1500,
+                "2BR PentOcean": 1500,
+                "Studio MountainAP": 1500,
+                "1BR MountainAP": 1500,
+                "2BR MountainAP": 1500,
+                "2BR OceanAP": 1500
+              }
+            },
+            {
+              "name": "AP2",
+              "global_reference": "AP2",
+              "room_points": {
+                "1BR Mountain": 1500,
+                "1BR Ocean": 1500,
+                "1BR PentMountain": 1500,
+                "1BR PentOcean": 1500,
+                "2BR Mountain": 1500,
+                "2BR Ocean": 1500,
+                "Studio Mountain": 1500,
+                "Studio Ocean": 1500,
+                "Studio PentMountain": 1500,
+                "Studio PentOcean": 1500,
+                "3BR Mountain": 1500,
+                "3BR Ocean": 1500,
+                "2BR PentMountain": 1500,
+                "2BR PentOcean": 1500,
+                "Studio MountainAP": 1500,
+                "1BR MountainAP": 1500,
+                "2BR MountainAP": 1500,
+                "2BR OceanAP": 1500
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-01-29"
+                },
+                {
+                  "start": "2026-03-27",
+                  "end": "2026-04-02"
+                },
+                {
+                  "start": "2026-04-10",
+                  "end": "2026-04-30"
+                },
+                {
+                  "start": "2026-05-08",
+                  "end": "2026-06-04"
+                },
+                {
+                  "start": "2026-08-28",
+                  "end": "2026-11-19"
+                },
+                {
+                  "start": "2026-12-04",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 355,
+                    "1BR Ocean": 465,
+                    "1BR PentMountain": 355,
+                    "1BR PentOcean": 550,
+                    "2BR Mountain": 500,
+                    "2BR Ocean": 625,
+                    "Studio Mountain": 205,
+                    "Studio Ocean": 270,
+                    "Studio PentMountain": 205,
+                    "Studio PentOcean": 295,
+                    "3BR Mountain": 650,
+                    "3BR Ocean": 825,
+                    "2BR PentMountain": 500,
+                    "2BR PentOcean": 750,
+                    "Studio MountainAP": 350,
+                    "1BR MountainAP": 510,
+                    "2BR MountainAP": 770,
+                    "2BR OceanAP": 910
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 355,
+                    "1BR Ocean": 465,
+                    "1BR PentMountain": 355,
+                    "1BR PentOcean": 550,
+                    "2BR Mountain": 500,
+                    "2BR Ocean": 625,
+                    "Studio Mountain": 205,
+                    "Studio Ocean": 270,
+                    "Studio PentMountain": 205,
+                    "Studio PentOcean": 295,
+                    "3BR Mountain": 650,
+                    "3BR Ocean": 825,
+                    "2BR PentMountain": 500,
+                    "2BR PentOcean": 750,
+                    "Studio MountainAP": 250,
+                    "1BR MountainAP": 360,
+                    "2BR MountainAP": 550,
+                    "2BR OceanAP": 660
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 575,
+                    "1BR Ocean": 625,
+                    "1BR PentMountain": 575,
+                    "1BR PentOcean": 850,
+                    "2BR Mountain": 775,
+                    "2BR Ocean": 900,
+                    "Studio Mountain": 340,
+                    "Studio Ocean": 360,
+                    "Studio PentMountain": 340,
+                    "Studio PentOcean": 475,
+                    "3BR Mountain": 925,
+                    "3BR Ocean": 1175,
+                    "2BR PentMountain": 775,
+                    "2BR PentOcean": 1075,
+                    "Studio MountainAP": 440,
+                    "1BR MountainAP": 630,
+                    "2BR MountainAP": 960,
+                    "2BR OceanAP": 1160
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-01-30",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-02-20",
+                  "end": "2026-03-26"
+                },
+                {
+                  "start": "2026-06-05",
+                  "end": "2026-07-02"
+                },
+                {
+                  "start": "2026-07-10",
+                  "end": "2026-08-13"
+                },
+                {
+                  "start": "2026-08-21",
+                  "end": "2026-08-27"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 415,
+                    "1BR Ocean": 525,
+                    "1BR PentMountain": 415,
+                    "1BR PentOcean": 625,
+                    "2BR Mountain": 575,
+                    "2BR Ocean": 725,
+                    "Studio Mountain": 250,
+                    "Studio Ocean": 295,
+                    "Studio PentMountain": 250,
+                    "Studio PentOcean": 340,
+                    "3BR Mountain": 750,
+                    "3BR Ocean": 975,
+                    "2BR PentMountain": 575,
+                    "2BR PentOcean": 875,
+                    "Studio MountainAP": 350,
+                    "1BR MountainAP": 510,
+                    "2BR MountainAP": 770,
+                    "2BR OceanAP": 910
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 415,
+                    "1BR Ocean": 525,
+                    "1BR PentMountain": 415,
+                    "1BR PentOcean": 625,
+                    "2BR Mountain": 575,
+                    "2BR Ocean": 725,
+                    "Studio Mountain": 250,
+                    "Studio Ocean": 295,
+                    "Studio PentMountain": 250,
+                    "Studio PentOcean": 340,
+                    "3BR Mountain": 750,
+                    "3BR Ocean": 975,
+                    "2BR PentMountain": 575,
+                    "2BR PentOcean": 875,
+                    "Studio MountainAP": 250,
+                    "1BR MountainAP": 360,
+                    "2BR MountainAP": 550,
+                    "2BR OceanAP": 660
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "1BR Mountain": 625,
+                    "1BR Ocean": 725,
+                    "1BR PentMountain": 625,
+                    "1BR PentOcean": 925,
+                    "2BR Mountain": 850,
+                    "2BR Ocean": 1050,
+                    "Studio Mountain": 360,
+                    "Studio Ocean": 430,
+                    "Studio PentMountain": 360,
+                    "Studio PentOcean": 520,
+                    "3BR Mountain": 1075,
+                    "3BR Ocean": 1375,
+                    "2BR PentMountain": 850,
+                    "2BR PentOcean": 1250,
+                    "Studio MountainAP": 440,
+                    "1BR MountainAP": 630,
+                    "2BR MountainAP": 960,
+                    "2BR OceanAP": 1160
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "1BR Mountain": 3525,
+                "1BR Ocean": 4300,
+                "1BR PentMountain": 3525,
+                "1BR PentOcean": 5275,
+                "2BR Mountain": 4800,
+                "2BR Ocean": 6025,
+                "Studio Mountain": 2160,
+                "Studio Ocean": 2475,
+                "Studio PentMountain": 2160,
+                "Studio PentOcean": 2800,
+                "3BR Mountain": 6250,
+                "3BR Ocean": 8025,
+                "2BR PentMountain": 4800,
+                "2BR PentOcean": 7225,
+                "Studio MountainAP": 2160,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4800,
+                "2BR OceanAP": 6025
+              }
+            },
+            {
+              "name": "Easter2",
+              "global_reference": "Easter2",
+              "room_points": {
+                "1BR Mountain": 3525,
+                "1BR Ocean": 4300,
+                "1BR PentMountain": 3525,
+                "1BR PentOcean": 5275,
+                "2BR Mountain": 4800,
+                "2BR Ocean": 6025,
+                "Studio Mountain": 2160,
+                "Studio Ocean": 2475,
+                "Studio PentMountain": 2160,
+                "Studio PentOcean": 2800,
+                "3BR Mountain": 6250,
+                "3BR Ocean": 8025,
+                "2BR PentMountain": 4800,
+                "2BR PentOcean": 7225,
+                "Studio MountainAP": 2160,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4800,
+                "2BR OceanAP": 6025
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "1BR Mountain": 3325,
+                "1BR Ocean": 4100,
+                "1BR PentMountain": 3325,
+                "1BR PentOcean": 5025,
+                "2BR Mountain": 4575,
+                "2BR Ocean": 5725,
+                "Studio Mountain": 1960,
+                "Studio Ocean": 2320,
+                "Studio PentMountain": 1960,
+                "Studio PentOcean": 2725,
+                "3BR Mountain": 5900,
+                "3BR Ocean": 7625,
+                "2BR PentMountain": 4575,
+                "2BR PentOcean": 6875,
+                "Studio MountainAP": 1960,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4575,
+                "2BR OceanAP": 5725
+              }
+            },
+            {
+              "name": "Thanksgiving",
+              "global_reference": "Thanksgiving",
+              "room_points": {
+                "1BR Mountain": 2950,
+                "1BR Ocean": 3600,
+                "1BR PentMountain": 2950,
+                "1BR PentOcean": 4450,
+                "2BR Mountain": 4050,
+                "2BR Ocean": 4925,
+                "Studio Mountain": 1690,
+                "Studio Ocean": 2070,
+                "Studio PentMountain": 1690,
+                "Studio PentOcean": 2410,
+                "3BR Mountain": 5100,
+                "3BR Ocean": 6475,
+                "2BR PentMountain": 4050,
+                "2BR PentOcean": 5900,
+                "Studio MountainAP": 1690,
+                "1BR MountainAP": 2950,
+                "2BR MountainAP": 4050,
+                "2BR OceanAP": 4925
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "1BR Mountain": 3525,
+                "1BR Ocean": 4300,
+                "1BR PentMountain": 3525,
+                "1BR PentOcean": 5275,
+                "2BR Mountain": 4800,
+                "2BR Ocean": 6025,
+                "Studio Mountain": 2160,
+                "Studio Ocean": 2475,
+                "Studio PentMountain": 2160,
+                "Studio PentOcean": 2880,
+                "3BR Mountain": 6250,
+                "3BR Ocean": 8025,
+                "2BR PentMountain": 4800,
+                "2BR PentOcean": 7225,
+                "Studio MountainAP": 2160,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4800,
+                "2BR OceanAP": 6025
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "1BR Mountain": 3525,
+                "1BR Ocean": 4300,
+                "1BR PentMountain": 3525,
+                "1BR PentOcean": 5275,
+                "2BR Mountain": 4800,
+                "2BR Ocean": 6025,
+                "Studio Mountain": 2160,
+                "Studio Ocean": 2475,
+                "Studio PentMountain": 2160,
+                "Studio PentOcean": 2880,
+                "3BR Mountain": 6250,
+                "3BR Ocean": 8025,
+                "2BR PentMountain": 4800,
+                "2BR PentOcean": 7225,
+                "Studio MountainAP": 2160,
+                "1BR MountainAP": 3525,
+                "2BR MountainAP": 4800,
+                "2BR OceanAP": 6025
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "1BR Mountain": 4075,
+                "1BR Ocean": 4975,
+                "1BR PentMountain": 4075,
+                "1BR PentOcean": 6100,
+                "2BR Mountain": 5550,
+                "2BR Ocean": 6875,
+                "Studio Mountain": 2365,
+                "Studio Ocean": 2835,
+                "Studio PentMountain": 2365,
+                "Studio PentOcean": 3330,
+                "3BR Mountain": 7100,
+                "3BR Ocean": 9175,
+                "2BR PentMountain": 5550,
+                "2BR PentOcean": 8250,
+                "Studio MountainAP": 2365,
+                "1BR MountainAP": 4075,
+                "2BR MountainAP": 5500,
+                "2BR OceanAP": 6875
+              }
+            },
+            {
+              "name": "AP1",
+              "global_reference": "AP1",
+              "room_points": {
+                "1BR Mountain": 1500,
+                "1BR Ocean": 1500,
+                "1BR PentMountain": 1500,
+                "1BR PentOcean": 1500,
+                "2BR Mountain": 1500,
+                "2BR Ocean": 1500,
+                "Studio Mountain": 1500,
+                "Studio Ocean": 1500,
+                "Studio PentMountain": 1500,
+                "Studio PentOcean": 1500,
+                "3BR Mountain": 1500,
+                "3BR Ocean": 1500,
+                "2BR PentMountain": 1500,
+                "2BR PentOcean": 1500,
+                "Studio MountainAP": 1500,
+                "1BR MountainAP": 1500,
+                "2BR MountainAP": 1500,
+                "2BR OceanAP": 1500
+              }
+            },
+            {
+              "name": "AP2",
+              "global_reference": "AP2",
+              "room_points": {
+                "1BR Mountain": 1500,
+                "1BR Ocean": 1500,
+                "1BR PentMountain": 1500,
+                "1BR PentOcean": 1500,
+                "2BR Mountain": 1500,
+                "2BR Ocean": 1500,
+                "Studio Mountain": 1500,
+                "Studio Ocean": 1500,
+                "Studio PentMountain": 1500,
+                "Studio PentOcean": 1500,
+                "3BR Mountain": 1500,
+                "3BR Ocean": 1500,
+                "2BR PentMountain": 1500,
+                "2BR PentOcean": 1500,
+                "Studio MountainAP": 1500,
+                "1BR MountainAP": 1500,
+                "2BR MountainAP": 1500,
+                "2BR OceanAP": 1500
               }
             }
           ]
