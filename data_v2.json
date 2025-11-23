@@ -11,10 +11,10 @@
   },
   "configuration": {
     "maintenance_rates": {
-      "2025": 0.50,
-      "2026": 0.56,
-      "2027": 0.61,
-      "2028": 0.66
+      "2025": 0.81,
+      "2026": 0.86,
+      "2027": 0.91,
+      "2028": 0.96
     },
     "discount_policies": {},
     "default_values": {}
@@ -272,6 +272,7 @@
       "display_name": "Aruba Ocean",
       "code": "AO",
       "resort_name": "Marriott's Aruba Ocean Club",
+      "address": "L.G. Smith Boulevard 99, Palm Beach, Aruba",
       "timezone": "America/Aruba",
       "years": {
         "2025": {
@@ -785,6 +786,7 @@
       "display_name": "Aruba Surf",
       "code": "AS",
       "resort_name": "Marriott's Aruba Surf Club",
+      "address": "L.G. Smith Boulevard 103, Palm Beach, Aruba",
       "timezone": "America/Aruba",
       "years": {
         "2025": {
@@ -1480,6 +1482,7 @@
       "display_name": "Bali Gardens",
       "code": "BG",
       "resort_name": "Marriott's Bali Nusa Dua Gardens",
+      "address": "Kawasan Pariwisata Lot SW1, Nusa Dua, Bali 80363, Indonesia",
       "timezone": "Asia/Bali",
       "years": {
         "2025": {
@@ -1845,6 +1848,7 @@
       "display_name": "Bali Terrace",
       "code": "BT",
       "resort_name": "Marriott's Bali Nusa Dua Terrace",
+      "address": "Kawasan Pariwisata ITDC Lot SW 4-5, Nusa Dua, Bali 80363, Indonesia",
       "timezone": "Asia/Bali",
       "years": {
         "2025": {
@@ -2210,6 +2214,7 @@
       "display_name": "Birch Vail",
       "code": "BV",
       "resort_name": "Marriott's StreamSide Birch at Vail",
+      "address": "2284 South Frontage Road West, Vail, CO 81657, USA",
       "timezone": "America/Denver",
       "years": {
         "2025": {
@@ -2679,6 +2684,7 @@
       "display_name": "Boston",
       "code": "B",
       "resort_name": "Marriott Vacation Club at Custom House, Boston",
+      "address": "3 McKinley Square, Boston, MA 02109, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -2950,6 +2956,7 @@
       "display_name": "Canyon Villas Arizona",
       "code": "CVA",
       "resort_name": "Marriott's Canyon Villas",
+      "address": "5220 East Marriott Drive, Phoenix, AZ 85054, USA",
       "timezone": "America/Phoenix",
       "years": {
         "2025": {
@@ -3397,6 +3404,7 @@
       "display_name": "Chateau Vegas",
       "code": "CV",
       "resort_name": "Marriott's Grand Chateau",
+      "address": "75 East Harmon Avenue, Las Vegas, NV 89109, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -3662,6 +3670,7 @@
       "display_name": "Crystal Shores",
       "code": "CS",
       "resort_name": "Marriott's Crystal Shores",
+      "address": "600 South Collier Boulevard, Marco Island, FL 34145, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -4299,6 +4308,7 @@
       "display_name": "Cypress Orlando",
       "code": "CO",
       "resort_name": "Marriott's Cypress Harbour",
+      "address": "11251 Harbour Villa Road, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -4664,6 +4674,7 @@
       "display_name": "Desert Springs II",
       "code": "DSI",
       "resort_name": "Marriott's Desert Springs Villas II",
+      "address": "1091 Pinehurst Lane, Palm Desert, CA 92260, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -5111,6 +5122,7 @@
       "display_name": "Doral Miami",
       "code": "DM",
       "resort_name": "Marriott's Villas at Doral",
+      "address": "4101 NW 87th Avenue, Miami, FL 33178, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -5390,6 +5402,7 @@
       "display_name": "Fort Lauderdale",
       "code": "FL",
       "resort_name": "Marriott's BeachPlace Towers",
+      "address": "21 South Fort Lauderdale Beach Boulevard, Fort Lauderdale, FL 33316, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -5827,6 +5840,7 @@
       "display_name": "Frenchman's Cove",
       "code": "FC",
       "resort_name": "Marriott's Frenchman's Cove",
+      "address": "7338 Estate Bakkeroe, St. Thomas, VI 00802, U.S. Virgin Islands",
       "timezone": "America/Virgin",
       "years": {
         "2025": {
@@ -6216,6 +6230,7 @@
       "display_name": "Grande Vista Orlando",
       "code": "GVO",
       "resort_name": "Marriott's Grande Vista",
+      "address": "5925 Avenida Vista, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -6653,6 +6668,7 @@
       "display_name": "Imperial Orlando",
       "code": "IO",
       "resort_name": "Marriott's Imperial Palms Villas",
+      "address": "8404 Vacation Way, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -7018,6 +7034,7 @@
       "display_name": "Kauai Beach",
       "code": "KB",
       "resort_name": "Marriott's Kaua'i Beach Club",
+      "address": "3610 Rice Street, Lihue, HI 96766, USA",
       "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
@@ -7541,6 +7558,7 @@
       "display_name": "Khao Lak",
       "code": "KL",
       "resort_name": "Marriott Vacation Club, Khao Lak Beach Resort",
+      "address": "43/17 Moo 3, Khuk Khak, Takua Pa, Phang Nga 82220, Thailand",
       "timezone": "Asia/Bangkok",
       "years": {
         "2025": {
@@ -7808,6 +7826,7 @@
       "display_name": "Lakeshore Orlando",
       "code": "LO",
       "resort_name": "Marriott's Lakeshore Reserve",
+      "address": "11248 Lakeshore Reserve Drive, Orlando, FL 32837, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -8317,6 +8336,7 @@
       "display_name": "Maui Ocean",
       "code": "MO",
       "resort_name": "Marriott's Maui Ocean Club",
+      "address": "100 Nohea Kai Drive, Lahaina, HI 96761, USA",
       "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
@@ -8884,6 +8904,7 @@
       "display_name": "Marbella Beach",
       "code": "MB",
       "resort_name": "Marriott's Marbella Beach Resort",
+      "address": "Carretera de Cádiz, Km 193, 29604 Marbella, Málaga, Spain",
       "timezone": "Europe/Madrid",
       "years": {
         "2025": {
@@ -9389,6 +9410,7 @@
       "display_name": "Mountainside Utah",
       "code": "MU",
       "resort_name": "Marriott's MountainSide",
+      "address": "1305 Lowell Avenue, Park City, UT 84060, USA",
       "timezone": "America/Denver",
       "years": {
         "2025": {
@@ -9858,6 +9880,7 @@
       "display_name": "Newport Coast",
       "code": "NC",
       "resort_name": "Marriott's Newport Coast Villas",
+      "address": "23000 Newport Coast Drive, Newport Coast, CA 92657, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -10137,6 +10160,7 @@
       "display_name": "Ocean Pointe",
       "code": "OP",
       "resort_name": "Marriott's Ocean Pointe",
+      "address": "71 Ocean Avenue, Palm Beach Shores, FL 33404, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -10654,6 +10678,7 @@
       "display_name": "Panama Florida",
       "code": "PF",
       "resort_name": "Marriott's Legends Edge at Bay Point",
+      "address": "4000 Marriott Drive, Panama City, FL 32408, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -10973,6 +10998,7 @@
       "display_name": "Phuket Beach Club",
       "code": "PBC",
       "resort_name": "Marriott's Phuket Beach Club",
+      "address": "230 Moo 3, Mai Khao, Phuket 83110, Thailand",
       "timezone": "Asia/Bangkok",
       "years": {
         "2025": {
@@ -11223,7 +11249,8 @@
       "id": "playa-andaluza",
       "display_name": "Playa Andaluza",
       "code": "PA",
-      "resort_name": "Marriott's Playa Andaluza",
+      "resort_name": "Marriott's Playa Andaluza, Spain",
+      "address": "Carretera de Cádiz, Km 168, 29680 Estepona, Málaga, Spain",
       "timezone": "Europe/Madrid",
       "years": {
         "2025": {
@@ -11813,6 +11840,7 @@
       "display_name": "Pulse San Diego",
       "code": "PSD",
       "resort_name": "Marriott Vacation Club, San Diego",
+      "address": "701 A Street, San Diego, CA 92101, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -12330,6 +12358,7 @@
       "display_name": "Pulse San Francisco",
       "code": "PSF",
       "resort_name": "Marriott Vacation Club, San Francisco",
+      "address": "780 Mission Street, San Francisco, CA 94103, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -12835,6 +12864,7 @@
       "display_name": "Residence Tahoe",
       "code": "RT",
       "resort_name": "Marriott Grand Residence Club, Lake Tahoe",
+      "address": "1001 Heavenly Village Way, South Lake Tahoe, CA 96150, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -13300,6 +13330,7 @@
       "display_name": "Ritz San Francisco",
       "code": "RSF",
       "resort_name": "The Ritz-Carlton Club, San Francisco",
+      "address": "690 Market Street, San Francisco, CA 94104, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -13775,6 +13806,7 @@
       "display_name": "Ritz Tahoe",
       "code": "RT",
       "resort_name": "The Ritz-Carlton Club, Lake Tahoe",
+      "address": "13051 Ritz-Carlton Highlands Drive, Truckee, CA 96161, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -14304,6 +14336,7 @@
       "display_name": "Ritz Vail",
       "code": "RV",
       "resort_name": "The Ritz-Carlton Club, Vail",
+      "address": "728 West Lionshead Circle, Vail, CO 81657, USA",
       "timezone": "America/Denver",
       "years": {
         "2025": {
@@ -14869,6 +14902,7 @@
       "display_name": "Sabal Orlando",
       "code": "SO",
       "resort_name": "Marriott's Sabal Palms",
+      "address": "8805 World Center Drive, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -15234,6 +15268,7 @@
       "display_name": "Shadow Ridge",
       "code": "SR",
       "resort_name": "Marriott's Shadow Ridge",
+      "address": "9003 Shadow Ridge Road, Palm Desert, CA 92211, USA",
       "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
@@ -15681,6 +15716,7 @@
       "display_name": "Sheraton Kauai",
       "code": "SK",
       "resort_name": "Sheraton Kauai Resort Villas",
+      "address": "2440 Hoonani Road, Koloa, HI 96756, USA",
       "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
@@ -16028,6 +16064,7 @@
       "display_name": "Sheraton Scottsdale",
       "code": "SS",
       "resort_name": "Sheraton Desert Oasis, Scottsdale",
+      "address": "17700 North Hayden Road, Scottsdale, AZ 85255, USA",
       "timezone": "America/Phoenix",
       "years": {
         "2025": {
@@ -16474,7 +16511,8 @@
       "id": "suenos-costarica",
       "display_name": "Suenos CostaRica",
       "code": "SC",
-      "resort_name": "Marriott Vacation Club at Los Sueños",
+      "resort_name": "Marriott Vacation Club at Los Sueños, Costa Rica",
+      "address": "800 meters west of Herradura Entrance, Playa Herradura, Garabito, Puntarenas, Costa Rica",
       "timezone": "America/Costa_Rica",
       "years": {
         "2025": {
@@ -16858,6 +16896,7 @@
       "display_name": "Surfers Paradise",
       "code": "SP",
       "resort_name": "Marriott Vacation Club at Surfers Paradise",
+      "address": "158 Ferny Avenue, Surfers Paradise, QLD 4217, Australia",
       "timezone": "Australia/Brisbane",
       "years": {
         "2025": {
@@ -17267,6 +17306,7 @@
       "display_name": "Village Paris",
       "code": "VP",
       "resort_name": "Marriott's Village d'Ile-de-France",
+      "address": "1 Allée de l'Orme Rond, 77700 Bailly-Romainvilliers, France",
       "timezone": "Europe/Paris",
       "years": {
         "2025": {
@@ -17640,6 +17680,7 @@
       "display_name": "Waikoloa Ocean",
       "code": "WO",
       "resort_name": "Marriott's Waikoloa Ocean Club",
+      "address": "69-275 Waikoloa Beach Drive, Waikoloa, HI 96738, USA",
       "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
@@ -18075,6 +18116,7 @@
       "display_name": "Westin Ka'anapali",
       "code": "WK",
       "resort_name": "The Westin Kā'anapali Ocean Resort Villas",
+      "address": "6 Kai Ala Drive, Lahaina, HI 96761, USA",
       "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
@@ -18554,6 +18596,7 @@
       "display_name": "Willow Branson",
       "code": "WB",
       "resort_name": "Marriott's Willow Ridge Lodge",
+      "address": "2929 Green Mountain Drive, Branson, MO 65616, USA",
       "timezone": "America/Chicago",
       "years": {
         "2025": {
@@ -18869,6 +18912,7 @@
       "display_name": "Harbour Lake Orlando",
       "code": "HLO",
       "resort_name": "Marriott's Harbour Lake",
+      "address": "7102 Grand Horizons Boulevard, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -19282,6 +19326,7 @@
       "display_name": "Washington DC",
       "code": "WD",
       "resort_name": "Marriott Vacation Club at The Mayflower, Washington, D.C.",
+      "address": "1127 Connecticut Avenue NW, Washington, DC 20036, USA",
       "timezone": "America/New_York",
       "years": {
         "2025": {
@@ -19831,6 +19876,7 @@
       "display_name": "Ko Olina Beach",
       "code": "KOB",
       "resort_name": "Marriott's Ko Olina Beach Club",
+      "address": "92-161 Waipahe Place, Kapolei, HI 96707, USA",
       "timezone": "Pacific/Honolulu",
       "years": {
         "2025": {
