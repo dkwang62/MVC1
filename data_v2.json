@@ -11,10 +11,10 @@
   },
   "configuration": {
     "maintenance_rates": {
-      "2025": 0.5,
-      "2026": 0.56,
-      "2027": 0.6,
-      "2028": 0.65
+      "2025": 0.81,
+      "2026": 0.86,
+      "2027": 0.91,
+      "2028": 0.96
     },
     "discount_policies": {},
     "default_values": {}
@@ -3397,7 +3397,7 @@
       "display_name": "Chateau Vegas",
       "code": "CV",
       "resort_name": "Marriott's Grand Chateau",
-      "timezone": "UTC",
+      "timezone": "America/Los_Angeles",
       "years": {
         "2025": {
           "seasons": [
@@ -3662,7 +3662,7 @@
       "display_name": "Crystal Shores",
       "code": "CS",
       "resort_name": "Marriott's Crystal Shores",
-      "timezone": "UTC",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
@@ -16475,7 +16475,7 @@
       "display_name": "Suenos CostaRica",
       "code": "SC",
       "resort_name": "Marriott Vacation Club at Los Sueños",
-      "timezone": "UTC",
+      "timezone": "America/Costa_Rica",
       "years": {
         "2025": {
           "seasons": [
@@ -19282,7 +19282,7 @@
       "display_name": "Washington DC",
       "code": "WD",
       "resort_name": "Marriott Vacation Club at The Mayflower, Washington, D.C.",
-      "timezone": "UTC",
+      "timezone": "America/New_York",
       "years": {
         "2025": {
           "seasons": [
