@@ -758,7 +758,7 @@ def main():
         mode_sel = st.selectbox(
             "User Mode",
             [m.value for m in UserMode],
-            index=0,
+            index=1,
             help="Select whether you're renting points or own them"
         )
         mode = UserMode(mode_sel)
