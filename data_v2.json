@@ -20756,6 +20756,754 @@
           ]
         }
       }
+    },
+    {
+      "id": "phuket-mai-khao",
+      "display_name": "Phuket Mai Khao",
+      "code": "PMK",
+      "resort_name": "Marriott's Mai Khao Resort",
+      "address": "234 Moo 3, Mai Khao, Phuket 83110, Thailand",
+      "timezone": "Asia/Bangkok",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-01-23"
+                },
+                {
+                  "start": "2025-01-31",
+                  "end": "2025-05-22"
+                },
+                {
+                  "start": "2025-07-04",
+                  "end": "2025-08-14"
+                },
+                {
+                  "start": "2025-09-26",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 590,
+                    "2BR": 510
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 420,
+                    "2BR": 370
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 740,
+                    "2BR": 640
+                  }
+                }
+              }
+            },
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-05-23",
+                  "end": "2025-07-03"
+                },
+                {
+                  "start": "2025-08-15",
+                  "end": "2025-09-25"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 370,
+                    "2BR": 330
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 270,
+                    "2BR": 230
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 470,
+                    "2BR": 410
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Chinese New Year",
+              "global_reference": "Chinese New Year",
+              "room_points": {
+                "2BR Pool": 6930,
+                "2BR": 6030
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2BR Pool": 6930,
+                "2BR": 6030
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2BR Pool": 6930,
+                "2BR": 6030
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-02-20",
+                  "end": "2026-05-21"
+                },
+                {
+                  "start": "2026-07-03",
+                  "end": "2026-08-13"
+                },
+                {
+                  "start": "2026-09-25",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 590,
+                    "2BR": 510
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 420,
+                    "2BR": 370
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 740,
+                    "2BR": 640
+                  }
+                }
+              }
+            },
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-05-22",
+                  "end": "2026-07-02"
+                },
+                {
+                  "start": "2026-08-14",
+                  "end": "2026-09-24"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 370,
+                    "2BR": 330
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 270,
+                    "2BR": 230
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Pool": 470,
+                    "2BR": 410
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Chinese New Year",
+              "global_reference": "Chinese New Year",
+              "room_points": {
+                "2BR Pool": 6930,
+                "2BR": 6030
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2BR Pool": 6930,
+                "2BR": 6030
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2BR Pool": 6930,
+                "2BR": 6030
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "mallorca-son-antem",
+      "display_name": "Mallorca Son Antem",
+      "code": "MSA",
+      "resort_name": "Marriott's Club Son Antem",
+      "address": "Carretera MA 19, salida 20, Llucmajor, 07620, Mallorca, Spain",
+      "timezone": "Europe/Madrid",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-02-13"
+                },
+                {
+                  "start": "2025-02-28",
+                  "end": "2025-03-27"
+                },
+                {
+                  "start": "2025-11-21",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 250,
+                    "3-BDRM": 325
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 350,
+                    "3-BDRM": 450
+                  }
+                }
+              }
+            },
+            {
+              "name": "Shoulder",
+              "periods": [
+                {
+                  "start": "2025-02-14",
+                  "end": "2025-02-27"
+                },
+                {
+                  "start": "2025-03-28",
+                  "end": "2025-04-10"
+                },
+                {
+                  "start": "2025-04-25",
+                  "end": "2025-05-22"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 375,
+                    "3-BDRM": 475
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 550,
+                    "3-BDRM": 675
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-05-23",
+                  "end": "2025-06-05"
+                },
+                {
+                  "start": "2025-07-18",
+                  "end": "2025-07-31"
+                },
+                {
+                  "start": "2025-08-15",
+                  "end": "2025-09-25"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 500,
+                    "3-BDRM": 625
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 725,
+                    "3-BDRM": 900
+                  }
+                }
+              }
+            },
+            {
+              "name": "Mid Season",
+              "periods": [
+                {
+                  "start": "2025-06-06",
+                  "end": "2025-07-17"
+                },
+                {
+                  "start": "2025-09-26",
+                  "end": "2025-11-20"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 325,
+                    "3-BDRM": 400
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 475,
+                    "3-BDRM": 575
+                  }
+                }
+              }
+            },
+            {
+              "name": "Peak Season",
+              "periods": [
+                {
+                  "start": "2025-08-01",
+                  "end": "2025-08-14"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 600,
+                    "3-BDRM": 750
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 875,
+                    "3-BDRM": 1075
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2-BDRM": 1950,
+                "3-BDRM": 2525
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2-BDRM": 1950,
+                "3-BDRM": 2525
+              }
+            },
+            {
+              "name": "Easter1",
+              "global_reference": "Easter1",
+              "room_points": {
+                "2-BDRM": 2750,
+                "3-BDRM": 3500
+              }
+            },
+            {
+              "name": "Easter2",
+              "global_reference": "Easter2",
+              "room_points": {
+                "2-BDRM": 2750,
+                "3-BDRM": 3500
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-02-27",
+                  "end": "2026-03-26"
+                },
+                {
+                  "start": "2026-11-20",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 250,
+                    "3-BDRM": 325
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 350,
+                    "3-BDRM": 450
+                  }
+                }
+              }
+            },
+            {
+              "name": "Shoulder",
+              "periods": [
+                {
+                  "start": "2026-02-13",
+                  "end": "2026-02-26"
+                },
+                {
+                  "start": "2026-04-10",
+                  "end": "2026-05-21"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 375,
+                    "3-BDRM": 475
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 550,
+                    "3-BDRM": 675
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-05-22",
+                  "end": "2026-06-04"
+                },
+                {
+                  "start": "2026-07-17",
+                  "end": "2026-07-30"
+                },
+                {
+                  "start": "2026-08-14",
+                  "end": "2026-09-24"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 500,
+                    "3-BDRM": 625
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 725,
+                    "3-BDRM": 900
+                  }
+                }
+              }
+            },
+            {
+              "name": "Mid Season",
+              "periods": [
+                {
+                  "start": "2026-06-05",
+                  "end": "2026-07-16"
+                },
+                {
+                  "start": "2026-09-25",
+                  "end": "2026-11-19"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 325,
+                    "3-BDRM": 400
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 475,
+                    "3-BDRM": 575
+                  }
+                }
+              }
+            },
+            {
+              "name": "Peak Season",
+              "periods": [
+                {
+                  "start": "2026-07-31",
+                  "end": "2026-08-13"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 600,
+                    "3-BDRM": 750
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2-BDRM": 875,
+                    "3-BDRM": 1075
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2-BDRM": 1950,
+                "3-BDRM": 2525
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2-BDRM": 1950,
+                "3-BDRM": 2525
+              }
+            },
+            {
+              "name": "Easter1",
+              "global_reference": "Easter1",
+              "room_points": {
+                "2-BDRM": 2750,
+                "3-BDRM": 3500
+              }
+            },
+            {
+              "name": "Easter2",
+              "global_reference": "Easter2",
+              "room_points": {
+                "2-BDRM": 2750,
+                "3-BDRM": 3500
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "migration_notes": {
