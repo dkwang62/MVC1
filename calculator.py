@@ -724,6 +724,21 @@ def main() -> None:
     # 1) Shared data auto-load (no uploader here)
     ensure_data_in_session()
 
+    # ===== Calculator check-in date state =====
+    today = datetime.now().date()
+    initial_default = today + timedelta(days=1)
+
+    
+
+
+
+
+
+
+
+
+
+    
     # 2) If no data, bail out early
     if not st.session_state.data:
         st.warning("⚠️ Please open the Editor and upload/merge data_v2.json first.")
@@ -736,81 +751,115 @@ def main() -> None:
     # 3) Sidebar: user settings only
     with st.sidebar:
         st.divider()
-        st.markdown("### 👤 User Settings")
-        # --- User mode selection & parameters ---
-        mode_sel = st.selectbox(
-            "User Mode",
+        st.markdown("### 👤 User Profile")
+        mode_sel = st.radio(
+            "Mode:",
             [m.value for m in UserMode],
             index=0,
-            help="Select whether you're renting points or own them.",
+            help="Select whether you're renting points or own them",
+            horizontal=True,
         )
         mode = UserMode(mode_sel)
         owner_params: Optional[dict] = None
         policy: DiscountPolicy = DiscountPolicy.NONE
-        # Temporarily set rate; may be overridden later based on mode + year
         rate = 0.50
-        opt = "No Discount"  # Default
+        opt = "No Discount"
 
+        st.divider()
+        
         if mode == UserMode.OWNER:
-            st.markdown("#### 💰 Ownership Parameters")
+            # Owner mode
+            st.markdown("##### 💰 Basic Costs")
             rate = st.number_input(
-                "Maintenance per Point ($)",
+                "Annual Maintenance Fee ($/point)",
                 value=0.50,
                 step=0.01,
                 min_value=0.0,
+                help="Your annual maintenance fee per point",
             )
+            
             opt = st.radio(
-                "Discount Option",
+                "Discount Tier:",
                 [
                     "No Discount",
-                    "Executive: 25% Points Discount (within 30 days)",
-                    "Presidential: 30% Points Discount (within 60 days)",
+                    "Executive (25% off within 30 days)",
+                    "Presidential (30% off within 60 days)",
                 ],
-                help="Select discount options.",
+                help="Last-minute booking discounts based on your membership tier",
             )
-            cap = st.number_input(
-                "Purchase Price per Point ($)",
-                value=18.0,
-                step=1.0,
-                min_value=0.0,
-                help="Initial purchase price per MVC point.",
-            )
-            coc = (
-                st.number_input(
-                    "Cost of Capital (%)",
-                    value=6.0,
-                    step=0.5,
-                    min_value=0.0,
-                    help="Expected return on alternative investments.",
+            
+            with st.expander("🔧 Advanced Options", expanded=False):
+                st.markdown("**What to Include in Calculation**")
+                inc_m = st.checkbox(
+                    "✓ Maintenance Fees",
+                    True,
+                    help="Include annual maintenance costs",
                 )
-                / 100.0
-            )
-            life = st.number_input(
-                "Useful Life (yrs)", value=15, min_value=1
-            )
-            salvage = st.number_input(
-                "Salvage ($/pt)",
-                value=3.0,
-                step=0.5,
-                min_value=0.0,
-            )
-            inc_m = st.checkbox(
-                "Include Maintenance",
-                True,
-                help="Annual Maintenance.",
-            )
-            inc_c = st.checkbox(
-                "Include Capital Cost",
-                True,
-                help="Opportunity cost of capital invested.",
-            )
-            inc_d = st.checkbox(
-                "Include Depreciation",
-                True,
-                help="Asset depreciation over time.",
-            )
+                inc_c = st.checkbox(
+                    "✓ Capital Cost",
+                    True,
+                    help="Include opportunity cost of capital invested",
+                )
+                inc_d = st.checkbox(
+                    "✓ Depreciation",
+                    True,
+                    help="Include asset depreciation over time",
+                )
+                
+                st.divider()
+                
+                # Only show relevant fields based on checkboxes
+                if inc_c or inc_d:
+                    st.markdown("**Purchase Details**")
+                    cap = st.number_input(
+                        "Purchase Price ($/point)",
+                        value=18.0,
+                        step=1.0,
+                        min_value=0.0,
+                        help="What you paid per point when purchasing",
+                        disabled=not (inc_c or inc_d),
+                    )
+                else:
+                    cap = 18.0  # Default value when not needed
+                
+                if inc_c:
+                    coc = (
+                        st.number_input(
+                            "Cost of Capital (%/year)",
+                            value=6.0,
+                            step=0.5,
+                            min_value=0.0,
+                            help="Your expected return on alternative investments",
+                        )
+                        / 100.0
+                    )
+                else:
+                    coc = 0.06  # Default value
+                
+                if inc_d:
+                    st.markdown("**Depreciation Details**")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        life = st.number_input(
+                            "Useful Life (years)",
+                            value=15,
+                            min_value=1,
+                            help="Expected ownership duration",
+                        )
+                    with col2:
+                        salvage = st.number_input(
+                            "Salvage Value ($/pt)",
+                            value=3.0,
+                            step=0.5,
+                            min_value=0.0,
+                            help="Expected resale value per point",
+                        )
+                else:
+                    life = 15  # Default value
+                    salvage = 3.0  # Default value
+            
             owner_params = {
-                "disc_mul": 1.0,  # Will be set below
+                "disc_mul": 1.0,
                 "inc_m": inc_m,
                 "inc_c": inc_c,
                 "inc_d": inc_d,
@@ -818,27 +867,31 @@ def main() -> None:
                 "dep_rate": (cap - salvage) / life if life > 0 else 0.0,
             }
         else:
-            st.markdown("#### 🏨 Rental Parameters")
+            # Renter mode
+            st.markdown("##### 💵 Rental Rate")
             rate = st.number_input(
-                "Maintenance per Point ($)",
+                "Cost per Point ($)",
                 value=0.50,
                 step=0.01,
                 min_value=0.0,
+                help="The rental rate you're paying per point",
             )
+            
+            st.markdown("##### 🎯 Available Discounts")
             opt = st.radio(
-                "Discount Option",
+                "Discount tier available:",
                 [
                     "No Discount",
-                    "Executive: 25% Points Discount (within 30 days)",
-                    "Presidential: 30% Points Discount (within 60 days)",
+                    "Executive (25% off within 30 days)",
+                    "Presidential (30% off within 60 days)",
                 ],
-                help="Select discount options.",
+                help="Last-minute discounts reduce required points",
             )
+            
             if "Presidential" in opt:
                 policy = DiscountPolicy.PRESIDENTIAL
             elif "Executive" in opt:
                 policy = DiscountPolicy.EXECUTIVE
-            # "No Discount" uses NONE
 
         # Set disc_mul for owners
         disc_mul = 1.0
@@ -847,22 +900,28 @@ def main() -> None:
         elif "Presidential" in opt:
             disc_mul = 0.7
 
-        if owner_params:  # Only for owners
+        if owner_params:
             owner_params["disc_mul"] = disc_mul
+        
+        st.divider()
+        st.markdown(
+            "<small>💡 **Tip:** Adjust settings above, then select your resort, dates, and room type in the main area.</small>",
+            unsafe_allow_html=True,
+        )
 
     # ===== Core calculator objects =====
     repo = MVCRepository(st.session_state.data)
     calc = MVCCalculator(repo)
 
-    # ===== Main content =====
+    # ===== Main content header =====
     render_page_header(
         "Calculator",
         f"👤 {mode.value} Mode: {'Ownership' if mode == UserMode.OWNER else 'Rental'} Cost Analysis",
         icon="🏨",
-        badge_color="#059669" if mode == UserMode.OWNER else "#2563eb"
+        badge_color="#059669" if mode == UserMode.OWNER else "#2563eb",
     )
 
-    # Resorts list & current selection by id
+    # ===== Resort selection via grid (RESTORED) =====
     resorts_full = repo.get_resort_list_full()  # list of resort dicts
     if resorts_full and st.session_state.current_resort_id is None:
         st.session_state.current_resort_id = resorts_full[0].get("id")
@@ -891,16 +950,45 @@ def main() -> None:
     )
     st.divider()
 
+    # ===== Calculator check-in date state (simple, robust) =====
+    today = datetime.now().date()
+    initial_default = today + timedelta(days=1)
+
+    # First-ever initialisation for this session
+    if "calc_initial_default" not in st.session_state:
+        st.session_state.calc_initial_default = initial_default
+        st.session_state.calc_checkin = initial_default
+        st.session_state.calc_checkin_user_set = False
+
     # ===== Booking details =====
     st.markdown("### 📅 Booking Details")
     input_cols = st.columns([2, 1, 2, 2])
+
+    # --- Check-in widget ---
     with input_cols[0]:
+        # IMPORTANT:
+        # - value comes from our own state (calc_checkin)
+        # - widget uses its own key ("calc_checkin_widget")
         checkin = st.date_input(
             "Check-in Date",
-            datetime.now().date() + timedelta(days=1),
+            value=st.session_state.calc_checkin,
+            key="calc_checkin_widget",
             format="YYYY/MM/DD",
             help="Your arrival date.",
         )
+
+    # Sync our own state from the widget (safe because keys are different)
+    st.session_state.calc_checkin = checkin
+
+    # Detect first time the user moves away from the default
+    if (
+        not st.session_state.calc_checkin_user_set
+        and checkin != st.session_state.calc_initial_default
+    ):
+        st.session_state.calc_checkin_user_set = True
+
+    user_changed_date = st.session_state.calc_checkin_user_set
+
     with input_cols[1]:
         nights = st.number_input(
             "Nights",
@@ -910,8 +998,14 @@ def main() -> None:
             help="Number of nights to stay.",
         )
 
+
     # Holiday adjustment (extend stay to full holiday span)
-    adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
+    # Only activate AFTER the user has changed the default date at least once.
+    if user_changed_date:
+        adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
+    else:
+        adj_in, adj_n, adj = checkin, nights, False
+
     if adj:
         end_date = adj_in + timedelta(days=adj_n - 1)
         st.info(
@@ -919,6 +1013,8 @@ def main() -> None:
             f"{adj_in.strftime('%b %d, %Y')} — {end_date.strftime('%b %d, %Y')} "
             f"({adj_n} nights)"
         )
+
+
 
     # Derive available room types from daily points for adjusted start
     pts, _ = calc._get_daily_points(calc.repo.get_resort(r_name), adj_in)
@@ -1081,19 +1177,14 @@ def main() -> None:
                 st.markdown(
                     f"""
                     ### 💰 Owner Cost Calculation
-                    **Maintenance**
-                    - Formula: Maintenance per point × points used
-                    - Current Maintenance: **${rate:.2f}** per point
-                    - Covers: Property upkeep, utilities, staff, amenities
-                    **Capital Cost**
-                    - Formula: Purchase price × cost of capital rate × points used
-                    - Represents: Opportunity cost of capital invested in ownership
-                    **Depreciation Cost**
-                    - Formula: (Purchase price − salvage value) ÷ useful life × points used
-                    - Represents: Asset value decline over time
-                    **Points Calculation**
-                    - Effective points may be reduced by last-minute owner discounts.
-                    - Holiday periods are priced as whole blocks rather than per-night averages.
+                    **Maintenance**  
+                    Maintenance per point × points used; Currently **${rate:.2f}** per point  
+
+                    **Capital Cost**  
+                    Purchase price × cost of capital rate × points used  
+
+                    **Depreciation Cost**  
+                    (Purchase price − salvage value) ÷ useful life × points used
                     """
                 )
             else:
@@ -1112,13 +1203,16 @@ def main() -> None:
                 st.markdown(
                     f"""
                     ### 🏨 Rent Calculation
-                    **Current Maintenance:** **${rate:.2f}** per point.
+                    **Current Rate:** **${rate:.2f}** per point.  
+
                     {discount_text}
-                    - The **Points** column may show reduced points if last-minute discounts apply.
-                    - 💰 Rent is always computed from the **discounted** points.
+
+                    - The **Points** column may show reduced points if last-minute discounts apply.  
+                    - 💰 Rent is always computed from the **discounted** points.  
                     - Holiday periods are treated as full blocks for pricing.
                     """
                 )
+
 
 def run() -> None:
     main()
