@@ -1823,7 +1823,7 @@ def main():
     # Main content
     render_page_header(
     "Editor",
-    "Master data management for MVC resorts",
+    "Data management",
     icon="🏨",
     badge_color="#EF4444"  # Adjust to match the red color in the image, e.g., #DC2626 or #EF4444
 )
