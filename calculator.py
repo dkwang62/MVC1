@@ -582,10 +582,10 @@ def main() -> None:
         st.markdown("### 👤 User Profile")
         
         # --- CONFIGURATION SECTION ---
-        with st.expander("⚙️ User Configuration", expanded=False):
-            with st.expander("ℹ️ About User Settings", expanded=False):
+        with st.expander("⚙️ Your Calculator Settings", expanded=False):
+            with st.expander("ℹ️ Your Calculator Settings", expanded=False):
                 st.markdown("""
-                This feature lets you save your personal ownership profile so you don't have to re-enter your numbers every time.
+                Save your inputs and preferences — including resort selections and discount options — and recall them anytime.
                 **How to use:**
                 * **Save:** Click the button to download a small file to your computer.
                 * **Load:** Upload file to restore settings.
@@ -732,7 +732,7 @@ def main() -> None:
         
         st.divider()
 
-    render_page_header("Calculator", f"👤 {mode.value} Mode", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
+    render_page_header("Calc", f"👤 {mode.value} Mode", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
 
     # Resort Selection
     if resorts_full and st.session_state.current_resort_id is None:
