@@ -26,7 +26,7 @@ choice = st.sidebar.radio(
     index=0,
 )
 
-if choice == "Points & Rent Calculator":
+if choice == "Calculator":
     import calculator
 
     calculator.run()
