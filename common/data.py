@@ -3,38 +3,8 @@ import json
 import streamlit as st
 from typing import Dict, Any, Optional
 from datetime import datetime
+
 DEFAULT_DATA_PATH = "data_v2.json"
-
-def ensure_data_in_session(
-    default_filename: str = "data_v2.json",
-    session_key: str = "data",
-    uploaded_name_key: str = "uploaded_file_name",
-) -> None:
-    """
-    Make sure st.session_state[session_key] has loaded JSON data.
-
-    - If it's already set, do nothing.
-    - Otherwise, try to auto-load default_filename from disk.
-    """
-    if session_key not in st.session_state:
-        st.session_state[session_key] = None
-    if uploaded_name_key not in st.session_state:
-        st.session_state[uploaded_name_key] = None
-
-    if st.session_state[session_key] is None:
-        try:
-            with open(default_filename, "r") as f:
-                payload = json.load(f)
-            # Minimal schema check
-            if "resorts" in payload:
-                st.session_state[session_key] = payload
-                st.session_state[uploaded_name_key] = default_filename
-        except Exception:
-            # Silently ignore if default file not present
-            pass
-
-
-
 
 def load_data() -> Dict[str, Any]:
     if "data" not in st.session_state or st.session_state.data is None:
@@ -50,16 +20,6 @@ def save_data(data: Dict[str, Any]):
     with open("data_v2.json", "w") as f:
         json.dump(data, f, indent=2)
     st.session_state.last_save_time = datetime.now()
-
-def get_resorts(data: Dict[str, Any]) -> list:
-    return data.get("resorts", []) if data else []
-
-def get_resort_by_display_name(data: Dict[str, Any], name: str) -> Optional[Dict[str, Any]]:
-    return next((r for r in get_resorts(data) if r.get("display_name") == name), None)
-
-def get_maintenance_rate(data: Dict[str, Any], year: int) -> float:
-    return float(data.get("configuration", {}).get("maintenance_rates", {}).get(str(year), 0.86))
-
 
 def ensure_data_in_session(auto_path: str = DEFAULT_DATA_PATH) -> None:
     """
@@ -129,4 +89,4 @@ def render_data_file_uploader(
     st.session_state[session_key] = data
     st.session_state[uploaded_name_key] = uploaded_file.name
     st.success(f"✅ Loaded {uploaded_file.name}")
-    st.experimental_rerun()
+    st.rerun()
