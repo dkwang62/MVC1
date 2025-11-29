@@ -568,7 +568,7 @@ def main() -> None:
 
     with st.sidebar:
         st.divider()
-        st.markdown("### 👤 User Profile")
+        st.markdown("### 👤 Your Settings mvc_owner_settings.json")
         
         # --- CONFIGURATION SECTION ---
         with st.expander("⚙️ Your Calculator Settings", expanded=False):
@@ -578,8 +578,8 @@ def main() -> None:
                 
                 This saves your costs, membership tier, and selected resort so you don't have to re-enter them.
                 
-                * **Save:** Download your profile to your computer.
-                * **Load:** Upload that file to restore your settings instantly.
+                * **Save:** Download mvc_owner_settings.json to your computer
+                * **Load:** Upload mvc_owner_settings.json to restore your settings instantly.
                 """
             )
             
