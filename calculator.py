@@ -583,7 +583,7 @@ def main() -> None:
         
         # --- CONFIGURATION SECTION ---
         with st.expander("⚙️ Your Calculator Settings", expanded=False):
-            with st.expander("ℹ️ Your Calculator Settings", expanded=False):
+       #     with st.expander("ℹ️ Your Calculator Settings", expanded=False):
                 st.markdown("""
                 Save your inputs and preferences — including resort selections and discount options — and recall them anytime.
                 **How to use:**
