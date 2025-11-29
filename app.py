@@ -4,9 +4,6 @@ import sys
 
 import streamlit as st
 
-
-
-
 # Ensure local package imports work on Streamlit Cloud
 current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
@@ -17,11 +14,15 @@ from common.ui import setup_page
 # Set up base page config and styling
 setup_page()
 
+# --- Initialize Default Theme ---
+if "ui_theme" not in st.session_state:
+    st.session_state.ui_theme = "Light"
+
 # --- App shell: choose which tool to run ---
 st.sidebar.markdown("### 🧰 MVC Tools")
 choice = st.sidebar.radio(
     "Choose Tool",
-    ["Points & Rent Calculator", "Resort Data Editor"],
+    ["Points & Rent Calculator", "Personalising Your Dataset"],
     index=0,
 )
 
