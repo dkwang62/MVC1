@@ -1,6 +1,6 @@
 import streamlit as st
 from common.ui import render_resort_card, render_resort_grid, render_page_header
-from common.data import load_data, save_data  # save_data is shadowed below but kept for compatibility
+from common.data import load_data 
 from functools import lru_cache
 import json
 import pandas as pd
@@ -39,6 +39,7 @@ def initialize_session_state():
         "working_resorts": {},
         "last_save_time": None,
         "delete_confirm": False,
+        "download_verified": False,  # State for the verify button
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -46,22 +47,8 @@ def initialize_session_state():
 
 
 def save_data():
-    # Local helper: mark "recently saved" for UI indicator.
+    # Only update local state timestamp (no disk write)
     st.session_state.last_save_time = datetime.now()
-
-
-def show_save_indicator():
-    if st.session_state.last_save_time:
-        elapsed = (datetime.now() - st.session_state.last_save_time).total_seconds()
-        if elapsed < 3:
-            st.sidebar.markdown(
-                """
-                <div style='background: #4caf50; color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: 600;'>
-                    ✓ Changes Saved
-                </div>
-            """,
-                unsafe_allow_html=True,
-            )
 
 
 def reset_state_for_new_file():
@@ -72,8 +59,11 @@ def reset_state_for_new_file():
         "working_resorts",
         "delete_confirm",
         "last_save_time",
+        "download_verified",
     ]:
         st.session_state[k] = {} if k == "working_resorts" else None
+        if k == "download_verified":
+            st.session_state[k] = False
 
 
 # ----------------------------------------------------------------------
@@ -185,60 +175,102 @@ def handle_file_upload():
 
 
 def create_download_button_v2(data: Dict[str, Any]):
-    # Header text stays OUTSIDE the expander
     st.sidebar.markdown("### 📥 Memory to File")
 
-    # Everything else INSIDE the expander
-    with st.sidebar.expander("💾 Save to File", expanded=False):
+    # Ensure state exists (for safety if hot-reloading)
+    if "download_verified" not in st.session_state:
+        st.session_state.download_verified = False
 
-        st.caption("You can change file name")
+    with st.sidebar.expander("💾 Save & Download", expanded=False):
+        
+        # --- 1. DETECT UNSAVED CHANGES ---
+        current_id = st.session_state.get("current_resort_id")
+        working_resorts = st.session_state.get("working_resorts", {})
+        has_unsaved_changes = False
+        
+        if current_id and current_id in working_resorts:
+            working_copy = working_resorts[current_id]
+            committed_copy = find_resort_by_id(data, current_id)
+            if committed_copy != working_copy:
+                has_unsaved_changes = True
 
-        # Let user choose filename
-        filename = st.text_input(
-            "File name",
-            value="data_v2.json",
-            key="download_filename_input",
-        ).strip()
+        # --- 2. STATE MACHINE ---
 
-        # Fallback + ensure .json extension
-        if not filename:
-            filename = "data_v2.json"
-        if not filename.lower().endswith(".json"):
-            filename += ".json"
+        if has_unsaved_changes:
+            # STATE: DIRTY
+            # Action: Must Commit to Memory
+            # Effect: Resets verification status
+            st.session_state.download_verified = False 
+            
+            st.warning("⚠️ Unsaved changes pending.")
+            
+            if st.button("🧠 COMMIT TO MEMORY", type="primary", use_container_width=True):
+                commit_working_to_data_v2(data, working_resorts[current_id], current_id)
+                st.toast("✅ Committed to memory.", icon="🧠")
+                st.rerun()
+            
+            st.caption("You must commit changes to memory before proceeding.")
 
-        json_data = json.dumps(data, indent=2, ensure_ascii=False)
+        elif not st.session_state.download_verified:
+            # STATE: CLEAN BUT UNVERIFIED
+            # Action: Must Verify
+            # Effect: Shows Download button next
+            st.info("ℹ️ Memory updated.")
+            
+            if st.button("🔍 Verify that memory is up to date", use_container_width=True):
+                # This button 'actively checks' status (logic is implicit since we are in the else block)
+                st.session_state.download_verified = True
+                st.rerun()
+                
+            st.caption("Please confirm the current memory state is correct to unlock the download.")
 
-        st.download_button(
-            label="💾 Save",
-            data=json_data,
-            file_name=filename,
-            mime="application/json",
-            key="download_v2_btn",
-            use_container_width=True,
-        )
+        else:
+            # STATE: VERIFIED
+            # Action: Allow Download
+            st.success("✅ Verified & Ready.")
+            
+            # This is the ONLY place this widget is rendered
+            filename = st.text_input(
+                "File name",
+                value="data_v2.json",
+                key="download_filename_input",
+            ).strip()
 
-        st.caption(
-            f"File will be downloaded as **{filename}** "
-            "to your browser’s default **Downloads** folder."
-        )
+            if not filename:
+                filename = "data_v2.json"
+            if not filename.lower().endswith(".json"):
+                filename += ".json"
+
+            json_data = json.dumps(data, indent=2, ensure_ascii=False)
+
+            st.download_button(
+                label="⬇️ DOWNLOAD JSON FILE",
+                data=json_data,
+                file_name=filename,
+                mime="application/json",
+                key="download_v2_btn",
+                type="primary",
+                use_container_width=True,
+            )
 
 def handle_file_verification():
     with st.sidebar.expander("🔍 Verify File", expanded=False):
         verify_upload = st.file_uploader(
-            "Verify", type="json", key="verify_uploader"
+            "Upload file to compare with memory", type="json", key="verify_uploader"
         )
         if verify_upload:
             try:
                 uploaded_data = json.load(verify_upload)
+                # Normalize strings for comparison
                 current_json = json.dumps(st.session_state.data, sort_keys=True)
                 uploaded_json = json.dumps(uploaded_data, sort_keys=True)
+                
                 if current_json == uploaded_json:
-                    st.success("✅ Files match")
+                    st.success("✅ File matches memory exactly.")
                 else:
-                    st.error("❌ Files differ")
+                    st.error("❌ File differs from memory.")
             except Exception as e:
                 st.error(f"❌ Error: {str(e)}")
-        st.sidebar.markdown("### 📥 Merge Resorts")
 
 
 def handle_merge_from_another_file_v2(data: Dict[str, Any]):
@@ -312,24 +344,21 @@ def handle_resort_creation_v2(
     data: Dict[str, Any], current_resort_id: Optional[str]
 ):
     resorts = data.setdefault("resorts", [])
+    
     with st.expander("➕ Create or Clone Resort", expanded=False):
-        new_name = st.text_input(
-            "Resort Name",
-            placeholder="e.g., Pulse San Francisco",
-            key="new_resort_name",
-        )
+        # Use tabs to separate the two distinct actions
+        tab_new, tab_clone = st.tabs(["✨ New Blank", "📋 Clone Current"])
 
-        col1, col2 = st.columns(2)
-        with col1:
-            if (
-                st.button(
-                    "✨ Create Blank",
-                    key="create_blank_btn",
-                    use_container_width=True,
-                )
-                and new_name
-            ):
-                name = new_name.strip()
+        # --- TAB 1: CREATE BLANK ---
+        with tab_new:
+            new_name_input = st.text_input(
+                "New Resort Name",
+                placeholder="e.g., Pulse San Francisco",
+                key="new_resort_name_blank",
+            )
+            
+            if st.button("Create Blank Resort", use_container_width=True):
+                name = new_name_input.strip()
                 if not name:
                     st.error("❌ Name cannot be empty")
                 elif is_duplicate_resort_name(name, resorts):
@@ -340,6 +369,7 @@ def handle_resort_creation_v2(
                     code = generate_resort_code(name)
                     detected_timezone = detect_timezone_from_name(name)
                     full_name = get_resort_full_name(rid, name)
+                    
                     new_resort = {
                         "id": rid,
                         "display_name": name,
@@ -352,50 +382,49 @@ def handle_resort_creation_v2(
                     resorts.append(new_resort)
                     st.session_state.current_resort_id = rid
                     save_data()
-                    st.success(
-                        f"✅ Created {name} (Timezone: {detected_timezone})"
-                    )
+                    st.success(f"✅ Created {name}")
                     st.rerun()
 
-        with col2:
-            if (
-                st.button(
-                    "📋 Clone Current",
-                    key="clone_current_resort_action",
-                    use_container_width=True,
-                )
-                and new_name
-            ):
-                name = new_name.strip()
-                if not name:
-                    st.error("❌ Name cannot be empty")
-                elif is_duplicate_resort_name(name, resorts):
-                    st.error("❌ Name already exists")
-                elif not current_resort_id:
-                    st.error("❌ Select a resort first")
-                else:
-                    src = find_resort_by_id(data, current_resort_id)
-                    if src is None:
-                        st.error("❌ Source not found")
-                    else:
-                        base_id = generate_resort_id(name)
+        # --- TAB 2: CLONE CURRENT ---
+        with tab_clone:
+            if not current_resort_id:
+                st.warning("⚠️ Select a resort from the grid first to clone it.")
+            else:
+                src = find_resort_by_id(data, current_resort_id)
+                if src:
+                    st.markdown(f"**Source:** {src.get('display_name', 'Unknown')}")
+                    
+                    if st.button("📋 Clone This Resort", use_container_width=True):
+                        # 1. Generate unique name
+                        original_name = src.get("display_name", "Resort")
+                        new_name = f"{original_name} (Copy)"
+                        
+                        # Ensure uniqueness if (Copy) already exists
+                        counter = 1
+                        while is_duplicate_resort_name(new_name, resorts):
+                            counter += 1
+                            new_name = f"{original_name} (Copy {counter})"
+
+                        # 2. Generate IDs
+                        base_id = generate_resort_id(new_name)
                         rid = make_unique_resort_id(base_id, resorts)
-                        code = generate_resort_code(name)
-                        detected_timezone = detect_timezone_from_name(name)
+                        code = generate_resort_code(new_name)
+
+                        # 3. Deep Copy everything (Policies, Seasons, Holidays)
                         cloned = copy.deepcopy(src)
+
+                        # 4. Update Identity Fields
                         cloned["id"] = rid
-                        cloned["display_name"] = name
+                        cloned["display_name"] = new_name
                         cloned["code"] = code
-                        cloned["resort_name"] = get_resort_full_name(
-                            rid, name
-                        )
-                        cloned["timezone"] = detected_timezone
+                        # We intentionally keep 'timezone' and 'address' from src
+                        # cloned["resort_name"] we update to match the new ID/Display
+                        cloned["resort_name"] = get_resort_full_name(rid, new_name)
+
                         resorts.append(cloned)
                         st.session_state.current_resort_id = rid
                         save_data()
-                        st.success(
-                            f"✅ Cloned to {name} (Timezone: {detected_timezone})"
-                        )
+                        st.success(f"✅ Cloned to {new_name}")
                         st.rerun()
 
 
@@ -918,17 +947,41 @@ def sync_holiday_room_points_across_years(
 # ----------------------------------------------------------------------
 def edit_resort_basics(working: Dict[str, Any], resort_id: str):
     """
-    Renders editable fields for resort_name, timezone and address.
+    Renders editable fields for resort_name, timezone, address, AND display_name.
     Returns nothing – directly mutates the working dict.
     """
     st.markdown("### Basic Resort Information")
 
+    # --- Added: Display Name Editor ---
+    col_disp, col_code = st.columns([3, 1])
+    with col_disp:
+        current_display = working.get("display_name", "")
+        new_display = st.text_input(
+            "Display Name (Internal ID)",
+            value=current_display,
+            key=rk(resort_id, "display_name_edit"),
+            help="The short name used in lists and menus."
+        )
+        if new_display and new_display != current_display:
+            working["display_name"] = new_display.strip()
+    
+    with col_code:
+        current_code = working.get("code", "")
+        new_code = st.text_input(
+            "Code", 
+            value=current_code,
+            key=rk(resort_id, "code_edit")
+        )
+        if new_code != current_code:
+            working["code"] = new_code.strip()
+
+    # --- Existing Fields ---
     current_name = working.get("resort_name", "")
     current_tz = working.get("timezone", "UTC")
     current_addr = working.get("address", "")
 
     new_name = st.text_input(
-        "Full Resort Name (resort_name)",
+        "Full Resort Name (Official)",
         value=current_name,
         key=rk(resort_id, "resort_name_edit"),
         help="Official name stored in the 'resort_name' field",
@@ -1789,41 +1842,32 @@ def main():
     # Sidebar
     with st.sidebar:
         st.divider()
-#        st.markdown(
-#            """
-#            <div style='text-align: center; padding: 12px; margin-bottom: 12px;'>
-#                <h3 style='color: #0891b2 !important; margin: 0; font-size: 22px;'>🏨 File Operations</h3>
-#            </div>
-#        """,
-#            unsafe_allow_html=True,
-#        )
-        with st.expander("ℹ️ How data is saved and retrieved", expanded=False):
-            st.markdown(
-                """
-            - The most updated data is pre-loaded into memory and can be edited.
-            - Loading another file will replace the data in memory.
-            - Edits in memory are temporary — SAVE or they may be lost on refresh.
-            - Verify by matching saved file to what’s in memory.
-            - Load a different file to merge selected resorts to memory.
+    with st.expander("ℹ️ How to create your own personalised resort dataset", expanded=False):
+        st.markdown(
             """
-            )
+If you want a wider set of resorts or need to fix errors in the data without waiting for the author to update it, you can make the changes yourself. The Editor allows you to modify the default dataset in memory and create your own personalised JSON file to reuse each time you open the app. You may also merge resorts from your personalised file into the dataset currently in memory.
 
+Restarting the app resets everything to the default dataset, so be sure to save and download the in-memory data to preserve your edits. To confirm your saved file matches what is in memory, use the verification step by loading your personalised JSON file."""
+        )
+            
         handle_file_upload()
 
         if st.session_state.data:
-            st.markdown(
-                "<div style='margin: 20px 0;'></div>", unsafe_allow_html=True
-            )
-            create_download_button_v2(st.session_state.data)
-            handle_file_verification()
+            # st.markdown(
+            #    "<div style='margin: 20px 0;'></div>", unsafe_allow_html=True
+            # )
+            # Move merge logic to File to Memory
             handle_merge_from_another_file_v2(st.session_state.data)
 
-        show_save_indicator()
+            create_download_button_v2(st.session_state.data)
+            handle_file_verification()
+
     
     # Main content
+    
     render_page_header(
     "Editor",
-    "Data Management",
+    "Personalising Your Dataset",
     icon="🏨",
     badge_color="#EF4444"  # Adjust to match the red color in the image, e.g., #DC2626 or #EF4444
 )
