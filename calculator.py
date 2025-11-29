@@ -389,17 +389,12 @@ def apply_settings_from_dict(user_data: dict):
         if "include_maintenance" in user_data: st.session_state.pref_inc_m = bool(user_data["include_maintenance"])
         if "include_capital" in user_data: st.session_state.pref_inc_c = bool(user_data["include_capital"])
         if "include_depreciation" in user_data: st.session_state.pref_inc_d = bool(user_data["include_depreciation"])
-        
-        # New field for Renter Rate
-        if "renter_rate" in user_data:
-            st.session_state.renter_rate_val = float(user_data["renter_rate"])
 
         if "preferred_resort_id" in user_data:
             rid = str(user_data["preferred_resort_id"])
             st.session_state.pref_resort_id = rid
             st.session_state.current_resort_id = rid
 
-        # Always switch to owner mode on load
         st.session_state.calculator_mode = UserMode.OWNER.value
     except Exception as e:
         st.error(f"Error applying settings: {e}")
@@ -412,8 +407,21 @@ def main() -> None:
 
     ensure_data_in_session()
 
-    # --- 1. INITIALIZE DEFAULTS ---
-    # Important: Set these before file loading so keys exist
+    # --- 1. AUTO-LOAD LOCAL FILE ON STARTUP ---
+    if "settings_auto_loaded" not in st.session_state:
+        # Load local file if exists
+        local_settings = "mvc_owner_settings.json"
+        if os.path.exists(local_settings):
+            try:
+                with open(local_settings, "r") as f:
+                    data = json.load(f)
+                    apply_settings_from_dict(data)
+                    st.toast("✅ Auto-loaded local settings!", icon="⚙️")
+            except Exception:
+                pass 
+        st.session_state.settings_auto_loaded = True
+
+    # --- 2. DEFAULTS (If keys missing) ---
     if "pref_maint_rate" not in st.session_state: st.session_state.pref_maint_rate = 0.55
     if "pref_purchase_price" not in st.session_state: st.session_state.pref_purchase_price = 18.0
     if "pref_capital_cost" not in st.session_state: st.session_state.pref_capital_cost = 5.0
@@ -425,23 +433,10 @@ def main() -> None:
     if "pref_inc_c" not in st.session_state: st.session_state.pref_inc_c = True
     if "pref_inc_d" not in st.session_state: st.session_state.pref_inc_d = True
     
+    if "calculator_mode" not in st.session_state: st.session_state.calculator_mode = UserMode.RENTER.value
     if "renter_rate_val" not in st.session_state: st.session_state.renter_rate_val = 0.50
     if "renter_discount_tier" not in st.session_state: st.session_state.renter_discount_tier = TIER_NO_DISCOUNT
-    
-    if "calculator_mode" not in st.session_state: st.session_state.calculator_mode = UserMode.RENTER.value
 
-    # --- 2. AUTO-LOAD LOCAL FILE ---
-    if "settings_auto_loaded" not in st.session_state:
-        local_settings = "mvc_owner_settings.json"
-        if os.path.exists(local_settings):
-            try:
-                with open(local_settings, "r") as f:
-                    data = json.load(f)
-                    apply_settings_from_dict(data)
-                    st.toast("✅ Auto-loaded local settings!", icon="⚙️")
-            except Exception:
-                pass 
-        st.session_state.settings_auto_loaded = True
 
     # Checkin state
     today = datetime.now().date()
@@ -499,7 +494,7 @@ def main() -> None:
                 "include_maintenance": st.session_state.get("pref_inc_m", True),
                 "include_capital": st.session_state.get("pref_inc_c", True),
                 "include_depreciation": st.session_state.get("pref_inc_d", True),
-                "renter_rate": st.session_state.get("renter_rate_val", 0.50),  # Added field
+                "renter_rate": st.session_state.get("renter_rate_val", 0.50),
                 "preferred_resort_id": current_pref_resort
             }
             st.download_button("💾 Save Settings", json.dumps(current_settings, indent=2), "mvc_owner_settings.json", "application/json", use_container_width=True)
@@ -518,7 +513,7 @@ def main() -> None:
         owner_params = None
         policy = DiscountPolicy.NONE
         
-        # Active Rate variable
+        # Variable to hold the active rate for the calculation engine
         rate_to_use = 0.50
 
         st.divider()
@@ -545,7 +540,7 @@ def main() -> None:
             except ValueError: t_idx = 0
             
             opt = st.radio("Discount Tier:", TIER_OPTIONS, index=t_idx, key="widget_discount_tier")
-            if opt != current_tier: st.session_state.pref_discount_tier = opt
+            st.session_state.pref_discount_tier = opt
             
             with st.expander("🔧 Advanced Options", expanded=False):
                 st.markdown("**Include in Cost:**")
@@ -678,11 +673,13 @@ def main() -> None:
     
     st.divider()
     
-    # Calculate with correct rate
-    res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
+    # --- DEFENSIVE CHECK: Safe Chart Rendering ---
+    # We wrap chart rendering in a check to ensure 'Holiday' column exists
     
+    res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
     st.markdown(f"### 📊 Results: {room_sel}")
     
+    # Custom Metrics
     if mode == UserMode.OWNER:
         cols = st.columns(5)
         cols[0].metric("Total Points", f"{res.total_points:,}")
@@ -707,8 +704,11 @@ def main() -> None:
         st.dataframe(comp_res.pivot_df, use_container_width=True)
         
         c1, c2 = st.columns(2)
-        if not comp_res.daily_chart_df.empty:
+        
+        # --- SAFE PLOTTING ---
+        if not comp_res.daily_chart_df.empty and "Holiday" in comp_res.daily_chart_df.columns:
              with c1: st.plotly_chart(px.bar(comp_res.daily_chart_df[comp_res.daily_chart_df["Holiday"]=="No"], x="Day", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Daily Cost"), use_container_width=True)
+        
         if not comp_res.holiday_chart_df.empty:
              with c2: st.plotly_chart(px.bar(comp_res.holiday_chart_df, x="Holiday", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Holiday Cost"), use_container_width=True)
 
