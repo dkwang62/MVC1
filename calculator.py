@@ -568,18 +568,18 @@ def main() -> None:
 
     with st.sidebar:
         st.divider()
-        st.markdown("### 👤 Your Settings mvc_owner_settings.json")
+        st.markdown("### 👤 Your Calc Settings")
         
         # --- CONFIGURATION SECTION ---
-        with st.expander("⚙️ Your Calculator Settings", expanded=False):
+        with st.expander("⚙️ mvc_owner_settings.json", expanded=False):
             st.info(
                 """
                 **Save & Recall your preferences.**
                 
-                This saves your costs, membership tier, and selected resort so you don't have to re-enter them.
+                This saves your settings - everything that you have entered and selected in Calc eg costs, preferred discount tier and owner output options and last selected resort into a file on your computer [mvc_owner_settings.json]
                 
-                * **Save:** Download mvc_owner_settings.json to your computer
-                * **Load:** Upload mvc_owner_settings.json to restore your settings instantly.
+                * **Save:** Download to your computer
+                * **Load:** Upload to restore your settings instantly.
                 """
             )
             
