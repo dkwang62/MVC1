@@ -22,7 +22,7 @@ if "ui_theme" not in st.session_state:
 st.sidebar.markdown("### 🧰 MVC Tools")
 choice = st.sidebar.radio(
     "Choose Tool",
-    ["Points & Rent Calculator", "Personalising Your Dataset"],
+    ["Costs & Rent Calculator", "Your Resort Editor"],
     index=0,
 )
 
