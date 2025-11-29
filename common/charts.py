@@ -57,18 +57,6 @@ def create_gantt_chart_from_resort_data(
     """
     Build a season + holiday Gantt chart for the calculator app using the
     typed domain objects defined in calculator.py.
-
-    Parameters
-    ----------
-    resort_data : Any
-        `ResortData` instance from MVCRepository (has `.years[year]`).
-    year : str
-        Year string (e.g. "2025").
-    global_holidays : dict, optional
-        Global holiday dict from the JSON, keyed by [year][name].
-        Not strictly required (Holiday objects already hold dates).
-    height : int
-        Figure height in pixels.
     """
     rows: List[Dict[str, Any]] = []
 
@@ -180,25 +168,6 @@ def create_gantt_chart_from_working(
 ) -> go.Figure:
     """
     Build a season + holiday Gantt chart for the editor UI.
-
-    This follows your original create_gantt_chart_v2 logic, but the
-    `Type` field is now a semantic bucket (Peak/High/Mid/Low/Holiday/No Data)
-    so we can apply a consistent colour scheme.
-
-    Parameters
-    ----------
-    working : dict
-        Editable resort dict (one resort), structure:
-          working["years"][year]["seasons"]  -> list of dicts with:
-              {"name": str, "periods": [{"start": "YYYY-MM-DD", "end": "YYYY-MM-DD"}, ...], ...}
-          working["years"][year]["holidays"] -> list of dicts with:
-              {"name": str, "global_reference": str, ...}
-    year : str
-        Year string (e.g. "2025").
-    data : dict
-        Full JSON data (has data["global_holidays"][year][ref] with dates).
-    height : int, optional
-        Preferred figure height. If None, we auto-size: max(400, len(df) * 35).
     """
     rows: List[Dict[str, Any]] = []
 
@@ -290,16 +259,3 @@ def create_gantt_chart_from_working(
     )
 
     return fig
-
-
-# Optional: keep your original name as an alias, if you ever call it directly.
-def create_gantt_chart_v2(
-    working: Dict[str, Any],
-    year: str,
-    data: Dict[str, Any],
-) -> go.Figure:
-    """
-    Backwards-compatible alias for your original create_gantt_chart_v2.
-    Uses the same logic, with auto-calculated height.
-    """
-    return create_gantt_chart_from_working(working, year, data, height=None)
