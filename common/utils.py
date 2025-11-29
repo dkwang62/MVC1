@@ -14,6 +14,8 @@ COMMON_TZ_ORDER = [
     "America/Winnipeg", "America/Toronto", "America/Halifax", "America/St_Johns",
     "US/Hawaii", "US/Alaska", "US/Pacific", "US/Mountain", "US/Central", "US/Eastern",
     "America/Aruba", "America/St_Thomas", "Asia/Denpasar",  # Aruba, Virgin Islands, Bali
+    "Europe/London", "Europe/Paris", "Europe/Madrid",  # Europe
+    "Asia/Bangkok", "Asia/Singapore", "Asia/Tokyo", "Australia/Sydney"
 ]
 
 TZ_TO_REGION = {
@@ -31,7 +33,12 @@ TZ_TO_REGION = {
     "US/Eastern": "East Coast",
     "America/Aruba": "Caribbean",
     "America/St_Thomas": "Caribbean",
-    "Asia/Denpasar": "Bali/Indonesia",
+    "Asia/Denpasar": "Bali",
+    "Europe/London": "UK",
+    "Europe/Paris": "France",
+    "Europe/Madrid": "Spain",
+    "Asia/Bangkok": "Thailand",
+    "Australia/Sydney": "Australia",
 }
 
 
@@ -73,16 +80,11 @@ def sort_resorts_west_to_east(resorts: List[Dict[str, Any]]) -> List[Dict[str, A
         if tz in COMMON_TZ_ORDER:
             priority = COMMON_TZ_ORDER.index(tz)
         else:
-            priority = 1000  # unknown – push to the end
+            # If unknown, put it at the end
+            priority = 999
 
         offset = get_timezone_offset(tz)
-        address = (
-            r.get("address")
-            or r.get("resort_name")
-            or r.get("display_name")
-            or ""
-        ).lower()
-
-        return (priority, offset, address)
+        # Sort primary by priority list, secondary by offset (ascending), tertiary by name
+        return (priority, offset, r.get("display_name", ""))
 
     return sorted(resorts, key=sort_key)
