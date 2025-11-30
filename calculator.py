@@ -566,7 +566,76 @@ def main() -> None:
     calc = MVCCalculator(repo)
     resorts_full = repo.get_resort_list_full()
 
+    with st.sidebar:
+        st.divider()
+        st.markdown("### ⚙️ YOUR CALC SETTINGS")
+        
+        # --- CONFIGURATION SECTION ---
+        with st.expander("Save and Load Settings", expanded=False):
+            st.info(
+                """
+                **JSON File:** `mvc_owner_settings`
 
+                **Save**  
+                Store all your inputs and preferences, including:  
+                • Costs  
+                • Preferred discount  
+                • Output options  
+                • Last selected resort  
+
+                **Load**  
+                Reload the file to instantly restore your settings.
+                """
+            )
+
+            # --- LOAD SETTINGS (button-style uploader) ---
+            config_file = st.file_uploader(
+                "💾 Load Settings",
+                type="json",
+                key="user_cfg_upload",
+            )
+
+            if config_file is not None:
+                file_sig = f"{config_file.name}_{config_file.size}"
+                if (
+                    "last_loaded_cfg" not in st.session_state
+                    or st.session_state.last_loaded_cfg != file_sig
+                ):
+                    config_file.seek(0)
+                    data = json.load(config_file)
+                    apply_settings_from_dict(data)
+                    st.session_state.last_loaded_cfg = file_sig
+                    st.rerun()
+
+            # --- SAVE SETTINGS ---
+            current_pref_resort = (
+                st.session_state.current_resort_id
+                if st.session_state.current_resort_id
+                else ""
+            )
+            current_settings = {
+                "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
+                "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
+                "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0),
+                "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
+                "useful_life": st.session_state.get("pref_useful_life", 10),
+                "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT),
+                "include_maintenance": st.session_state.get("pref_inc_m", True),
+                "include_capital": st.session_state.get("pref_inc_c", True),
+                "include_depreciation": st.session_state.get("pref_inc_d", True),
+                "renter_rate": st.session_state.get("renter_rate_val", 0.50),
+                "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
+                "preferred_resort_id": current_pref_resort,
+            }
+
+            st.download_button(
+                "💾 Save Settings",
+                json.dumps(current_settings, indent=2),
+                "mvc_owner_settings.json",
+                "application/json",
+                use_container_width=True,
+            )
+        st.divider()
         
         # MODE SELECTOR
         mode_sel = st.radio(
@@ -771,75 +840,6 @@ def main() -> None:
         st.divider()
         with st.expander("📅 Season and Holiday Calendar", expanded=False):
             st.plotly_chart(create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {})), use_container_width=True)
-    with st.sidebar:
-        st.divider()
-        st.markdown("### ⚙️ YOUR CALC SETTINGS")
-        
-        # --- CONFIGURATION SECTION ---
-        with st.expander("Save and Load Settings", expanded=False):
-            st.info(
-                """
-                **JSON File:** `mvc_owner_settings`
 
-                **Save**  
-                Store all your inputs and preferences, including:  
-                • Costs  
-                • Preferred discount  
-                • Output options  
-                • Last selected resort  
-
-                **Load**  
-                Reload the file to instantly restore your settings.
-                """
-            )
-
-            # --- LOAD SETTINGS (button-style uploader) ---
-            config_file = st.file_uploader(
-                "💾 Load Settings",
-                type="json",
-                key="user_cfg_upload",
-            )
-
-            if config_file is not None:
-                file_sig = f"{config_file.name}_{config_file.size}"
-                if (
-                    "last_loaded_cfg" not in st.session_state
-                    or st.session_state.last_loaded_cfg != file_sig
-                ):
-                    config_file.seek(0)
-                    data = json.load(config_file)
-                    apply_settings_from_dict(data)
-                    st.session_state.last_loaded_cfg = file_sig
-                    st.rerun()
-
-            # --- SAVE SETTINGS ---
-            current_pref_resort = (
-                st.session_state.current_resort_id
-                if st.session_state.current_resort_id
-                else ""
-            )
-            current_settings = {
-                "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
-                "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
-                "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0),
-                "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
-                "useful_life": st.session_state.get("pref_useful_life", 10),
-                "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT),
-                "include_maintenance": st.session_state.get("pref_inc_m", True),
-                "include_capital": st.session_state.get("pref_inc_c", True),
-                "include_depreciation": st.session_state.get("pref_inc_d", True),
-                "renter_rate": st.session_state.get("renter_rate_val", 0.50),
-                "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
-                "preferred_resort_id": current_pref_resort,
-            }
-
-            st.download_button(
-                "💾 Save Settings",
-                json.dumps(current_settings, indent=2),
-                "mvc_owner_settings.json",
-                "application/json",
-                use_container_width=True,
-            )
-        st.divider()
 def run() -> None:
     main()
