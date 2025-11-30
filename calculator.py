@@ -745,7 +745,7 @@ def main() -> None:
         
         st.divider()
 
-    render_page_header("Calc", f"👤 {mode.value} Mode", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
+    render_page_header("Calc", f"👤 {mode.value}", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
 
     # Resort Selection
     if resorts_full and st.session_state.current_resort_id is None:
