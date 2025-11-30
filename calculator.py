@@ -594,7 +594,7 @@ def main() -> None:
         st.divider()
         
         if mode == UserMode.OWNER:
-            st.markdown("##### 💰 Basic Costs")
+#            st.markdown("##### 💰 Basic Costs")
             
             # OWNER PROXY
             current_val = st.session_state.get("pref_maint_rate", 0.55)
