@@ -450,7 +450,6 @@ class MVCCalculator:
                 new_row[room] = f"${val:,.0f}"
             final_pivot.append(new_row)
             
-        # Total Row
         tot_row = {"Date": "Total Cost" if user_mode == UserMode.OWNER else "Total Rent"}
         for r in rooms:
             d_sum = sum(x[val_key] for x in daily_data if x["Room Type"] == r)
@@ -458,7 +457,6 @@ class MVCCalculator:
             tot_row[r] = f"${d_sum + h_sum:,.0f}"
         final_pivot.append(tot_row)
 
-        # Holiday Chart Rows
         h_chart_rows = []
         for r, h_map in holiday_data.items():
             for h_name, val in h_map.items():
@@ -589,7 +587,7 @@ def main() -> None:
             [m.value for m in UserMode],
             key="calculator_mode",
             horizontal=True,
-            label_visibility="collapsed" # Ensure hidden via python api too
+            label_visibility="collapsed"
         )
         mode = UserMode(mode_sel)
         
@@ -621,25 +619,23 @@ def main() -> None:
             opt = st.radio("Discount Tier:", TIER_OPTIONS, index=t_idx, key="widget_discount_tier")
             st.session_state.pref_discount_tier = opt
             
-            # --- ADVANCED OPTIONS (NO EXPANDER) ---
+            # --- CONDENSED ADVANCED OPTIONS ---
             st.divider()
-            st.markdown("##### 🔧 Advanced Options")
-            st.markdown("**Include in Cost:**")
             
+            # Checkboxes on one row
             col_chk1, col_chk2, col_chk3 = st.columns(3)
             with col_chk1:
                  inc_m = st.checkbox("Maint.", value=st.session_state.get("pref_inc_m", True), key="widget_inc_m")
                  st.session_state.pref_inc_m = inc_m
             with col_chk2:
-                 inc_c = st.checkbox("Capital", value=st.session_state.get("pref_inc_c", True), key="widget_inc_c")
+                 inc_c = st.checkbox("Cap.", value=st.session_state.get("pref_inc_c", True), key="widget_inc_c")
                  st.session_state.pref_inc_c = inc_c
             with col_chk3:
                  inc_d = st.checkbox("Deprec.", value=st.session_state.get("pref_inc_d", True), key="widget_inc_d")
                  st.session_state.pref_inc_d = inc_d
             
             if inc_c or inc_d:
-                st.caption("**Purchase Details**")
-                val_cap = st.number_input("Purchase Price ($/pt)", value=st.session_state.get("pref_purchase_price", 18.0), key="widget_purchase_price", step=1.0)
+                val_cap = st.number_input("Purchase ($/pt)", value=st.session_state.get("pref_purchase_price", 18.0), key="widget_purchase_price", step=1.0)
                 st.session_state.pref_purchase_price = val_cap
                 cap = val_cap
             else:
@@ -653,7 +649,6 @@ def main() -> None:
                 coc = 0.06
             
             if inc_d:
-                st.caption("**Depreciation**")
                 c1, c2 = st.columns(2)
                 with c1:
                     val_life = st.number_input("Useful Life (yrs)", value=st.session_state.get("pref_useful_life", 10), key="widget_useful_life", min_value=1)
@@ -782,8 +777,8 @@ def main() -> None:
         st.dataframe(comp_res.pivot_df, use_container_width=True)
         
         c1, c2 = st.columns(2)
+        # SAFE PLOT
         if not comp_res.daily_chart_df.empty:
-             # FIXED: Safe plot without filter
              with c1: st.plotly_chart(px.bar(comp_res.daily_chart_df, x="Day", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Daily Cost"), use_container_width=True)
         if not comp_res.holiday_chart_df.empty:
              with c2: st.plotly_chart(px.bar(comp_res.holiday_chart_df, x="Holiday", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Holiday Cost"), use_container_width=True)
