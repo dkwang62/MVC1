@@ -159,8 +159,10 @@ def render_resort_card(resort_name: str, timezone: str, address: str) -> None:
         f"""
         <div class="resort-card">
           <h2>🖖 {resort_name}</h2>
-          <div class="resort-meta">🕒 Timezone: {timezone}</div>
-          <div class="resort-meta">📍 {address}</div>
+          <div class="resort-meta">
+            <span>🕒 Timezone: {timezone}</span>
+            <span style="margin-left: 1rem;">📍 {address}</span>
+          </div>
         </div>
         """,
         unsafe_allow_html=True,
