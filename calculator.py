@@ -581,7 +581,7 @@ def main() -> None:
                 """
             )
             
-            st.markdown("###### 📂 Load/Save Settings")
+#            st.markdown("###### 📂 Load/Save Settings")
             config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
             
             # AUTO LOAD LOGIC
