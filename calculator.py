@@ -430,11 +430,10 @@ class MVCCalculator:
                     i += 1
                 else:
                     i += 1
-
-        # Build Pivot Table with Details
+                    
+        # Build Pivot with Details
         template_res = self.calculate_breakdown(resort_name, rooms[0], checkin, nights, user_mode, rate, policy, owner_config)
         final_pivot = []
-        
         for _, tmpl_row in template_res.breakdown_df.iterrows():
             d_str = tmpl_row["Date"]
             new_row = {"Date": d_str}
@@ -586,10 +585,11 @@ def main() -> None:
         
         # MODE SELECTOR
         mode_sel = st.radio(
-            "Calc mode:", # CHANGED LABEL
+            "Calc mode:", # Label hidden via CSS in app.py
             [m.value for m in UserMode],
             key="calculator_mode",
             horizontal=True,
+            label_visibility="collapsed" # Ensure hidden via python api too
         )
         mode = UserMode(mode_sel)
         
@@ -602,6 +602,7 @@ def main() -> None:
         if mode == UserMode.OWNER:
             st.markdown("##### 💰 Basic Costs")
             
+            # OWNER PROXY
             current_val = st.session_state.get("pref_maint_rate", 0.55)
             val_rate = st.number_input(
                 "Annual Maintenance Fee ($/point)",
@@ -620,52 +621,61 @@ def main() -> None:
             opt = st.radio("Discount Tier:", TIER_OPTIONS, index=t_idx, key="widget_discount_tier")
             st.session_state.pref_discount_tier = opt
             
-            with st.expander("🔧 Advanced Options", expanded=False):
-                st.markdown("**Include in Cost:**")
-                inc_m = st.checkbox("Maintenance Fees", value=st.session_state.get("pref_inc_m", True), key="widget_inc_m")
-                st.session_state.pref_inc_m = inc_m
-                inc_c = st.checkbox("Capital Cost", value=st.session_state.get("pref_inc_c", True), key="widget_inc_c")
-                st.session_state.pref_inc_c = inc_c
-                inc_d = st.checkbox("Depreciation", value=st.session_state.get("pref_inc_d", True), key="widget_inc_d")
-                st.session_state.pref_inc_d = inc_d
-                
-                st.divider()
-                if inc_c or inc_d:
-                    st.markdown("**Purchase Details**")
-                    val_cap = st.number_input("Purchase Price ($/pt)", value=st.session_state.get("pref_purchase_price", 18.0), key="widget_purchase_price", step=1.0)
-                    st.session_state.pref_purchase_price = val_cap
-                    cap = val_cap
-                else:
-                    cap = st.session_state.get("pref_purchase_price", 18.0)
-                
-                if inc_c:
-                    val_coc = st.number_input("Cost of Capital (%)", value=st.session_state.get("pref_capital_cost", 5.0), key="widget_capital_cost", step=0.5)
-                    st.session_state.pref_capital_cost = val_coc
-                    coc = val_coc / 100.0
-                else:
-                    coc = 0.06
-                
-                if inc_d:
-                    st.markdown("**Depreciation**")
-                    val_life = st.number_input("Useful Life (years)", value=st.session_state.get("pref_useful_life", 10), key="widget_useful_life", min_value=1)
+            # --- ADVANCED OPTIONS (NO EXPANDER) ---
+            st.divider()
+            st.markdown("##### 🔧 Advanced Options")
+            st.markdown("**Include in Cost:**")
+            
+            col_chk1, col_chk2, col_chk3 = st.columns(3)
+            with col_chk1:
+                 inc_m = st.checkbox("Maint.", value=st.session_state.get("pref_inc_m", True), key="widget_inc_m")
+                 st.session_state.pref_inc_m = inc_m
+            with col_chk2:
+                 inc_c = st.checkbox("Capital", value=st.session_state.get("pref_inc_c", True), key="widget_inc_c")
+                 st.session_state.pref_inc_c = inc_c
+            with col_chk3:
+                 inc_d = st.checkbox("Deprec.", value=st.session_state.get("pref_inc_d", True), key="widget_inc_d")
+                 st.session_state.pref_inc_d = inc_d
+            
+            if inc_c or inc_d:
+                st.caption("**Purchase Details**")
+                val_cap = st.number_input("Purchase Price ($/pt)", value=st.session_state.get("pref_purchase_price", 18.0), key="widget_purchase_price", step=1.0)
+                st.session_state.pref_purchase_price = val_cap
+                cap = val_cap
+            else:
+                cap = st.session_state.get("pref_purchase_price", 18.0)
+            
+            if inc_c:
+                val_coc = st.number_input("Cost of Capital (%)", value=st.session_state.get("pref_capital_cost", 5.0), key="widget_capital_cost", step=0.5)
+                st.session_state.pref_capital_cost = val_coc
+                coc = val_coc / 100.0
+            else:
+                coc = 0.06
+            
+            if inc_d:
+                st.caption("**Depreciation**")
+                c1, c2 = st.columns(2)
+                with c1:
+                    val_life = st.number_input("Useful Life (yrs)", value=st.session_state.get("pref_useful_life", 10), key="widget_useful_life", min_value=1)
                     st.session_state.pref_useful_life = val_life
                     life = val_life
-                    
-                    val_salvage = st.number_input("Salvage Value ($/pt)", value=st.session_state.get("pref_salvage_value", 3.0), key="widget_salvage_value", step=0.5)
+                with c2:
+                    val_salvage = st.number_input("Salvage ($/pt)", value=st.session_state.get("pref_salvage_value", 3.0), key="widget_salvage_value", step=0.5)
                     st.session_state.pref_salvage_value = val_salvage
                     salvage = val_salvage
-                else:
-                    life, salvage = 15, 3.0
+            else:
+                life, salvage = 15, 3.0
             
             owner_params = {
                 "disc_mul": 1.0, "inc_m": inc_m, "inc_c": inc_c, "inc_d": inc_d,
                 "cap_rate": cap * coc, "dep_rate": (cap - salvage) / life if life > 0 else 0.0,
             }
         else:
+            # RENTER MODE
             st.markdown("##### 💵 Rental Rate")
             curr_rent = st.session_state.get("renter_rate_val", 0.50)
             renter_rate_input = st.number_input("Cost per Point ($)", value=curr_rent, step=0.01, key="widget_renter_rate")
-            st.session_state.renter_rate_val = renter_rate_input
+            if renter_rate_input != curr_rent: st.session_state.renter_rate_val = renter_rate_input
             rate_to_use = renter_rate_input
 
             st.markdown("##### 🎯 Available Discounts")
@@ -679,54 +689,13 @@ def main() -> None:
             if "Presidential" in opt or "Chairman" in opt: policy = DiscountPolicy.PRESIDENTIAL
             elif "Executive" in opt: policy = DiscountPolicy.EXECUTIVE
 
+        # Apply discount logic
         if mode == UserMode.OWNER:
              if "Executive" in opt: policy = DiscountPolicy.EXECUTIVE
              elif "Presidential" in opt or "Chairman" in opt: policy = DiscountPolicy.PRESIDENTIAL
 
         disc_mul = 0.75 if "Executive" in opt else 0.7 if "Presidential" in opt or "Chairman" in opt else 1.0
         if owner_params: owner_params["disc_mul"] = disc_mul
-        
-        st.divider()
-
-        # --- MOVED CONFIGURATION SECTION TO BOTTOM ---
-        with st.expander("⚙️ Your Calculator Settings", expanded=False):
-            st.info(
-                """
-                **Save time by saving your profile.**
-                
-                Store your costs, membership tier, and resort preference to a file.
-                Upload it anytime to instantly restore your setup.
-                """
-            )
-            
-            st.markdown("###### 📂 Load/Save Settings")
-            config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
-            
-            if config_file:
-                 file_sig = f"{config_file.name}_{config_file.size}"
-                 if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
-                     config_file.seek(0)
-                     data = json.load(config_file)
-                     apply_settings_from_dict(data)
-                     st.session_state.last_loaded_cfg = file_sig
-                     st.rerun()
-
-            current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
-            current_settings = {
-                "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
-                "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
-                "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0),
-                "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
-                "useful_life": st.session_state.get("pref_useful_life", 10),
-                "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT),
-                "include_maintenance": st.session_state.get("pref_inc_m", True),
-                "include_capital": st.session_state.get("pref_inc_c", True),
-                "include_depreciation": st.session_state.get("pref_inc_d", True),
-                "renter_rate": st.session_state.get("renter_rate_val", 0.50),
-                "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
-                "preferred_resort_id": current_pref_resort
-            }
-            st.download_button("💾 Save Settings", json.dumps(current_settings, indent=2), "mvc_owner_settings.json", "application/json", use_container_width=True)
         
         st.divider()
 
@@ -814,6 +783,7 @@ def main() -> None:
         
         c1, c2 = st.columns(2)
         if not comp_res.daily_chart_df.empty:
+             # FIXED: Safe plot without filter
              with c1: st.plotly_chart(px.bar(comp_res.daily_chart_df, x="Day", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Daily Cost"), use_container_width=True)
         if not comp_res.holiday_chart_df.empty:
              with c2: st.plotly_chart(px.bar(comp_res.holiday_chart_df, x="Holiday", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Holiday Cost"), use_container_width=True)
@@ -824,6 +794,48 @@ def main() -> None:
         st.divider()
         with st.expander("📅 Season and Holiday Calendar", expanded=False):
             st.plotly_chart(create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {})), use_container_width=True)
+            
+    # --- CONFIGURATION SECTION (MOVED TO BOTTOM) ---
+    with st.sidebar:
+        with st.expander("⚙️ Your Calculator Settings", expanded=False):
+            st.info(
+                """
+                **Save time by saving your profile.**
+                
+                Store your costs, membership tier, and resort preference to a file.
+                Upload it anytime to instantly restore your setup.
+                """
+            )
+            
+            st.markdown("###### 📂 Load/Save Settings")
+            config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
+            
+            # AUTO LOAD LOGIC
+            if config_file:
+                 file_sig = f"{config_file.name}_{config_file.size}"
+                 if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
+                     config_file.seek(0)
+                     data = json.load(config_file)
+                     apply_settings_from_dict(data)
+                     st.session_state.last_loaded_cfg = file_sig
+                     st.rerun()
+
+            current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
+            current_settings = {
+                "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
+                "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
+                "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0),
+                "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
+                "useful_life": st.session_state.get("pref_useful_life", 10),
+                "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT),
+                "include_maintenance": st.session_state.get("pref_inc_m", True),
+                "include_capital": st.session_state.get("pref_inc_c", True),
+                "include_depreciation": st.session_state.get("pref_inc_d", True),
+                "renter_rate": st.session_state.get("renter_rate_val", 0.50),
+                "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
+                "preferred_resort_id": current_pref_resort
+            }
+            st.download_button("💾 Save Settings", json.dumps(current_settings, indent=2), "mvc_owner_settings.json", "application/json", use_container_width=True)
 
 def run() -> None:
     main()
