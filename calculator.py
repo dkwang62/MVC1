@@ -709,7 +709,7 @@ def main() -> None:
     r_name = resort_obj.get("display_name")
     info = repo.get_resort_info(r_name)
     render_resort_card(info["full_name"], info["timezone"], info["address"])
-#    st.divider()
+    st.divider()
 
 #    st.markdown("### 📅 Booking Details")
     c1, c2, c3, c4 = st.columns([2, 1, 2, 2])
