@@ -574,7 +574,7 @@ def main() -> None:
         with st.expander("Save and Load Settings", expanded=False):
             st.info(
                 """
-                **File:** `mvc_owner_settings.json`<br><br>
+                **File:** `mvc_owner_settings.json`
 
                 **Save**  
                 Store all your inputs and preferences, including:  
