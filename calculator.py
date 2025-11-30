@@ -566,9 +566,33 @@ def main() -> None:
     calc = MVCCalculator(repo)
     resorts_full = repo.get_resort_list_full()
 
+    # One-time CSS to make the uploader look like a normal full-width button
+    st.markdown(
+        """
+        <style>
+        /* Make file uploader look like a single button */
+        div[data-testid="stFileUploaderDropzone"] > div {
+            padding: 0 !important;
+        }
+        div[data-testid="stFileUploaderDropzone"] section {
+            padding: 0 !important;
+        }
+        /* Hide the "Drag and drop file here" + size text */
+        div[data-testid="stFileUploaderDropzone"] section > div:nth-child(1) {
+            display: none !important;
+        }
+        /* Make the browse button full width, like st.download_button */
+        div[data-testid="stFileUploaderDropzone"] button {
+            width: 100% !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
     with st.sidebar:
         st.divider()
-        st.markdown("### ⚙️ Your Calc Settings")
+        st.markdown("### ⚙️ YOUR CALC SETTINGS")
         
         # --- CONFIGURATION SECTION ---
         with st.expander("Save and Load Settings", expanded=False):
@@ -588,14 +612,11 @@ def main() -> None:
                 """
             )
 
-            # --- LOAD SETTINGS ---
-            st.markdown("###### 💾 Load Settings (JSON)")
-
+            # --- LOAD SETTINGS (button-style uploader) ---
             config_file = st.file_uploader(
-                "",
+                "💾 Load Settings",
                 type="json",
                 key="user_cfg_upload",
-                label_visibility="collapsed",
             )
 
             if config_file is not None:
