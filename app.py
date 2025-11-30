@@ -15,7 +15,7 @@ import editor
 import calculator
 
 def main():
-    # Inject CSS manually to ensure styling (since we moved set_page_config up)
+    # Inject CSS manually to ensure styling
     st.markdown(
         """
     <style>
@@ -28,7 +28,6 @@ def main():
         }
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
-        /* Allow header so sidebar toggle works */
         
         section[data-testid="stSidebar"] {
             background-color: var(--card-bg);
@@ -58,11 +57,6 @@ def main():
         section[data-testid="stSidebar"] hr {
             margin: 1.5rem 0 1rem 0 !important;
         }
-        
-        /* HIDE RADIO LABEL for the Tool Selector specifically if possible, 
-           but globally hiding all radio labels might be too aggressive.
-           Instead, we rely on label_visibility="collapsed" in the widget call. */
-        
     </style>
     """,
         unsafe_allow_html=True,
@@ -71,16 +65,16 @@ def main():
     # --- SIDEBAR NAVIGATION ---
     with st.sidebar:
         st.markdown("### 🛠️ TOOLS")
-        # Changed: collapsed label, horizontal layout
+        # Changed to short names "Calc" and "Edit"
         choice = st.radio(
             "Choose tool",
-            ["Points & Rent Calculator", "Data Editor"],
+            ["Calc", "Edit"],
             index=0,
             label_visibility="collapsed",
             horizontal=True
         )
 
-    if choice == "Points & Rent Calculator":
+    if choice == "Calc":
         calculator.run()
     else:
         editor.run()
