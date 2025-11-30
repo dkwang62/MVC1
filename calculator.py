@@ -571,13 +571,12 @@ def main() -> None:
         st.markdown("### ⚙️ Your Calc Settings")
         
         # --- CONFIGURATION SECTION ---
-        with st.expander("mvc_owner_settings", expanded=False):
+        with st.expander("Save and Load Settings", expanded=False):
             st.info(
                 """
-                **Save & Recall your preferences.**
-                
-                Save to a file on your computer everything you have entered and selected eg costs, preferred discount, output options, your last selected resort
-                Upload to restore your settings instantly.
+                File: mvc_owner_settings.json
+                Save on your computer, everything you have entered and selected eg costs, preferred discount, output options, your last selected resort
+                Load to restore your settings instantly.
                 """
             )
             
