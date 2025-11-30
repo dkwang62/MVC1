@@ -587,12 +587,12 @@ def main() -> None:
                 Reload the file to instantly restore your settings.
                 """
             )
+            # --- LOAD SETTINGS ---
             
-#            st.markdown("###### 📂 Load/Save Settings")
             config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
-            
-            # AUTO LOAD LOGIC
-            if config_file:
+            load_clicked = st.button("💾 Load Settings", use_container_width=True)
+
+            if load_clicked and config_file is not None:
                  file_sig = f"{config_file.name}_{config_file.size}"
                  if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
                      config_file.seek(0)
@@ -601,6 +601,7 @@ def main() -> None:
                      st.session_state.last_loaded_cfg = file_sig
                      st.rerun()
 
+        # --- SAVE SETTINGS ---
             # Save Button
             current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
             current_settings = {
