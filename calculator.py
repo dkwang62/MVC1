@@ -614,7 +614,7 @@ def main() -> None:
 
             # --- LOAD SETTINGS (button-style uploader) ---
             config_file = st.file_uploader(
-                "💾 Load Settings",
+                "     💾 Load Settings",
                 type="json",
                 key="user_cfg_upload",
             )
