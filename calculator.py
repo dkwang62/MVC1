@@ -587,23 +587,35 @@ def main() -> None:
                 Reload the file to instantly restore your settings.
                 """
             )
+
             # --- LOAD SETTINGS ---
-            
-            config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
-            load_clicked = st.button("💾 Load Settings", use_container_width=True)
+            st.markdown("###### 💾 Load Settings (JSON)")
 
-            if load_clicked and config_file is not None:
-                 file_sig = f"{config_file.name}_{config_file.size}"
-                 if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
-                     config_file.seek(0)
-                     data = json.load(config_file)
-                     apply_settings_from_dict(data)
-                     st.session_state.last_loaded_cfg = file_sig
-                     st.rerun()
+            config_file = st.file_uploader(
+                "",
+                type="json",
+                key="user_cfg_upload",
+                label_visibility="collapsed",
+            )
 
-        # --- SAVE SETTINGS ---
-            # Save Button
-            current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
+            if config_file is not None:
+                file_sig = f"{config_file.name}_{config_file.size}"
+                if (
+                    "last_loaded_cfg" not in st.session_state
+                    or st.session_state.last_loaded_cfg != file_sig
+                ):
+                    config_file.seek(0)
+                    data = json.load(config_file)
+                    apply_settings_from_dict(data)
+                    st.session_state.last_loaded_cfg = file_sig
+                    st.rerun()
+
+            # --- SAVE SETTINGS ---
+            current_pref_resort = (
+                st.session_state.current_resort_id
+                if st.session_state.current_resort_id
+                else ""
+            )
             current_settings = {
                 "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
                 "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
@@ -616,10 +628,16 @@ def main() -> None:
                 "include_depreciation": st.session_state.get("pref_inc_d", True),
                 "renter_rate": st.session_state.get("renter_rate_val", 0.50),
                 "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
-                "preferred_resort_id": current_pref_resort
+                "preferred_resort_id": current_pref_resort,
             }
-            st.download_button("💾 Save Settings", json.dumps(current_settings, indent=2), "mvc_owner_settings.json", "application/json", use_container_width=True)
 
+            st.download_button(
+                "💾 Save Settings",
+                json.dumps(current_settings, indent=2),
+                "mvc_owner_settings.json",
+                "application/json",
+                use_container_width=True,
+            )
         st.divider()
         
         # MODE SELECTOR
