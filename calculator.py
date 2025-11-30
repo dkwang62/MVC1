@@ -709,9 +709,9 @@ def main() -> None:
     r_name = resort_obj.get("display_name")
     info = repo.get_resort_info(r_name)
     render_resort_card(info["full_name"], info["timezone"], info["address"])
-    st.divider()
+#    st.divider()
 
-    st.markdown("### 📅 Booking Details")
+#    st.markdown("### 📅 Booking Details")
     c1, c2, c3, c4 = st.columns([2, 1, 2, 2])
     with c1:
         checkin = st.date_input("Check-in", value=st.session_state.calc_checkin, key="calc_checkin_widget")
@@ -749,7 +749,7 @@ def main() -> None:
     
     res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
     
-    st.markdown(f"### 📊 Results: {room_sel}")
+#    st.markdown(f"### 📊 Results: {room_sel}")
     
     if mode == UserMode.OWNER:
         cols = st.columns(5)
