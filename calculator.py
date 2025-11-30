@@ -745,7 +745,7 @@ def main() -> None:
     with c3: room_sel = st.selectbox("Room Type", room_types)
     with c4: comp_rooms = st.multiselect("Compare With", [r for r in room_types if r != room_sel])
     
-#    st.divider()
+    st.divider()
     
     res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
     
