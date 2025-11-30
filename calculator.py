@@ -663,8 +663,8 @@ def main() -> None:
                 "cap_rate": cap * coc, "dep_rate": (cap - salvage) / life if life > 0 else 0.0,
             }
         else:
-#            # RENTER MODE
-            st.markdown("##### 💵 Rental Rate")
+            # RENTER MODE 
+            # st.markdown("##### 💵 Rental Rate")
             curr_rent = st.session_state.get("renter_rate_val", 0.50)
             renter_rate_input = st.number_input("Cost per Point ($)", value=curr_rent, step=0.01, key="widget_renter_rate")
             if renter_rate_input != curr_rent: st.session_state.renter_rate_val = renter_rate_input
