@@ -571,14 +571,23 @@ def main() -> None:
         st.markdown("### ⚙️ Your Calc Settings")
         
         # --- CONFIGURATION SECTION ---
-        with st.expander("Save and Load Settings", expanded=False):
-            st.info(
-                """
-                File: mvc_owner_settings.json
-                Save on your computer, everything you have entered and selected eg costs, preferred discount, output options, your last selected resort
-                Load to restore your settings instantly.
-                """
-            )
+    with st.expander("Save and Load Settings", expanded=False):
+        st.info(
+            """
+    **File:** `mvc_owner_settings.json`<br><br>
+
+    **Save**  
+    Store all your inputs and preferences, including:  
+    - Costs  
+    - Preferred discount  
+    - Output options  
+    - Last selected resort  
+
+    **Load**  
+    Reload the file to instantly restore your settings.
+            """,
+            icon="💾"
+        )
             
 #            st.markdown("###### 📂 Load/Save Settings")
             config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
