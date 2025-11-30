@@ -250,8 +250,8 @@ class MVCCalculator:
                 cost = 0.0
                 m = c = dp = 0.0
                 if is_owner and owner_config:
-                    # Use passed 'rate' explicitly
-                    if owner_config.get("inc_m", False): m = math.ceil(eff * rate)
+                    # FIX: Use passed 'rate' explicitly for maintenance cost
+                    m = math.ceil(eff * rate)
                     if owner_config.get("inc_c", False): c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
                     if owner_config.get("inc_d", False): dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
                     cost = m + c + dp
@@ -263,7 +263,8 @@ class MVCCalculator:
                     "Day": "", "Points": eff
                 }
                 if is_owner:
-                    if owner_config.get("inc_m", False): row["Maintenance"] = m
+                    # FIX: Always include Maintenance
+                    row["Maintenance"] = m
                     if owner_config.get("inc_c", False): row["Capital Cost"] = c
                     if owner_config.get("inc_d", False): row["Depreciation"] = dp
                     row["Total Cost"] = cost
@@ -302,8 +303,8 @@ class MVCCalculator:
                 cost = 0.0
                 m = c = dp = 0.0
                 if is_owner and owner_config:
-                    # Use passed 'rate' explicitly
-                    if owner_config.get("inc_m", False): m = math.ceil(eff * rate)
+                    # FIX: Use passed 'rate' explicitly for maintenance cost
+                    m = math.ceil(eff * rate)
                     if owner_config.get("inc_c", False): c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
                     if owner_config.get("inc_d", False): dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
                     cost = m + c + dp
@@ -312,7 +313,8 @@ class MVCCalculator:
 
                 row = {"Date": d.strftime("%Y-%m-%d"), "Day": d.strftime("%a"), "Points": eff}
                 if is_owner:
-                    if owner_config.get("inc_m", False): row["Maintenance"] = m
+                    # FIX: Always include Maintenance
+                    row["Maintenance"] = m
                     if owner_config.get("inc_c", False): row["Capital Cost"] = c
                     if owner_config.get("inc_d", False): row["Depreciation"] = dp
                     row["Total Cost"] = cost
@@ -336,28 +338,18 @@ class MVCCalculator:
         return CalculationResult(df, tot_eff_pts, tot_financial, disc_applied, list(set(disc_days)), tot_m, tot_c, tot_d)
 
     def compare_stays(self, resort_name, rooms, checkin, nights, user_mode, rate, policy, owner_config):
-        # Simplified compare logic for brevity; relies on calculate_breakdown
-        base = self.calculate_breakdown(resort_name, rooms[0], checkin, nights, user_mode, rate, policy, owner_config)
-        if base.breakdown_df.empty: return ComparisonResult(pd.DataFrame(), pd.DataFrame(), pd.DataFrame())
-        
-        pivot_data = []
-        chart_data = []
-        
-        for room in rooms:
-            res = self.calculate_breakdown(resort_name, room, checkin, nights, user_mode, rate, policy, owner_config)
-            val = res.financial_total
-            pivot_data.append({"Room Type": room, "Total Cost": f"${val:,.0f}", "Points": f"{res.total_points:,}"})
-            chart_data.append({"Room Type": room, "Cost": val})
-            
-        # 1. Gather Data for Charts and Pivot (Full Logic)
+        # Full Logic implementation to ensure daily_data is populated correctly
         daily_data = []
         holiday_data = defaultdict(lambda: defaultdict(float))
         val_key = "TotalCostValue" if user_mode == UserMode.OWNER else "RentValue"
-        resort = self.repo.get_resort(resort_name)
-        today = datetime.now().date()
-        processed_holidays = {room: set() for room in rooms}
         
-        # Helper config for calculations
+        resort = self.repo.get_resort(resort_name)
+        if not resort: return ComparisonResult(pd.DataFrame(), pd.DataFrame(), pd.DataFrame())
+        
+        processed_holidays = {room: set() for room in rooms}
+        today = datetime.now().date()
+        
+        # Helper configs
         disc_mul = owner_config["disc_mul"] if owner_config else 1.0
         renter_mul = 1.0
         if not user_mode == UserMode.OWNER:
@@ -370,7 +362,7 @@ class MVCCalculator:
                 d = checkin + timedelta(days=i)
                 pts_map, h = self._get_daily_points(resort, d)
                 
-                # HOLIDAY LOGIC
+                # Holiday Logic
                 if h and h.name not in processed_holidays[room]:
                     processed_holidays[room].add(h.name)
                     raw = pts_map.get(room, 0)
@@ -384,10 +376,11 @@ class MVCCalculator:
                         if (policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
                            (policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
                              eff = math.floor(raw * renter_mul)
-
+                    
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
-                         m = math.ceil(eff * rate) if owner_config.get("inc_m") else 0
+                         # FIX: Use passed 'rate' explicitly for maintenance cost
+                         m = math.ceil(eff * rate)
                          c = math.ceil(eff * owner_config.get("cap_rate", 0.0)) if owner_config.get("inc_c") else 0
                          dp = math.ceil(eff * owner_config.get("dep_rate", 0.0)) if owner_config.get("inc_d") else 0
                          cost = m + c + dp
@@ -397,7 +390,7 @@ class MVCCalculator:
                     holiday_data[room][h.name] += cost
                     i += (h.end_date - h.start_date).days + 1
                 
-                # REGULAR DAY LOGIC
+                # Regular Day Logic
                 elif not h:
                     raw = pts_map.get(room, 0)
                     eff = raw
@@ -413,7 +406,8 @@ class MVCCalculator:
                     
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
-                         m = math.ceil(eff * rate) if owner_config.get("inc_m") else 0
+                         # FIX: Use passed 'rate' explicitly for maintenance cost
+                         m = math.ceil(eff * rate)
                          c = math.ceil(eff * owner_config.get("cap_rate", 0.0)) if owner_config.get("inc_c") else 0
                          dp = math.ceil(eff * owner_config.get("dep_rate", 0.0)) if owner_config.get("inc_d") else 0
                          cost = m + c + dp
@@ -430,10 +424,11 @@ class MVCCalculator:
                     i += 1
                 else:
                     i += 1
-                    
-        # Build Pivot with Details
+
+        # Build Pivot Table
         template_res = self.calculate_breakdown(resort_name, rooms[0], checkin, nights, user_mode, rate, policy, owner_config)
         final_pivot = []
+        
         for _, tmpl_row in template_res.breakdown_df.iterrows():
             d_str = tmpl_row["Date"]
             new_row = {"Date": d_str}
@@ -501,8 +496,8 @@ def apply_settings_from_dict(user_data: dict):
             if "Executive" in raw: st.session_state.pref_discount_tier = TIER_EXECUTIVE
             elif "Presidential" in raw or "Chairman" in raw: st.session_state.pref_discount_tier = TIER_PRESIDENTIAL
             else: st.session_state.pref_discount_tier = TIER_NO_DISCOUNT
-
-        if "include_maintenance" in user_data: st.session_state.pref_inc_m = bool(user_data["include_maintenance"])
+        
+        # Note: include_maintenance is no longer a user setting, it's always true for owners
         if "include_capital" in user_data: st.session_state.pref_inc_c = bool(user_data["include_capital"])
         if "include_depreciation" in user_data: st.session_state.pref_inc_d = bool(user_data["include_depreciation"])
         
@@ -553,7 +548,8 @@ def main() -> None:
     if "pref_useful_life" not in st.session_state: st.session_state.pref_useful_life = 10
     if "pref_discount_tier" not in st.session_state: st.session_state.pref_discount_tier = TIER_NO_DISCOUNT
     
-    if "pref_inc_m" not in st.session_state: st.session_state.pref_inc_m = True
+    # Default to True for owners, and it's not toggleable anymore
+    st.session_state.pref_inc_m = True
     if "pref_inc_c" not in st.session_state: st.session_state.pref_inc_c = True
     if "pref_inc_d" not in st.session_state: st.session_state.pref_inc_d = True
     
@@ -622,13 +618,14 @@ def main() -> None:
             # --- CONDENSED ADVANCED OPTIONS ---
             st.divider()
             
-            # Checkboxes on one row
-            col_chk1, col_chk2, col_chk3 = st.columns(3)
-            with col_chk1:
-                 inc_m = st.checkbox("Maint.", value=st.session_state.get("pref_inc_m", True), key="widget_inc_m")
-                 st.session_state.pref_inc_m = inc_m
+            # Checkboxes on one row - REMOVED MAINTENANCE CHEKBOX
+            col_chk2, col_chk3 = st.columns(2)
+            # Maintenance is now always included, so no checkbox needed.
+            inc_m = True 
+            
             with col_chk2:
-                 inc_c = st.checkbox("Cap.", value=st.session_state.get("pref_inc_c", True), key="widget_inc_c")
+                 # RENAMED to 'Capital'
+                 inc_c = st.checkbox("Capital", value=st.session_state.get("pref_inc_c", True), key="widget_inc_c")
                  st.session_state.pref_inc_c = inc_c
             with col_chk3:
                  inc_d = st.checkbox("Deprec.", value=st.session_state.get("pref_inc_d", True), key="widget_inc_d")
@@ -694,7 +691,8 @@ def main() -> None:
         
         st.divider()
 
-    render_page_header("Calculator", f"👤 {mode.value} Mode", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
+    # UPDATED HEADER
+    render_page_header("Calc", f"👤 {mode.value}", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
 
     # Resort Selection
     if resorts_full and st.session_state.current_resort_id is None:
@@ -757,7 +755,8 @@ def main() -> None:
         cols = st.columns(5)
         cols[0].metric("Total Points", f"{res.total_points:,}")
         cols[1].metric("Total Cost", f"${res.financial_total:,.0f}")
-        if inc_m: cols[2].metric("Maintenance", f"${res.m_cost:,.0f}")
+        # Always show Maint.
+        cols[2].metric("Maintenance", f"${res.m_cost:,.0f}")
         if inc_c: cols[3].metric("Capital Cost", f"${res.c_cost:,.0f}")
         if inc_d: cols[4].metric("Depreciation", f"${res.d_cost:,.0f}")
     else:
@@ -777,7 +776,6 @@ def main() -> None:
         st.dataframe(comp_res.pivot_df, use_container_width=True)
         
         c1, c2 = st.columns(2)
-        # SAFE PLOT
         if not comp_res.daily_chart_df.empty:
              with c1: st.plotly_chart(px.bar(comp_res.daily_chart_df, x="Day", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Daily Cost"), use_container_width=True)
         if not comp_res.holiday_chart_df.empty:
@@ -823,7 +821,8 @@ def main() -> None:
                 "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
                 "useful_life": st.session_state.get("pref_useful_life", 10),
                 "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT),
-                "include_maintenance": st.session_state.get("pref_inc_m", True),
+                # Maintenance is now always included
+                "include_maintenance": True,
                 "include_capital": st.session_state.get("pref_inc_c", True),
                 "include_depreciation": st.session_state.get("pref_inc_d", True),
                 "renter_rate": st.session_state.get("renter_rate_val", 0.50),
