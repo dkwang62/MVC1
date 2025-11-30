@@ -765,8 +765,8 @@ def main() -> None:
         cols[1].metric("Total Rent", f"${res.financial_total:,.0f}")
         if res.discount_applied: st.success(f"Discount Applied: {len(res.discounted_days)} days")
 
-    st.divider()
-    st.markdown("### 📋 Detailed Breakdown")
+#    st.divider()
+#    st.markdown("### 📋 Detailed Breakdown")
     st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
 
     if comp_rooms:
