@@ -13,6 +13,10 @@ from common.ui import render_resort_card, render_resort_grid, render_page_header
 from common.charts import create_gantt_chart_from_resort_data
 from common.data import ensure_data_in_session
 
+# ... (LAYER 1, 2, 3 code remains unchanged) ...
+# Copy your existing Layer 1, 2, and 3 code here (Models, Repository, Service).
+# It is identical to your previous version. I will focus on the MAIN LOGIC and SIDEBAR changes below.
+
 # ==============================================================================
 # LAYER 1: DOMAIN MODELS
 # ==============================================================================
@@ -334,18 +338,27 @@ class MVCCalculator:
         return CalculationResult(df, tot_eff_pts, tot_financial, disc_applied, list(set(disc_days)), tot_m, tot_c, tot_d)
 
     def compare_stays(self, resort_name, rooms, checkin, nights, user_mode, rate, policy, owner_config):
-        # Full Logic implementation to ensure daily_data is populated correctly
+        base = self.calculate_breakdown(resort_name, rooms[0], checkin, nights, user_mode, rate, policy, owner_config)
+        if base.breakdown_df.empty: return ComparisonResult(pd.DataFrame(), pd.DataFrame(), pd.DataFrame())
+        
+        pivot_data = []
+        chart_data = []
+        
+        for room in rooms:
+            res = self.calculate_breakdown(resort_name, room, checkin, nights, user_mode, rate, policy, owner_config)
+            val = res.financial_total
+            pivot_data.append({"Room Type": room, "Total Cost": f"${val:,.0f}", "Points": f"{res.total_points:,}"})
+            chart_data.append({"Room Type": room, "Cost": val})
+            
+        # 1. Gather Data for Charts and Pivot (Full Logic)
         daily_data = []
         holiday_data = defaultdict(lambda: defaultdict(float))
         val_key = "TotalCostValue" if user_mode == UserMode.OWNER else "RentValue"
-        
         resort = self.repo.get_resort(resort_name)
-        if not resort: return ComparisonResult(pd.DataFrame(), pd.DataFrame(), pd.DataFrame())
-        
-        processed_holidays = {room: set() for room in rooms}
         today = datetime.now().date()
+        processed_holidays = {room: set() for room in rooms}
         
-        # Helper configs
+        # Helper config for calculations
         disc_mul = owner_config["disc_mul"] if owner_config else 1.0
         renter_mul = 1.0
         if not user_mode == UserMode.OWNER:
@@ -358,7 +371,7 @@ class MVCCalculator:
                 d = checkin + timedelta(days=i)
                 pts_map, h = self._get_daily_points(resort, d)
                 
-                # Holiday Logic
+                # HOLIDAY LOGIC
                 if h and h.name not in processed_holidays[room]:
                     processed_holidays[room].add(h.name)
                     raw = pts_map.get(room, 0)
@@ -372,7 +385,7 @@ class MVCCalculator:
                         if (policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
                            (policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
                              eff = math.floor(raw * renter_mul)
-                    
+
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
                          m = math.ceil(eff * rate) if owner_config.get("inc_m") else 0
@@ -385,7 +398,7 @@ class MVCCalculator:
                     holiday_data[room][h.name] += cost
                     i += (h.end_date - h.start_date).days + 1
                 
-                # Regular Day Logic
+                # REGULAR DAY LOGIC
                 elif not h:
                     raw = pts_map.get(room, 0)
                     eff = raw
@@ -418,11 +431,10 @@ class MVCCalculator:
                     i += 1
                 else:
                     i += 1
-
-        # Build Pivot Table
+                    
+        # Build Pivot with Details
         template_res = self.calculate_breakdown(resort_name, rooms[0], checkin, nights, user_mode, rate, policy, owner_config)
         final_pivot = []
-        
         for _, tmpl_row in template_res.breakdown_df.iterrows():
             d_str = tmpl_row["Date"]
             new_row = {"Date": d_str}
@@ -568,51 +580,36 @@ def main() -> None:
 
     with st.sidebar:
         st.divider()
-        st.markdown("### ⚙️ YOUR CALC SETTINGS")
+        st.markdown("### 👤 User Profile")
         
         # --- CONFIGURATION SECTION ---
-        with st.expander("Save and Load Settings", expanded=False):
+        with st.expander("⚙️ Your Calculator Settings", expanded=False):
             st.info(
                 """
-                **JSON File:** `mvc_owner_settings`
-
-                **Save**  
-                Store all your inputs and preferences, including:  
-                • Costs  
-                • Preferred discount  
-                • Output options  
-                • Last selected resort  
-
-                **Load**  
-                Reload the file to instantly restore your settings.
+                **Save & Recall your preferences.**
+                
+                This saves your costs, membership tier, and selected resort so you don't have to re-enter them.
+                
+                * **Save:** Download your profile to your computer.
+                * **Load:** Upload that file to restore your settings instantly.
                 """
             )
+            
+            st.markdown("###### 📂 Load/Save Settings")
+            config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
+            
+            # AUTO LOAD LOGIC
+            if config_file:
+                 file_sig = f"{config_file.name}_{config_file.size}"
+                 if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
+                     config_file.seek(0)
+                     data = json.load(config_file)
+                     apply_settings_from_dict(data)
+                     st.session_state.last_loaded_cfg = file_sig
+                     st.rerun()
 
-            # --- LOAD SETTINGS (button-style uploader) ---
-            config_file = st.file_uploader(
-                "💾 Load Settings",
-                type="json",
-                key="user_cfg_upload",
-            )
-
-            if config_file is not None:
-                file_sig = f"{config_file.name}_{config_file.size}"
-                if (
-                    "last_loaded_cfg" not in st.session_state
-                    or st.session_state.last_loaded_cfg != file_sig
-                ):
-                    config_file.seek(0)
-                    data = json.load(config_file)
-                    apply_settings_from_dict(data)
-                    st.session_state.last_loaded_cfg = file_sig
-                    st.rerun()
-
-            # --- SAVE SETTINGS ---
-            current_pref_resort = (
-                st.session_state.current_resort_id
-                if st.session_state.current_resort_id
-                else ""
-            )
+            # Save Button
+            current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
             current_settings = {
                 "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
                 "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
@@ -625,16 +622,10 @@ def main() -> None:
                 "include_depreciation": st.session_state.get("pref_inc_d", True),
                 "renter_rate": st.session_state.get("renter_rate_val", 0.50),
                 "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
-                "preferred_resort_id": current_pref_resort,
+                "preferred_resort_id": current_pref_resort
             }
+            st.download_button("💾 Save Settings", json.dumps(current_settings, indent=2), "mvc_owner_settings.json", "application/json", use_container_width=True)
 
-            st.download_button(
-                "💾 Save Settings",
-                json.dumps(current_settings, indent=2),
-                "mvc_owner_settings.json",
-                "application/json",
-                use_container_width=True,
-            )
         st.divider()
         
         # MODE SELECTOR
@@ -718,10 +709,10 @@ def main() -> None:
         else:
             # RENTER MODE
             st.markdown("##### 💵 Rental Rate")
+            # --- RENTER PROXY WIDGETS ---
             curr_rent = st.session_state.get("renter_rate_val", 0.50)
             renter_rate_input = st.number_input("Cost per Point ($)", value=curr_rent, step=0.01, key="widget_renter_rate")
-            if renter_rate_input != curr_rent:
-                st.session_state.renter_rate_val = renter_rate_input
+            st.session_state.renter_rate_val = renter_rate_input
             rate_to_use = renter_rate_input
 
             st.markdown("##### 🎯 Available Discounts")
@@ -745,7 +736,7 @@ def main() -> None:
         
         st.divider()
 
-    render_page_header("Calc", f"👤 {mode.value}", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
+    render_page_header("Calculator", f"👤 {mode.value} Mode", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
 
     # Resort Selection
     if resorts_full and st.session_state.current_resort_id is None:
@@ -828,8 +819,8 @@ def main() -> None:
         st.dataframe(comp_res.pivot_df, use_container_width=True)
         
         c1, c2 = st.columns(2)
-        # Safe plot
         if not comp_res.daily_chart_df.empty:
+             # FILTER REMOVED HERE TO FIX KEYERROR
              with c1: st.plotly_chart(px.bar(comp_res.daily_chart_df, x="Day", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Daily Cost"), use_container_width=True)
         if not comp_res.holiday_chart_df.empty:
              with c2: st.plotly_chart(px.bar(comp_res.holiday_chart_df, x="Holiday", y="TotalCostValue" if mode==UserMode.OWNER else "RentValue", color="Room Type", barmode="group", title="Holiday Cost"), use_container_width=True)
