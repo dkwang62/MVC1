@@ -226,22 +226,21 @@ class MVCCalculator:
                 eff = raw
                 holiday_days = (holiday.end_date - holiday.start_date).days + 1
                 is_disc = False
-                days_out = (holiday.start_date - today).days
                 
+                # --- DISCOUNT LOGIC MODIFIED ---
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
-                    # FIX: Round the result to handle floating point error (e.g., (1-0.7)*100 != 30)
-                    disc_pct = int(round((1 - disc_mul) * 100))
-                    thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
-                    if disc_pct > 0 and days_out <= thresh:
+                    # Applies to all dates regardless of days_out if multiplier exists
+                    if disc_mul < 1.0:
                         eff = math.floor(raw * disc_mul)
                         is_disc = True
                 else:
                     renter_mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
-                    if (discount_policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
-                       (discount_policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
+                    # Applies to all dates regardless of days_out if multiplier exists
+                    if renter_mul < 1.0:
                         eff = math.floor(raw * renter_mul)
                         is_disc = True
+                # -------------------------------
                 
                 if is_disc:
                     disc_applied = True
@@ -279,22 +278,19 @@ class MVCCalculator:
                 raw = pts_map.get(room, 0)
                 eff = raw
                 is_disc = False
-                days_out = (d - today).days
                 
+                # --- DISCOUNT LOGIC MODIFIED ---
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
-                    # FIX: Round the result to handle floating point error
-                    disc_pct = int(round((1 - disc_mul) * 100))
-                    thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
-                    if disc_pct > 0 and days_out <= thresh:
+                    if disc_mul < 1.0:
                         eff = math.floor(raw * disc_mul)
                         is_disc = True
                 else:
                     renter_mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
-                    if (discount_policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
-                       (discount_policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
+                    if renter_mul < 1.0:
                         eff = math.floor(raw * renter_mul)
                         is_disc = True
+                # -------------------------------
                 
                 if is_disc:
                     disc_applied = True
@@ -344,8 +340,8 @@ class MVCCalculator:
         if not resort: return ComparisonResult(pd.DataFrame(), pd.DataFrame(), pd.DataFrame())
         
         processed_holidays = {room: set() for room in rooms}
-        today = datetime.now().date()
         
+        # Helper configs
         disc_mul = owner_config["disc_mul"] if owner_config else 1.0
         renter_mul = 1.0
         if not user_mode == UserMode.OWNER:
@@ -363,16 +359,13 @@ class MVCCalculator:
                     processed_holidays[room].add(h.name)
                     raw = pts_map.get(room, 0)
                     eff = raw
-                    days_out = (h.start_date - today).days
+                    
+                    # --- DISCOUNT LOGIC MODIFIED ---
                     if user_mode == UserMode.OWNER:
-                        # FIX: Round the result to handle floating point error
-                        disc_pct = int(round((1 - disc_mul) * 100))
-                        thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
-                        if disc_pct > 0 and days_out <= thresh: eff = math.floor(raw * disc_mul)
+                        if disc_mul < 1.0: eff = math.floor(raw * disc_mul)
                     else:
-                        if (policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
-                           (policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
-                                eff = math.floor(raw * renter_mul)
+                        if renter_mul < 1.0: eff = math.floor(raw * renter_mul)
+                    # -------------------------------
                     
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
@@ -390,16 +383,13 @@ class MVCCalculator:
                 elif not h:
                     raw = pts_map.get(room, 0)
                     eff = raw
-                    days_out = (d - today).days
+                    
+                    # --- DISCOUNT LOGIC MODIFIED ---
                     if user_mode == UserMode.OWNER:
-                        # FIX: Round the result to handle floating point error
-                        disc_pct = int(round((1 - disc_mul) * 100))
-                        thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
-                        if disc_pct > 0 and days_out <= thresh: eff = math.floor(raw * disc_mul)
+                         if disc_mul < 1.0: eff = math.floor(raw * disc_mul)
                     else:
-                        if (policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
-                           (policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
-                                eff = math.floor(raw * renter_mul)
+                         if renter_mul < 1.0: eff = math.floor(raw * renter_mul)
+                    # -------------------------------
                     
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
@@ -421,6 +411,7 @@ class MVCCalculator:
                 else:
                     i += 1
 
+        # Build Pivot Table
         template_res = self.calculate_breakdown(resort_name, rooms[0], checkin, nights, user_mode, rate, policy, owner_config)
         final_pivot = []
         
@@ -589,7 +580,7 @@ def main() -> None:
         st.divider()
         
         if mode == UserMode.OWNER:
-#            st.markdown("##### 💰 Basic Costs")
+#             st.markdown("##### 💰 Basic Costs")
             
             # OWNER PROXY
             current_val = st.session_state.get("pref_maint_rate", 0.55)
@@ -706,7 +697,7 @@ def main() -> None:
     render_resort_card(info["full_name"], info["timezone"], info["address"])
     st.divider()
 
-#    st.markdown("### 📅 Booking Details")
+#     st.markdown("### 📅 Booking Details")
     c1, c2, c3, c4 = st.columns([2, 1, 2, 2])
     with c1:
         checkin = st.date_input("Check-in", value=st.session_state.calc_checkin, key="calc_checkin_widget")
@@ -744,7 +735,7 @@ def main() -> None:
     
     res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
     
-#    st.markdown(f"### 📊 Results: {room_sel}")
+#     st.markdown(f"### 📊 Results: {room_sel}")
     
     if mode == UserMode.OWNER:
         cols = st.columns(5)
@@ -760,8 +751,8 @@ def main() -> None:
         cols[1].metric("Total Rent", f"${res.financial_total:,.0f}")
         if res.discount_applied: st.success(f"Discount Applied: {len(res.discounted_days)} days")
 
-#    st.divider()
-#    st.markdown("### 📋 Detailed Breakdown")
+#     st.divider()
+#     st.markdown("### 📋 Detailed Breakdown")
     st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
 
     if comp_rooms:
