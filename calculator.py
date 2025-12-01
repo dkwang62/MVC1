@@ -230,7 +230,8 @@ class MVCCalculator:
                 
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
-                    disc_pct = (1 - disc_mul) * 100
+                    # FIX: Round the result to handle floating point error (e.g., (1-0.7)*100 != 30)
+                    disc_pct = int(round((1 - disc_mul) * 100))
                     thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
                     if disc_pct > 0 and days_out <= thresh:
                         eff = math.floor(raw * disc_mul)
@@ -250,7 +251,6 @@ class MVCCalculator:
                 cost = 0.0
                 m = c = dp = 0.0
                 if is_owner and owner_config:
-                    # FIX: Use passed 'rate' explicitly for maintenance cost
                     m = math.ceil(eff * rate)
                     if owner_config.get("inc_c", False): c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
                     if owner_config.get("inc_d", False): dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
@@ -263,7 +263,6 @@ class MVCCalculator:
                     "Day": "", "Points": eff
                 }
                 if is_owner:
-                    # FIX: Always include Maintenance
                     row["Maintenance"] = m
                     if owner_config.get("inc_c", False): row["Capital Cost"] = c
                     if owner_config.get("inc_d", False): row["Depreciation"] = dp
@@ -284,7 +283,8 @@ class MVCCalculator:
                 
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
-                    disc_pct = (1 - disc_mul) * 100
+                    # FIX: Round the result to handle floating point error
+                    disc_pct = int(round((1 - disc_mul) * 100))
                     thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
                     if disc_pct > 0 and days_out <= thresh:
                         eff = math.floor(raw * disc_mul)
@@ -303,7 +303,6 @@ class MVCCalculator:
                 cost = 0.0
                 m = c = dp = 0.0
                 if is_owner and owner_config:
-                    # FIX: Use passed 'rate' explicitly for maintenance cost
                     m = math.ceil(eff * rate)
                     if owner_config.get("inc_c", False): c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
                     if owner_config.get("inc_d", False): dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
@@ -313,7 +312,6 @@ class MVCCalculator:
 
                 row = {"Date": d.strftime("%Y-%m-%d"), "Day": d.strftime("%a"), "Points": eff}
                 if is_owner:
-                    # FIX: Always include Maintenance
                     row["Maintenance"] = m
                     if owner_config.get("inc_c", False): row["Capital Cost"] = c
                     if owner_config.get("inc_d", False): row["Depreciation"] = dp
@@ -338,7 +336,6 @@ class MVCCalculator:
         return CalculationResult(df, tot_eff_pts, tot_financial, disc_applied, list(set(disc_days)), tot_m, tot_c, tot_d)
 
     def compare_stays(self, resort_name, rooms, checkin, nights, user_mode, rate, policy, owner_config):
-        # Full Logic implementation to ensure daily_data is populated correctly
         daily_data = []
         holiday_data = defaultdict(lambda: defaultdict(float))
         val_key = "TotalCostValue" if user_mode == UserMode.OWNER else "RentValue"
@@ -349,7 +346,6 @@ class MVCCalculator:
         processed_holidays = {room: set() for room in rooms}
         today = datetime.now().date()
         
-        # Helper configs
         disc_mul = owner_config["disc_mul"] if owner_config else 1.0
         renter_mul = 1.0
         if not user_mode == UserMode.OWNER:
@@ -369,17 +365,17 @@ class MVCCalculator:
                     eff = raw
                     days_out = (h.start_date - today).days
                     if user_mode == UserMode.OWNER:
-                        disc_pct = (1 - disc_mul) * 100
+                        # FIX: Round the result to handle floating point error
+                        disc_pct = int(round((1 - disc_mul) * 100))
                         thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
                         if disc_pct > 0 and days_out <= thresh: eff = math.floor(raw * disc_mul)
                     else:
                         if (policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
                            (policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
-                             eff = math.floor(raw * renter_mul)
+                                eff = math.floor(raw * renter_mul)
                     
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
-                         # FIX: Use passed 'rate' explicitly for maintenance cost
                          m = math.ceil(eff * rate)
                          c = math.ceil(eff * owner_config.get("cap_rate", 0.0)) if owner_config.get("inc_c") else 0
                          dp = math.ceil(eff * owner_config.get("dep_rate", 0.0)) if owner_config.get("inc_d") else 0
@@ -396,17 +392,17 @@ class MVCCalculator:
                     eff = raw
                     days_out = (d - today).days
                     if user_mode == UserMode.OWNER:
-                        disc_pct = (1 - disc_mul) * 100
+                        # FIX: Round the result to handle floating point error
+                        disc_pct = int(round((1 - disc_mul) * 100))
                         thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
                         if disc_pct > 0 and days_out <= thresh: eff = math.floor(raw * disc_mul)
                     else:
                         if (policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
                            (policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
-                             eff = math.floor(raw * renter_mul)
+                                eff = math.floor(raw * renter_mul)
                     
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
-                         # FIX: Use passed 'rate' explicitly for maintenance cost
                          m = math.ceil(eff * rate)
                          c = math.ceil(eff * owner_config.get("cap_rate", 0.0)) if owner_config.get("inc_c") else 0
                          dp = math.ceil(eff * owner_config.get("dep_rate", 0.0)) if owner_config.get("inc_d") else 0
@@ -425,7 +421,6 @@ class MVCCalculator:
                 else:
                     i += 1
 
-        # Build Pivot Table
         template_res = self.calculate_breakdown(resort_name, rooms[0], checkin, nights, user_mode, rate, policy, owner_config)
         final_pivot = []
         
