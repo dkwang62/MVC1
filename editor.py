@@ -727,42 +727,45 @@ def render_single_season_v2(
     sname = season.get("name", f"Season {idx+1}")
     st.markdown(f"**🎯 {sname}**")
 
-    periods = season.setdefault("periods", [])
-    for r_idx, p in enumerate(periods):
-        col1, col2, col3 = st.columns([3, 3, 1])
-        with col1:
-            new_start = st.date_input(
-                "Start",
-                safe_date(p.get("start") or f"{year}-01-01"),
-                key=rk(resort_id, "season", year, idx, "start", r_idx),
-            )
-        with col2:
-            new_end = st.date_input(
-                "End",
-                safe_date(p.get("end") or f"{year}-01-07"),
-                key=rk(resort_id, "season", year, idx, "end", r_idx),
-            )
-        with col3:
-            if st.button(
-                "❌",
-                key=rk(resort_id, "season", year, idx, "del_range", r_idx),
-            ):
-                periods.pop(r_idx)
-                st.rerun()
+    # --- Use Data Editor for efficient date management ---
+    periods = season.get("periods", [])
+    
+    # Create DataFrame for editing
+    df_data = []
+    for p in periods:
+        df_data.append({
+            "start": safe_date(p.get("start")),
+            "end": safe_date(p.get("end"))
+        })
+    
+    df = pd.DataFrame(df_data)
 
-        p["start"] = new_start.isoformat()
-        p["end"] = new_end.isoformat()
+    edited_df = st.data_editor(
+        df,
+        key=rk(resort_id, "season_editor", year, idx),
+        num_rows="dynamic",
+        use_container_width=True,
+        column_config={
+            "start": st.column_config.DateColumn("Start Date", format="YYYY-MM-DD", required=True),
+            "end": st.column_config.DateColumn("End Date", format="YYYY-MM-DD", required=True),
+        },
+        hide_index=True
+    )
 
-    col_add, col_del = st.columns([1, 1])
-    with col_add:
-        if st.button(
-            "➕ Add Date Range",
-            key=rk(resort_id, "season", year, idx, "add_range"),
-            use_container_width=True,
-        ):
-            periods.append({"start": f"{year}-01-01", "end": f"{year}-01-07"})
-            st.rerun()
+    # Save back to JSON structure (converting dates back to ISO strings)
+    new_periods = []
+    for _, row in edited_df.iterrows():
+        if row["start"] and row["end"]:
+            new_periods.append({
+                "start": row["start"].isoformat() if hasattr(row["start"], 'isoformat') else str(row["start"]),
+                "end": row["end"].isoformat() if hasattr(row["end"], 'isoformat') else str(row["end"])
+            })
+    
+    season["periods"] = new_periods
+    # -------------------------------------------------------------
 
+    # Keep the Delete Season button outside the editor
+    col_spacer, col_del = st.columns([4, 1])
     with col_del:
         if st.button(
             "🗑️ Delete Season",
@@ -1020,7 +1023,7 @@ def render_reference_points_editor_v2(
         unsafe_allow_html=True,
     )
     st.caption(
-        "Edit nightly points for each season. Changes apply to all years automatically."
+        "Edit nightly points for each season using the table editor. Changes apply to all years automatically."
     )
 
     base_year = (
@@ -1063,29 +1066,33 @@ def render_reference_points_editor_v2(
 
                 room_points = cat.setdefault("room_points", {})
                 rooms_here = canonical_rooms or sorted(room_points.keys())
+                
+                # --- Use Data Editor for Points ---
+                pts_data = []
                 for room in rooms_here:
-                    room_points.setdefault(room, 0)
-
-                cols = st.columns(4)
-                for j, room in enumerate(sorted(room_points.keys())):
-                    with cols[j % 4]:
-                        current_val = int(room_points.get(room, 0) or 0)
-                        new_val = st.number_input(
-                            room,
-                            value=current_val,
-                            step=25,
-                            key=rk(
-                                resort_id,
-                                "master_rp",
-                                base_year,
-                                s_idx,
-                                key,
-                                room,
-                            ),
-                            help=f"Nightly points for {room}",
-                        )
-                        if new_val != current_val:
-                            room_points[room] = int(new_val)
+                    pts_data.append({
+                        "Room Type": room,
+                        "Points": int(room_points.get(room, 0) or 0)
+                    })
+                
+                df_pts = pd.DataFrame(pts_data)
+                
+                edited_df = st.data_editor(
+                    df_pts,
+                    key=rk(resort_id, "master_rp_editor", base_year, s_idx, key),
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                        "Room Type": st.column_config.TextColumn(disabled=True),
+                        "Points": st.column_config.NumberColumn(min_value=0, step=25)
+                    }
+                )
+                
+                # Update source dictionary from edited dataframe
+                if not edited_df.empty:
+                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+                    cat["room_points"] = new_rp
+                # -------------------------------------------
 
     st.markdown("---")
     st.markdown("**🏠 Manage Room Types**")
@@ -1363,25 +1370,32 @@ def render_holiday_management_v2(
                 st.caption(f"Reference key: {key}")
                 rp = h.setdefault("room_points", {})
                 rooms_here = sorted(all_rooms or rp.keys())
-                cols = st.columns(4)
-                for j, room in enumerate(rooms_here):
-                    rp.setdefault(room, 0)
-                    with cols[j % 4]:
-                        current_val = int(rp.get(room, 0) or 0)
-                        new_val = st.number_input(
-                            room,
-                            value=current_val,
-                            step=25,
-                            key=rk(
-                                resort_id,
-                                "holiday_master_rp",
-                                base_year,
-                                h_idx,
-                                room,
-                            ),
-                        )
-                        if new_val != current_val:
-                            rp[room] = int(new_val)
+                
+                # --- Use Data Editor for Points ---
+                pts_data = []
+                for room in rooms_here:
+                    pts_data.append({
+                        "Room Type": room,
+                        "Points": int(rp.get(room, 0) or 0)
+                    })
+                
+                df_pts = pd.DataFrame(pts_data)
+                
+                edited_df = st.data_editor(
+                    df_pts,
+                    key=rk(resort_id, "holiday_master_rp_editor", base_year, h_idx),
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                        "Room Type": st.column_config.TextColumn(disabled=True),
+                        "Points": st.column_config.NumberColumn(min_value=0, step=25)
+                    }
+                )
+                
+                if not edited_df.empty:
+                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+                    h["room_points"] = new_rp
+                # ------------------------------
 
     sync_holiday_room_points_across_years(working, base_year=base_year)
 
