@@ -214,33 +214,35 @@ class MVCCalculator:
         is_owner = user_mode == UserMode.OWNER
         processed_holidays: set[str] = set()
         i = 0
-        today = datetime.now().date()
+        today = datetime.now().date() # Kept for reference, but logic no longer depends on it
         
         while i < nights:
             d = checkin + timedelta(days=i)
             pts_map, holiday = self._get_daily_points(resort, d)
             
+            # --- HOLIDAY LOGIC ---
             if holiday and holiday.name not in processed_holidays:
                 processed_holidays.add(holiday.name)
                 raw = pts_map.get(room, 0)
                 eff = raw
                 holiday_days = (holiday.end_date - holiday.start_date).days + 1
                 is_disc = False
-                days_out = (holiday.start_date - today).days
                 
+                # --- DISCOUNT LOGIC (Window restriction removed) ---
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
-                    # FIX: Round the result to handle floating point error (30.0000004 -> 30)
-                    disc_pct = int(round((1 - disc_mul) * 100))
-                    thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
-                    if disc_pct > 0 and days_out <= thresh:
+                    # If multiplier is less than 1.0 (e.g. 0.75 or 0.7), apply it unconditionally
+                    if disc_mul < 1.0:
                         eff = math.floor(raw * disc_mul)
                         is_disc = True
                 else:
-                    renter_mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
-                    if (discount_policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
-                       (discount_policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
-                        eff = math.floor(raw * renter_mul)
+                    # RENTER: Check Policy Enum directly. 
+                    # PRESIDENTIAL covers "Presidential/Chairman"
+                    if discount_policy == DiscountPolicy.PRESIDENTIAL:
+                        eff = math.floor(raw * 0.70)
+                        is_disc = True
+                    elif discount_policy == DiscountPolicy.EXECUTIVE:
+                        eff = math.floor(raw * 0.75)
                         is_disc = True
                 
                 if is_disc:
@@ -275,25 +277,27 @@ class MVCCalculator:
                 tot_financial += cost
                 tot_m += m; tot_c += c; tot_d += dp
                 i += holiday_days
+
+            # --- REGULAR DAY LOGIC ---
             elif not holiday:
                 raw = pts_map.get(room, 0)
                 eff = raw
                 is_disc = False
-                days_out = (d - today).days
                 
+                # --- DISCOUNT LOGIC (Window restriction removed) ---
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
-                    # FIX: Round the result to handle floating point error
-                    disc_pct = int(round((1 - disc_mul) * 100))
-                    thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
-                    if disc_pct > 0 and days_out <= thresh:
+                    # If multiplier is less than 1.0, apply it unconditionally
+                    if disc_mul < 1.0:
                         eff = math.floor(raw * disc_mul)
                         is_disc = True
                 else:
-                    renter_mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
-                    if (discount_policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
-                       (discount_policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
-                        eff = math.floor(raw * renter_mul)
+                    # RENTER: Check Policy Enum directly
+                    if discount_policy == DiscountPolicy.PRESIDENTIAL:
+                        eff = math.floor(raw * 0.70)
+                        is_disc = True
+                    elif discount_policy == DiscountPolicy.EXECUTIVE:
+                        eff = math.floor(raw * 0.75)
                         is_disc = True
                 
                 if is_disc:
@@ -344,13 +348,8 @@ class MVCCalculator:
         if not resort: return ComparisonResult(pd.DataFrame(), pd.DataFrame(), pd.DataFrame())
         
         processed_holidays = {room: set() for room in rooms}
-        today = datetime.now().date()
         
         disc_mul = owner_config["disc_mul"] if owner_config else 1.0
-        renter_mul = 1.0
-        if not user_mode == UserMode.OWNER:
-            if policy == DiscountPolicy.PRESIDENTIAL: renter_mul = 0.7
-            elif policy == DiscountPolicy.EXECUTIVE: renter_mul = 0.75
 
         for room in rooms:
             i = 0
@@ -358,21 +357,21 @@ class MVCCalculator:
                 d = checkin + timedelta(days=i)
                 pts_map, h = self._get_daily_points(resort, d)
                 
-                # Holiday Logic
+                # --- HOLIDAY LOGIC ---
                 if h and h.name not in processed_holidays[room]:
                     processed_holidays[room].add(h.name)
                     raw = pts_map.get(room, 0)
                     eff = raw
-                    days_out = (h.start_date - today).days
+                    
+                    # DISCOUNT (Unconditional)
                     if user_mode == UserMode.OWNER:
-                        # FIX: Round the result to handle floating point error
-                        disc_pct = int(round((1 - disc_mul) * 100))
-                        thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
-                        if disc_pct > 0 and days_out <= thresh: eff = math.floor(raw * disc_mul)
+                        if disc_mul < 1.0: 
+                            eff = math.floor(raw * disc_mul)
                     else:
-                        if (policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
-                           (policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
-                                eff = math.floor(raw * renter_mul)
+                        if policy == DiscountPolicy.PRESIDENTIAL:
+                            eff = math.floor(raw * 0.70)
+                        elif policy == DiscountPolicy.EXECUTIVE:
+                            eff = math.floor(raw * 0.75)
                     
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
@@ -386,20 +385,20 @@ class MVCCalculator:
                     holiday_data[room][h.name] += cost
                     i += (h.end_date - h.start_date).days + 1
                 
-                # Regular Day Logic
+                # --- REGULAR DAY LOGIC ---
                 elif not h:
                     raw = pts_map.get(room, 0)
                     eff = raw
-                    days_out = (d - today).days
+                    
+                    # DISCOUNT (Unconditional)
                     if user_mode == UserMode.OWNER:
-                        # FIX: Round the result to handle floating point error
-                        disc_pct = int(round((1 - disc_mul) * 100))
-                        thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
-                        if disc_pct > 0 and days_out <= thresh: eff = math.floor(raw * disc_mul)
+                        if disc_mul < 1.0: 
+                            eff = math.floor(raw * disc_mul)
                     else:
-                        if (policy == DiscountPolicy.PRESIDENTIAL and days_out <= 60) or \
-                           (policy == DiscountPolicy.EXECUTIVE and days_out <= 30):
-                                eff = math.floor(raw * renter_mul)
+                        if policy == DiscountPolicy.PRESIDENTIAL:
+                            eff = math.floor(raw * 0.70)
+                        elif policy == DiscountPolicy.EXECUTIVE:
+                            eff = math.floor(raw * 0.75)
                     
                     cost = 0.0
                     if user_mode == UserMode.OWNER and owner_config:
