@@ -230,7 +230,7 @@ class MVCCalculator:
                 
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
-                    # FIX: Round the result to handle floating point error (e.g., (1-0.7)*100 != 30)
+                    # FIX: Round the result to handle floating point error (30.0000004 -> 30)
                     disc_pct = int(round((1 - disc_mul) * 100))
                     thresh = 30 if disc_pct == 25 else 60 if disc_pct == 30 else 0
                     if disc_pct > 0 and days_out <= thresh:
