@@ -176,7 +176,6 @@ class MVCRepository:
 # LAYER 3: SERVICE
 # ==============================================================================
 class MVCCalculator:
-class MVCCalculator:
     def __init__(self, repo: MVCRepository):
         self.repo = repo
 
@@ -359,6 +358,54 @@ class MVCCalculator:
 
             else:
                 i += 1
+
+        df = pd.DataFrame(rows)
+
+        # ====================================================
+        # OVERRIDE TOTALS:
+        #  - Renter: Total Rent = total discounted points × rate
+        #  - Owner: Total cost from total discounted points × per-pt rates
+        # ====================================================
+        if user_mode == UserMode.RENTER:
+            # this is the priority rule you defined
+            tot_financial = tot_eff_pts * rate
+        elif user_mode == UserMode.OWNER and owner_config:
+            maint_total = tot_eff_pts * rate
+            cap_total = (
+                tot_eff_pts * owner_config.get("cap_rate", 0.0)
+                if owner_config.get("inc_c", False)
+                else 0.0
+            )
+            dep_total = (
+                tot_eff_pts * owner_config.get("dep_rate", 0.0)
+                if owner_config.get("inc_d", False)
+                else 0.0
+            )
+
+            tot_m = maint_total
+            tot_c = cap_total
+            tot_d = dep_total
+            tot_financial = maint_total + cap_total + dep_total
+        # ====================================================
+
+        if not df.empty:
+            fmt_cols = [c for c in df.columns if c not in ["Date", "Day", "Points"]]
+            for col in fmt_cols:
+                df[col] = df[col].apply(
+                    lambda x: f"${x:,.0f}" if isinstance(x, (int, float)) else x
+                )
+
+        return CalculationResult(
+            df,
+            tot_eff_pts,
+            tot_financial,
+            disc_applied,
+            list(set(disc_days)),
+            tot_m,
+            tot_c,
+            tot_d,
+        )
+
 
         df = pd.DataFrame(rows)
 
