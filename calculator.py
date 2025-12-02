@@ -839,11 +839,20 @@ def main() -> None:
             }
         else:
             # RENTER MODE 
-            # st.markdown("##### 💵 Rental Rate")
             curr_rent = st.session_state.get("renter_rate_val", 0.50)
-            renter_rate_input = st.number_input("Cost per Point ($)", value=curr_rent, step=0.01, key="widget_renter_rate")
-            if renter_rate_input != curr_rent: st.session_state.renter_rate_val = renter_rate_input
-            rate_to_use = renter_rate_input
+            renter_rate_input = st.number_input(
+                "Cost per Point ($)",
+                value=curr_rent,
+                step=0.01,
+                key="widget_renter_rate"
+            )
+
+            # Snap to 2 decimal places so internal value matches what is shown
+            renter_rate_input = round(float(renter_rate_input), 2)
+
+    st.session_state.renter_rate_val = renter_rate_input
+    rate_to_use = renter_rate_input
+
 
             st.markdown("##### 🎯 Available Discounts")
             curr_r_tier = st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT)
