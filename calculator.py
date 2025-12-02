@@ -176,6 +176,7 @@ class MVCRepository:
 # LAYER 3: SERVICE
 # ==============================================================================
 class MVCCalculator:
+class MVCCalculator:
     def __init__(self, repo: MVCRepository):
         self.repo = repo
 
@@ -198,13 +199,20 @@ class MVCCalculator:
         return {}, None
 
     def calculate_breakdown(
-        self, resort_name: str, room: str, checkin: date, nights: int, 
-        user_mode: UserMode, rate: float, discount_policy: DiscountPolicy = DiscountPolicy.NONE, 
+        self,
+        resort_name: str,
+        room: str,
+        checkin: date,
+        nights: int,
+        user_mode: UserMode,
+        rate: float,
+        discount_policy: DiscountPolicy = DiscountPolicy.NONE,
         owner_config: Optional[dict] = None,
     ) -> CalculationResult:
         resort = self.repo.get_resort(resort_name)
         if not resort:
             return CalculationResult(pd.DataFrame(), 0, 0.0, False, [])
+
         rows: List[Dict[str, Any]] = []
         tot_eff_pts = 0
         tot_financial = 0.0
@@ -214,120 +222,190 @@ class MVCCalculator:
         is_owner = user_mode == UserMode.OWNER
         processed_holidays: set[str] = set()
         i = 0
-        today = datetime.now().date()
-        
+
         while i < nights:
             d = checkin + timedelta(days=i)
             pts_map, holiday = self._get_daily_points(resort, d)
-            
+
+            # ---------------- HOLIDAY BLOCK ----------------
             if holiday and holiday.name not in processed_holidays:
                 processed_holidays.add(holiday.name)
                 raw = pts_map.get(room, 0)
                 eff = raw
                 holiday_days = (holiday.end_date - holiday.start_date).days + 1
                 is_disc = False
-                
-                # --- DISCOUNT LOGIC (unchanged) ---
+
+                # discount => adjust eff (effective points)
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
                     if disc_mul < 1.0:
                         eff = math.floor(raw * disc_mul)
                         is_disc = True
                 else:
-                    renter_mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
+                    renter_mul = (
+                        0.7
+                        if discount_policy == DiscountPolicy.PRESIDENTIAL
+                        else 0.75
+                        if discount_policy == DiscountPolicy.EXECUTIVE
+                        else 1.0
+                    )
                     if renter_mul < 1.0:
                         eff = math.floor(raw * renter_mul)
                         is_disc = True
-                # ----------------------------------
-                
+
                 if is_disc:
                     disc_applied = True
                     for j in range(holiday_days):
-                        disc_days.append((holiday.start_date + timedelta(days=j)).strftime("%Y-%m-%d"))
-                
-                cost = 0.0
+                        disc_days.append(
+                            (holiday.start_date + timedelta(days=j)).strftime("%Y-%m-%d")
+                        )
+
                 m = c = dp = 0.0
                 if is_owner and owner_config:
                     m = math.ceil(eff * rate)
-                    if owner_config.get("inc_c", False): 
+                    if owner_config.get("inc_c", False):
                         c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
-                    if owner_config.get("inc_d", False): 
+                    if owner_config.get("inc_d", False):
                         dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
                     cost = m + c + dp
                 else:
-                    # daily $ still rounded upwards for renters
+                    # renter daily $ rounded UP
                     cost = math.ceil(eff * rate)
-                
+
                 row = {
-                    "Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {holiday.end_date.strftime('%b %d')})", 
-                    "Day": "", "Points": eff
+                    "Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {holiday.end_date.strftime('%b %d')})",
+                    "Day": "",
+                    "Points": eff,
                 }
                 if is_owner:
                     row["Maintenance"] = m
-                    if owner_config.get("inc_c", False): row["Capital Cost"] = c
-                    if owner_config.get("inc_d", False): row["Depreciation"] = dp
+                    if owner_config.get("inc_c", False):
+                        row["Capital Cost"] = c
+                    if owner_config.get("inc_d", False):
+                        row["Depreciation"] = dp
                     row["Total Cost"] = cost
                 else:
                     row[room] = cost
-                
+
                 rows.append(row)
                 tot_eff_pts += eff
-                # still accumulate daily-rounded totals; we’ll override later
                 tot_financial += cost
-                tot_m += m; tot_c += c; tot_d += dp
+                tot_m += m
+                tot_c += c
+                tot_d += dp
                 i += holiday_days
 
+            # ------------- REGULAR (NON-HOLIDAY) DAY -------------
             elif not holiday:
                 raw = pts_map.get(room, 0)
                 eff = raw
                 is_disc = False
-                
-                # --- DISCOUNT LOGIC (unchanged) ---
+
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
                     if disc_mul < 1.0:
                         eff = math.floor(raw * disc_mul)
                         is_disc = True
                 else:
-                    renter_mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
+                    renter_mul = (
+                        0.7
+                        if discount_policy == DiscountPolicy.PRESIDENTIAL
+                        else 0.75
+                        if discount_policy == DiscountPolicy.EXECUTIVE
+                        else 1.0
+                    )
                     if renter_mul < 1.0:
                         eff = math.floor(raw * renter_mul)
                         is_disc = True
-                # ----------------------------------
-                
+
                 if is_disc:
                     disc_applied = True
                     disc_days.append(d.strftime("%Y-%m-%d"))
-                
-                cost = 0.0
+
                 m = c = dp = 0.0
                 if is_owner and owner_config:
                     m = math.ceil(eff * rate)
-                    if owner_config.get("inc_c", False): 
+                    if owner_config.get("inc_c", False):
                         c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
-                    if owner_config.get("inc_d", False): 
+                    if owner_config.get("inc_d", False):
                         dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
                     cost = m + c + dp
                 else:
-                    # daily $ still rounded upwards for renters
+                    # renter daily $ rounded UP
                     cost = math.ceil(eff * rate)
 
-                row = {"Date": d.strftime("%Y-%m-%d"), "Day": d.strftime("%a"), "Points": eff}
+                row = {
+                    "Date": d.strftime("%Y-%m-%d"),
+                    "Day": d.strftime("%a"),
+                    "Points": eff,
+                }
                 if is_owner:
                     row["Maintenance"] = m
-                    if owner_config.get("inc_c", False): row["Capital Cost"] = c
-                    if owner_config.get("inc_d", False): row["Depreciation"] = dp
+                    if owner_config.get("inc_c", False):
+                        row["Capital Cost"] = c
+                    if owner_config.get("inc_d", False):
+                        row["Depreciation"] = dp
                     row["Total Cost"] = cost
                 else:
                     row[room] = cost
-                
+
                 rows.append(row)
                 tot_eff_pts += eff
                 tot_financial += cost
-                tot_m += m; tot_c += c; tot_d += dp
+                tot_m += m
+                tot_c += c
+                tot_d += dp
                 i += 1
+
             else:
                 i += 1
+
+        df = pd.DataFrame(rows)
+
+        # ====================================================
+        # OVERRIDE TOTALS:
+        #  - Renter: Total Rent = total discounted points × rate
+        #  - Owner: Total cost from total discounted points × per-pt rates
+        # ====================================================
+        if user_mode == UserMode.RENTER:
+            # this is the priority rule you defined
+            tot_financial = tot_eff_pts * rate
+        elif user_mode == UserMode.OWNER and owner_config:
+            maint_total = tot_eff_pts * rate
+            cap_total = (
+                tot_eff_pts * owner_config.get("cap_rate", 0.0)
+                if owner_config.get("inc_c", False)
+                else 0.0
+            )
+            dep_total = (
+                tot_eff_pts * owner_config.get("dep_rate", 0.0)
+                if owner_config.get("inc_d", False)
+                else 0.0
+            )
+
+            tot_m = maint_total
+            tot_c = cap_total
+            tot_d = dep_total
+            tot_financial = maint_total + cap_total + dep_total
+        # ====================================================
+
+        if not df.empty:
+            fmt_cols = [c for c in df.columns if c not in ["Date", "Day", "Points"]]
+            for col in fmt_cols:
+                df[col] = df[col].apply(
+                    lambda x: f"${x:,.0f}" if isinstance(x, (int, float)) else x
+                )
+
+        return CalculationResult(
+            df,
+            tot_eff_pts,
+            tot_financial,
+            disc_applied,
+            list(set(disc_days)),
+            tot_m,
+            tot_c,
+            tot_d,
+        )
 
         df = pd.DataFrame(rows)
 
