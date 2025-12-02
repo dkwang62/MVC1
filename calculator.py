@@ -473,13 +473,25 @@ class MVCCalculator:
                 new_row[room] = f"${val:,.0f}"
             final_pivot.append(new_row)
             
+        # Total row: use the same priority rule as the main calculator:
+        # total $ = total effective points after discount × per-point rate
         tot_row = {"Date": "Total Cost" if user_mode == UserMode.OWNER else "Total Rent"}
         for r in rooms:
-            d_sum = sum(x[val_key] for x in daily_data if x["Room Type"] == r)
-            h_sum = sum(holiday_data[r].values())
-            tot_row[r] = f"${d_sum + h_sum:,.0f}"
+            room_res = self.calculate_breakdown(
+                resort_name,
+                r,
+                checkin,
+                nights,
+                user_mode,
+                rate,
+                policy,
+                owner_config,
+            )
+            tot_row[r] = f"${room_res.financial_total:,.0f}"
         final_pivot.append(tot_row)
 
+
+        
         h_chart_rows = []
         for r, h_map in holiday_data.items():
             for h_name, val in h_map.items():
