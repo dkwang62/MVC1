@@ -324,6 +324,25 @@ class MVCCalculator:
                 i += 1
 
         df = pd.DataFrame(rows)
+
+        # ============================================================
+        # NEW: OVERRIDE TOTALS BASED ON "POINTS AFTER DISCOUNT × RATE"
+        # ============================================================
+        if user_mode == UserMode.RENTER:
+            # RENTER: Total Rent strictly = total effective points × renter rate
+            tot_financial = tot_eff_pts * rate
+        elif user_mode == UserMode.OWNER and owner_config:
+            # OWNER: Total cost strictly derived from effective points and per-pt economics
+            maint_total = tot_eff_pts * rate
+            cap_total = tot_eff_pts * owner_config.get("cap_rate", 0.0) if owner_config.get("inc_c", False) else 0.0
+            dep_total = tot_eff_pts * owner_config.get("dep_rate", 0.0) if owner_config.get("inc_d", False) else 0.0
+
+            tot_m = maint_total
+            tot_c = cap_total
+            tot_d = dep_total
+            tot_financial = maint_total + cap_total + dep_total
+        # ============================================================
+
         if not df.empty:
             fmt_cols = [c for c in df.columns if c not in ["Date", "Day", "Points"]]
             for col in fmt_cols:
