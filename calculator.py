@@ -227,20 +227,18 @@ class MVCCalculator:
                 holiday_days = (holiday.end_date - holiday.start_date).days + 1
                 is_disc = False
                 
-                # --- DISCOUNT LOGIC MODIFIED ---
+                # --- DISCOUNT LOGIC (unchanged) ---
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
-                    # Applies to all dates regardless of days_out if multiplier exists
                     if disc_mul < 1.0:
                         eff = math.floor(raw * disc_mul)
                         is_disc = True
                 else:
                     renter_mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
-                    # Applies to all dates regardless of days_out if multiplier exists
                     if renter_mul < 1.0:
                         eff = math.floor(raw * renter_mul)
                         is_disc = True
-                # -------------------------------
+                # ----------------------------------
                 
                 if is_disc:
                     disc_applied = True
@@ -251,10 +249,13 @@ class MVCCalculator:
                 m = c = dp = 0.0
                 if is_owner and owner_config:
                     m = math.ceil(eff * rate)
-                    if owner_config.get("inc_c", False): c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
-                    if owner_config.get("inc_d", False): dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
+                    if owner_config.get("inc_c", False): 
+                        c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
+                    if owner_config.get("inc_d", False): 
+                        dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
                     cost = m + c + dp
                 else:
+                    # daily $ still rounded upwards for renters
                     cost = math.ceil(eff * rate)
                 
                 row = {
@@ -271,15 +272,17 @@ class MVCCalculator:
                 
                 rows.append(row)
                 tot_eff_pts += eff
+                # still accumulate daily-rounded totals; we’ll override later
                 tot_financial += cost
                 tot_m += m; tot_c += c; tot_d += dp
                 i += holiday_days
+
             elif not holiday:
                 raw = pts_map.get(room, 0)
                 eff = raw
                 is_disc = False
                 
-                # --- DISCOUNT LOGIC MODIFIED ---
+                # --- DISCOUNT LOGIC (unchanged) ---
                 if is_owner:
                     disc_mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
                     if disc_mul < 1.0:
@@ -290,7 +293,7 @@ class MVCCalculator:
                     if renter_mul < 1.0:
                         eff = math.floor(raw * renter_mul)
                         is_disc = True
-                # -------------------------------
+                # ----------------------------------
                 
                 if is_disc:
                     disc_applied = True
@@ -300,10 +303,13 @@ class MVCCalculator:
                 m = c = dp = 0.0
                 if is_owner and owner_config:
                     m = math.ceil(eff * rate)
-                    if owner_config.get("inc_c", False): c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
-                    if owner_config.get("inc_d", False): dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
+                    if owner_config.get("inc_c", False): 
+                        c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
+                    if owner_config.get("inc_d", False): 
+                        dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
                     cost = m + c + dp
                 else:
+                    # daily $ still rounded upwards for renters
                     cost = math.ceil(eff * rate)
 
                 row = {"Date": d.strftime("%Y-%m-%d"), "Day": d.strftime("%a"), "Points": eff}
@@ -322,6 +328,45 @@ class MVCCalculator:
                 i += 1
             else:
                 i += 1
+
+        df = pd.DataFrame(rows)
+
+        # ====================================================
+        # KEY OVERRIDE:
+        #  - Renter: Total Rent = total discounted points × rate
+        #  - Owner: Total cost from total discounted points × per-pt rates
+        # ====================================================
+        if user_mode == UserMode.RENTER:
+            tot_financial = tot_eff_pts * rate
+        elif user_mode == UserMode.OWNER and owner_config:
+            maint_total = tot_eff_pts * rate
+            cap_total = tot_eff_pts * owner_config.get("cap_rate", 0.0) if owner_config.get("inc_c", False) else 0.0
+            dep_total = tot_eff_pts * owner_config.get("dep_rate", 0.0) if owner_config.get("inc_d", False) else 0.0
+
+            tot_m = maint_total
+            tot_c = cap_total
+            tot_d = dep_total
+            tot_financial = maint_total + cap_total + dep_total
+        # ====================================================
+
+        if not df.empty:
+            fmt_cols = [c for c in df.columns if c not in ["Date", "Day", "Points"]]
+            for col in fmt_cols:
+                df[col] = df[col].apply(
+                    lambda x: f"${x:,.0f}" if isinstance(x, (int, float)) else x
+                )
+        
+        return CalculationResult(
+            df,
+            tot_eff_pts,
+            tot_financial,
+            disc_applied,
+            list(set(disc_days)),
+            tot_m,
+            tot_c,
+            tot_d,
+        )
+
 
         df = pd.DataFrame(rows)
 
