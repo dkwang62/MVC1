@@ -489,7 +489,7 @@ def render_single_season_v2(working: Dict[str, Any], year: str, season: Dict[str
     df = pd.DataFrame(df_data)
     
     wk = rk(resort_id, "se_edit", year, idx)
-    st.data_editor(
+    edited_df = st.data_editor(
         df, key=wk, num_rows="dynamic", width="stretch", hide_index=True,
         column_config={
             "start": st.column_config.DateColumn("Start", format="YYYY-MM-DD", required=True),
@@ -497,6 +497,17 @@ def render_single_season_v2(working: Dict[str, Any], year: str, season: Dict[str
         },
         on_change=save_dates_cb, args=(wk, season)
     )
+
+    # SAFETY NET: REDUNDANT SAVE IN MAIN FLOW
+    if edited_df is not None and not edited_df.empty:
+         new_periods = []
+         for _, row in edited_df.iterrows():
+             if pd.notnull(row["start"]) and pd.notnull(row["end"]):
+                 new_periods.append({
+                     "start": row["start"].isoformat() if hasattr(row["start"], 'isoformat') else str(row["start"]),
+                     "end": row["end"].isoformat() if hasattr(row["end"], 'isoformat') else str(row["end"])
+                 })
+         season["periods"] = new_periods
 
     if st.button("🗑️ Delete Season", key=rk(resort_id, "del_s", year, idx)):
         delete_season_across_years(working, sname)
@@ -553,7 +564,6 @@ def render_reference_points_editor_v2(working: Dict[str, Any], years: List[str],
     # --- CALLBACK FOR POINTS SAVING ---
     def save_pts_cb(k, cat_dict):
         edited = st.session_state.get(k)
-        # STRICT CHECK: Ensure it is a valid DF and not empty
         if edited is not None and isinstance(edited, pd.DataFrame) and not edited.empty:
             new_rp = dict(zip(edited["Room Type"], edited["Points"]))
             cat_dict["room_points"] = new_rp
@@ -575,7 +585,7 @@ def render_reference_points_editor_v2(working: Dict[str, Any], years: List[str],
                 df = pd.DataFrame(df_data)
                 wk = rk(resort_id, "rp_ed", base_year, s_idx, key)
                 
-                st.data_editor(
+                edited_df = st.data_editor(
                     df, key=wk, width="stretch", hide_index=True,
                     column_config={
                         "Room Type": st.column_config.TextColumn(disabled=True),
@@ -583,6 +593,12 @@ def render_reference_points_editor_v2(working: Dict[str, Any], years: List[str],
                     },
                     on_change=save_pts_cb, args=(wk, cat)
                 )
+
+                # SAFETY NET: REDUNDANT SAVE IN MAIN FLOW
+                if edited_df is not None and not edited_df.empty:
+                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+                    cat["room_points"] = new_rp
+
 
     # Room Management
     st.markdown("---")
@@ -659,7 +675,6 @@ def render_holiday_management_v2(working: Dict[str, Any], years: List[str], reso
     # --- CALLBACK FOR HOLIDAY POINTS ---
     def save_h_pts_cb(k, h_obj):
         edited = st.session_state.get(k)
-        # STRICT CHECK: Ensure valid DF
         if edited is not None and isinstance(edited, pd.DataFrame) and not edited.empty:
             new_rp = dict(zip(edited["Room Type"], edited["Points"]))
             h_obj["room_points"] = new_rp
@@ -680,7 +695,7 @@ def render_holiday_management_v2(working: Dict[str, Any], years: List[str], reso
                 df = pd.DataFrame(df_data)
                 
                 wk = rk(resort_id, "hp_ed", base_year, idx)
-                st.data_editor(
+                edited_df = st.data_editor(
                     df, key=wk, width="stretch", hide_index=True,
                     column_config={
                         "Room Type": st.column_config.TextColumn(disabled=True),
@@ -688,6 +703,12 @@ def render_holiday_management_v2(working: Dict[str, Any], years: List[str], reso
                     },
                     on_change=save_h_pts_cb, args=(wk, h)
                 )
+
+                # SAFETY NET: REDUNDANT SAVE IN MAIN FLOW
+                if edited_df is not None and not edited_df.empty:
+                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+                    h["room_points"] = new_rp
+
 
     sync_holiday_points(working, base_year)
 
