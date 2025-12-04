@@ -730,7 +730,8 @@ def render_single_season_v2(
     # --- CALLBACK: Update Season Dates Immediately ---
     def update_season_dates_callback(widget_key, season_dict):
         edited_df = st.session_state.get(widget_key)
-        if edited_df is not None:  # Safety check
+        # Check if it is a valid DataFrame
+        if edited_df is not None and isinstance(edited_df, pd.DataFrame):
             new_periods = []
             for _, row in edited_df.iterrows():
                 # Check for valid dates (NaT check)
@@ -1035,7 +1036,8 @@ def render_reference_points_editor_v2(
     # --- CALLBACK: Update Reference Points Immediately ---
     def update_ref_points_callback(widget_key, cat_dict):
         edited_df = st.session_state.get(widget_key)
-        if edited_df is not None and not edited_df.empty:
+        # Verify it is a DataFrame before checking .empty
+        if edited_df is not None and isinstance(edited_df, pd.DataFrame) and not edited_df.empty:
             new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
             cat_dict["room_points"] = new_rp
             save_data()
@@ -1276,7 +1278,8 @@ def render_holiday_management_v2(
     # --- CALLBACK: Update Holiday Points Immediately ---
     def update_holiday_points_callback(widget_key, holiday_obj):
         edited_df = st.session_state.get(widget_key)
-        if edited_df is not None and not edited_df.empty:
+        # Verify it is a DataFrame before checking .empty
+        if edited_df is not None and isinstance(edited_df, pd.DataFrame) and not edited_df.empty:
             new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
             holiday_obj["room_points"] = new_rp
             save_data()
@@ -1512,7 +1515,9 @@ def render_resort_summary_v2(working: Dict[str, Any]):
             "Season rows show 7-night totals computed from nightly rates. "
             "Holiday rows show weekly totals directly from holiday points (no extra calculations)."
         )
-        st.dataframe(df, use_container_width=True, hide_index=True)
+        # Fix for ArrowInvalid error: Convert all columns to strings before display
+        # because the dataframe contains mixed types (integers and "—" strings).
+        st.dataframe(df.astype(str), use_container_width=True, hide_index=True)
     else:
         st.info("💡 No rate or holiday data available")
 
