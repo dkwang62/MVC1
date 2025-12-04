@@ -727,7 +727,22 @@ def render_single_season_v2(
     sname = season.get("name", f"Season {idx+1}")
     st.markdown(f"**🎯 {sname}**")
 
-    # --- Use Data Editor for efficient date management ---
+    # --- CALLBACK: Update Season Dates Immediately ---
+    def update_season_dates_callback(widget_key, season_dict):
+        edited_df = st.session_state.get(widget_key)
+        if edited_df is not None:  # Safety check
+            new_periods = []
+            for _, row in edited_df.iterrows():
+                # Check for valid dates (NaT check)
+                if pd.notnull(row["start"]) and pd.notnull(row["end"]):
+                    new_periods.append({
+                        "start": row["start"].isoformat() if hasattr(row["start"], 'isoformat') else str(row["start"]),
+                        "end": row["end"].isoformat() if hasattr(row["end"], 'isoformat') else str(row["end"])
+                    })
+            season_dict["periods"] = new_periods
+            save_data()
+    # ------------------------------------------------
+
     periods = season.get("periods", [])
     
     # Create DataFrame for editing
@@ -739,30 +754,21 @@ def render_single_season_v2(
         })
     
     df = pd.DataFrame(df_data)
+    widget_key = rk(resort_id, "season_editor", year, idx)
 
-    edited_df = st.data_editor(
+    st.data_editor(
         df,
-        key=rk(resort_id, "season_editor", year, idx),
+        key=widget_key,
         num_rows="dynamic",
         use_container_width=True,
         column_config={
             "start": st.column_config.DateColumn("Start Date", format="YYYY-MM-DD", required=True),
             "end": st.column_config.DateColumn("End Date", format="YYYY-MM-DD", required=True),
         },
-        hide_index=True
+        hide_index=True,
+        on_change=update_season_dates_callback,
+        args=(widget_key, season)
     )
-
-    # Save back to JSON structure (converting dates back to ISO strings)
-    new_periods = []
-    for _, row in edited_df.iterrows():
-        if row["start"] and row["end"]:
-            new_periods.append({
-                "start": row["start"].isoformat() if hasattr(row["start"], 'isoformat') else str(row["start"]),
-                "end": row["end"].isoformat() if hasattr(row["end"], 'isoformat') else str(row["end"])
-            })
-    
-    season["periods"] = new_periods
-    # -------------------------------------------------------------
 
     # Keep the Delete Season button outside the editor
     col_spacer, col_del = st.columns([4, 1])
@@ -1026,19 +1032,14 @@ def render_reference_points_editor_v2(
         "Edit nightly points for each season using the table editor. Changes apply to all years automatically."
     )
 
-    # --- CALLBACK FUNCTION TO FIX THE "FIRST ENTRY LOST" BUG ---
-    def update_points_callback(widget_key, cat_dict):
-        """
-        Updates the working dictionary immediately when the editor changes,
-        preventing state lag/reset on the first edit.
-        """
-        edited_df = st.session_state[widget_key]
-        if not edited_df.empty:
-            # Convert the edited dataframe back to the dictionary format
+    # --- CALLBACK: Update Reference Points Immediately ---
+    def update_ref_points_callback(widget_key, cat_dict):
+        edited_df = st.session_state.get(widget_key)
+        if edited_df is not None and not edited_df.empty:
             new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
             cat_dict["room_points"] = new_rp
-            save_data() # Update the last_save_time timestamp
-    # -----------------------------------------------------------
+            save_data()
+    # ---------------------------------------------------
 
     base_year = (
         BASE_YEAR_FOR_POINTS
@@ -1090,11 +1091,8 @@ def render_reference_points_editor_v2(
                     })
                 
                 df_pts = pd.DataFrame(pts_data)
-                
-                # Generate a stable key for this specific table
                 widget_key = rk(resort_id, "master_rp_editor", base_year, s_idx, key)
 
-                # RENDER EDITOR WITH CALLBACK
                 st.data_editor(
                     df_pts,
                     key=widget_key,
@@ -1104,11 +1102,9 @@ def render_reference_points_editor_v2(
                         "Room Type": st.column_config.TextColumn(disabled=True),
                         "Points": st.column_config.NumberColumn(min_value=0, step=25)
                     },
-                    on_change=update_points_callback, # Call this function on edit
-                    args=(widget_key, cat)            # Pass the key and the dict to update
+                    on_change=update_ref_points_callback,
+                    args=(widget_key, cat)
                 )
-                # Note: We removed the `if not edited_df.empty:` block that was here 
-                # because the callback now handles the update logic.
 
     st.markdown("---")
     st.markdown("**🏠 Manage Room Types**")
@@ -1277,6 +1273,15 @@ def render_holiday_management_v2(
         unsafe_allow_html=True,
     )
 
+    # --- CALLBACK: Update Holiday Points Immediately ---
+    def update_holiday_points_callback(widget_key, holiday_obj):
+        edited_df = st.session_state.get(widget_key)
+        if edited_df is not None and not edited_df.empty:
+            new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+            holiday_obj["room_points"] = new_rp
+            save_data()
+    # -------------------------------------------------
+
     base_year = (
         BASE_YEAR_FOR_POINTS
         if BASE_YEAR_FOR_POINTS in years
@@ -1396,22 +1401,20 @@ def render_holiday_management_v2(
                     })
                 
                 df_pts = pd.DataFrame(pts_data)
+                widget_key = rk(resort_id, "holiday_master_rp_editor", base_year, h_idx)
                 
-                edited_df = st.data_editor(
+                st.data_editor(
                     df_pts,
-                    key=rk(resort_id, "holiday_master_rp_editor", base_year, h_idx),
+                    key=widget_key,
                     use_container_width=True,
                     hide_index=True,
                     column_config={
                         "Room Type": st.column_config.TextColumn(disabled=True),
                         "Points": st.column_config.NumberColumn(min_value=0, step=25)
-                    }
+                    },
+                    on_change=update_holiday_points_callback,
+                    args=(widget_key, h)
                 )
-                
-                if not edited_df.empty:
-                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
-                    h["room_points"] = new_rp
-                # ------------------------------
 
     sync_holiday_room_points_across_years(working, base_year=base_year)
 
@@ -1884,7 +1887,7 @@ Restarting the app resets everything to the default dataset, so be sure to save 
 
         if st.session_state.data:
             # st.markdown(
-            #    "<div style='margin: 20px 0;'></div>", unsafe_allow_html=True
+            #     "<div style='margin: 20px 0;'></div>", unsafe_allow_html=True
             # )
             # Move merge logic to File to Memory
             handle_merge_from_another_file_v2(st.session_state.data)
