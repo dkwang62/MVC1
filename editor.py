@@ -874,6 +874,7 @@ def edit_resort_basics(working: Dict[str, Any], resort_id: str):
 # ----------------------------------------------------------------------
 # MASTER POINTS EDITOR
 # ----------------------------------------------------------------------
+# MASTER POINTS EDITOR (auto-save, no button)
 def render_reference_points_editor_v2(
     working: Dict[str, Any], years: List[str], resort_id: str
 ):
@@ -940,12 +941,10 @@ def render_reference_points_editor_v2(
                     }
                 )
                
-                if st.button("Save Changes", key=rk(resort_id, "save_master_rp", base_year, s_idx, key)):
-                    if not edited_df.empty:
-                        new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
-                        cat["room_points"] = new_rp
-                        st.success("Points saved!")
-                        st.rerun()
+                if not edited_df.empty and not edited_df.equals(df_pts):
+                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+                    cat["room_points"] = new_rp
+                    st.rerun()  # Force immediate rerun to commit
                 # -------------------------------------------
     st.markdown("---")
     st.markdown("**🏠 Manage Room Types**")
@@ -1003,90 +1002,8 @@ def render_reference_points_editor_v2(
                 )
                 st.rerun()
     sync_season_room_points_across_years(working, base_year=base_year)
-# ----------------------------------------------------------------------
-# HOLIDAY MANAGEMENT
-# ----------------------------------------------------------------------
-def get_all_holidays_for_resort(
-    working: Dict[str, Any]
-) -> List[Dict[str, Any]]:
-    """Get unique list of holidays across all years (by global_reference)"""
-    holidays_map = {}
-    for year_obj in working.get("years", {}).values():
-        for h in year_obj.get("holidays", []):
-            key = (h.get("global_reference") or h.get("name") or "").strip()
-            if key and key not in holidays_map:
-                holidays_map[key] = {
-                    "name": h.get("name", key),
-                    "global_reference": key,
-                }
-    return list(holidays_map.values())
-def add_holiday_to_all_years(
-    working: Dict[str, Any], holiday_name: str, global_ref: str
-):
-    """Add a holiday to all years in the resort"""
-    holiday_name = holiday_name.strip()
-    global_ref = (global_ref or holiday_name).strip()
-    if not holiday_name or not global_ref:
-        return False
-    years = working.get("years", {})
-    for year_obj in years.values():
-        holidays = year_obj.setdefault("holidays", [])
-        if any(
-            (h.get("global_reference") or h.get("name") or "").strip()
-            == global_ref
-            for h in holidays
-        ):
-            continue
-        holidays.append(
-            {
-                "name": holiday_name,
-                "global_reference": global_ref,
-                "room_points": {},
-            }
-        )
-    return True
-def delete_holiday_from_all_years(working: Dict[str, Any], global_ref: str):
-    """Delete a holiday from all years in the resort"""
-    global_ref = (global_ref or "").strip()
-    if not global_ref:
-        return False
-    changed = False
-    for year_obj in working.get("years", {}).values():
-        holidays = year_obj.get("holidays", [])
-        original_len = len(holidays)
-        year_obj["holidays"] = [
-            h
-            for h in holidays
-            if (h.get("global_reference") or h.get("name") or "").strip()
-            != global_ref
-        ]
-        if len(year_obj["holidays"]) < original_len:
-            changed = True
-    return changed
-def rename_holiday_across_years(
-    working: Dict[str, Any],
-    old_global_ref: str,
-    new_name: str,
-    new_global_ref: str,
-):
-    """Rename a holiday across all years"""
-    old_global_ref = (old_global_ref or "").strip()
-    new_name = (new_name or "").strip()
-    new_global_ref = (new_global_ref or "").strip()
-    if not old_global_ref or not new_name or not new_global_ref:
-        st.error("All fields must be filled")
-        return False
-    changed = False
-    for year_obj in working.get("years", {}).values():
-        for h in year_obj.get("holidays", []):
-            if (
-                (h.get("global_reference") or h.get("name") or "").strip()
-                == old_global_ref
-            ):
-                h["name"] = new_name
-                h["global_reference"] = new_global_ref
-                changed = True
-    return changed
+
+# HOLIDAY MANAGEMENT (auto-save, no button)
 def render_holiday_management_v2(
     working: Dict[str, Any], years: List[str], resort_id: str
 ):
@@ -1215,12 +1132,10 @@ def render_holiday_management_v2(
                     }
                 )
                
-                if st.button("Save Changes", key=rk(resort_id, "save_holiday_rp", base_year, h_idx)):
-                    if not edited_df.empty:
-                        new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
-                        h["room_points"] = new_rp
-                        st.success("Points saved!")
-                        st.rerun()
+                if not edited_df.empty and not edited_df.equals(df_pts):
+                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+                    h["room_points"] = new_rp
+                    st.rerun()  # Force immediate rerun to commit
     sync_holiday_room_points_across_years(working, base_year=base_year)
 # ----------------------------------------------------------------------
 # RESORT SUMMARY
