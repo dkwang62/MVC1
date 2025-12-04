@@ -335,5 +335,7 @@ def main():
 
         # ... rest unchanged ...
 
-if __name__ == "__main__":
-    main()
+def run():
+    main()
+if **name** == "**main**":
+    main()
