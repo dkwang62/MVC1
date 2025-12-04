@@ -1026,6 +1026,20 @@ def render_reference_points_editor_v2(
         "Edit nightly points for each season using the table editor. Changes apply to all years automatically."
     )
 
+    # --- CALLBACK FUNCTION TO FIX THE "FIRST ENTRY LOST" BUG ---
+    def update_points_callback(widget_key, cat_dict):
+        """
+        Updates the working dictionary immediately when the editor changes,
+        preventing state lag/reset on the first edit.
+        """
+        edited_df = st.session_state[widget_key]
+        if not edited_df.empty:
+            # Convert the edited dataframe back to the dictionary format
+            new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+            cat_dict["room_points"] = new_rp
+            save_data() # Update the last_save_time timestamp
+    # -----------------------------------------------------------
+
     base_year = (
         BASE_YEAR_FOR_POINTS
         if BASE_YEAR_FOR_POINTS in years
@@ -1077,22 +1091,24 @@ def render_reference_points_editor_v2(
                 
                 df_pts = pd.DataFrame(pts_data)
                 
-                edited_df = st.data_editor(
+                # Generate a stable key for this specific table
+                widget_key = rk(resort_id, "master_rp_editor", base_year, s_idx, key)
+
+                # RENDER EDITOR WITH CALLBACK
+                st.data_editor(
                     df_pts,
-                    key=rk(resort_id, "master_rp_editor", base_year, s_idx, key),
+                    key=widget_key,
                     use_container_width=True,
                     hide_index=True,
                     column_config={
                         "Room Type": st.column_config.TextColumn(disabled=True),
                         "Points": st.column_config.NumberColumn(min_value=0, step=25)
-                    }
+                    },
+                    on_change=update_points_callback, # Call this function on edit
+                    args=(widget_key, cat)            # Pass the key and the dict to update
                 )
-                
-                # Update source dictionary from edited dataframe
-                if not edited_df.empty:
-                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
-                    cat["room_points"] = new_rp
-                # -------------------------------------------
+                # Note: We removed the `if not edited_df.empty:` block that was here 
+                # because the callback now handles the update logic.
 
     st.markdown("---")
     st.markdown("**🏠 Manage Room Types**")
