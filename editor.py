@@ -106,6 +106,33 @@ def make_unique_resort_id(base_id: str, resorts: List[Dict[str, Any]]) -> str:
     return f"{base_id}-{i}"
 
 # ----------------------------------------------------------------------
+# DATA MIGRATION / SANITIZATION (THE FIX)
+# ----------------------------------------------------------------------
+def sanitize_loaded_data(data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Critical function to fix legacy data structures (like string holidays)
+    immediately upon load, preventing crashes later.
+    """
+    # 1. Fix Global Holidays (String -> Dict)
+    gh = data.get("global_holidays", {})
+    if isinstance(gh, dict):
+        for year, holidays in gh.items():
+            if isinstance(holidays, list):
+                new_list = []
+                for h in holidays:
+                    if isinstance(h, str):
+                        # Convert old string holiday to object
+                        new_list.append({"name": h, "date": "2025-01-01"})
+                    elif isinstance(h, dict):
+                        # Ensure keys exist
+                        if "name" not in h: h["name"] = "Unnamed"
+                        if "date" not in h: h["date"] = "2025-01-01"
+                        new_list.append(h)
+                gh[year] = new_list
+    
+    return data
+
+# ----------------------------------------------------------------------
 # FILE OPERATIONS
 # ----------------------------------------------------------------------
 def handle_file_upload():
@@ -122,11 +149,14 @@ def handle_file_upload():
                         st.error("❌ Invalid file format")
                         return
                     
-                    st.session_state.data = raw_data
+                    # RUN SANITIZATION IMMEDIATELY
+                    clean_data = sanitize_loaded_data(raw_data)
+                    
+                    st.session_state.data = clean_data
                     st.session_state.last_upload_sig = current_sig
                     st.session_state.working_resorts = {}
                     st.session_state.current_resort_id = None
-                    st.success(f"✅ Loaded {len(raw_data.get('resorts', []))} resorts")
+                    st.success(f"✅ Loaded {len(clean_data.get('resorts', []))} resorts")
                     st.rerun()
                 except Exception as e:
                     st.error(f"❌ Error: {str(e)}")
@@ -165,7 +195,7 @@ def handle_file_verification():
                 # Ensure memory is synced before comparing
                 force_sync_working_to_data()
                 current_json = json.dumps(st.session_state.data, sort_keys=True)
-                uploaded_json = json.dumps(uploaded_data, sort_keys=True)
+                uploaded_json = json.dumps(sanitize_loaded_data(uploaded_data), sort_keys=True)
                 if current_json == uploaded_json:
                     st.success("✅ File matches memory exactly.")
                 else:
@@ -179,6 +209,8 @@ def handle_merge_from_another_file_v2(data: Dict[str, Any]):
         if merge_upload:
             try:
                 merge_data = json.load(merge_upload)
+                merge_data = sanitize_loaded_data(merge_data) # Sanitize incoming too
+                
                 target_resorts = data.setdefault("resorts", [])
                 existing_ids = {r.get("id") for r in target_resorts}
                 merge_resorts = merge_data.get("resorts", [])
@@ -332,10 +364,14 @@ def render_global_holidays_editor(data: Dict[str, Any], years: List[str]):
         for idx, h in enumerate(holidays):
             c_a, c_b = st.columns([3, 1])
             with c_a:
-                st.text(f"{h.get('date')} - {h.get('name')}")
+                # SAFE ACCESS: data has been sanitized, but we double check
+                d_str = h.get('date', 'No Date') if isinstance(h, dict) else "No Date"
+                n_str = h.get('name', 'Unnamed') if isinstance(h, dict) else str(h)
+                st.text(f"{d_str} - {n_str}")
             with c_b:
                 if st.button("🗑️", key=f"gh_del_{sel_year}_{idx}"):
                     holidays.pop(idx)
+                    st.session_state.last_save_time = datetime.now() 
                     st.rerun()
     else:
         st.caption("No global holidays for this year.")
