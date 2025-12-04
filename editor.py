@@ -1017,8 +1017,113 @@ Restarting the app resets everything to the default dataset, so be sure to save 
     )
 
 
+# ──────────────────────────────────────────────────────────────────────
+#  REPLACE YOUR CURRENT run() FUNCTION WITH THIS ONE
+# ──────────────────────────────────────────────────────────────────────
 def run():
-    main()
+    initialize_session_state()
+
+    # Auto-load default file if nothing is loaded yet
+    if st.session_state.data is None:
+        try:
+            with open("data_v2.json", "r", encoding="utf-8") as f:
+                raw_data = json.load(f)
+                if "schema_version" in raw_data and "resorts" in raw_data:
+                    st.session_state.data = raw_data
+                    st.toast(f"Auto-loaded {len(raw_data.get('resorts', []))} resorts", icon="success")
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            st.toast(f"Auto-load failed: {e}", icon="warning")
+
+    render_page_header(
+        "Edit",
+        "Creating Your Data File",
+        icon="hotel",
+        badge_color="#EF4444"
+    )
+
+    if not st.session_state.data:
+        st.markdown(
+            """
+            <div class='info-box'>
+                <h3>Welcome!</h3>
+                <p>Load json file from the sidebar to begin editing resort data.</p>
+            </div>
+        """,
+            unsafe_allow_html=True,
+        )
+        return
+
+    data = st.session_state.data
+    resorts = get_resort_list(data)
+    years = get_years_from_data(data)
+
+    # ── Sidebar ─────────────────────────────────────────────────────
+    with st.sidebar:
+        handle_file_upload()
+        if st.session_state.data:
+            handle_merge_from_another_file_v2(st.session_state.data)
+            create_download_button_v2(st.session_state.data)
+            handle_file_verification()
+
+    # ── Main content ───────────────────────────────────────────────
+    render_resort_grid(resorts, st.session_state.current_resort_id)
+
+    handle_resort_switch_v2(data, st.session_state.current_resort_id, st.session_state.previous_resort_id)
+
+    working = load_resort(data, st.session_state.current_resort_id)
+    if working:
+        resort_name = (
+            working.get("resort_name")
+            or working.get("display_name")
+            or st.session_state.current_resort_id
+        )
+        timezone = working.get("timezone", "UTC")
+        address = working.get("address", "No address provided")
+        render_resort_card(resort_name, timezone, address)
+
+        render_validation_panel_v2(working, data, years)
+        render_save_button_v2(data, working, st.session_state.current_resort_id)
+
+        handle_resort_creation_v2(data, st.session_state.current_resort_id)
+        handle_resort_deletion_v2(data, st.session_state.current_resort_id)
+
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(
+            ["Overview", "Season Dates", "Room Points", "Holidays", "Points Summary"]
+        )
+
+        with tab1:
+            edit_resort_basics(working, st.session_state.current_resort_id)
+
+        with tab2:
+            render_gantt_charts_v2(working, years, data)
+            render_season_dates_editor_v2(working, years, st.session_state.current_resort_id)
+
+        with tab3:
+            render_reference_points_editor_v2(working, years, st.session_state.current_resort_id)
+
+        with tab4:
+            render_holiday_management_v2(working, years, st.session_state.current_resort_id)
+
+        with tab5:
+            render_resort_summary_v2(working)
+
+    st.markdown("---")
+    render_global_settings_v2(data, years)
+
+    st.markdown(
+        """
+        <div class='success-box'>
+            <p style='margin: 0;'>MVC Resort Editor V2</p>
+            <p style='margin: 8px 0 0 0; font-size: 14px; opacity: 0.9;'>
+                Master data management • Real-time sync across years • Professional-grade tools
+            </p>
+        </div>
+    """,
+        unsafe_allow_html=True,
+    )
+# ──────────────────────────────────────────────────────────────────────
 
 
 if __name__ == "__main__":
