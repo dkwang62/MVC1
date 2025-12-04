@@ -1,6 +1,6 @@
 import streamlit as st
 from common.ui import render_resort_card, render_resort_grid, render_page_header
-from common.data import load_data
+from common.data import load_data 
 from functools import lru_cache
 import json
 import pandas as pd
@@ -15,6 +15,7 @@ from typing import Dict, List, Any, Optional, Tuple, Set
 DEFAULT_YEARS = ["2025", "2026"]
 BASE_YEAR_FOR_POINTS = "2025"
 
+
 # ----------------------------------------------------------------------
 # WIDGET KEY HELPER (RESORT-SCOPED)
 # ----------------------------------------------------------------------
@@ -23,6 +24,7 @@ def rk(resort_id: str, *parts: str) -> str:
     """Build a unique Streamlit widget key scoped to a resort."""
     safe_resort = resort_id or "resort"
     return "__".join([safe_resort] + [str(p) for p in parts])
+
 
 # ----------------------------------------------------------------------
 # SESSION STATE MANAGEMENT
@@ -37,15 +39,17 @@ def initialize_session_state():
         "working_resorts": {},
         "last_save_time": None,
         "delete_confirm": False,
-        "download_verified": False,
+        "download_verified": False,  # State for the verify button
     }
     for k, v in defaults.items():
         if k not in st.session_state:
-            continue
-        st.session_state[k] = v
+            st.session_state[k] = v
+
 
 def save_data():
+    # Only update local state timestamp (no disk write)
     st.session_state.last_save_time = datetime.now()
+
 
 def reset_state_for_new_file():
     for k in [
@@ -57,36 +61,44 @@ def reset_state_for_new_file():
         "last_save_time",
         "download_verified",
     ]:
-        if k == "working_resorts":
-            st.session_state[k] = {}
-        elif k == "download_verified":
+        st.session_state[k] = {} if k == "working_resorts" else None
+        if k == "download_verified":
             st.session_state[k] = False
-        else:
-            st.session_state[k] = None
+
 
 # ----------------------------------------------------------------------
 # BASIC RESORT NAME / TIMEZONE HELPERS
 # ----------------------------------------------------------------------
 def detect_timezone_from_name(name: str) -> str:
+    """Simple placeholder timezone detector; keep as UTC or customise later."""
     return "UTC"
 
+
 def get_resort_full_name(resort_id: str, display_name: str) -> str:
+    """For new resorts, treat display_name as full resort name."""
     return display_name
+
 
 # ----------------------------------------------------------------------
 # OPTIMIZED HELPER FUNCTIONS
 # ----------------------------------------------------------------------
 @lru_cache(maxsize=128)
 def get_years_from_data_cached(data_hash: int) -> Tuple[str, ...]:
+    """Cached version of get_years_from_data"""
     return tuple(sorted(get_years_from_data(st.session_state.data)))
 
+
 def get_years_from_data(data: Dict[str, Any]) -> List[str]:
+    """Derive list of years from global_holidays or resort years."""
     years: Set[str] = set()
     gh = data.get("global_holidays", {})
     years.update(gh.keys())
+
     for r in data.get("resorts", []):
         years.update(str(y) for y in r.get("years", {}).keys())
+
     return sorted(years) if years else DEFAULT_YEARS
+
 
 def safe_date(d: Optional[str], default: str = "2025-01-01") -> date:
     if not d or not isinstance(d, str):
@@ -96,24 +108,30 @@ def safe_date(d: Optional[str], default: str = "2025-01-01") -> date:
     except ValueError:
         return datetime.strptime(default, "%Y-%m-%d").date()
 
+
 def get_resort_list(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     return data.get("resorts", [])
 
+
 def find_resort_by_id(data: Dict[str, Any], rid: str) -> Optional[Dict[str, Any]]:
     return next((r for r in data.get("resorts", []) if r.get("id") == rid), None)
+
 
 def find_resort_index(data: Dict[str, Any], rid: str) -> Optional[int]:
     return next(
         (i for i, r in enumerate(data.get("resorts", [])) if r.get("id") == rid), None
     )
 
+
 def generate_resort_id(name: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", name.strip().lower())
     return re.sub(r"-+", "-", slug).strip("-") or "resort"
 
+
 def generate_resort_code(name: str) -> str:
-    parts = [p for p in name.replace("'", "").split() if p]
+    parts = [p for p in name.replace("'", "'").split() if p]
     return "".join(p[0].upper() for p in parts[:3]) or "RST"
+
 
 def make_unique_resort_id(base_id: str, resorts: List[Dict[str, Any]]) -> str:
     existing = {r.get("id") for r in resorts}
@@ -124,15 +142,13 @@ def make_unique_resort_id(base_id: str, resorts: List[Dict[str, Any]]) -> str:
         i += 1
     return f"{base_id}-{i}"
 
-# ----------------------------------------------------------------------
-# FILE OPERATIONS WITH ENHANCED UI (unchanged)
-# ----------------------------------------------------------------------
-# ... [all your file handling functions remain exactly as you wrote them] ...
-# (kept 100% untouched)
 
+# ----------------------------------------------------------------------
+# FILE OPERATIONS WITH ENHANCED UI
+# ----------------------------------------------------------------------
 def handle_file_upload():
-    st.sidebar.markdown("### File to Memory")
-    with st.sidebar.expander("Load", expanded=False):
+    st.sidebar.markdown("### 📤 File to Memory")
+    with st.sidebar.expander("📤 Load", expanded=False):
         uploaded = st.file_uploader(
             "Choose JSON file",
             type="json",
@@ -146,34 +162,561 @@ def handle_file_upload():
                 try:
                     raw_data = json.load(uploaded)
                     if "schema_version" not in raw_data or not raw_data.get("resorts"):
-                        st.error("Invalid file format")
+                        st.error("❌ Invalid file format")
                         return
                     reset_state_for_new_file()
                     st.session_state.data = raw_data
                     st.session_state.last_upload_sig = current_sig
                     resorts_list = get_resort_list(raw_data)
-                    st.success(f"Loaded {len(resorts_list)} resorts")
+                    st.success(f"✅ Loaded {len(resorts_list)} resorts")
                     st.rerun()
                 except Exception as e:
-                    st.error(f"Error: {str(e)}")
+                    st.error(f"❌ Error: {str(e)}")
 
-# ... [download, merge, verify functions unchanged] ...
+
+def create_download_button_v2(data: Dict[str, Any]):
+    st.sidebar.markdown("### 📥 Memory to File")
+
+    # Ensure state exists (for safety if hot-reloading)
+    if "download_verified" not in st.session_state:
+        st.session_state.download_verified = False
+
+    with st.sidebar.expander("💾 Save & Download", expanded=False):
+        
+        # --- 1. DETECT UNSAVED CHANGES ---
+        current_id = st.session_state.get("current_resort_id")
+        working_resorts = st.session_state.get("working_resorts", {})
+        has_unsaved_changes = False
+        
+        if current_id and current_id in working_resorts:
+            working_copy = working_resorts[current_id]
+            committed_copy = find_resort_by_id(data, current_id)
+            if committed_copy != working_copy:
+                has_unsaved_changes = True
+
+        # --- 2. STATE MACHINE ---
+
+        if has_unsaved_changes:
+            # STATE: DIRTY
+            # Action: Must Commit to Memory
+            # Effect: Resets verification status
+            st.session_state.download_verified = False 
+            
+            st.warning("⚠️ Unsaved changes pending.")
+            
+            if st.button("🧠 COMMIT TO MEMORY", type="primary", use_container_width=True):
+                commit_working_to_data_v2(data, working_resorts[current_id], current_id)
+                st.toast("✅ Committed to memory.", icon="🧠")
+                st.rerun()
+            
+            st.caption("You must commit changes to memory before proceeding.")
+
+        elif not st.session_state.download_verified:
+            # STATE: CLEAN BUT UNVERIFIED
+            # Action: Must Verify
+            # Effect: Shows Download button next
+            st.info("ℹ️ Memory updated.")
+            
+            if st.button("🔍 Verify that memory is up to date", use_container_width=True):
+                # This button 'actively checks' status (logic is implicit since we are in the else block)
+                st.session_state.download_verified = True
+                st.rerun()
+                
+            st.caption("Please confirm the current memory state is correct to unlock the download.")
+
+        else:
+            # STATE: VERIFIED
+            # Action: Allow Download
+            st.success("✅ Verified & Ready.")
+            
+            # This is the ONLY place this widget is rendered
+            filename = st.text_input(
+                "File name",
+                value="data_v2.json",
+                key="download_filename_input",
+            ).strip()
+
+            if not filename:
+                filename = "data_v2.json"
+            if not filename.lower().endswith(".json"):
+                filename += ".json"
+
+            json_data = json.dumps(data, indent=2, ensure_ascii=False)
+
+            st.download_button(
+                label="⬇️ DOWNLOAD JSON FILE",
+                data=json_data,
+                file_name=filename,
+                mime="application/json",
+                key="download_v2_btn",
+                type="primary",
+                use_container_width=True,
+            )
+
+def handle_file_verification():
+    with st.sidebar.expander("🔍 Verify File", expanded=False):
+        verify_upload = st.file_uploader(
+            "Upload file to compare with memory", type="json", key="verify_uploader"
+        )
+        if verify_upload:
+            try:
+                uploaded_data = json.load(verify_upload)
+                # Normalize strings for comparison
+                current_json = json.dumps(st.session_state.data, sort_keys=True)
+                uploaded_json = json.dumps(uploaded_data, sort_keys=True)
+                
+                if current_json == uploaded_json:
+                    st.success("✅ File matches memory exactly.")
+                else:
+                    st.error("❌ File differs from memory.")
+            except Exception as e:
+                st.error(f"❌ Error: {str(e)}")
+
+
+def handle_merge_from_another_file_v2(data: Dict[str, Any]):
+    with st.sidebar.expander("🔀 Merge", expanded=False):
+        merge_upload = st.file_uploader(
+            "File with required resorts",
+            type="json",
+            key="merge_uploader_v2",
+        )
+        if merge_upload:
+            try:
+                merge_data = json.load(merge_upload)
+                if "resorts" not in merge_data:
+                    st.error("❌ Invalid V2 schema")
+                    return
+
+                target_resorts = data.setdefault("resorts", [])
+                existing_ids = {r.get("id") for r in target_resorts}
+                merge_resorts = merge_data.get("resorts", [])
+                if not merge_resorts:
+                    st.warning("No resorts found")
+                    return
+
+                display_map = {
+                    f"{r.get('display_name', r.get('id'))} ({r.get('id')})": r
+                    for r in merge_resorts
+                }
+
+                selected_labels = st.multiselect(
+                    "Select resorts",
+                    list(display_map.keys()),
+                    key="selected_merge_resorts_v2",
+                )
+
+                if selected_labels and st.button(
+                    "🔀 Merge", key="merge_btn_v2", use_container_width=True
+                ):
+                    merged_count = 0
+                    skipped = []
+                    for label in selected_labels:
+                        resort_obj = display_map[label]
+                        rid = resort_obj.get("id")
+                        if rid in existing_ids:
+                            skipped.append(resort_obj.get("display_name", rid))
+                            continue
+                        target_resorts.append(copy.deepcopy(resort_obj))
+                        existing_ids.add(rid)
+                        merged_count += 1
+
+                    save_data()
+                    if merged_count:
+                        st.success(f"✅ Merged {merged_count} resort(s)")
+                    if skipped:
+                        st.warning(f"Skipped: {', '.join(skipped)}")
+                    st.rerun()
+            except Exception as e:
+                st.error(f"❌ Error: {str(e)}")
+
 
 # ----------------------------------------------------------------------
-# WORKING RESORT MANAGEMENT (unchanged)
+# RESORT MANAGEMENT (creation / deletion)
 # ----------------------------------------------------------------------
-def load_resort(data: Dict[str, Any], current_resort_id: Optional[str]) -> Optional[Dict[str, Any]]:
+def is_duplicate_resort_name(name: str, resorts: List[Dict[str, Any]]) -> bool:
+    target = name.strip().lower()
+    return any(
+        r.get("display_name", "").strip().lower() == target for r in resorts
+    )
+
+
+def handle_resort_creation_v2(
+    data: Dict[str, Any], current_resort_id: Optional[str]
+):
+    resorts = data.setdefault("resorts", [])
+    
+    with st.expander("➕ Create or Clone Resort", expanded=False):
+        # Use tabs to separate the two distinct actions
+        tab_new, tab_clone = st.tabs(["✨ New Blank", "📋 Clone Current"])
+
+        # --- TAB 1: CREATE BLANK ---
+        with tab_new:
+            new_name_input = st.text_input(
+                "New Resort Name",
+                placeholder="e.g., Pulse San Francisco",
+                key="new_resort_name_blank",
+            )
+            
+            if st.button("Create Blank Resort", use_container_width=True):
+                name = new_name_input.strip()
+                if not name:
+                    st.error("❌ Name cannot be empty")
+                elif is_duplicate_resort_name(name, resorts):
+                    st.error("❌ Name already exists")
+                else:
+                    base_id = generate_resort_id(name)
+                    rid = make_unique_resort_id(base_id, resorts)
+                    code = generate_resort_code(name)
+                    detected_timezone = detect_timezone_from_name(name)
+                    full_name = get_resort_full_name(rid, name)
+                    
+                    new_resort = {
+                        "id": rid,
+                        "display_name": name,
+                        "code": code,
+                        "resort_name": full_name,
+                        "address": "",
+                        "timezone": detected_timezone,
+                        "years": {},
+                    }
+                    resorts.append(new_resort)
+                    st.session_state.current_resort_id = rid
+                    save_data()
+                    st.success(f"✅ Created {name}")
+                    st.rerun()
+
+        # --- TAB 2: CLONE CURRENT ---
+        with tab_clone:
+            if not current_resort_id:
+                st.warning("⚠️ Select a resort from the grid first to clone it.")
+            else:
+                src = find_resort_by_id(data, current_resort_id)
+                if src:
+                    st.markdown(f"**Source:** {src.get('display_name', 'Unknown')}")
+                    
+                    if st.button("📋 Clone This Resort", use_container_width=True):
+                        # 1. Generate unique name
+                        original_name = src.get("display_name", "Resort")
+                        new_name = f"{original_name} (Copy)"
+                        
+                        # Ensure uniqueness if (Copy) already exists
+                        counter = 1
+                        while is_duplicate_resort_name(new_name, resorts):
+                            counter += 1
+                            new_name = f"{original_name} (Copy {counter})"
+
+                        # 2. Generate IDs
+                        base_id = generate_resort_id(new_name)
+                        rid = make_unique_resort_id(base_id, resorts)
+                        code = generate_resort_code(new_name)
+
+                        # 3. Deep Copy everything (Policies, Seasons, Holidays)
+                        cloned = copy.deepcopy(src)
+
+                        # 4. Update Identity Fields
+                        cloned["id"] = rid
+                        cloned["display_name"] = new_name
+                        cloned["code"] = code
+                        # We intentionally keep 'timezone' and 'address' from src
+                        # cloned["resort_name"] we update to match the new ID/Display
+                        cloned["resort_name"] = get_resort_full_name(rid, new_name)
+
+                        resorts.append(cloned)
+                        st.session_state.current_resort_id = rid
+                        save_data()
+                        st.success(f"✅ Cloned to {new_name}")
+                        st.rerun()
+
+
+def handle_resort_deletion_v2(
+    data: Dict[str, Any], current_resort_id: Optional[str]
+):
     if not current_resort_id:
-        return None
-    working_resorts = st.session_state.working_resorts
-    if current_resort_id not in working_resorts:
-        if resort_obj := find_resort_by_id(data, current_resort_id):
-            working_resorts[current_resort_id] = copy.deepcopy(resort_obj)
-    return working_resorts.get(current_resort_id)
+        return
+
+    current_resort = find_resort_by_id(data, current_resort_id)
+    if not current_resort:
+        return
+
+    if not st.session_state.delete_confirm:
+        if st.button(
+            "🗑️ Delete Resort",
+            key="delete_resort_init",
+            type="secondary",
+        ):
+            st.session_state.delete_confirm = True
+            st.rerun()
+    else:
+        name = current_resort.get("display_name", current_resort_id)
+        st.markdown(
+            f"""
+            <div class='error-box'>
+                <h4>⚠️ Confirm Deletion</h4>
+                <p>Are you sure you want to permanently delete <strong>{name}</strong>?</p>
+                <p>This action cannot be undone.</p>
+            </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button(
+                "🔥 DELETE FOREVER",
+                key=f"delete_resort_final_{current_resort_id}",
+                type="primary",
+                use_container_width=True,
+            ):
+                idx = find_resort_index(data, current_resort_id)
+                if idx is not None:
+                    data.get("resorts", []).pop(idx)
+                st.session_state.current_resort_id = None
+                st.session_state.delete_confirm = False
+                st.session_state.working_resorts.pop(current_resort_id, None)
+                save_data()
+                st.success("✅ Resort deleted")
+                st.rerun()
+
+        with col2:
+            if st.button(
+                "❌ Cancel",
+                key=f"delete_cancel_{current_resort_id}",
+                use_container_width=True,
+            ):
+                st.session_state.delete_confirm = False
+                st.rerun()
+
+        st.stop()
+
 
 # ----------------------------------------------------------------------
-# SEASON MANAGEMENT – FIXED render_single_season_v2
+# WORKING RESORT MANAGEMENT
 # ----------------------------------------------------------------------
+def handle_resort_switch_v2(
+    data: Dict[str, Any],
+    current_resort_id: Optional[str],
+    previous_resort_id: Optional[str],
+):
+    if previous_resort_id and previous_resort_id != current_resort_id:
+        working_resorts = st.session_state.working_resorts
+        if previous_resort_id in working_resorts:
+            working = working_resorts[previous_resort_id]
+            committed = find_resort_by_id(data, previous_resort_id)
+            if committed is None:
+                working_resorts.pop(previous_resort_id, None)
+            elif working != committed:
+                st.warning(
+                    f"⚠️ Unsaved changes in {committed.get('display_name', previous_resort_id)}"
+                )
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    if st.button(
+                        "Save changes to memory",
+                        key="switch_save_prev",
+                        use_container_width=True,
+                    ):
+                        commit_working_to_data_v2(
+                            data, working, previous_resort_id
+                        )
+                        del working_resorts[previous_resort_id]
+                        st.session_state.previous_resort_id = current_resort_id
+                        st.rerun()
+                with col2:
+                    if st.button(
+                        "🚫 Discard",
+                        key="switch_discard_prev",
+                        use_container_width=True,
+                    ):
+                        del working_resorts[previous_resort_id]
+                        st.session_state.previous_resort_id = current_resort_id
+                        st.rerun()
+                with col3:
+                    if st.button(
+                        "↩️ Stay",
+                        key="switch_cancel_prev",
+                        use_container_width=True,
+                    ):
+                        st.session_state.current_resort_id = previous_resort_id
+                        st.rerun()
+                st.stop()
+
+    st.session_state.previous_resort_id = current_resort_id
+
+
+def commit_working_to_data_v2(
+    data: Dict[str, Any], working: Dict[str, Any], resort_id: str
+):
+    idx = find_resort_index(data, resort_id)
+    if idx is not None:
+        data["resorts"][idx] = copy.deepcopy(working)
+        save_data()
+
+
+def render_save_button_v2(
+    data: Dict[str, Any], working: Dict[str, Any], resort_id: str
+):
+    """
+    Now only shows a passive status. We rely on the exit prompt in
+    handle_resort_switch_v2 for actual save/discard decisions.
+    """
+    committed = find_resort_by_id(data, resort_id)
+
+    if committed is not None and committed != working:
+        # There ARE unsaved changes, but we don't nag; just inform quietly.
+        st.caption(
+            "Changes in this resort are currently kept in memory. "
+            "You’ll be asked to **Save or Discard** only when you leave this resort."
+        )
+    else:
+        # Everything matches the committed data.
+        st.caption("All changes for this resort are in sync with the saved data.")
+
+
+# ----------------------------------------------------------------------
+# SEASON MANAGEMENT
+# ----------------------------------------------------------------------
+def ensure_year_structure(resort: Dict[str, Any], year: str):
+    years = resort.setdefault("years", {})
+    year_obj = years.setdefault(year, {})
+    year_obj.setdefault("seasons", [])
+    year_obj.setdefault("holidays", [])
+    return year_obj
+
+
+def get_all_season_names_for_resort(working: Dict[str, Any]) -> Set[str]:
+    names: Set[str] = set()
+    for year_obj in working.get("years", {}).values():
+        names.update(
+            s.get("name") for s in year_obj.get("seasons", []) if s.get("name")
+        )
+    return names
+
+
+def delete_season_across_years(working: Dict[str, Any], season_name: str):
+    years = working.get("years", {})
+    for year_obj in years.values():
+        year_obj["seasons"] = [
+            s
+            for s in year_obj.get("seasons", [])
+            if s.get("name") != season_name
+        ]
+
+
+def rename_season_across_years(
+    working: Dict[str, Any], old_name: str, new_name: str
+):
+    old_name = (old_name or "").strip()
+    new_name = (new_name or "").strip()
+    if not old_name or not new_name:
+        st.error("Season names cannot be empty")
+        return
+    if old_name == new_name:
+        st.info("Season name unchanged.")
+        return
+
+    all_names = get_all_season_names_for_resort(working)
+    if any(
+        n.lower() == new_name.lower() and n != old_name for n in all_names
+    ):
+        st.error(f"❌ Season '{new_name}' already exists")
+        return
+
+    changed = False
+    for year_obj in working.get("years", {}).values():
+        for s in year_obj.get("seasons", []):
+            if (s.get("name") or "").strip() == old_name:
+                s["name"] = new_name
+                changed = True
+
+    if changed:
+        st.success(
+            f"✅ Renamed season '{old_name}' → '{new_name}' across all years"
+        )
+    else:
+        st.warning(f"No season named '{old_name}' found")
+
+
+def render_season_rename_panel_v2(working: Dict[str, Any], resort_id: str):
+    all_names = sorted(get_all_season_names_for_resort(working))
+    if not all_names:
+        st.caption("No seasons available to rename yet.")
+        return
+
+    st.markdown("**✏️ Rename Seasons (applies to all years)**")
+    for name in all_names:
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            new_name = st.text_input(
+                f"Rename '{name}' to",
+                value=name,
+                key=rk(resort_id, "rename_season_input", name),
+            )
+        with col2:
+            if st.button(
+                "Apply", key=rk(resort_id, "rename_season_btn", name)
+            ):
+                if new_name and new_name != name:
+                    rename_season_across_years(working, name, new_name)
+                    st.rerun()
+
+
+def render_season_dates_editor_v2(
+    working: Dict[str, Any], years: List[str], resort_id: str
+):
+    st.markdown(
+        "<div class='section-header'>📅 Season Dates</div>",
+        unsafe_allow_html=True,
+    )
+    st.caption(
+        "Define season date ranges for each year. Season names apply across all years."
+    )
+
+    render_season_rename_panel_v2(working, resort_id)
+    all_names = get_all_season_names_for_resort(working)
+
+    for year in years:
+        year_obj = ensure_year_structure(working, year)
+        seasons = year_obj.get("seasons", [])
+
+        with st.expander(f"📆 {year} Seasons", expanded=True):
+            col1, col2 = st.columns([4, 1])
+            with col1:
+                new_season_name = st.text_input(
+                    "New season (applies to all years)",
+                    key=rk(resort_id, "new_season", year),
+                    placeholder="e.g., Peak Season",
+                )
+            with col2:
+                if (
+                    st.button(
+                        "➕ Add",
+                        key=rk(resort_id, "add_season_all_years", year),
+                        use_container_width=True,
+                    )
+                    and new_season_name
+                ):
+                    name = new_season_name.strip()
+                    if not name:
+                        st.error("❌ Name required")
+                    elif any(name.lower() == n.lower() for n in all_names):
+                        st.error("❌ Season exists")
+                    else:
+                        for y2 in years:
+                            y2_obj = ensure_year_structure(working, y2)
+                            y2_obj.setdefault("seasons", []).append(
+                                {
+                                    "name": name,
+                                    "periods": [],
+                                    "day_categories": {},
+                                }
+                            )
+                        st.success(f"✅ Added '{name}'")
+                        st.rerun()
+
+            for idx, season in enumerate(seasons):
+                render_single_season_v2(working, year, season, idx, resort_id)
+
+
 def render_single_season_v2(
     working: Dict[str, Any],
     year: str,
@@ -182,23 +725,26 @@ def render_single_season_v2(
     resort_id: str,
 ):
     sname = season.get("name", f"Season {idx+1}")
-    st.markdown(f"**{sname}**")
+    st.markdown(f"**🎯 {sname}**")
 
+    # --- Use Data Editor for efficient date management ---
     periods = season.get("periods", [])
-
+    
+    # Create DataFrame for editing
     df_data = []
     for p in periods:
         df_data.append({
             "start": safe_date(p.get("start")),
             "end": safe_date(p.get("end"))
         })
+    
     df = pd.DataFrame(df_data)
 
     edited_df = st.data_editor(
         df,
         key=rk(resort_id, "season_editor", year, idx),
         num_rows="dynamic",
-        width="stretch",  # ← fixed deprecation
+        use_container_width=True,
         column_config={
             "start": st.column_config.DateColumn("Start Date", format="YYYY-MM-DD", required=True),
             "end": st.column_config.DateColumn("End Date", format="YYYY-MM-DD", required=True),
@@ -206,52 +752,292 @@ def render_single_season_v2(
         hide_index=True
     )
 
-    # ONLY update when actually changed → fixes double-entry bug
-    if not edited_df.equals(df):
-        new_periods = []
-        for _, row in edited_df.iterrows():
-            if pd.notna(row["start"]) and pd.notna(row["end"]):
-                new_periods.append({
-                    "start": row["start"].isoformat(),
-                    "end": row["end"].isoformat()
-                })
-        season["periods"] = new_periods
+    # Save back to JSON structure (converting dates back to ISO strings)
+    new_periods = []
+    for _, row in edited_df.iterrows():
+        if row["start"] and row["end"]:
+            new_periods.append({
+                "start": row["start"].isoformat() if hasattr(row["start"], 'isoformat') else str(row["start"]),
+                "end": row["end"].isoformat() if hasattr(row["end"], 'isoformat') else str(row["end"])
+            })
+    
+    season["periods"] = new_periods
+    # -------------------------------------------------------------
 
+    # Keep the Delete Season button outside the editor
     col_spacer, col_del = st.columns([4, 1])
     with col_del:
         if st.button(
-            "Delete Season",
+            "🗑️ Delete Season",
             key=rk(resort_id, "season_del_all_years", year, idx),
-            width="stretch",
+            use_container_width=True,
         ):
-            # your existing delete logic
-            for y_obj in working.get("years", {}).values():
-                y_obj["seasons"] = [s for s in y_obj.get("seasons", []) if s.get("name") != sname]
+            delete_season_across_years(working, sname)
             st.rerun()
 
+
 # ----------------------------------------------------------------------
-# MASTER POINTS EDITOR – also fixed (same safe pattern)
+# ROOM TYPE MANAGEMENT
+# ----------------------------------------------------------------------
+def get_all_room_types_for_resort(working: Dict[str, Any]) -> List[str]:
+    rooms: Set[str] = set()
+    for year_obj in working.get("years", {}).values():
+        for season in year_obj.get("seasons", []):
+            for cat in season.get("day_categories", {}).values():
+                if isinstance(rp := cat.get("room_points", {}), dict):
+                    rooms.update(rp.keys())
+        for h in year_obj.get("holidays", []):
+            if isinstance(rp := h.get("room_points", {}), dict):
+                rooms.update(rp.keys())
+    return sorted(rooms)
+
+
+def add_room_type_master(working: Dict[str, Any], room: str, base_year: str):
+    room = room.strip()
+    if not room:
+        return
+
+    years = working.get("years", {})
+    if base_year in years:
+        base_year_obj = ensure_year_structure(working, base_year)
+        for season in base_year_obj.get("seasons", []):
+            for cat in season.setdefault("day_categories", {}).values():
+                cat.setdefault("room_points", {}).setdefault(room, 0)
+
+    for year_obj in years.values():
+        for h in year_obj.get("holidays", []):
+            h.setdefault("room_points", {}).setdefault(room, 0)
+
+
+def delete_room_type_master(working: Dict[str, Any], room: str):
+    for year_obj in working.get("years", {}).values():
+        for season in year_obj.get("seasons", []):
+            for cat in season.get("day_categories", {}).values():
+                if isinstance(rp := cat.get("room_points", {}), dict):
+                    rp.pop(room, None)
+        for h in year_obj.get("holidays", []):
+            if isinstance(rp := h.get("room_points", {}), dict):
+                rp.pop(room, None)
+
+
+def rename_room_type_across_resort(
+    working: Dict[str, Any], old_name: str, new_name: str
+):
+    old_name = (old_name or "").strip()
+    new_name = (new_name or "").strip()
+    if not old_name or not new_name:
+        st.error("Room names cannot be empty")
+        return
+    if old_name == new_name:
+        st.info("Room name unchanged.")
+        return
+
+    all_rooms = get_all_room_types_for_resort(working)
+    if any(
+        r.lower() == new_name.lower() and r != old_name for r in all_rooms
+    ):
+        st.error(f"❌ Room type '{new_name}' already exists")
+        return
+
+    changed = False
+    for year_obj in working.get("years", {}).values():
+        for season in year_obj.get("seasons", []):
+            for cat in season.get("day_categories", {}).values():
+                rp = cat.get("room_points")
+                if isinstance(rp, dict) and old_name in rp:
+                    rp[new_name] = rp.pop(old_name)
+                    changed = True
+        for h in year_obj.get("holidays", []):
+            rp = h.get("room_points")
+            if isinstance(rp, dict) and old_name in rp:
+                rp[new_name] = rp.pop(old_name)
+                changed = True
+
+    if changed:
+        st.success(
+            f"✅ Renamed room '{old_name}' → '{new_name}' across all years and holidays"
+        )
+    else:
+        st.warning(f"No room named '{old_name}' found")
+
+
+# ----------------------------------------------------------------------
+# SYNC FUNCTIONS
+# ----------------------------------------------------------------------
+def sync_season_room_points_across_years(
+    working: Dict[str, Any], base_year: str
+):
+    years = working.get("years", {})
+    if not years or base_year not in years:
+        return
+
+    canonical_rooms: Set[str] = set()
+    for y_obj in years.values():
+        for season in y_obj.get("seasons", []):
+            for cat in season.get("day_categories", {}).values():
+                if isinstance(rp := cat.get("room_points", {}), dict):
+                    canonical_rooms |= set(rp.keys())
+
+    if not canonical_rooms:
+        return
+
+    base_year_obj = years[base_year]
+    base_seasons = base_year_obj.get("seasons", [])
+
+    for season in base_seasons:
+        for cat in season.setdefault("day_categories", {}).values():
+            rp = cat.setdefault("room_points", {})
+            for room in canonical_rooms:
+                rp.setdefault(room, 0)
+            for room in list(rp.keys()):
+                if room not in canonical_rooms:
+                    del rp[room]
+
+    base_by_name = {
+        s.get("name", ""): s for s in base_seasons if s.get("name")
+    }
+
+    for year_name, year_obj in years.items():
+        if year_name != base_year:
+            for season in year_obj.get("seasons", []):
+                if (name := season.get("name", "")) in base_by_name:
+                    season["day_categories"] = copy.deepcopy(
+                        base_by_name[name].get("day_categories", {})
+                    )
+
+
+def sync_holiday_room_points_across_years(
+    working: Dict[str, Any], base_year: str
+):
+    years = working.get("years", {})
+    if not years or base_year not in years:
+        return
+
+    base_year_obj = ensure_year_structure(working, base_year)
+    base_holidays = base_year_obj.get("holidays", [])
+
+    all_rooms = get_all_room_types_for_resort(working)
+
+    for h in base_holidays:
+        rp = h.setdefault("room_points", {})
+        for room in all_rooms:
+            rp.setdefault(room, 0)
+        for room in list(rp.keys()):
+            if room not in all_rooms:
+                del rp[room]
+
+    base_by_key = {
+        (h.get("global_reference") or h.get("name") or "").strip(): h
+        for h in base_holidays
+        if (h.get("global_reference") or h.get("name") or "").strip()
+    }
+
+    for year_name, year_obj in years.items():
+        if year_name != base_year:
+            for h in year_obj.get("holidays", []):
+                if (
+                    key := (
+                        h.get("global_reference") or h.get("name") or ""
+                    ).strip()
+                ) in base_by_key:
+                    h["room_points"] = copy.deepcopy(
+                        base_by_key[key].get("room_points", {})
+                    )
+
+
+# ----------------------------------------------------------------------
+# RESORT BASIC INFO EDITOR (helper)
+# ----------------------------------------------------------------------
+def edit_resort_basics(working: Dict[str, Any], resort_id: str):
+    """
+    Renders editable fields for resort_name, timezone, address, AND display_name.
+    Returns nothing – directly mutates the working dict.
+    """
+    st.markdown("### Basic Resort Information")
+
+    # --- Added: Display Name Editor ---
+    col_disp, col_code = st.columns([3, 1])
+    with col_disp:
+        current_display = working.get("display_name", "")
+        new_display = st.text_input(
+            "Display Name (Internal ID)",
+            value=current_display,
+            key=rk(resort_id, "display_name_edit"),
+            help="The short name used in lists and menus."
+        )
+        if new_display and new_display != current_display:
+            working["display_name"] = new_display.strip()
+    
+    with col_code:
+        current_code = working.get("code", "")
+        new_code = st.text_input(
+            "Code", 
+            value=current_code,
+            key=rk(resort_id, "code_edit")
+        )
+        if new_code != current_code:
+            working["code"] = new_code.strip()
+
+    # --- Existing Fields ---
+    current_name = working.get("resort_name", "")
+    current_tz = working.get("timezone", "UTC")
+    current_addr = working.get("address", "")
+
+    new_name = st.text_input(
+        "Full Resort Name (Official)",
+        value=current_name,
+        key=rk(resort_id, "resort_name_edit"),
+        help="Official name stored in the 'resort_name' field",
+    )
+    working["resort_name"] = new_name.strip()
+
+    col_tz, col_addr = st.columns(2)
+    with col_tz:
+        new_tz = st.text_input(
+            "Timezone",
+            value=current_tz,
+            key=rk(resort_id, "timezone_edit"),
+            help="e.g. America/New_York, Europe/London, etc.",
+        )
+        working["timezone"] = new_tz.strip() or "UTC"
+
+    with col_addr:
+        new_addr = st.text_area(
+            "Address",
+            value=current_addr,
+            height=80,
+            key=rk(resort_id, "address_edit"),
+            help="Full street address of the resort",
+        )
+        working["address"] = new_addr.strip()
+
+
+# ----------------------------------------------------------------------
+# MASTER POINTS EDITOR
 # ----------------------------------------------------------------------
 def render_reference_points_editor_v2(
     working: Dict[str, Any], years: List[str], resort_id: str
 ):
     st.markdown(
-        "<div class='section-header'>Master Room Points</div>",
+        "<div class='section-header'>🎯 Master Room Points</div>",
         unsafe_allow_html=True,
     )
     st.caption(
         "Edit nightly points for each season using the table editor. Changes apply to all years automatically."
     )
+
     base_year = (
         BASE_YEAR_FOR_POINTS
         if BASE_YEAR_FOR_POINTS in years
         else (sorted(years)[0] if years else BASE_YEAR_FOR_POINTS)
     )
+
     base_year_obj = ensure_year_structure(working, base_year)
     seasons = base_year_obj.get("seasons", [])
+
     if not seasons:
         st.info(
-            "No seasons defined yet. Add seasons in the Season Dates section first."
+            "💡 No seasons defined yet. Add seasons in the Season Dates section first."
         )
         return
 
@@ -259,7 +1045,7 @@ def render_reference_points_editor_v2(
 
     for s_idx, season in enumerate(seasons):
         with st.expander(
-            f"{season.get('name', f'Season {s_idx+1}')}", expanded=True
+            f"🏖️ {season.get('name', f'Season {s_idx+1}')}", expanded=True
         ):
             dc = season.setdefault("day_categories", {})
             if not dc:
@@ -271,133 +1057,297 @@ def render_reference_points_editor_v2(
                     "day_pattern": ["Fri", "Sat"],
                     "room_points": {},
                 }
+
             for key, cat in dc.items():
                 day_pattern = cat.setdefault("day_pattern", [])
                 st.markdown(
-                    f"**{key}** – {', '.join(day_pattern) if day_pattern else 'No days set'}"
+                    f"**📅 {key}** – {', '.join(day_pattern) if day_pattern else 'No days set'}"
                 )
+
                 room_points = cat.setdefault("room_points", {})
                 rooms_here = canonical_rooms or sorted(room_points.keys())
-
+                
+                # --- Use Data Editor for Points ---
                 pts_data = []
                 for room in rooms_here:
                     pts_data.append({
                         "Room Type": room,
                         "Points": int(room_points.get(room, 0) or 0)
                     })
+                
                 df_pts = pd.DataFrame(pts_data)
-
+                
                 edited_df = st.data_editor(
                     df_pts,
                     key=rk(resort_id, "master_rp_editor", base_year, s_idx, key),
-                    width="stretch",  # ← fixed
+                    use_container_width=True,
                     hide_index=True,
                     column_config={
                         "Room Type": st.column_config.TextColumn(disabled=True),
                         "Points": st.column_config.NumberColumn(min_value=0, step=25)
                     }
                 )
-
-                # ONLY write back if changed → fixes double-entry bug
-                if not edited_df.empty and not edited_df.equals(df_pts):
+                
+                # Update source dictionary from edited dataframe
+                if not edited_df.empty:
                     new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
                     cat["room_points"] = new_rp
+                # -------------------------------------------
 
-    # ... rest of your room type management unchanged ...
+    st.markdown("---")
+    st.markdown("**🏠 Manage Room Types**")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        new_room = st.text_input(
+            "Add room type (applies to all seasons/years)",
+            key=rk(resort_id, "room_add_master"),
+            placeholder="e.g., 2BR Ocean View",
+        )
+        if st.button(
+            "➕ Add Room",
+            key=rk(resort_id, "room_add_btn_master"),
+            use_container_width=True,
+        ) and new_room:
+            add_room_type_master(working, new_room.strip(), base_year)
+            st.success(f"✅ Added {new_room}")
+            st.rerun()
+
+    with col2:
+        del_room = st.selectbox(
+            "Delete room type",
+            [""] + get_all_room_types_for_resort(working),
+            key=rk(resort_id, "room_del_master"),
+        )
+        if del_room and st.button(
+            "🗑️ Delete Room",
+            key=rk(resort_id, "room_del_btn_master"),
+            use_container_width=True,
+        ):
+            delete_room_type_master(working, del_room)
+            st.success(f"✅ Deleted {del_room}")
+            st.rerun()
+
+    all_rooms_list = get_all_room_types_for_resort(working)
+    if all_rooms_list:
+        st.markdown("**✏️ Rename Room Type (applies everywhere)**")
+        col3, col4 = st.columns(2)
+        with col3:
+            old_room = st.selectbox(
+                "Room to rename",
+                [""] + all_rooms_list,
+                key=rk(resort_id, "room_rename_old"),
+            )
+        with col4:
+            new_room_name = st.text_input(
+                "New name", key=rk(resort_id, "room_rename_new")
+            )
+
+        if st.button(
+            "✅ Apply Rename",
+            key=rk(resort_id, "room_rename_apply"),
+            use_container_width=True,
+        ):
+            if old_room and new_room_name:
+                rename_room_type_across_resort(
+                    working, old_room, new_room_name
+                )
+                st.rerun()
+
+    sync_season_room_points_across_years(working, base_year=base_year)
+
 
 # ----------------------------------------------------------------------
-# HOLIDAY MANAGEMENT – FIXED (the main culprit)
+# HOLIDAY MANAGEMENT
 # ----------------------------------------------------------------------
+def get_all_holidays_for_resort(
+    working: Dict[str, Any]
+) -> List[Dict[str, Any]]:
+    """Get unique list of holidays across all years (by global_reference)"""
+    holidays_map = {}
+    for year_obj in working.get("years", {}).values():
+        for h in year_obj.get("holidays", []):
+            key = (h.get("global_reference") or h.get("name") or "").strip()
+            if key and key not in holidays_map:
+                holidays_map[key] = {
+                    "name": h.get("name", key),
+                    "global_reference": key,
+                }
+    return list(holidays_map.values())
+
+
+def add_holiday_to_all_years(
+    working: Dict[str, Any], holiday_name: str, global_ref: str
+):
+    """Add a holiday to all years in the resort"""
+    holiday_name = holiday_name.strip()
+    global_ref = (global_ref or holiday_name).strip()
+    if not holiday_name or not global_ref:
+        return False
+
+    years = working.get("years", {})
+    for year_obj in years.values():
+        holidays = year_obj.setdefault("holidays", [])
+        if any(
+            (h.get("global_reference") or h.get("name") or "").strip()
+            == global_ref
+            for h in holidays
+        ):
+            continue
+        holidays.append(
+            {
+                "name": holiday_name,
+                "global_reference": global_ref,
+                "room_points": {},
+            }
+        )
+    return True
+
+
+def delete_holiday_from_all_years(working: Dict[str, Any], global_ref: str):
+    """Delete a holiday from all years in the resort"""
+    global_ref = (global_ref or "").strip()
+    if not global_ref:
+        return False
+
+    changed = False
+    for year_obj in working.get("years", {}).values():
+        holidays = year_obj.get("holidays", [])
+        original_len = len(holidays)
+        year_obj["holidays"] = [
+            h
+            for h in holidays
+            if (h.get("global_reference") or h.get("name") or "").strip()
+            != global_ref
+        ]
+        if len(year_obj["holidays"]) < original_len:
+            changed = True
+    return changed
+
+
+def rename_holiday_across_years(
+    working: Dict[str, Any],
+    old_global_ref: str,
+    new_name: str,
+    new_global_ref: str,
+):
+    """Rename a holiday across all years"""
+    old_global_ref = (old_global_ref or "").strip()
+    new_name = (new_name or "").strip()
+    new_global_ref = (new_global_ref or "").strip()
+
+    if not old_global_ref or not new_name or not new_global_ref:
+        st.error("All fields must be filled")
+        return False
+
+    changed = False
+    for year_obj in working.get("years", {}).values():
+        for h in year_obj.get("holidays", []):
+            if (
+                (h.get("global_reference") or h.get("name") or "").strip()
+                == old_global_ref
+            ):
+                h["name"] = new_name
+                h["global_reference"] = new_global_ref
+                changed = True
+    return changed
+
+
 def render_holiday_management_v2(
     working: Dict[str, Any], years: List[str], resort_id: str
 ):
     st.markdown(
-        "<div class='section-header'>Holiday Management</div>",
+        "<div class='section-header'>🎄 Holiday Management</div>",
         unsafe_allow_html=True,
     )
+
     base_year = (
         BASE_YEAR_FOR_POINTS
         if BASE_YEAR_FOR_POINTS in years
         else (sorted(years)[0] if years else BASE_YEAR_FOR_POINTS)
     )
 
-    # ... your holiday list/add/rename UI unchanged ...
+    st.markdown("**📋 Manage Holidays (applies to all years)**")
+    st.caption(
+        "Holidays are automatically synchronized across all years. Changes here affect every year."
+    )
+
+    current_holidays = get_all_holidays_for_resort(working)
+
+    if current_holidays:
+        st.markdown("**Current Holidays:**")
+        for h in current_holidays:
+            unique_key = h.get("global_reference", "")
+            col1, col2, col3 = st.columns([3, 3, 1])
+
+            with col1:
+                new_display = st.text_input(
+                    "Display Name",
+                    value=h.get("name", ""),
+                    key=rk(resort_id, "holiday_display", unique_key),
+                )
+            with col2:
+                new_global = st.text_input(
+                    "Global Reference",
+                    value=h.get("global_reference", ""),
+                    key=rk(resort_id, "holiday_ref", unique_key),
+                )
+            with col3:
+                if st.button(
+                    "🗑️",
+                    key=rk(resort_id, "holiday_del_global", unique_key),
+                ):
+                    if delete_holiday_from_all_years(working, unique_key):
+                        st.success(
+                            f"✅ Deleted '{h['name']}' from all years"
+                        )
+                        st.rerun()
+
+            if (
+                new_display != h["name"]
+                or new_global != h["global_reference"]
+            ):
+                if rename_holiday_across_years(
+                    working, unique_key, new_display, new_global
+                ):
+                    # Silent update; persisted on Save
+                    pass
+    else:
+        st.info("💡 No holidays assigned yet. Add one below.")
 
     st.markdown("---")
-    st.markdown("**Master Holiday Points**")
-    st.caption(
-        "Edit holiday room points once. Applied to all years automatically."
-    )
-    base_year_obj = ensure_year_structure(working, base_year)
-    base_holidays = base_year_obj.get("holidays", [])
-    if not base_holidays:
-        st.info(
-            f"No holidays defined in {base_year}. Add holidays above first."
+    st.markdown("**➕ Add New Holiday**")
+
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        new_name = st.text_input(
+            "Holiday name (will be added to all years)",
+            key=rk(resort_id, "new_holiday_name"),
+            placeholder="e.g., Christmas Week",
         )
-    else:
-        all_rooms = get_all_room_types_for_resort(working)
-        for h_idx, h in enumerate(base_holidays):
-            disp_name = h.get("name", f"Holiday {h_idx+1}")
-            key = (h.get("global_reference") or h.get("name") or "").strip()
-            with st.expander(f"{disp_name}", expanded=False):
-                st.caption(f"Reference key: {key}")
-                rp = h.setdefault("room_points", {})
-                rooms_here = sorted(all_rooms or rp.keys())
-
-                pts_data = []
-                for room in rooms_here:
-                    pts_data.append({
-                        "Room Type": room,
-                        "Points": int(rp.get(room, 0) or 0)
-                    })
-                df_pts = pd.DataFrame(pts_data)
-
-                edited_df = st.data_editor(
-                    df_pts,
-                    key=rk(resort_id, "holiday_master_rp_editor", base_year, h_idx),
-                    width="stretch",  # ← fixed
-                    hide_index=True,
-                    column_config={
-                        "Room Type": st.column_config.TextColumn(disabled=True),
-                        "Points": st.column_config.NumberColumn(min_value=0, step=25)
-                    }
-                )
-
-                # ONLY update when changed → fixes double-entry bug
-                if not edited_df.empty and not edited_df.equals(df_pts):
-                    new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
-                    h["room_points"] = new_rp
+    with col2:
+        if (
+            st.button(
+                "➕ Add to All Years",
+                key=rk(resort_id, "btn_add_holiday_global"),
+                use_container_width=True,
+            )
+            and new_name
+        ):
+            name = new_name.strip()
+            if not name:
+                st.error("❌ Name cannot be empty")
+            elif any(
+                h["global_reference"].lower() == name.lower()
+                for h in current_holidays
+            ):
+                st.error("❌ Holiday already exists")
+            else:
+                if add_holiday_to_all_years(working, name, name):
+                    st.success(f"✅ Added '{name}' to all years")
+                    st.rerun()
 
     sync_holiday_room_points_across_years(working, base_year=base_year)
-
-# ----------------------------------------------------------------------
-# ALL OTHER FUNCTIONS ARE 100% UNTOUCHED
-# ----------------------------------------------------------------------
-# Your original functions below remain exactly as you wrote them:
-# - ensure_year_structure
-# - get_all_season_names_for_resort
-# - delete_season_across_years
-# - render_season_dates_editor_v2
-# - get_all_room_types_for_resort
-# - sync functions
-# - validation
-# - gantt
-# - global settings
-# - main()
-# etc.
-
-# Just make sure in your main() you call the editors like this:
-# with tab2:
-#     render_gantt_charts_v2(...)
-#     render_season_dates_editor_v2(...)
-# with tab3:
-#     render_reference_points_editor_v2(...)
-# with tab4:
-#     render_holiday_management_v2(...)
-
-# ----------------------------------------------------------------------
-# Keep your original main() and if __name__ == "__main__": block unchanged
-# ----------------------------------------------------------------------
 
     st.markdown("---")
     st.markdown("**💰 Master Holiday Points**")
@@ -1017,113 +1967,8 @@ Restarting the app resets everything to the default dataset, so be sure to save 
     )
 
 
-# ──────────────────────────────────────────────────────────────────────
-#  REPLACE YOUR CURRENT run() FUNCTION WITH THIS ONE
-# ──────────────────────────────────────────────────────────────────────
 def run():
-    initialize_session_state()
-
-    # Auto-load default file if nothing is loaded yet
-    if st.session_state.data is None:
-        try:
-            with open("data_v2.json", "r", encoding="utf-8") as f:
-                raw_data = json.load(f)
-                if "schema_version" in raw_data and "resorts" in raw_data:
-                    st.session_state.data = raw_data
-                    st.toast(f"Auto-loaded {len(raw_data.get('resorts', []))} resorts", icon="success")
-        except FileNotFoundError:
-            pass
-        except Exception as e:
-            st.toast(f"Auto-load failed: {e}", icon="warning")
-
-    render_page_header(
-        "Edit",
-        "Creating Your Data File",
-        icon="hotel",
-        badge_color="#EF4444"
-    )
-
-    if not st.session_state.data:
-        st.markdown(
-            """
-            <div class='info-box'>
-                <h3>Welcome!</h3>
-                <p>Load json file from the sidebar to begin editing resort data.</p>
-            </div>
-        """,
-            unsafe_allow_html=True,
-        )
-        return
-
-    data = st.session_state.data
-    resorts = get_resort_list(data)
-    years = get_years_from_data(data)
-
-    # ── Sidebar ─────────────────────────────────────────────────────
-    with st.sidebar:
-        handle_file_upload()
-        if st.session_state.data:
-            handle_merge_from_another_file_v2(st.session_state.data)
-            create_download_button_v2(st.session_state.data)
-            handle_file_verification()
-
-    # ── Main content ───────────────────────────────────────────────
-    render_resort_grid(resorts, st.session_state.current_resort_id)
-
-    handle_resort_switch_v2(data, st.session_state.current_resort_id, st.session_state.previous_resort_id)
-
-    working = load_resort(data, st.session_state.current_resort_id)
-    if working:
-        resort_name = (
-            working.get("resort_name")
-            or working.get("display_name")
-            or st.session_state.current_resort_id
-        )
-        timezone = working.get("timezone", "UTC")
-        address = working.get("address", "No address provided")
-        render_resort_card(resort_name, timezone, address)
-
-        render_validation_panel_v2(working, data, years)
-        render_save_button_v2(data, working, st.session_state.current_resort_id)
-
-        handle_resort_creation_v2(data, st.session_state.current_resort_id)
-        handle_resort_deletion_v2(data, st.session_state.current_resort_id)
-
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(
-            ["Overview", "Season Dates", "Room Points", "Holidays", "Points Summary"]
-        )
-
-        with tab1:
-            edit_resort_basics(working, st.session_state.current_resort_id)
-
-        with tab2:
-            render_gantt_charts_v2(working, years, data)
-            render_season_dates_editor_v2(working, years, st.session_state.current_resort_id)
-
-        with tab3:
-            render_reference_points_editor_v2(working, years, st.session_state.current_resort_id)
-
-        with tab4:
-            render_holiday_management_v2(working, years, st.session_state.current_resort_id)
-
-        with tab5:
-            render_resort_summary_v2(working)
-
-    st.markdown("---")
-    render_global_settings_v2(data, years)
-
-    st.markdown(
-        """
-        <div class='success-box'>
-            <p style='margin: 0;'>MVC Resort Editor V2</p>
-            <p style='margin: 8px 0 0 0; font-size: 14px; opacity: 0.9;'>
-                Master data management • Real-time sync across years • Professional-grade tools
-            </p>
-        </div>
-    """,
-        unsafe_allow_html=True,
-    )
-# ──────────────────────────────────────────────────────────────────────
+    main()
 
 
 if __name__ == "__main__":
