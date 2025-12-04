@@ -648,8 +648,7 @@ def render_single_season_v2(
         },
         hide_index=True
     )
-    # Save back to JSON structure (converting dates back to ISO strings)
-    if not edited_df.equals(df):
+    if st.button("Save Dates", key=rk(resort_id, "save_season_dates", year, idx)):
         new_periods = []
         for _, row in edited_df.iterrows():
             if row["start"] and row["end"]:
@@ -658,7 +657,8 @@ def render_single_season_v2(
                     "end": row["end"].isoformat() if hasattr(row["end"], 'isoformat') else str(row["end"])
                 })
         season["periods"] = new_periods
-        st.rerun()  # Force immediate rerun to commit
+        st.success("Dates saved!")
+        st.rerun()
     # -------------------------------------------------------------
     # Keep the Delete Season button outside the editor
     col_spacer, col_del = st.columns([4, 1])
@@ -882,7 +882,7 @@ def render_reference_points_editor_v2(
         unsafe_allow_html=True,
     )
     st.caption(
-        "Edit nightly points for each season. Changes apply to all years automatically."
+        "Edit nightly points for each season using the table editor. Changes apply to all years automatically."
     )
     base_year = (
         BASE_YEAR_FOR_POINTS
@@ -919,18 +919,34 @@ def render_reference_points_editor_v2(
                 room_points = cat.setdefault("room_points", {})
                 rooms_here = canonical_rooms or sorted(room_points.keys())
                
-                # Use individual number_inputs for easy navigation
+                # --- Use Data Editor for Points ---
+                pts_data = []
                 for room in rooms_here:
-                    current_points = int(room_points.get(room, 0) or 0)
-                    new_points = st.number_input(
-                        f"Points for {room}",
-                        min_value=0,
-                        step=25,
-                        value=current_points,
-                        key=rk(resort_id, "points_input", base_year, s_idx, key, room)
-                    )
-                    if new_points != current_points:
-                        room_points[room] = new_points
+                    pts_data.append({
+                        "Room Type": room,
+                        "Points": int(room_points.get(room, 0) or 0)
+                    })
+               
+                df_pts = pd.DataFrame(pts_data)
+               
+                edited_df = st.data_editor(
+                    df_pts,
+                    key=rk(resort_id, "master_rp_editor", base_year, s_idx, key),
+                    width="stretch",
+                    hide_index=True,
+                    column_config={
+                        "Room Type": st.column_config.TextColumn(disabled=True),
+                        "Points": st.column_config.NumberColumn(min_value=0, step=25)
+                    }
+                )
+               
+                if st.button("Save Changes", key=rk(resort_id, "save_master_rp", base_year, s_idx, key)):
+                    if not edited_df.empty:
+                        new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+                        cat["room_points"] = new_rp
+                        st.success("Points saved!")
+                        st.rerun()
+                # -------------------------------------------
     st.markdown("---")
     st.markdown("**🏠 Manage Room Types**")
     col1, col2 = st.columns(2)
@@ -1178,18 +1194,33 @@ def render_holiday_management_v2(
                 rp = h.setdefault("room_points", {})
                 rooms_here = sorted(all_rooms or rp.keys())
                
-                # Use individual number_inputs for easy navigation
+                # --- Use Data Editor for Points ---
+                pts_data = []
                 for room in rooms_here:
-                    current_points = int(rp.get(room, 0) or 0)
-                    new_points = st.number_input(
-                        f"Points for {room}",
-                        min_value=0,
-                        step=25,
-                        value=current_points,
-                        key=rk(resort_id, "holiday_points_input", base_year, h_idx, room)
-                    )
-                    if new_points != current_points:
-                        rp[room] = new_points
+                    pts_data.append({
+                        "Room Type": room,
+                        "Points": int(rp.get(room, 0) or 0)
+                    })
+               
+                df_pts = pd.DataFrame(pts_data)
+               
+                edited_df = st.data_editor(
+                    df_pts,
+                    key=rk(resort_id, "holiday_master_rp_editor", base_year, h_idx),
+                    width="stretch",
+                    hide_index=True,
+                    column_config={
+                        "Room Type": st.column_config.TextColumn(disabled=True),
+                        "Points": st.column_config.NumberColumn(min_value=0, step=25)
+                    }
+                )
+               
+                if st.button("Save Changes", key=rk(resort_id, "save_holiday_rp", base_year, h_idx)):
+                    if not edited_df.empty:
+                        new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
+                        h["room_points"] = new_rp
+                        st.success("Points saved!")
+                        st.rerun()
     sync_holiday_room_points_across_years(working, base_year=base_year)
 # ----------------------------------------------------------------------
 # RESORT SUMMARY
