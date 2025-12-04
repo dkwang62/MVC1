@@ -490,7 +490,7 @@ def render_single_season_v2(working: Dict[str, Any], year: str, season: Dict[str
     
     wk = rk(resort_id, "se_edit", year, idx)
     st.data_editor(
-        df, key=wk, num_rows="dynamic", use_container_width=True, hide_index=True,
+        df, key=wk, num_rows="dynamic", width="stretch", hide_index=True,
         column_config={
             "start": st.column_config.DateColumn("Start", format="YYYY-MM-DD", required=True),
             "end": st.column_config.DateColumn("End", format="YYYY-MM-DD", required=True)
@@ -576,7 +576,7 @@ def render_reference_points_editor_v2(working: Dict[str, Any], years: List[str],
                 wk = rk(resort_id, "rp_ed", base_year, s_idx, key)
                 
                 st.data_editor(
-                    df, key=wk, use_container_width=True, hide_index=True,
+                    df, key=wk, width="stretch", hide_index=True,
                     column_config={
                         "Room Type": st.column_config.TextColumn(disabled=True),
                         "Points": st.column_config.NumberColumn(min_value=0, step=25)
@@ -681,7 +681,7 @@ def render_holiday_management_v2(working: Dict[str, Any], years: List[str], reso
                 
                 wk = rk(resort_id, "hp_ed", base_year, idx)
                 st.data_editor(
-                    df, key=wk, use_container_width=True, hide_index=True,
+                    df, key=wk, width="stretch", hide_index=True,
                     column_config={
                         "Room Type": st.column_config.TextColumn(disabled=True),
                         "Points": st.column_config.NumberColumn(min_value=0, step=25)
@@ -740,7 +740,7 @@ def render_resort_summary_v2(working: Dict[str, Any]):
     if rows:
         df = pd.DataFrame(rows)
         # FIX FOR ARROW INVALID ERROR: Convert everything to string for display
-        st.dataframe(df.astype(str), use_container_width=True, hide_index=True)
+        st.dataframe(df.astype(str), width="stretch", hide_index=True)
 
 def edit_resort_basics(working: Dict[str, Any], resort_id: str):
     st.markdown("### Basic Info")
@@ -844,5 +844,8 @@ def render_gantt_charts_v2(working, years, data):
             fig = create_gantt_chart_from_working(working, y, data, height=400)
             st.plotly_chart(fig, use_container_width=True)
 
-if __name__ == "__main__":
+def run():
     main()
+
+if __name__ == "__main__":
+    run()
