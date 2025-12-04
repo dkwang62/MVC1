@@ -701,6 +701,9 @@ def render_single_season_v2(
             "end": safe_date(p.get("end"))
         })
     
+    if not df_data:
+        df_data = [{"start": safe_date(f"{year}-01-01"), "end": safe_date(f"{year}-01-07")}]
+    
     df = pd.DataFrame(df_data)
 
     edited_df = st.data_editor(
@@ -715,6 +718,7 @@ def render_single_season_v2(
         hide_index=True,
     )
 
+    # Build new periods list
     new_periods = []
     for _, row in edited_df.iterrows():
         if pd.notna(row["start"]) and pd.notna(row["end"]):
@@ -723,7 +727,16 @@ def render_single_season_v2(
                 "end": row["end"].isoformat() if hasattr(row["end"], 'isoformat') else str(row["end"])
             })
     
-    if new_periods != periods:
+    # Convert periods to comparable format for comparison
+    old_periods_normalized = []
+    for p in periods:
+        old_periods_normalized.append({
+            "start": safe_date(p.get("start")).isoformat(),
+            "end": safe_date(p.get("end")).isoformat()
+        })
+    
+    # Only update if actually different
+    if new_periods != old_periods_normalized:
         season["periods"] = new_periods
 
     col_spacer, col_del = st.columns([4, 1])
@@ -1029,6 +1042,9 @@ def render_reference_points_editor_v2(
                         "Points": int(room_points.get(room, 0) or 0)
                     })
                 
+                if not pts_data:
+                    pts_data = [{"Room Type": "Studio", "Points": 0}]
+                
                 df_pts = pd.DataFrame(pts_data)
                 
                 edited_df = st.data_editor(
@@ -1042,14 +1058,19 @@ def render_reference_points_editor_v2(
                     }
                 )
                 
+                # Build new dictionary and compare properly
                 if not edited_df.empty:
                     new_rp = {}
                     for _, row in edited_df.iterrows():
-                        room = row["Room Type"]
+                        room = str(row["Room Type"])
                         points = int(row["Points"]) if pd.notna(row["Points"]) else 0
                         new_rp[room] = points
                     
-                    if new_rp != room_points:
+                    # Normalize both for comparison
+                    current_rp_normalized = {k: int(v or 0) for k, v in room_points.items()}
+                    
+                    # Only update if different
+                    if new_rp != current_rp_normalized:
                         cat["room_points"] = new_rp
 
     st.markdown("---")
@@ -1331,6 +1352,9 @@ def render_holiday_management_v2(
                         "Points": int(rp.get(room, 0) or 0)
                     })
                 
+                if not pts_data:
+                    pts_data = [{"Room Type": "Studio", "Points": 0}]
+                
                 df_pts = pd.DataFrame(pts_data)
                 
                 edited_df = st.data_editor(
@@ -1347,11 +1371,14 @@ def render_holiday_management_v2(
                 if not edited_df.empty:
                     new_rp = {}
                     for _, row in edited_df.iterrows():
-                        room = row["Room Type"]
+                        room = str(row["Room Type"])
                         points = int(row["Points"]) if pd.notna(row["Points"]) else 0
                         new_rp[room] = points
                     
-                    if new_rp != rp:
+                    # Normalize for comparison
+                    current_rp_normalized = {k: int(v or 0) for k, v in rp.items()}
+                    
+                    if new_rp != current_rp_normalized:
                         h["room_points"] = new_rp
 
     sync_holiday_room_points_across_years(working, base_year=base_year)
