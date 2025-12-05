@@ -3697,18 +3697,18 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "2BR S": 375,
-                    "2BR IS": 425,
-                    "2BR PS": 475,
-                    "2BR UV": 500,
-                    "2BR PSH": 550,
-                    "2BR US": 550,
-                    "2BR UF": 650,
-                    "3BR S": 500,
-                    "3BR IS": 525,
-                    "3BR PS": 600,
-                    "3BR PSH": 750,
-                    "3BR PHUF": 900
+                    "2BR Gulf Front": 650,
+                    "2BR Gulf View": 500,
+                    "2BR Gulf Side": 550,
+                    "2BR Island": 425,
+                    "2BR Pool": 475,
+                    "2BR HighPool": 550,
+                    "2BR": 375,
+                    "3BR": 500,
+                    "3BR Island": 525,
+                    "3BR Pool": 600,
+                    "3BR HighPool": 750,
+                    "3BR Pent": 900
                   }
                 },
                 "fri_sat": {
@@ -3717,18 +3717,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "2BR S": 925,
-                    "2BR IS": 1025,
-                    "2BR PS": 1200,
-                    "2BR UV": 1250,
-                    "2BR PSH": 1350,
-                    "2BR US": 1350,
-                    "2BR UF": 1600,
-                    "3BR S": 1250,
-                    "3BR IS": 1300,
-                    "3BR PS": 1525,
-                    "3BR PSH": 1900,
-                    "3BR PHUF": 2200
+                    "2BR Gulf Front": 1600,
+                    "2BR Gulf View": 1250,
+                    "2BR Gulf Side": 1350,
+                    "2BR Island": 1025,
+                    "2BR Pool": 1200,
+                    "2BR HighPool": 1350,
+                    "2BR": 925,
+                    "3BR": 1250,
+                    "3BR Island": 1300,
+                    "3BR Pool": 1525,
+                    "3BR HighPool": 1900,
+                    "3BR Pent": 2200
                   }
                 }
               }
@@ -3755,18 +3755,18 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "2BR S": 400,
-                    "2BR IS": 450,
-                    "2BR PS": 525,
-                    "2BR UV": 550,
-                    "2BR PSH": 600,
-                    "2BR US": 600,
-                    "2BR UF": 750,
-                    "3BR S": 550,
-                    "3BR IS": 575,
-                    "3BR PS": 700,
-                    "3BR PSH": 800,
-                    "3BR PHUF": 950
+                    "2BR Gulf Front": 750,
+                    "2BR Gulf View": 550,
+                    "2BR Gulf Side": 600,
+                    "2BR Island": 450,
+                    "2BR Pool": 525,
+                    "2BR HighPool": 600,
+                    "2BR": 400,
+                    "3BR": 550,
+                    "3BR Island": 575,
+                    "3BR Pool": 700,
+                    "3BR HighPool": 800,
+                    "3BR Pent": 950
                   }
                 },
                 "fri_sat": {
@@ -3775,18 +3775,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "2BR S": 925,
-                    "2BR IS": 1125,
-                    "2BR PS": 1275,
-                    "2BR UV": 1300,
-                    "2BR PSH": 1450,
-                    "2BR US": 1450,
-                    "2BR UF": 1800,
-                    "3BR S": 1300,
-                    "3BR IS": 1375,
-                    "3BR PS": 1650,
-                    "3BR PSH": 2000,
-                    "3BR PHUF": 2350
+                    "2BR Gulf Front": 1800,
+                    "2BR Gulf View": 1300,
+                    "2BR Gulf Side": 1450,
+                    "2BR Island": 1125,
+                    "2BR Pool": 1275,
+                    "2BR HighPool": 1450,
+                    "2BR": 925,
+                    "3BR": 1300,
+                    "3BR Island": 1375,
+                    "3BR Pool": 1650,
+                    "3BR HighPool": 2000,
+                    "3BR Pent": 2350
                   }
                 }
               }
@@ -3817,18 +3817,18 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "2BR S": 225,
-                    "2BR IS": 250,
-                    "2BR PS": 275,
-                    "2BR UV": 300,
-                    "2BR PSH": 350,
-                    "2BR US": 350,
-                    "2BR UF": 450,
-                    "3BR S": 300,
-                    "3BR IS": 325,
-                    "3BR PS": 400,
-                    "3BR PSH": 475,
-                    "3BR PHUF": 550
+                    "2BR Gulf Front": 450,
+                    "2BR Gulf View": 300,
+                    "2BR Gulf Side": 350,
+                    "2BR Island": 250,
+                    "2BR Pool": 275,
+                    "2BR HighPool": 350,
+                    "2BR": 225,
+                    "3BR": 300,
+                    "3BR Island": 325,
+                    "3BR Pool": 400,
+                    "3BR HighPool": 475,
+                    "3BR Pent": 550
                   }
                 },
                 "fri_sat": {
@@ -3837,18 +3837,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "2BR S": 550,
-                    "2BR IS": 625,
-                    "2BR PS": 725,
-                    "2BR UV": 750,
-                    "2BR PSH": 850,
-                    "2BR US": 850,
-                    "2BR UF": 1000,
-                    "3BR S": 750,
-                    "3BR IS": 800,
-                    "3BR PS": 925,
-                    "3BR PSH": 1075,
-                    "3BR PHUF": 1300
+                    "2BR Gulf Front": 1000,
+                    "2BR Gulf View": 750,
+                    "2BR Gulf Side": 850,
+                    "2BR Island": 625,
+                    "2BR Pool": 725,
+                    "2BR HighPool": 850,
+                    "2BR": 550,
+                    "3BR": 750,
+                    "3BR Island": 800,
+                    "3BR Pool": 925,
+                    "3BR HighPool": 1075,
+                    "3BR Pent": 1300
                   }
                 }
               }
@@ -3875,18 +3875,18 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "2BR S": 125,
-                    "2BR IS": 150,
-                    "2BR PS": 175,
-                    "2BR UV": 200,
-                    "2BR PSH": 225,
-                    "2BR US": 225,
-                    "2BR UF": 275,
-                    "3BR S": 200,
-                    "3BR IS": 225,
-                    "3BR PS": 250,
-                    "3BR PSH": 275,
-                    "3BR PHUF": 300
+                    "2BR Gulf Front": 275,
+                    "2BR Gulf View": 200,
+                    "2BR Gulf Side": 225,
+                    "2BR Island": 150,
+                    "2BR Pool": 175,
+                    "2BR HighPool": 225,
+                    "2BR": 125,
+                    "3BR": 200,
+                    "3BR Island": 225,
+                    "3BR Pool": 250,
+                    "3BR HighPool": 275,
+                    "3BR Pent": 300
                   }
                 },
                 "fri_sat": {
@@ -3895,18 +3895,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "2BR S": 375,
-                    "2BR IS": 425,
-                    "2BR PS": 475,
-                    "2BR UV": 500,
-                    "2BR PSH": 650,
-                    "2BR US": 650,
-                    "2BR UF": 800,
-                    "3BR S": 500,
-                    "3BR IS": 575,
-                    "3BR PS": 725,
-                    "3BR PSH": 825,
-                    "3BR PHUF": 900
+                    "2BR Gulf Front": 800,
+                    "2BR Gulf View": 500,
+                    "2BR Gulf Side": 650,
+                    "2BR Island": 425,
+                    "2BR Pool": 475,
+                    "2BR HighPool": 650,
+                    "2BR": 375,
+                    "3BR": 500,
+                    "3BR Island": 575,
+                    "3BR Pool": 725,
+                    "3BR HighPool": 825,
+                    "3BR Pent": 900
                   }
                 }
               }
@@ -3917,72 +3917,72 @@
               "name": "Presidents Day",
               "global_reference": "Presidents Day",
               "room_points": {
-                "2BR S": 5100,
-                "2BR IS": 5700,
-                "2BR PS": 6525,
-                "2BR UV": 6900,
-                "2BR PSH": 7550,
-                "2BR US": 7550,
-                "2BR UF": 9450,
-                "3BR S": 6900,
-                "3BR IS": 7075,
-                "3BR PS": 8800,
-                "3BR PSH": 10525,
-                "3BR PHUF": 12150
+                "2BR Gulf Front": 9450,
+                "2BR Gulf View": 6900,
+                "2BR Gulf Side": 7550,
+                "2BR Island": 5700,
+                "2BR Pool": 6525,
+                "2BR HighPool": 7550,
+                "2BR": 5100,
+                "3BR": 6900,
+                "3BR Island": 7075,
+                "3BR Pool": 8800,
+                "3BR HighPool": 10525,
+                "3BR Pent": 12150
               }
             },
             {
               "name": "Independence Day",
               "global_reference": "Independence Day",
               "room_points": {
-                "2BR S": 2225,
-                "2BR IS": 2500,
-                "2BR PS": 2825,
-                "2BR UV": 3000,
-                "2BR PSH": 3450,
-                "2BR US": 3450,
-                "2BR UF": 4250,
-                "3BR S": 3000,
-                "3BR IS": 3225,
-                "3BR PS": 3850,
-                "3BR PSH": 4525,
-                "3BR PHUF": 5350
+                "2BR Gulf Front": 4250,
+                "2BR Gulf View": 3000,
+                "2BR Gulf Side": 3450,
+                "2BR Island": 2500,
+                "2BR Pool": 2825,
+                "2BR HighPool": 3450,
+                "2BR": 2225,
+                "3BR": 3000,
+                "3BR Island": 3225,
+                "3BR Pool": 3850,
+                "3BR HighPool": 4525,
+                "3BR Pent": 5350
               }
             },
             {
               "name": "Christmas",
               "global_reference": "Christmas",
               "room_points": {
-                "2BR S": 3950,
-                "2BR IS": 4500,
-                "2BR PS": 5175,
-                "2BR UV": 5350,
-                "2BR PSH": 5900,
-                "2BR US": 5900,
-                "2BR UF": 7350,
-                "3BR S": 5350,
-                "3BR IS": 5625,
-                "3BR PS": 6800,
-                "3BR PSH": 8000,
-                "3BR PHUF": 9450
+                "2BR Gulf Front": 7350,
+                "2BR Gulf View": 5350,
+                "2BR Gulf Side": 5900,
+                "2BR Island": 4500,
+                "2BR Pool": 5175,
+                "2BR HighPool": 5900,
+                "2BR": 3950,
+                "3BR": 5350,
+                "3BR Island": 5625,
+                "3BR Pool": 6800,
+                "3BR HighPool": 8000,
+                "3BR Pent": 9450
               }
             },
             {
               "name": "NewYear",
               "global_reference": "NewYear",
               "room_points": {
-                "2BR S": 4375,
-                "2BR IS": 4875,
-                "2BR PS": 5550,
-                "2BR UV": 5900,
-                "2BR PSH": 6450,
-                "2BR US": 6450,
-                "2BR UF": 7900,
-                "3BR S": 5900,
-                "3BR IS": 6075,
-                "3BR PS": 7400,
-                "3BR PSH": 8850,
-                "3BR PHUF": 10450
+                "2BR Gulf Front": 7900,
+                "2BR Gulf View": 5900,
+                "2BR Gulf Side": 6450,
+                "2BR Island": 4875,
+                "2BR Pool": 5550,
+                "2BR HighPool": 6450,
+                "2BR": 4375,
+                "3BR": 5900,
+                "3BR Island": 6075,
+                "3BR Pool": 7400,
+                "3BR HighPool": 8850,
+                "3BR Pent": 10450
               }
             }
           ]
@@ -4011,18 +4011,18 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "2BR S": 375,
-                    "2BR IS": 425,
-                    "2BR PS": 475,
-                    "2BR UV": 500,
-                    "2BR PSH": 550,
-                    "2BR US": 550,
-                    "2BR UF": 650,
-                    "3BR S": 500,
-                    "3BR IS": 525,
-                    "3BR PS": 600,
-                    "3BR PSH": 750,
-                    "3BR PHUF": 900
+                    "2BR Gulf Front": 650,
+                    "2BR Gulf View": 500,
+                    "2BR Gulf Side": 550,
+                    "2BR Island": 425,
+                    "2BR Pool": 475,
+                    "2BR HighPool": 550,
+                    "2BR": 375,
+                    "3BR": 500,
+                    "3BR Island": 525,
+                    "3BR Pool": 600,
+                    "3BR HighPool": 750,
+                    "3BR Pent": 900
                   }
                 },
                 "fri_sat": {
@@ -4031,18 +4031,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "2BR S": 925,
-                    "2BR IS": 1025,
-                    "2BR PS": 1200,
-                    "2BR UV": 1250,
-                    "2BR PSH": 1350,
-                    "2BR US": 1350,
-                    "2BR UF": 1600,
-                    "3BR S": 1250,
-                    "3BR IS": 1300,
-                    "3BR PS": 1525,
-                    "3BR PSH": 1900,
-                    "3BR PHUF": 2200
+                    "2BR Gulf Front": 1600,
+                    "2BR Gulf View": 1250,
+                    "2BR Gulf Side": 1350,
+                    "2BR Island": 1025,
+                    "2BR Pool": 1200,
+                    "2BR HighPool": 1350,
+                    "2BR": 925,
+                    "3BR": 1250,
+                    "3BR Island": 1300,
+                    "3BR Pool": 1525,
+                    "3BR HighPool": 1900,
+                    "3BR Pent": 2200
                   }
                 }
               }
@@ -4069,18 +4069,18 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "2BR S": 400,
-                    "2BR IS": 450,
-                    "2BR PS": 525,
-                    "2BR UV": 550,
-                    "2BR PSH": 600,
-                    "2BR US": 600,
-                    "2BR UF": 750,
-                    "3BR S": 550,
-                    "3BR IS": 575,
-                    "3BR PS": 700,
-                    "3BR PSH": 800,
-                    "3BR PHUF": 950
+                    "2BR Gulf Front": 750,
+                    "2BR Gulf View": 550,
+                    "2BR Gulf Side": 600,
+                    "2BR Island": 450,
+                    "2BR Pool": 525,
+                    "2BR HighPool": 600,
+                    "2BR": 400,
+                    "3BR": 550,
+                    "3BR Island": 575,
+                    "3BR Pool": 700,
+                    "3BR HighPool": 800,
+                    "3BR Pent": 950
                   }
                 },
                 "fri_sat": {
@@ -4089,18 +4089,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "2BR S": 925,
-                    "2BR IS": 1125,
-                    "2BR PS": 1275,
-                    "2BR UV": 1300,
-                    "2BR PSH": 1450,
-                    "2BR US": 1450,
-                    "2BR UF": 1800,
-                    "3BR S": 1300,
-                    "3BR IS": 1375,
-                    "3BR PS": 1650,
-                    "3BR PSH": 2000,
-                    "3BR PHUF": 2350
+                    "2BR Gulf Front": 1800,
+                    "2BR Gulf View": 1300,
+                    "2BR Gulf Side": 1450,
+                    "2BR Island": 1125,
+                    "2BR Pool": 1275,
+                    "2BR HighPool": 1450,
+                    "2BR": 925,
+                    "3BR": 1300,
+                    "3BR Island": 1375,
+                    "3BR Pool": 1650,
+                    "3BR HighPool": 2000,
+                    "3BR Pent": 2350
                   }
                 }
               }
@@ -4131,18 +4131,18 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "2BR S": 225,
-                    "2BR IS": 250,
-                    "2BR PS": 275,
-                    "2BR UV": 300,
-                    "2BR PSH": 350,
-                    "2BR US": 350,
-                    "2BR UF": 450,
-                    "3BR S": 300,
-                    "3BR IS": 325,
-                    "3BR PS": 400,
-                    "3BR PSH": 475,
-                    "3BR PHUF": 550
+                    "2BR Gulf Front": 450,
+                    "2BR Gulf View": 300,
+                    "2BR Gulf Side": 350,
+                    "2BR Island": 250,
+                    "2BR Pool": 275,
+                    "2BR HighPool": 350,
+                    "2BR": 225,
+                    "3BR": 300,
+                    "3BR Island": 325,
+                    "3BR Pool": 400,
+                    "3BR HighPool": 475,
+                    "3BR Pent": 550
                   }
                 },
                 "fri_sat": {
@@ -4151,18 +4151,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "2BR S": 550,
-                    "2BR IS": 625,
-                    "2BR PS": 725,
-                    "2BR UV": 750,
-                    "2BR PSH": 850,
-                    "2BR US": 850,
-                    "2BR UF": 1000,
-                    "3BR S": 750,
-                    "3BR IS": 800,
-                    "3BR PS": 925,
-                    "3BR PSH": 1075,
-                    "3BR PHUF": 1300
+                    "2BR Gulf Front": 1000,
+                    "2BR Gulf View": 750,
+                    "2BR Gulf Side": 850,
+                    "2BR Island": 625,
+                    "2BR Pool": 725,
+                    "2BR HighPool": 850,
+                    "2BR": 550,
+                    "3BR": 750,
+                    "3BR Island": 800,
+                    "3BR Pool": 925,
+                    "3BR HighPool": 1075,
+                    "3BR Pent": 1300
                   }
                 }
               }
@@ -4189,18 +4189,18 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "2BR S": 125,
-                    "2BR IS": 150,
-                    "2BR PS": 175,
-                    "2BR UV": 200,
-                    "2BR PSH": 225,
-                    "2BR US": 225,
-                    "2BR UF": 275,
-                    "3BR S": 200,
-                    "3BR IS": 225,
-                    "3BR PS": 250,
-                    "3BR PSH": 275,
-                    "3BR PHUF": 300
+                    "2BR Gulf Front": 275,
+                    "2BR Gulf View": 200,
+                    "2BR Gulf Side": 225,
+                    "2BR Island": 150,
+                    "2BR Pool": 175,
+                    "2BR HighPool": 225,
+                    "2BR": 125,
+                    "3BR": 200,
+                    "3BR Island": 225,
+                    "3BR Pool": 250,
+                    "3BR HighPool": 275,
+                    "3BR Pent": 300
                   }
                 },
                 "fri_sat": {
@@ -4209,18 +4209,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "2BR S": 375,
-                    "2BR IS": 425,
-                    "2BR PS": 475,
-                    "2BR UV": 500,
-                    "2BR PSH": 650,
-                    "2BR US": 650,
-                    "2BR UF": 800,
-                    "3BR S": 500,
-                    "3BR IS": 575,
-                    "3BR PS": 725,
-                    "3BR PSH": 825,
-                    "3BR PHUF": 900
+                    "2BR Gulf Front": 800,
+                    "2BR Gulf View": 500,
+                    "2BR Gulf Side": 650,
+                    "2BR Island": 425,
+                    "2BR Pool": 475,
+                    "2BR HighPool": 650,
+                    "2BR": 375,
+                    "3BR": 500,
+                    "3BR Island": 575,
+                    "3BR Pool": 725,
+                    "3BR HighPool": 825,
+                    "3BR Pent": 900
                   }
                 }
               }
@@ -4231,72 +4231,72 @@
               "name": "Presidents Day",
               "global_reference": "Presidents Day",
               "room_points": {
-                "2BR S": 5100,
-                "2BR IS": 5700,
-                "2BR PS": 6525,
-                "2BR UV": 6900,
-                "2BR PSH": 7550,
-                "2BR US": 7550,
-                "2BR UF": 9450,
-                "3BR S": 6900,
-                "3BR IS": 7075,
-                "3BR PS": 8800,
-                "3BR PSH": 10525,
-                "3BR PHUF": 12150
+                "2BR Gulf Front": 9450,
+                "2BR Gulf View": 6900,
+                "2BR Gulf Side": 7550,
+                "2BR Island": 5700,
+                "2BR Pool": 6525,
+                "2BR HighPool": 7550,
+                "2BR": 5100,
+                "3BR": 6900,
+                "3BR Island": 7075,
+                "3BR Pool": 8800,
+                "3BR HighPool": 10525,
+                "3BR Pent": 12150
               }
             },
             {
               "name": "Independence Day",
               "global_reference": "Independence Day",
               "room_points": {
-                "2BR S": 2225,
-                "2BR IS": 2500,
-                "2BR PS": 2825,
-                "2BR UV": 3000,
-                "2BR PSH": 3450,
-                "2BR US": 3450,
-                "2BR UF": 4250,
-                "3BR S": 3000,
-                "3BR IS": 3225,
-                "3BR PS": 3850,
-                "3BR PSH": 4525,
-                "3BR PHUF": 5350
+                "2BR Gulf Front": 4250,
+                "2BR Gulf View": 3000,
+                "2BR Gulf Side": 3450,
+                "2BR Island": 2500,
+                "2BR Pool": 2825,
+                "2BR HighPool": 3450,
+                "2BR": 2225,
+                "3BR": 3000,
+                "3BR Island": 3225,
+                "3BR Pool": 3850,
+                "3BR HighPool": 4525,
+                "3BR Pent": 5350
               }
             },
             {
               "name": "Christmas",
               "global_reference": "Christmas",
               "room_points": {
-                "2BR S": 3950,
-                "2BR IS": 4500,
-                "2BR PS": 5175,
-                "2BR UV": 5350,
-                "2BR PSH": 5900,
-                "2BR US": 5900,
-                "2BR UF": 7350,
-                "3BR S": 5350,
-                "3BR IS": 5625,
-                "3BR PS": 6800,
-                "3BR PSH": 8000,
-                "3BR PHUF": 9450
+                "2BR Gulf Front": 7350,
+                "2BR Gulf View": 5350,
+                "2BR Gulf Side": 5900,
+                "2BR Island": 4500,
+                "2BR Pool": 5175,
+                "2BR HighPool": 5900,
+                "2BR": 3950,
+                "3BR": 5350,
+                "3BR Island": 5625,
+                "3BR Pool": 6800,
+                "3BR HighPool": 8000,
+                "3BR Pent": 9450
               }
             },
             {
               "name": "NewYear",
               "global_reference": "NewYear",
               "room_points": {
-                "2BR S": 4375,
-                "2BR IS": 4875,
-                "2BR PS": 5550,
-                "2BR UV": 5900,
-                "2BR PSH": 6450,
-                "2BR US": 6450,
-                "2BR UF": 7900,
-                "3BR S": 5900,
-                "3BR IS": 6075,
-                "3BR PS": 7400,
-                "3BR PSH": 8850,
-                "3BR PHUF": 10450
+                "2BR Gulf Front": 7900,
+                "2BR Gulf View": 5900,
+                "2BR Gulf Side": 6450,
+                "2BR Island": 4875,
+                "2BR Pool": 5550,
+                "2BR HighPool": 6450,
+                "2BR": 4375,
+                "3BR": 5900,
+                "3BR Island": 6075,
+                "3BR Pool": 7400,
+                "3BR HighPool": 8850,
+                "3BR Pent": 10450
               }
             }
           ]
