@@ -200,10 +200,9 @@ def main():
 
     render_page_header("Calculator", "Points & Cost Calculator", icon="Calculator")
 
-    # RESORT SELECTION IN MAIN AREA — exactly like your original
+    # Resort selection in main area
     st.markdown("### Resort Selection")
     render_resort_grid(calc.repo.get_resort_list_full(), st.session_state.get("current_resort_id"))
-
     if not st.session_state.get("current_resort_id"):
         st.info("Please select a resort above to continue.")
         return
@@ -234,7 +233,7 @@ def main():
 
     adj_in = checkin
 
-    # Financial Settings — exactly as in your original
+    # Financial settings
     with st.expander("Financial Settings", expanded=True):
         col1, col2 = st.columns(2)
         with col1:
@@ -251,16 +250,13 @@ def main():
                 include_capital = include_depreciation = False
                 purchase_price = salvage = useful_life = capital_pct = 0
 
-    # NEW: Clean Cost Table for All Room Types (replaces old comparison)
-    st.divider()
-    st.subheader("Cost for All Room Types")
-
     year_str = str(year)
     year_data = resort.years.get(year_str)
     if not year_data:
         st.error("No data for selected year.")
         return
 
+    # Get all room types
     all_room_types = set()
     for season in year_data.seasons:
         for cat in season.day_categories:
@@ -268,6 +264,34 @@ def main():
     for h in year_data.holidays:
         all_room_types.update(h.room_points.keys())
     all_room_types = sorted(all_room_types)
+
+    # DAILY BREAKDOWN — restored!
+    st.divider()
+    st.subheader("Daily Points Breakdown")
+
+    breakdown_rows = []
+    current_date = adj_in
+    for i in range(nights):
+        holiday = calc._is_holiday(current_date, year_data)
+        if holiday:
+            source = f"Holiday: {holiday.name}"
+        else:
+            season_name, _ = calc._get_season_day_category(current_date, current_date.strftime("%a"), year_data)
+            source = season_name or "Unknown"
+
+        breakdown_rows.append({
+            "Date": current_date.strftime("%Y-%m-%d"),
+            "Day": current_date.strftime("%a"),
+            "Season/Holiday": source,
+        })
+        current_date += timedelta(days=1)
+
+    breakdown_df = pd.DataFrame(breakdown_rows)
+    st.dataframe(breakdown_df, use_container_width=True, hide_index=True)
+
+    # COST FOR ALL ROOM TYPES
+    st.divider()
+    st.subheader("Cost for All Room Types")
 
     rows = []
     for room_type in all_room_types:
@@ -292,7 +316,6 @@ def main():
     df = pd.DataFrame(rows)
     st.dataframe(df.style.format({"Points Required": "{:,}"}), use_container_width=True, hide_index=True)
 
-    # Highlight cheapest and most expensive
     if len(df) > 1:
         cost_vals = df["Total Cost ($)"].str.replace("[$,]", "", regex=True).astype(float)
         cheapest = df.iloc[cost_vals.idxmin()]
@@ -303,37 +326,28 @@ def main():
         with c2:
             st.warning(f"Most Expensive – {expensive['Room Type']}: {expensive['Total Cost ($)']} ({expensive['Points Required']} pts)")
 
-    # Gantt Chart — exactly as in your original
-    res_data = calc.repo.get_resort(r_name)
-    if res_data and year_str in res_data.years:
+    # Gantt chart
+    if year_str in resort.years:
         st.divider()
         with st.expander("Season and Holiday Calendar", expanded=False):
-            st.plotly_chart(create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {})), use_container_width=True)
+            st.plotly_chart(create_gantt_chart_from_resort_data(resort, year_str, data.get("global_holidays", {})), use_container_width=True)
 
-    # Your original Settings panel in the sidebar
+    # Settings panel
     with st.sidebar:
         with st.expander("Your Calculator Settings", expanded=False):
-            st.info(
-                """
-                **Save time by saving your profile.**
-                Store your costs, membership tier, and resort preference to a file.
-                Upload it anytime to instantly restore your setup.
-                """
-            )
-            
+            st.info("**Save time by saving your profile.**\nStore your costs, membership tier, and resort preference to a file.\nUpload it anytime to instantly restore your setup.")
             st.markdown("###### Load/Save Settings")
             config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
-            
             if config_file:
-                 file_sig = f"{config_file.name}_{config_file.size}"
-                 if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
-                     config_file.seek(0)
-                     data = json.load(config_file)
-                     apply_settings_from_dict(data)
-                     st.session_state.last_loaded_cfg = file_sig
-                     st.rerun()
+                file_sig = f"{config_file.name}_{config_file.size}"
+                if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
+                    config_file.seek(0)
+                    data = json.load(config_file)
+                    apply_settings_from_dict(data)
+                    st.session_state.last_loaded_cfg = file_sig
+                    st.rerun()
 
-            current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
+            current_pref_resort = st.session_state.current_resort_id or ""
             current_settings = {
                 "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
                 "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
