@@ -172,36 +172,40 @@ def render_resort_grid(
     resorts: List[Dict[str, Any]],
     current_resort_key: Optional[str],
     *,
-    title: str = "🏨 Resorts in Memory (West to East) 🖖 Select Resort",
+    title: str = "🏨 Resorts in Memory (West to East) • Select Resort", # Fixed emojis here
 ) -> None:
-    st.markdown(f"<div class='section-header'>{title}</div>", unsafe_allow_html=True)
-    if not resorts:
-        st.info("No resorts available.")
-        return
-    sorted_resorts = sort_resorts_west_to_east(resorts)
-    num_cols = 6
-    cols = st.columns(num_cols)
-    num_resorts = len(sorted_resorts)
-    num_rows = (num_resorts + num_cols - 1) // num_cols 
-    for col_idx, col in enumerate(cols):
-        with col:
-            for row in range(num_rows):
-                idx = col_idx * num_rows + row
-                if idx >= num_resorts:
-                    continue
-                resort = sorted_resorts[idx]
-                rid = resort.get("id")
-                name = resort.get("display_name", rid or f"Resort {idx+1}")
-                is_current = current_resort_key in (rid, name)
-                btn_type = "primary" if is_current else "secondary"
-                if st.button(
-                    f"🏨 {name}",
-                    key=f"resort_btn_{rid or name}",
-                    type=btn_type,
-                    use_container_width=True,
-                ):
-                    st.session_state.current_resort_id = rid
-                    st.session_state.current_resort = name
-                    if "delete_confirm" in st.session_state:
-                        st.session_state.delete_confirm = False
-                    st.rerun()
+    # Wrap the grid in an expander
+    with st.expander(title, expanded=True):
+        if not resorts:
+            st.info("No resorts available.")
+            return
+
+        sorted_resorts = sort_resorts_west_to_east(resorts)
+        num_cols = 6
+        cols = st.columns(num_cols)
+        num_resorts = len(sorted_resorts)
+        num_rows = (num_resorts + num_cols - 1) // num_cols 
+        for col_idx, col in enumerate(cols):
+            with col:
+                for row in range(num_rows):
+                    idx = col_idx * num_rows + row
+                    if idx >= num_resorts:
+                        continue
+                    resort = sorted_resorts[idx]
+                    rid = resort.get("id")
+                    name = resort.get("display_name", rid or f"Resort {idx+1}")
+                    is_current = current_resort_key in (rid, name)
+                    btn_type = "primary" if is_current else "secondary"
+                    
+                    # Fixed emoji here from "妾" to "🏨"
+                    if st.button(
+                        f"🏨 {name}", 
+                        key=f"resort_btn_{rid or name}",
+                        type=btn_type,
+                        use_container_width=True,
+                    ):
+                        st.session_state.current_resort_id = rid
+                        st.session_state.current_resort = name
+                        if "delete_confirm" in st.session_state:
+                            st.session_state.delete_confirm = False
+                        st.rerun()
