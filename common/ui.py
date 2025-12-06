@@ -175,7 +175,7 @@ def render_resort_grid(
     title: str = "🏨 Resorts in Memory (West to East) • Select Resort", # Fixed emojis here
 ) -> None:
     # Wrap the grid in an expander
-    with st.expander(title, expanded=True):
+    with st.expander(title, expanded=False):
         if not resorts:
             st.info("No resorts available.")
             return
