@@ -8375,19 +8375,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio IV": 275,
-                    "Studio MG": 325,
-                    "Studio OV": 375,
-                    "Studio OF": 425,
-                    "1BR IV": 400,
-                    "1BR MG": 450,
                     "1BR OV": 550,
                     "1BR OF": 625,
-                    "2BR IV": 600,
-                    "2BR MG": 700,
                     "2BR OV": 850,
                     "2BR OF": 950,
-                    "3BR OF": 1300
+                    "3BR OF": 1300,
+                    "1BR Garden": 450,
+                    "2BR Garden": 700,
+                    "2BR Island": 600,
+                    "1BR Island": 400,
+                    "0Studio OF": 425,
+                    "0Studio OV": 375,
+                    "0Studio Garden": 325,
+                    "0Studio Island": 275
                   }
                 },
                 "fri_sat": {
@@ -8396,19 +8396,19 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio IV": 400,
-                    "Studio MG": 450,
-                    "Studio OV": 550,
-                    "Studio OF": 625,
-                    "1BR IV": 550,
-                    "1BR MG": 650,
                     "1BR OV": 775,
                     "1BR OF": 875,
-                    "2BR IV": 850,
-                    "2BR MG": 1000,
                     "2BR OV": 1200,
                     "2BR OF": 1350,
-                    "3BR OF": 1850
+                    "3BR OF": 1850,
+                    "1BR Garden": 650,
+                    "2BR Garden": 1000,
+                    "2BR Island": 850,
+                    "1BR Island": 550,
+                    "0Studio OF": 625,
+                    "0Studio OV": 550,
+                    "0Studio Garden": 450,
+                    "0Studio Island": 400
                   }
                 }
               }
@@ -8443,19 +8443,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio IV": 325,
-                    "Studio MG": 375,
-                    "Studio OV": 450,
-                    "Studio OF": 500,
-                    "1BR IV": 450,
-                    "1BR MG": 525,
                     "1BR OV": 650,
                     "1BR OF": 725,
-                    "2BR IV": 700,
-                    "2BR MG": 825,
                     "2BR OV": 975,
                     "2BR OF": 1100,
-                    "3BR OF": 1500
+                    "3BR OF": 1500,
+                    "1BR Garden": 525,
+                    "2BR Garden": 825,
+                    "2BR Island": 700,
+                    "1BR Island": 450,
+                    "0Studio OF": 500,
+                    "0Studio OV": 450,
+                    "0Studio Garden": 375,
+                    "0Studio Island": 325
                   }
                 },
                 "fri_sat": {
@@ -8464,18 +8464,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio IV": 450,
-                    "Studio MG": 525,
-                    "Studio OV": 625,
-                    "Studio OF": 725,
-                    "1BR IV": 650,
-                    "1BR MG": 750,
-                    "1BR OV": 900,
+                    "0Studio Garden": 525,
+                    "0Studio Island": 450,
+                    "0Studio OF": 725,
+                    "0Studio OV": 625,
+                    "1BR Garden": 750,
+                    "1BR Island": 650,
                     "1BR OF": 1025,
-                    "2BR IV": 975,
-                    "2BR MG": 1150,
-                    "2BR OV": 1375,
+                    "1BR OV": 900,
+                    "2BR Garden": 1150,
+                    "2BR Island": 975,
                     "2BR OF": 1575,
+                    "2BR OV": 1375,
                     "3BR OF": 2150
                   }
                 }
@@ -8487,133 +8487,133 @@
               "name": "Presidents Day",
               "global_reference": "Presidents Day",
               "room_points": {
-                "Studio IV": 2700,
-                "Studio MG": 3100,
-                "Studio OV": 3675,
-                "Studio OF": 4125,
-                "1BR IV": 3850,
-                "1BR MG": 4350,
                 "1BR OV": 5275,
                 "1BR OF": 5900,
-                "2BR IV": 5675,
-                "2BR MG": 6700,
                 "2BR OV": 8025,
                 "2BR OF": 9050,
-                "3BR OF": 12375
+                "3BR OF": 12375,
+                "1BR Garden": 4350,
+                "2BR Garden": 6700,
+                "2BR Island": 5675,
+                "1BR Island": 3850,
+                "0Studio OF": 4125,
+                "0Studio OV": 3675,
+                "0Studio Garden": 3100,
+                "0Studio Island": 2700
               }
             },
             {
               "name": "Easter2",
               "global_reference": "Easter2",
               "room_points": {
-                "Studio IV": 2700,
-                "Studio MG": 3100,
-                "Studio OV": 3675,
-                "Studio OF": 4125,
-                "1BR IV": 3850,
-                "1BR MG": 4350,
                 "1BR OV": 5275,
                 "1BR OF": 5900,
-                "2BR IV": 5675,
-                "2BR MG": 6700,
                 "2BR OV": 8025,
                 "2BR OF": 9050,
-                "3BR OF": 12375
+                "3BR OF": 12375,
+                "1BR Garden": 4350,
+                "2BR Garden": 6700,
+                "2BR Island": 5675,
+                "1BR Island": 3850,
+                "0Studio OF": 4125,
+                "0Studio OV": 3675,
+                "0Studio Garden": 3100,
+                "0Studio Island": 2700
               }
             },
             {
               "name": "Independence Day",
               "global_reference": "Independence Day",
               "room_points": {
-                "Studio IV": 2525,
-                "Studio MG": 2925,
-                "Studio OV": 3500,
-                "Studio OF": 3950,
-                "1BR IV": 3550,
-                "1BR MG": 4125,
                 "1BR OV": 5050,
                 "1BR OF": 5675,
-                "2BR IV": 5450,
-                "2BR MG": 6425,
                 "2BR OV": 7625,
                 "2BR OF": 8650,
-                "3BR OF": 11800
+                "3BR OF": 11800,
+                "1BR Garden": 4125,
+                "2BR Garden": 6425,
+                "2BR Island": 5450,
+                "1BR Island": 3550,
+                "0Studio OF": 3950,
+                "0Studio OV": 3500,
+                "0Studio Garden": 2925,
+                "0Studio Island": 2525
               }
             },
             {
               "name": "Thanksgiving",
               "global_reference": "Thanksgiving",
               "room_points": {
-                "Studio IV": 2175,
-                "Studio MG": 2525,
-                "Studio OV": 2975,
-                "Studio OF": 3375,
-                "1BR IV": 3100,
-                "1BR MG": 3550,
                 "1BR OV": 4300,
                 "1BR OF": 4875,
-                "2BR IV": 4700,
-                "2BR MG": 5500,
                 "2BR OV": 6650,
                 "2BR OF": 7450,
-                "3BR OF": 10200
+                "3BR OF": 10200,
+                "1BR Garden": 3550,
+                "2BR Garden": 5500,
+                "2BR Island": 4700,
+                "1BR Island": 3100,
+                "0Studio OF": 3375,
+                "0Studio OV": 2975,
+                "0Studio Garden": 2525,
+                "0Studio Island": 2175
               }
             },
             {
               "name": "Thanksgiving2",
               "global_reference": "Thanksgiving2",
               "room_points": {
-                "Studio IV": 2700,
-                "Studio MG": 3100,
-                "Studio OV": 3675,
-                "Studio OF": 4125,
-                "1BR IV": 3850,
-                "1BR MG": 4350,
                 "1BR OV": 5275,
                 "1BR OF": 5900,
-                "2BR IV": 5675,
-                "2BR MG": 6700,
                 "2BR OV": 8025,
                 "2BR OF": 9050,
-                "3BR OF": 12375
+                "3BR OF": 12375,
+                "1BR Garden": 4350,
+                "2BR Garden": 6700,
+                "2BR Island": 5675,
+                "1BR Island": 3850,
+                "0Studio OF": 4125,
+                "0Studio OV": 3675,
+                "0Studio Garden": 3100,
+                "0Studio Island": 2700
               }
             },
             {
               "name": "Christmas",
               "global_reference": "Christmas",
               "room_points": {
-                "Studio IV": 2700,
-                "Studio MG": 3100,
-                "Studio OV": 3675,
-                "Studio OF": 4125,
-                "1BR IV": 3850,
-                "1BR MG": 4350,
                 "1BR OV": 5275,
                 "1BR OF": 5900,
-                "2BR IV": 5675,
-                "2BR MG": 6700,
                 "2BR OV": 8025,
                 "2BR OF": 9050,
-                "3BR OF": 12375
+                "3BR OF": 12375,
+                "1BR Garden": 4350,
+                "2BR Garden": 6700,
+                "2BR Island": 5675,
+                "1BR Island": 3850,
+                "0Studio OF": 4125,
+                "0Studio OV": 3675,
+                "0Studio Garden": 3100,
+                "0Studio Island": 2700
               }
             },
             {
               "name": "NewYear",
               "global_reference": "NewYear",
               "room_points": {
-                "Studio IV": 2975,
-                "Studio MG": 3500,
-                "Studio OV": 4125,
-                "Studio OF": 4700,
-                "1BR IV": 4300,
-                "1BR MG": 5100,
                 "1BR OV": 6075,
                 "1BR OF": 6875,
-                "2BR IV": 6475,
-                "2BR MG": 7675,
                 "2BR OV": 9225,
                 "2BR OF": 10425,
-                "3BR OF": 14325
+                "3BR OF": 14325,
+                "1BR Garden": 5100,
+                "2BR Garden": 7675,
+                "2BR Island": 6475,
+                "1BR Island": 4300,
+                "0Studio OF": 4700,
+                "0Studio OV": 4125,
+                "0Studio Garden": 3500,
+                "0Studio Island": 2975
               }
             }
           ]
@@ -8654,19 +8654,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio IV": 275,
-                    "Studio MG": 325,
-                    "Studio OV": 375,
-                    "Studio OF": 425,
-                    "1BR IV": 400,
-                    "1BR MG": 450,
                     "1BR OV": 550,
                     "1BR OF": 625,
-                    "2BR IV": 600,
-                    "2BR MG": 700,
                     "2BR OV": 850,
                     "2BR OF": 950,
-                    "3BR OF": 1300
+                    "3BR OF": 1300,
+                    "1BR Garden": 450,
+                    "2BR Garden": 700,
+                    "2BR Island": 600,
+                    "1BR Island": 400,
+                    "0Studio OF": 425,
+                    "0Studio OV": 375,
+                    "0Studio Garden": 325,
+                    "0Studio Island": 275
                   }
                 },
                 "fri_sat": {
@@ -8675,19 +8675,19 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio IV": 400,
-                    "Studio MG": 450,
-                    "Studio OV": 550,
-                    "Studio OF": 625,
-                    "1BR IV": 550,
-                    "1BR MG": 650,
                     "1BR OV": 775,
                     "1BR OF": 875,
-                    "2BR IV": 850,
-                    "2BR MG": 1000,
                     "2BR OV": 1200,
                     "2BR OF": 1350,
-                    "3BR OF": 1850
+                    "3BR OF": 1850,
+                    "1BR Garden": 650,
+                    "2BR Garden": 1000,
+                    "2BR Island": 850,
+                    "1BR Island": 550,
+                    "0Studio OF": 625,
+                    "0Studio OV": 550,
+                    "0Studio Garden": 450,
+                    "0Studio Island": 400
                   }
                 }
               }
@@ -8722,19 +8722,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio IV": 325,
-                    "Studio MG": 375,
-                    "Studio OV": 450,
-                    "Studio OF": 500,
-                    "1BR IV": 450,
-                    "1BR MG": 525,
                     "1BR OV": 650,
                     "1BR OF": 725,
-                    "2BR IV": 700,
-                    "2BR MG": 825,
                     "2BR OV": 975,
                     "2BR OF": 1100,
-                    "3BR OF": 1500
+                    "3BR OF": 1500,
+                    "1BR Garden": 525,
+                    "2BR Garden": 825,
+                    "2BR Island": 700,
+                    "1BR Island": 450,
+                    "0Studio OF": 500,
+                    "0Studio OV": 450,
+                    "0Studio Garden": 375,
+                    "0Studio Island": 325
                   }
                 },
                 "fri_sat": {
@@ -8743,18 +8743,18 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio IV": 450,
-                    "Studio MG": 525,
-                    "Studio OV": 625,
-                    "Studio OF": 725,
-                    "1BR IV": 650,
-                    "1BR MG": 750,
-                    "1BR OV": 900,
+                    "0Studio Garden": 525,
+                    "0Studio Island": 450,
+                    "0Studio OF": 725,
+                    "0Studio OV": 625,
+                    "1BR Garden": 750,
+                    "1BR Island": 650,
                     "1BR OF": 1025,
-                    "2BR IV": 975,
-                    "2BR MG": 1150,
-                    "2BR OV": 1375,
+                    "1BR OV": 900,
+                    "2BR Garden": 1150,
+                    "2BR Island": 975,
                     "2BR OF": 1575,
+                    "2BR OV": 1375,
                     "3BR OF": 2150
                   }
                 }
@@ -8766,133 +8766,133 @@
               "name": "Presidents Day",
               "global_reference": "Presidents Day",
               "room_points": {
-                "Studio IV": 2700,
-                "Studio MG": 3100,
-                "Studio OV": 3675,
-                "Studio OF": 4125,
-                "1BR IV": 3850,
-                "1BR MG": 4350,
                 "1BR OV": 5275,
                 "1BR OF": 5900,
-                "2BR IV": 5675,
-                "2BR MG": 6700,
                 "2BR OV": 8025,
                 "2BR OF": 9050,
-                "3BR OF": 12375
+                "3BR OF": 12375,
+                "1BR Garden": 4350,
+                "2BR Garden": 6700,
+                "2BR Island": 5675,
+                "1BR Island": 3850,
+                "0Studio OF": 4125,
+                "0Studio OV": 3675,
+                "0Studio Garden": 3100,
+                "0Studio Island": 2700
               }
             },
             {
               "name": "Easter2",
               "global_reference": "Easter2",
               "room_points": {
-                "Studio IV": 2700,
-                "Studio MG": 3100,
-                "Studio OV": 3675,
-                "Studio OF": 4125,
-                "1BR IV": 3850,
-                "1BR MG": 4350,
                 "1BR OV": 5275,
                 "1BR OF": 5900,
-                "2BR IV": 5675,
-                "2BR MG": 6700,
                 "2BR OV": 8025,
                 "2BR OF": 9050,
-                "3BR OF": 12375
+                "3BR OF": 12375,
+                "1BR Garden": 4350,
+                "2BR Garden": 6700,
+                "2BR Island": 5675,
+                "1BR Island": 3850,
+                "0Studio OF": 4125,
+                "0Studio OV": 3675,
+                "0Studio Garden": 3100,
+                "0Studio Island": 2700
               }
             },
             {
               "name": "Independence Day",
               "global_reference": "Independence Day",
               "room_points": {
-                "Studio IV": 2525,
-                "Studio MG": 2925,
-                "Studio OV": 3500,
-                "Studio OF": 3950,
-                "1BR IV": 3550,
-                "1BR MG": 4125,
                 "1BR OV": 5050,
                 "1BR OF": 5675,
-                "2BR IV": 5450,
-                "2BR MG": 6425,
                 "2BR OV": 7625,
                 "2BR OF": 8650,
-                "3BR OF": 11800
+                "3BR OF": 11800,
+                "1BR Garden": 4125,
+                "2BR Garden": 6425,
+                "2BR Island": 5450,
+                "1BR Island": 3550,
+                "0Studio OF": 3950,
+                "0Studio OV": 3500,
+                "0Studio Garden": 2925,
+                "0Studio Island": 2525
               }
             },
             {
               "name": "Thanksgiving",
               "global_reference": "Thanksgiving",
               "room_points": {
-                "Studio IV": 2175,
-                "Studio MG": 2525,
-                "Studio OV": 2975,
-                "Studio OF": 3375,
-                "1BR IV": 3100,
-                "1BR MG": 3550,
                 "1BR OV": 4300,
                 "1BR OF": 4875,
-                "2BR IV": 4700,
-                "2BR MG": 5500,
                 "2BR OV": 6650,
                 "2BR OF": 7450,
-                "3BR OF": 10200
+                "3BR OF": 10200,
+                "1BR Garden": 3550,
+                "2BR Garden": 5500,
+                "2BR Island": 4700,
+                "1BR Island": 3100,
+                "0Studio OF": 3375,
+                "0Studio OV": 2975,
+                "0Studio Garden": 2525,
+                "0Studio Island": 2175
               }
             },
             {
               "name": "Thanksgiving2",
               "global_reference": "Thanksgiving2",
               "room_points": {
-                "Studio IV": 2700,
-                "Studio MG": 3100,
-                "Studio OV": 3675,
-                "Studio OF": 4125,
-                "1BR IV": 3850,
-                "1BR MG": 4350,
                 "1BR OV": 5275,
                 "1BR OF": 5900,
-                "2BR IV": 5675,
-                "2BR MG": 6700,
                 "2BR OV": 8025,
                 "2BR OF": 9050,
-                "3BR OF": 12375
+                "3BR OF": 12375,
+                "1BR Garden": 4350,
+                "2BR Garden": 6700,
+                "2BR Island": 5675,
+                "1BR Island": 3850,
+                "0Studio OF": 4125,
+                "0Studio OV": 3675,
+                "0Studio Garden": 3100,
+                "0Studio Island": 2700
               }
             },
             {
               "name": "Christmas",
               "global_reference": "Christmas",
               "room_points": {
-                "Studio IV": 2700,
-                "Studio MG": 3100,
-                "Studio OV": 3675,
-                "Studio OF": 4125,
-                "1BR IV": 3850,
-                "1BR MG": 4350,
                 "1BR OV": 5275,
                 "1BR OF": 5900,
-                "2BR IV": 5675,
-                "2BR MG": 6700,
                 "2BR OV": 8025,
                 "2BR OF": 9050,
-                "3BR OF": 12375
+                "3BR OF": 12375,
+                "1BR Garden": 4350,
+                "2BR Garden": 6700,
+                "2BR Island": 5675,
+                "1BR Island": 3850,
+                "0Studio OF": 4125,
+                "0Studio OV": 3675,
+                "0Studio Garden": 3100,
+                "0Studio Island": 2700
               }
             },
             {
               "name": "NewYear",
               "global_reference": "NewYear",
               "room_points": {
-                "Studio IV": 2975,
-                "Studio MG": 3500,
-                "Studio OV": 4125,
-                "Studio OF": 4700,
-                "1BR IV": 4300,
-                "1BR MG": 5100,
                 "1BR OV": 6075,
                 "1BR OF": 6875,
-                "2BR IV": 6475,
-                "2BR MG": 7675,
                 "2BR OV": 9225,
                 "2BR OF": 10425,
-                "3BR OF": 14325
+                "3BR OF": 14325,
+                "1BR Garden": 5100,
+                "2BR Garden": 7675,
+                "2BR Island": 6475,
+                "1BR Island": 4300,
+                "0Studio OF": 4700,
+                "0Studio OV": 4125,
+                "0Studio Garden": 3500,
+                "0Studio Island": 2975
               }
             }
           ]
