@@ -837,6 +837,16 @@ def main(forced_mode: str = "Renter") -> None:
     st.divider()
 
     # --- RESULTS ---
+    # Minimal Explainer just above results
+    discount_display = "None"
+    if disc_mul < 1.0:
+        pct = int((1.0 - disc_mul) * 100)
+        policy_label = "Executive" if disc_mul == 0.75 else "Presidential/Chairman" if disc_mul == 0.7 else "Custom"
+        discount_display = f"✅ {pct}% Off ({policy_label})"
+    
+    rate_label = "Maintenance Fee Rate" if mode == UserMode.OWNER else "Rental Rate"
+    st.caption(f"ℹ️ **Calculation Basis:** {rate_label}: **${rate_to_use:.2f}/pt** • Discount Setting: **{discount_display}**")
+
     res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
 
     if mode == UserMode.OWNER:
@@ -898,5 +908,5 @@ def main(forced_mode: str = "Renter") -> None:
             else:
                 st.info("No season or holiday pricing data for this year.")
 
-def run(forced_mode="Renter") -> None:
+def run(forced_mode: str = "Renter") -> None:
     main(forced_mode)
