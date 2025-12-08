@@ -214,7 +214,6 @@ class MVCCalculator:
         if not resort:
             return CalculationResult(pd.DataFrame(), 0, 0.0, False, [])
 
-        # --- 1. Universal Rate Precision ---
         rate = round(float(rate), 2)
         rows: List[Dict[str, Any]] = []
         tot_eff_pts = 0
@@ -366,7 +365,6 @@ class MVCCalculator:
         return CalculationResult(df, tot_eff_pts, tot_financial, disc_applied, list(set(disc_days)), tot_m, tot_c, tot_d)
 
     def compare_stays(self, resort_name, rooms, checkin, nights, user_mode, rate, policy, owner_config):
-        # (unchanged — your original logic preserved)
         daily_data = []
         holiday_data = defaultdict(lambda: defaultdict(float))
         val_key = "TotalCostValue" if user_mode == UserMode.OWNER else "RentValue"
@@ -479,7 +477,7 @@ class MVCCalculator:
         return adj_s, (adj_e - adj_s).days + 1, True
 
 # ==============================================================================
-# NEW: CONSISTENT TABLE HELPERS
+# HELPER: SEASON COST TABLE
 # ==============================================================================
 def get_all_room_types_for_resort(resort_data: ResortData) -> List[str]:
     rooms = set()
@@ -573,7 +571,6 @@ TIER_PRESIDENTIAL = "Presidential / Chairman (30% off within 60 days)"
 TIER_OPTIONS = [TIER_NO_DISCOUNT, TIER_EXECUTIVE, TIER_PRESIDENTIAL]
 
 def apply_settings_from_dict(user_data: dict):
-    # (unchanged)
     try:
         if "maintenance_rate" in user_data: st.session_state.pref_maint_rate = float(user_data["maintenance_rate"])
         if "purchase_price" in user_data: st.session_state.pref_purchase_price = float(user_data["purchase_price"])
@@ -604,16 +601,14 @@ def apply_settings_from_dict(user_data: dict):
             st.session_state.pref_resort_id = rid
             st.session_state.current_resort_id = rid
 
-        st.session_state.calculator_mode = UserMode.OWNER.value
     except Exception as e:
         st.error(f"Error applying settings: {e}")
 
-def main() -> None:
+def main(forced_mode: str = "Renter") -> None:
     # --- 0. INIT STATE ---
     if "current_resort" not in st.session_state: st.session_state.current_resort = None
     if "current_resort_id" not in st.session_state: st.session_state.current_resort_id = None
-    if "show_help" not in st.session_state: st.session_state.show_help = False
-
+    
     ensure_data_in_session()
 
     # --- 1. AUTO-LOAD LOCAL FILE ON STARTUP ---
@@ -641,7 +636,6 @@ def main() -> None:
     if "pref_inc_c" not in st.session_state: st.session_state.pref_inc_c = True
     if "pref_inc_d" not in st.session_state: st.session_state.pref_inc_d = True
 
-    if "calculator_mode" not in st.session_state: st.session_state.calculator_mode = UserMode.RENTER.value
     if "renter_rate_val" not in st.session_state: st.session_state.renter_rate_val = 0.50
     if "renter_discount_tier" not in st.session_state: st.session_state.renter_discount_tier = TIER_NO_DISCOUNT
 
@@ -660,103 +654,129 @@ def main() -> None:
     calc = MVCCalculator(repo)
     resorts_full = repo.get_resort_list_full()
 
-    with st.sidebar:
-        st.divider()
-        st.markdown("### User Profile")
+    # Determine mode from arg
+    mode = UserMode(forced_mode)
 
-        mode_sel = st.radio(
-            "Calc mode:",
-            [m.value for m in UserMode],
-            key="calculator_mode",
-            horizontal=True,
-            label_visibility="collapsed"
-        )
-        mode = UserMode(mode_sel)
+    render_page_header("Calc", f"{mode.value} Mode", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
 
-        owner_params = None
-        policy = DiscountPolicy.NONE
-        rate_to_use = 0.50
-        st.divider()
+    # --- MAIN PAGE: CONFIGURATION EXPANDER (Moved from Sidebar) ---
+    owner_params = None
+    policy = DiscountPolicy.NONE
+    rate_to_use = 0.50
+    disc_mul = 1.0
 
+    with st.expander("⚙️ Configuration & Settings", expanded=False):
         if mode == UserMode.OWNER:
-            current_val = st.session_state.get("pref_maint_rate", 0.55)
-            val_rate = st.number_input(
-                "Annual Maintenance Fee ($/point)",
-                value=current_val,
-                key="widget_maint_rate",
-                step=0.01, min_value=0.0
-            )
-            if val_rate != current_val:
-                st.session_state.pref_maint_rate = val_rate
+            c1, c2 = st.columns(2)
+            with c1:
+                current_val = st.session_state.get("pref_maint_rate", 0.55)
+                val_rate = st.number_input(
+                    "Annual Maintenance Fee ($/point)",
+                    value=current_val,
+                    key="widget_maint_rate",
+                    step=0.01, min_value=0.0
+                )
+                if val_rate != current_val:
+                    st.session_state.pref_maint_rate = val_rate
+                rate_to_use = val_rate
 
-            rate_to_use = val_rate
-            current_tier = st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT)
-            try: t_idx = TIER_OPTIONS.index(current_tier)
-            except ValueError: t_idx = 0
-
-            opt = st.radio("Discount Tier:", TIER_OPTIONS, index=t_idx, key="widget_discount_tier")
-            st.session_state.pref_discount_tier = opt
-
-            st.divider()
+            with c2:
+                current_tier = st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT)
+                try: t_idx = TIER_OPTIONS.index(current_tier)
+                except ValueError: t_idx = 0
+                opt = st.radio("Discount Tier:", TIER_OPTIONS, index=t_idx, key="widget_discount_tier")
+                st.session_state.pref_discount_tier = opt
 
             col_chk2, col_chk3 = st.columns(2)
             inc_m = True
-
             with col_chk2:
-                inc_c = st.checkbox("Capital", value=st.session_state.get("pref_inc_c", True), key="widget_inc_c")
+                inc_c = st.checkbox("Include Capital Cost", value=st.session_state.get("pref_inc_c", True), key="widget_inc_c")
                 st.session_state.pref_inc_c = inc_c
             with col_chk3:
-                inc_d = st.checkbox("Deprec.", value=st.session_state.get("pref_inc_d", True), key="widget_inc_d")
+                inc_d = st.checkbox("Include Depreciation", value=st.session_state.get("pref_inc_d", True), key="widget_inc_d")
                 st.session_state.pref_inc_d = inc_d
 
+            cap, coc, life, salvage = 18.0, 0.06, 15, 3.0
+            
             if inc_c or inc_d:
-                val_cap = st.number_input("Purchase ($/pt)", value=st.session_state.get("pref_purchase_price", 18.0), key="widget_purchase_price", step=1.0)
-                st.session_state.pref_purchase_price = val_cap
-                cap = val_cap
-            else:
-                cap = st.session_state.get("pref_purchase_price", 18.0)
-
-            if inc_c:
-                val_coc = st.number_input("Cost of Capital (%)", value=st.session_state.get("pref_capital_cost", 5.0), key="widget_capital_cost", step=0.5)
-                st.session_state.pref_capital_cost = val_coc
-                coc = val_coc / 100.0
-            else:
-                coc = 0.06
-
-            if inc_d:
-                c1, c2 = st.columns(2)
-                with c1:
-                    val_life = st.number_input("Useful Life (yrs)", value=st.session_state.get("pref_useful_life", 10), key="widget_useful_life", min_value=1)
-                    st.session_state.pref_useful_life = val_life
-                    life = val_life
-                with c2:
-                    val_salvage = st.number_input("Salvage ($/pt)", value=st.session_state.get("pref_salvage_value", 3.0), key="widget_salvage_value", step=0.5)
-                    st.session_state.pref_salvage_value = val_salvage
-                    salvage = val_salvage
-            else:
-                life, salvage = 15, 3.0
+                st.markdown("---")
+                rc1, rc2, rc3, rc4 = st.columns(4)
+                with rc1:
+                    val_cap = st.number_input("Purchase ($/pt)", value=st.session_state.get("pref_purchase_price", 18.0), key="widget_purchase_price", step=1.0)
+                    st.session_state.pref_purchase_price = val_cap
+                    cap = val_cap
+                with rc2:
+                    if inc_c:
+                        val_coc = st.number_input("Cost of Capital (%)", value=st.session_state.get("pref_capital_cost", 5.0), key="widget_capital_cost", step=0.5)
+                        st.session_state.pref_capital_cost = val_coc
+                        coc = val_coc / 100.0
+                with rc3:
+                    if inc_d:
+                        val_life = st.number_input("Useful Life (yrs)", value=st.session_state.get("pref_useful_life", 10), key="widget_useful_life", min_value=1)
+                        st.session_state.pref_useful_life = val_life
+                        life = val_life
+                with rc4:
+                    if inc_d:
+                        val_salvage = st.number_input("Salvage ($/pt)", value=st.session_state.get("pref_salvage_value", 3.0), key="widget_salvage_value", step=0.5)
+                        st.session_state.pref_salvage_value = val_salvage
+                        salvage = val_salvage
 
             owner_params = {
                 "disc_mul": 1.0, "inc_m": inc_m, "inc_c": inc_c, "inc_d": inc_d,
                 "cap_rate": cap * coc, "dep_rate": (cap - salvage) / life if life > 0 else 0.0,
             }
+            
+            # Save/Load UI inside Main Page Expander
+            st.markdown("---")
+            sl_col1, sl_col2 = st.columns([3, 1])
+            with sl_col1:
+                config_file = st.file_uploader("Load Saved Settings (JSON)", type="json", key="user_cfg_upload_main")
+                if config_file:
+                     file_sig = f"{config_file.name}_{config_file.size}"
+                     if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
+                         config_file.seek(0)
+                         data = json.load(config_file)
+                         apply_settings_from_dict(data)
+                         st.session_state.last_loaded_cfg = file_sig
+                         st.rerun()
+            with sl_col2:
+                current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
+                current_settings = {
+                    "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
+                    "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
+                    "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0),
+                    "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
+                    "useful_life": st.session_state.get("pref_useful_life", 10),
+                    "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT),
+                    "include_maintenance": True,
+                    "include_capital": st.session_state.get("pref_inc_c", True),
+                    "include_depreciation": st.session_state.get("pref_inc_d", True),
+                    "renter_rate": st.session_state.get("renter_rate_val", 0.50),
+                    "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
+                    "preferred_resort_id": current_pref_resort
+                }
+                st.download_button("💾 Save Profile", json.dumps(current_settings, indent=2), "mvc_owner_settings.json", "application/json", use_container_width=True)
+
         else:
-            curr_rent = st.session_state.get("renter_rate_val", 0.50)
-            renter_rate_input = st.number_input("Cost per Point ($)", value=curr_rent, step=0.01, key="widget_renter_rate")
-            if renter_rate_input != curr_rent: st.session_state.renter_rate_val = renter_rate_input
+            # RENTER MODE CONFIG
+            c1, c2 = st.columns(2)
+            with c1:
+                curr_rent = st.session_state.get("renter_rate_val", 0.50)
+                renter_rate_input = st.number_input("Rental Cost per Point ($)", value=curr_rent, step=0.01, key="widget_renter_rate")
+                if renter_rate_input != curr_rent: st.session_state.renter_rate_val = renter_rate_input
+                rate_to_use = renter_rate_input
 
-            rate_to_use = renter_rate_input
-
-            curr_r_tier = st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT)
-            try: r_idx = TIER_OPTIONS.index(curr_r_tier)
-            except ValueError: r_idx = 0
-
-            opt = st.radio("Discount tier available:", TIER_OPTIONS, index=r_idx, key="widget_renter_discount_tier")
-            st.session_state.renter_discount_tier = opt
+            with c2:
+                curr_r_tier = st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT)
+                try: r_idx = TIER_OPTIONS.index(curr_r_tier)
+                except ValueError: r_idx = 0
+                opt = st.radio("Discount tier available:", TIER_OPTIONS, index=r_idx, key="widget_renter_discount_tier")
+                st.session_state.renter_discount_tier = opt
 
             if "Presidential" in opt or "Chairman" in opt: policy = DiscountPolicy.PRESIDENTIAL
             elif "Executive" in opt: policy = DiscountPolicy.EXECUTIVE
 
+        # Common Logic for Discount Multiplier
         if mode == UserMode.OWNER:
              if "Executive" in opt: policy = DiscountPolicy.EXECUTIVE
              elif "Presidential" in opt or "Chairman" in opt: policy = DiscountPolicy.PRESIDENTIAL
@@ -764,10 +784,7 @@ def main() -> None:
         disc_mul = 0.75 if "Executive" in opt else 0.7 if "Presidential" in opt or "Chairman" in opt else 1.0
         if owner_params: owner_params["disc_mul"] = disc_mul
 
-        st.divider()
-
-    render_page_header("Calc", f"{mode.value}", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
-
+    # --- RESORT SELECTION ---
     if resorts_full and st.session_state.current_resort_id is None:
         if "pref_resort_id" in st.session_state and any(r.get("id") == st.session_state.pref_resort_id for r in resorts_full):
             st.session_state.current_resort_id = st.session_state.pref_resort_id
@@ -784,6 +801,7 @@ def main() -> None:
     render_resort_card(info["full_name"], info["timezone"], info["address"])
     st.divider()
 
+    # --- CALCULATOR INPUTS ---
     c1, c2, c3, c4 = st.columns([2, 1, 2, 2])
     with c1:
         checkin = st.date_input("Check-in", value=st.session_state.calc_checkin, key="calc_checkin_widget")
@@ -818,6 +836,7 @@ def main() -> None:
 
     st.divider()
 
+    # --- RESULTS ---
     res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
 
     if mode == UserMode.OWNER:
@@ -835,7 +854,7 @@ def main() -> None:
 
     st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
 
-    # NEW: All Room Types – This Stay (directly below breakdown)
+    # All Room Types – This Stay
     st.markdown("**All Room Types – This Stay**")
     comp_data = []
     all_room_types = get_all_room_types_for_resort(calc.repo.get_resort(r_name))
@@ -868,7 +887,6 @@ def main() -> None:
         with st.expander("Season and Holiday Calendar", expanded=False):
             st.plotly_chart(create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {})), use_container_width=True)
 
-            # NEW: 7-Night Cost Table using native st.dataframe()
             cost_df = build_season_cost_table(res_data, int(year_str), rate_to_use, disc_mul, mode, owner_params)
             if cost_df is not None:
                 title = "7-Night Rental Costs" if mode == UserMode.RENTER else "7-Night Ownership Costs"
@@ -878,38 +896,5 @@ def main() -> None:
             else:
                 st.info("No season or holiday pricing data for this year.")
 
-    with st.sidebar:
-        with st.expander("Your Calculator Settings", expanded=False):
-            st.info("**Save time by saving your profile.** Store your costs, membership tier, and resort preference to a file. Upload it anytime to instantly restore your setup.")
-
-            st.markdown("###### Load/Save Settings")
-            config_file = st.file_uploader("Load Settings (JSON)", type="json", key="user_cfg_upload")
-
-            if config_file:
-                 file_sig = f"{config_file.name}_{config_file.size}"
-                 if "last_loaded_cfg" not in st.session_state or st.session_state.last_loaded_cfg != file_sig:
-                     config_file.seek(0)
-                     data = json.load(config_file)
-                     apply_settings_from_dict(data)
-                     st.session_state.last_loaded_cfg = file_sig
-                     st.rerun()
-
-            current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
-            current_settings = {
-                "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
-                "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
-                "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0),
-                "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
-                "useful_life": st.session_state.get("pref_useful_life", 10),
-                "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT),
-                "include_maintenance": True,
-                "include_capital": st.session_state.get("pref_inc_c", True),
-                "include_depreciation": st.session_state.get("pref_inc_d", True),
-                "renter_rate": st.session_state.get("renter_rate_val", 0.50),
-                "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
-                "preferred_resort_id": current_pref_resort
-            }
-            st.download_button("Save Settings", json.dumps(current_settings, indent=2), "mvc_owner_settings.json", "application/json", use_container_width=True)
-
-def run() -> None:
-    main()
+def run(forced_mode="Renter") -> None:
+    main(forced_mode)
