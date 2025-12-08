@@ -852,21 +852,23 @@ def main(forced_mode: str = "Renter") -> None:
         cols[1].metric("Total Rent", f"${res.financial_total:,.0f}")
         if res.discount_applied: st.success(f"Discount Applied: {len(res.discounted_days)} days")
 
-    st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
+    # --- EXPANDER 1: Daily Breakdown (Collapsed by default) ---
+    with st.expander("Daily Breakdown", expanded=False):
+        st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
 
-    # All Room Types – This Stay
-    st.markdown("**All Room Types – This Stay**")
-    comp_data = []
-    all_room_types = get_all_room_types_for_resort(calc.repo.get_resort(r_name))
-    for rm in all_room_types:
-        room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
-        cost_label = "Rent" if mode == UserMode.RENTER else "Cost"
-        comp_data.append({
-            "Room Type": rm,
-            "Points": f"{room_res.total_points:,}",
-            cost_label: f"${room_res.financial_total:,.0f}"
-        })
-    st.dataframe(pd.DataFrame(comp_data), use_container_width=True, hide_index=True)
+    # --- EXPANDER 2: All Room Types – This Stay (Collapsed by default) ---
+    with st.expander("All Room Types – This Stay", expanded=False):
+        comp_data = []
+        all_room_types = get_all_room_types_for_resort(calc.repo.get_resort(r_name))
+        for rm in all_room_types:
+            room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
+            cost_label = "Rent" if mode == UserMode.RENTER else "Cost"
+            comp_data.append({
+                "Room Type": rm,
+                "Points": f"{room_res.total_points:,}",
+                cost_label: f"${room_res.financial_total:,.0f}"
+            })
+        st.dataframe(pd.DataFrame(comp_data), use_container_width=True, hide_index=True)
 
     if comp_rooms:
         st.divider()
