@@ -665,7 +665,7 @@ def main(forced_mode: str = "Renter") -> None:
     rate_to_use = 0.50
     disc_mul = 1.0
 
-    with st.expander("⚙️ Configuration & Settings", expanded=False):
+    with st.expander("⚙️ Settings", expanded=False):
         if mode == UserMode.OWNER:
             c1, c2 = st.columns(2)
             with c1:
@@ -845,7 +845,7 @@ def main(forced_mode: str = "Renter") -> None:
         discount_display = f"✅ {pct}% Off ({policy_label})"
     
     rate_label = "Maintenance Fee Rate" if mode == UserMode.OWNER else "Rental Rate"
-    st.caption(f"ℹ️ **Change in Configuration & Settings:** {rate_label}: **${rate_to_use:.2f}/pt** • Discount Setting: **{discount_display}**")
+    st.caption(f"ℹ️ ** 🔧 Settings:** {rate_label}: **${rate_to_use:.2f}/pt** • Points Discount: **{discount_display}**")
 
     res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
 
