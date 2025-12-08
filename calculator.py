@@ -845,7 +845,7 @@ def main(forced_mode: str = "Renter") -> None:
         discount_display = f"✅ {pct}% Off ({policy_label})"
     
     rate_label = "Maintenance Fee Rate" if mode == UserMode.OWNER else "Rental Rate"
-    st.caption(f"ℹ️ **Calculation Basis:** {rate_label}: **${rate_to_use:.2f}/pt** • Discount Setting: **{discount_display}**")
+    st.caption(f"ℹ️ **Change in Configuration & Settings:** {rate_label}: **${rate_to_use:.2f}/pt** • Discount Setting: **{discount_display}**")
 
     res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
 
