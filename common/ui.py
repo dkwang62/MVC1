@@ -199,7 +199,7 @@ def render_resort_grid(
                     
                     # Fixed emoji here from "妾" to "🏨"
                     if st.button(
-                        f"🏨 {name}", 
+                        f"{name}", 
                         key=f"resort_btn_{rid or name}",
                         type=btn_type,
                         use_container_width=True,
