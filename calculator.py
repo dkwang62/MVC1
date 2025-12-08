@@ -799,7 +799,7 @@ def main(forced_mode: str = "Renter") -> None:
     r_name = resort_obj.get("display_name")
     info = repo.get_resort_info(r_name)
     render_resort_card(info["full_name"], info["timezone"], info["address"])
-    st.divider()
+    # st.divider()
 
     # --- CALCULATOR INPUTS ---
     c1, c2, c3, c4 = st.columns([2, 1, 2, 2])
@@ -895,7 +895,6 @@ def main(forced_mode: str = "Renter") -> None:
     year_str = str(adj_in.year)
     res_data = calc.repo.get_resort(r_name)
     if res_data and year_str in res_data.years:
-        # st.divider()
         with st.expander("Season and Holiday Calendar", expanded=False):
             st.plotly_chart(create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {})), use_container_width=True)
 
