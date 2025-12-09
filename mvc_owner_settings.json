@@ -1,14 +1,14 @@
 {
-  "maintenance_rate": 0.56,
+  "maintenance_rate": 0.52,
   "purchase_price": 18.0,
   "capital_cost_pct": 5.0,
   "salvage_value": 3.0,
   "useful_life": 20,
-  "discount_tier": "No Discount",
+  "discount_tier": "Presidential",
   "include_maintenance": true,
   "include_capital": false,
   "include_depreciation": false,
-  "renter_rate": 0.83,
-  "renter_discount_tier": "No Discount",
-  "preferred_resort_id": "surfers-paradise"
+  "renter_rate": 0.82,
+  "renter_discount_tier": "Ordinary",
+  "preferred_resort_id": "phuket-mai-khao"
 }
