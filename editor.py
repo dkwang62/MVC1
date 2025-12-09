@@ -37,7 +37,7 @@ def initialize_session_state():
         "working_resorts": {},
         "last_save_time": None,
         "delete_confirm": False,
-        "download_verified": False,  # State for the verify button
+        "download_verified": False, # State for the verify button
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -161,12 +161,12 @@ def create_download_button_v2(data: Dict[str, Any]):
     if "download_verified" not in st.session_state:
         st.session_state.download_verified = False
     with st.sidebar.expander("💾 Save & Download", expanded=False):
-        
+       
         # --- 1. DETECT UNSAVED CHANGES ---
         current_id = st.session_state.get("current_resort_id")
         working_resorts = st.session_state.get("working_resorts", {})
         has_unsaved_changes = False
-        
+       
         if current_id and current_id in working_resorts:
             working_copy = working_resorts[current_id]
             committed_copy = find_resort_by_id(data, current_id)
@@ -179,32 +179,32 @@ def create_download_button_v2(data: Dict[str, Any]):
             # Action: Must Commit to Memory
             # Effect: Resets verification status
             st.session_state.download_verified = False
-            
+           
             st.warning("⚠️ Unsaved changes pending.")
-            
+           
             if st.button("🧠 COMMIT TO MEMORY", type="primary", width="stretch"):
                 commit_working_to_data_v2(data, working_resorts[current_id], current_id)
                 st.toast("Committed to memory.", icon="✅")
                 st.rerun()
-            
+           
             st.caption("You must commit changes to memory before proceeding.")
         elif not st.session_state.download_verified:
             # STATE: CLEAN BUT UNVERIFIED
             # Action: Must Verify
             # Effect: Shows Download button next
             st.info("ℹ️ Memory updated.")
-            
+           
             if st.button("🔍 Verify that memory is up to date", width="stretch"):
                 # This button 'actively checks' status (logic is implicit since we are in the else block)
                 st.session_state.download_verified = True
                 st.rerun()
-                
+               
             st.caption("Please confirm the current memory state is correct to unlock the download.")
         else:
             # STATE: VERIFIED
             # Action: Allow Download
             st.success("✅ Verified & Ready.")
-            
+           
             # This is the ONLY place this widget is rendered
             filename = st.text_input(
                 "File name",
@@ -237,7 +237,7 @@ def handle_file_verification():
                 # Normalize strings for comparison
                 current_json = json.dumps(st.session_state.data, sort_keys=True)
                 uploaded_json = json.dumps(uploaded_data, sort_keys=True)
-                
+               
                 if current_json == uploaded_json:
                     st.success("✅ File matches memory exactly.")
                 else:
@@ -309,7 +309,7 @@ def handle_resort_creation_v2(
     data: Dict[str, Any], current_resort_id: Optional[str]
 ):
     resorts = data.setdefault("resorts", [])
-    
+   
     with st.expander("➕ Create or Clone Resort", expanded=False):
         # Use tabs to separate the two distinct actions
         tab_new, tab_clone = st.tabs(["✨ New Blank", "📋 Clone Current"])
@@ -320,7 +320,7 @@ def handle_resort_creation_v2(
                 placeholder="e.g., Pulse San Francisco",
                 key="new_resort_name_blank",
             )
-            
+           
             if st.button("Create Blank Resort", width="stretch"):
                 name = new_name_input.strip()
                 if not name:
@@ -333,7 +333,7 @@ def handle_resort_creation_v2(
                     code = generate_resort_code(name)
                     detected_timezone = detect_timezone_from_name(name)
                     full_name = get_resort_full_name(rid, name)
-                    
+                   
                     new_resort = {
                         "id": rid,
                         "display_name": name,
@@ -356,12 +356,12 @@ def handle_resort_creation_v2(
                 src = find_resort_by_id(data, current_resort_id)
                 if src:
                     st.markdown(f"**Source:** {src.get('display_name', 'Unknown')}")
-                    
+                   
                     if st.button("📋 Clone This Resort", width="stretch"):
                         # 1. Generate unique name
                         original_name = src.get("display_name", "Resort")
                         new_name = f"{original_name} (Copy)"
-                        
+                       
                         # Ensure uniqueness if (Copy) already exists
                         counter = 1
                         while is_duplicate_resort_name(new_name, resorts):
@@ -510,13 +510,11 @@ def render_save_button_v2(
     """
     committed = find_resort_by_id(data, resort_id)
     if committed is not None and committed != working:
-        # There ARE unsaved changes, but we don't nag; just inform quietly.
         st.caption(
             "Changes in this resort are currently kept in memory. "
             "You’ll be asked to **Save or Discard** only when you leave this resort."
         )
     else:
-        # Everything matches the committed data.
         st.caption("All changes for this resort are in sync with the saved data.")
 
 # ----------------------------------------------------------------------
@@ -661,7 +659,7 @@ def render_single_season_v2(
     st.markdown(f"**🎯 {sname}**")
     # --- Use Data Editor for efficient date management ---
     periods = season.get("periods", [])
-    
+   
     # Create DataFrame for editing
     df_data = []
     for p in periods:
@@ -669,7 +667,7 @@ def render_single_season_v2(
             "start": safe_date(p.get("start")),
             "end": safe_date(p.get("end"))
         })
-    
+   
     df = pd.DataFrame(df_data)
     edited_df = st.data_editor(
         df,
@@ -873,7 +871,7 @@ def edit_resort_basics(working: Dict[str, Any], resort_id: str):
         )
         if new_display and new_display != current_display:
             working["display_name"] = new_display.strip()
-    
+   
     with col_code:
         current_code = working.get("code", "")
         new_code = st.text_input(
@@ -960,7 +958,7 @@ def render_reference_points_editor_v2(
                 )
                 room_points = cat.setdefault("room_points", {})
                 rooms_here = canonical_rooms or sorted(room_points.keys())
-                
+               
                 # --- Use Data Editor for Points ---
                 pts_data = []
                 for room in rooms_here:
@@ -968,9 +966,9 @@ def render_reference_points_editor_v2(
                         "Room Type": room,
                         "Points": int(room_points.get(room, 0) or 0)
                     })
-                
+               
                 df_pts = pd.DataFrame(pts_data)
-                
+               
                 edited_df = st.data_editor(
                     df_pts,
                     key=rk(resort_id, "master_rp_editor", base_year, s_idx, key),
@@ -981,7 +979,7 @@ def render_reference_points_editor_v2(
                         "Points": st.column_config.NumberColumn(min_value=0, step=25)
                     }
                 )
-                
+               
                 if st.button("Save Changes", key=rk(resort_id, "save_master_rp", base_year, s_idx, key)):
                     if not edited_df.empty:
                         new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
@@ -1049,6 +1047,17 @@ def render_reference_points_editor_v2(
 # ----------------------------------------------------------------------
 # HOLIDAY MANAGEMENT
 # ----------------------------------------------------------------------
+def get_available_global_holidays(data: Dict[str, Any]) -> List[str]:
+    """Return a sorted list of unique global holiday names available in the data."""
+    if not data or "global_holidays" not in data:
+        return []
+    
+    unique_names = set()
+    for year_data in data["global_holidays"].values():
+        unique_names.update(year_data.keys())
+        
+    return sorted(list(unique_names))
+
 def get_all_holidays_for_resort(
     working: Dict[str, Any]
 ) -> List[Dict[str, Any]]:
@@ -1063,6 +1072,29 @@ def get_all_holidays_for_resort(
                     "global_reference": key,
                 }
     return list(holidays_map.values())
+
+def sort_holidays_chronologically(working: Dict[str, Any], data: Dict[str, Any]):
+    """
+    Sorts the holidays list within the working resort for every year based on
+    the date defined in global_holidays for that specific year.
+    """
+    global_holidays = data.get("global_holidays", {})
+    years = working.get("years", {})
+    
+    for year_str, year_obj in years.items():
+        current_holidays = year_obj.get("holidays", [])
+        if not current_holidays:
+            continue
+            
+        gh_year = global_holidays.get(year_str, {})
+        
+        def sort_key(h):
+            ref = h.get("global_reference") or h.get("name")
+            if ref in gh_year:
+                return gh_year[ref].get("start_date", "9999-12-31")
+            return "9999-12-31" # Put undefined dates at the end
+            
+        current_holidays.sort(key=sort_key)
 
 def add_holiday_to_all_years(
     working: Dict[str, Any], holiday_name: str, global_ref: str
@@ -1135,7 +1167,7 @@ def rename_holiday_across_years(
     return changed
 
 def render_holiday_management_v2(
-    working: Dict[str, Any], years: List[str], resort_id: str
+    working: Dict[str, Any], years: List[str], resort_id: str, data: Dict[str, Any]
 ):
     st.markdown(
         "<div class='section-header'>🎄 Holiday Management</div>",
@@ -1150,23 +1182,44 @@ def render_holiday_management_v2(
     st.caption(
         "Holidays are automatically synchronized across all years. Changes here affect every year."
     )
+    
+    # --- 1. Sort holidays chronologically first ---
+    sort_holidays_chronologically(working, data)
+    
+    # --- 2. Get unique list for display ---
+    # We sort the display list by the date in the base year for a consistent view
     current_holidays = get_all_holidays_for_resort(working)
+    gh_base = data.get("global_holidays", {}).get(base_year, {})
+    
+    def display_sort_key(h):
+        ref = h.get("global_reference", "")
+        return gh_base.get(ref, {}).get("start_date", "9999-12-31")
+    
+    current_holidays.sort(key=display_sort_key)
+
     if current_holidays:
         st.markdown("**Current Holidays:**")
         for h in current_holidays:
             unique_key = h.get("global_reference", "")
             col1, col2, col3 = st.columns([3, 3, 1])
             with col1:
-                new_display = st.text_input(
+                # Disabled editing of name since it should match Global Reference generally, 
+                # but leaving as text_input disabled if you strictly want them linked, 
+                # or enabled if you allow custom display names. 
+                # Per requirements "Holiday weeks can only be selected from this Global list",
+                # implies strict adherence. 
+                st.text_input(
                     "Display Name",
                     value=h.get("name", ""),
                     key=rk(resort_id, "holiday_display", unique_key),
+                    disabled=True 
                 )
             with col2:
-                new_global = st.text_input(
+                st.text_input(
                     "Global Reference",
                     value=h.get("global_reference", ""),
                     key=rk(resort_id, "holiday_ref", unique_key),
+                    disabled=True
                 )
             with col3:
                 if st.button(
@@ -1178,55 +1231,55 @@ def render_holiday_management_v2(
                             f"✅ Deleted '{h['name']}' from all years"
                         )
                         st.rerun()
-            if (
-                new_display != h["name"]
-                or new_global != h["global_reference"]
-            ):
-                if rename_holiday_across_years(
-                    working, unique_key, new_display, new_global
-                ):
-                    # Silent update; persisted on Save
-                    pass
     else:
         st.info("💡 No holidays assigned yet. Add one below.")
+        
     st.markdown("---")
     st.markdown("**➕ Add New Holiday**")
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        new_name = st.text_input(
-            "Holiday name (will be added to all years)",
-            key=rk(resort_id, "new_holiday_name"),
-            placeholder="e.g., Christmas Week",
-        )
-    with col2:
-        if (
-            st.button(
+    
+    # --- 3. Dropdown for adding holidays ---
+    available_globals = get_available_global_holidays(data)
+    # Filter out ones already added
+    existing_refs = set(h["global_reference"] for h in current_holidays)
+    options = [opt for opt in available_globals if opt not in existing_refs]
+    
+    if not options:
+        st.info("All global holidays have already been added to this resort.")
+    else:
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            selected_holiday = st.selectbox(
+                "Select Global Holiday to Add",
+                options=options,
+                key=rk(resort_id, "new_holiday_select"),
+            )
+        with col2:
+            if st.button(
                 "➕ Add to All Years",
                 key=rk(resort_id, "btn_add_holiday_global"),
                 width="stretch",
-            )
-            and new_name
-        ):
-            name = new_name.strip()
-            if not name:
-                st.error("❌ Name cannot be empty")
-            elif any(
-                h["global_reference"].lower() == name.lower()
-                for h in current_holidays
             ):
-                st.error("❌ Holiday already exists")
-            else:
-                if add_holiday_to_all_years(working, name, name):
-                    st.success(f"✅ Added '{name}' to all years")
-                    st.rerun()
+                if selected_holiday:
+                    if add_holiday_to_all_years(working, selected_holiday, selected_holiday):
+                        st.success(f"✅ Added '{selected_holiday}' to all years")
+                        st.rerun()
+                    else:
+                        st.error("Failed to add holiday.")
+
     sync_holiday_room_points_across_years(working, base_year=base_year)
+    
     st.markdown("---")
     st.markdown("**💰 Master Holiday Points**")
     st.caption(
         "Edit holiday room points once. Applied to all years automatically."
     )
+    
+    # Ensure base year holidays are sorted before displaying points editor
+    sort_holidays_chronologically(working, data)
+    
     base_year_obj = ensure_year_structure(working, base_year)
     base_holidays = base_year_obj.get("holidays", [])
+    
     if not base_holidays:
         st.info(
             f"💡 No holidays defined in {base_year}. Add holidays above first."
@@ -1240,7 +1293,7 @@ def render_holiday_management_v2(
                 st.caption(f"Reference key: {key}")
                 rp = h.setdefault("room_points", {})
                 rooms_here = sorted(all_rooms or rp.keys())
-                
+               
                 # --- Use Data Editor for Points ---
                 pts_data = []
                 for room in rooms_here:
@@ -1248,9 +1301,9 @@ def render_holiday_management_v2(
                         "Room Type": room,
                         "Points": int(rp.get(room, 0) or 0)
                     })
-                
+               
                 df_pts = pd.DataFrame(pts_data)
-                
+               
                 edited_df = st.data_editor(
                     df_pts,
                     key=rk(resort_id, "holiday_master_rp_editor", base_year, h_idx),
@@ -1261,7 +1314,7 @@ def render_holiday_management_v2(
                         "Points": st.column_config.NumberColumn(min_value=0, step=25)
                     }
                 )
-                
+               
                 if st.button("Save Changes", key=rk(resort_id, "save_holiday_rp", base_year, h_idx)):
                     if not edited_df.empty:
                         new_rp = dict(zip(edited_df["Room Type"], edited_df["Points"]))
@@ -1529,22 +1582,23 @@ def render_gantt_charts_v2(
         "<div class='section-header'>📊 Visual Timeline</div>",
         unsafe_allow_html=True,
     )
+    
+    # Ensure sort order before rendering chart
+    sort_holidays_chronologically(working, data)
+    
     tabs = st.tabs([f"📅 {year}" for year in years])
     for tab, year in zip(tabs, years):
         with tab:
-            # --- FIX: Retrieve season AND holiday counts ---
             year_data = working.get("years", {}).get(year, {})
             n_seasons = len(year_data.get("seasons", []))
             n_holidays = len(year_data.get("holidays", []))
-             
-            # Sum them up so the chart allocates space for both
+            
             total_rows = n_seasons + n_holidays
 
             fig = create_gantt_chart_from_working(
                 working,
                 year,
                 data,
-                # Calculate height based on the total number of items
                 height=max(400, total_rows * 35 + 150),
             )
             st.plotly_chart(fig, width="stretch")
@@ -1690,24 +1744,20 @@ def run():
 If you want a wider set of resorts or need to fix errors in the data without waiting for the author to update it, you can make the changes yourself. The Editor allows you to modify the default dataset in memory and create your own personalised JSON file to reuse each time you open the app. You may also merge resorts from your personalised file into the dataset currently in memory.
 Restarting the app resets everything to the default dataset, so be sure to save and download the in-memory data to preserve your edits. To confirm your saved file matches what is in memory, use the verification step by loading your personalised JSON file."""
         )
-            
+           
         handle_file_upload()
         if st.session_state.data:
-            # st.markdown(
-            # "<div style='margin: 20px 0;'></div>", unsafe_allow_html=True
-            # )
-            # Move merge logic to File to Memory
             handle_merge_from_another_file_v2(st.session_state.data)
             create_download_button_v2(st.session_state.data)
             handle_file_verification()
-    
+   
     # Main content
-    
+   
     render_page_header(
     "Edit",
     "Creating Your Data File",
     icon="🏨",
-    badge_color="#EF4444" # Adjust to match the red color in the image, e.g., #DC2626 or #EF4444
+    badge_color="#EF4444" 
 )
     if not st.session_state.data:
         st.markdown(
@@ -1725,9 +1775,11 @@ Restarting the app resets everything to the default dataset, so be sure to save 
     years = get_years_from_data(data)
     current_resort_id = st.session_state.current_resort_id
     previous_resort_id = st.session_state.previous_resort_id
+    
     # Shared grid (column-first, West → East) from common.ui
     render_resort_grid(resorts, current_resort_id)
     handle_resort_switch_v2(data, current_resort_id, previous_resort_id)
+    
     # Working resort
     working = load_resort(data, current_resort_id)
     if working:
@@ -1738,12 +1790,14 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         )
         timezone = working.get("timezone", "UTC")
         address = working.get("address", "No address provided")
+        
         # Shared resort card from common.ui
         render_resort_card(resort_name, timezone, address)
         render_validation_panel_v2(working, data, years)
         render_save_button_v2(data, working, current_resort_id)
         handle_resort_creation_v2(data, current_resort_id)
         handle_resort_deletion_v2(data, current_resort_id)
+        
         tab1, tab2, tab3, tab4, tab5 = st.tabs(
             [
                 "📊 Overview",
@@ -1761,9 +1815,11 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         with tab3:
             render_reference_points_editor_v2(working, years, current_resort_id)
         with tab4:
-            render_holiday_management_v2(working, years, current_resort_id)
+            # Passes data now so it can look up global holidays
+            render_holiday_management_v2(working, years, current_resort_id, data)
         with tab5:
             render_resort_summary_v2(working)
+            
     st.markdown("---")
     render_global_settings_v2(data, years)
     st.markdown(
