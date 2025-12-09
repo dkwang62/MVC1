@@ -172,7 +172,7 @@ def render_resort_grid(
     resorts: List[Dict[str, Any]],
     current_resort_key: Optional[str],
     *,
-    title: str = "🏨 Resorts in Memory (West to East) • Select Resort", # Fixed emojis here
+    title: str = "🏨 Resorts in Memory (West to East) • Select Resort", 
 ) -> None:
     # Wrap the grid in an expander
     with st.expander(title, expanded=False):
@@ -197,7 +197,6 @@ def render_resort_grid(
                     is_current = current_resort_key in (rid, name)
                     btn_type = "primary" if is_current else "secondary"
                     
-                    # Fixed emoji here from "妾" to "🏨"
                     if st.button(
                         f"{name}", 
                         key=f"resort_btn_{rid or name}",
