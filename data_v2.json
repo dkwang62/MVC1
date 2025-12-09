@@ -54,7 +54,7 @@
           "US"
         ]
       },
-      "Thanksgiving": {
+      "Thanksgiving1": {
         "start_date": "2025-11-21",
         "end_date": "2025-11-27",
         "type": "federal_holiday",
@@ -176,7 +176,7 @@
           "US"
         ]
       },
-      "Thanksgiving": {
+      "Thanksgiving1": {
         "start_date": "2026-11-20",
         "end_date": "2026-11-26",
         "type": "federal_holiday",
@@ -2412,8 +2412,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Suite": 350,
                 "1-BDRM": 400,
@@ -2640,8 +2640,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Suite": 350,
                 "1-BDRM": 400,
@@ -3141,8 +3141,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1400,
                 "1-BDRM": 1950,
@@ -3360,8 +3360,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1400,
                 "1-BDRM": 1950,
@@ -4859,8 +4859,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1400,
                 "1BR": 2000,
@@ -5078,8 +5078,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1400,
                 "1BR": 2000,
@@ -7225,8 +7225,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Parlor GV": 975,
                 "Parlor OV": 1525,
@@ -7482,8 +7482,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Parlor GV": 975,
                 "Parlor OV": 1525,
@@ -8541,8 +8541,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1BR OV": 4300,
                 "1BR OF": 4875,
@@ -8820,8 +8820,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1BR OV": 4300,
                 "1BR OF": 4875,
@@ -9608,8 +9608,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 675,
                 "1-BDRM": 900,
@@ -9836,8 +9836,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 675,
                 "1-BDRM": 900,
@@ -12056,8 +12056,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Doubles": 1750,
                 "King": 1750,
@@ -12310,8 +12310,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Doubles": 1750,
                 "King": 1750,
@@ -12568,8 +12568,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Guest No-View": 2050,
                 "Guest Courtyard": 2450,
@@ -12816,8 +12816,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Guest No-View": 2050,
                 "Guest Courtyard": 2450,
@@ -13049,8 +13049,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1400,
                 "1BR": 2000,
@@ -13277,8 +13277,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1400,
                 "1BR": 2000,
@@ -13520,8 +13520,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1-BDRM": 2900,
                 "2-BDRM": 3750,
@@ -13753,8 +13753,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1-BDRM": 2900,
                 "2-BDRM": 3750,
@@ -14032,8 +14032,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "2-BDRM": 2500,
                 "3-BDRM": 3225,
@@ -14292,8 +14292,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "2-BDRM": 2500,
                 "3-BDRM": 3225,
@@ -14578,8 +14578,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "2-BDRM": 2500,
                 "2-BDRM Den": 2725,
@@ -14854,8 +14854,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "2-BDRM": 2500,
                 "2-BDRM Den": 2725,
@@ -15453,8 +15453,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1450,
                 "1BR": 2175,
@@ -15672,8 +15672,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1450,
                 "1BR": 2175,
@@ -15851,8 +15851,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1325,
                 "1-BDRM VILLA": 1950,
@@ -16020,8 +16020,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio": 1325,
                 "1-BDRM VILLA": 1950,
@@ -16249,8 +16249,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1-BR Small": 1225,
                 "1-BR Villa": 1400,
@@ -16468,8 +16468,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1-BR Small": 1225,
                 "1-BR Villa": 1400,
@@ -17843,8 +17843,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1-BDRM IV": 2925,
                 "1-BDRM PV": 3325,
@@ -18056,8 +18056,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1-BDRM IV": 2925,
                 "1-BDRM PV": 3325,
@@ -18293,8 +18293,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio IV": 2525,
                 "Studio OV": 2525,
@@ -18528,8 +18528,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Studio IV": 2525,
                 "Studio OV": 2525,
@@ -19554,8 +19554,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Guestroom K": 2300,
                 "Guestroom DB": 2300,
@@ -19824,8 +19824,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "Guestroom K": 2300,
                 "Guestroom DB": 2300,
@@ -20172,8 +20172,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1BR Mountain": 2950,
                 "1BR Ocean": 3600,
@@ -20610,8 +20610,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "1BR Mountain": 2950,
                 "1BR Ocean": 3600,
@@ -21704,8 +21704,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "0Studio": 1175,
                 "1BR": 1725,
@@ -21946,8 +21946,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "0Studio": 1175,
                 "1BR": 1725,
@@ -22192,8 +22192,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "0Studio": 450,
                 "1BR": 625
@@ -22406,8 +22406,8 @@
               }
             },
             {
-              "name": "Thanksgiving",
-              "global_reference": "Thanksgiving",
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "0Studio": 450,
                 "1BR": 625
@@ -22435,6 +22435,774 @@
               "room_points": {
                 "0Studio": 2950,
                 "1BR": 4000
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "waikiki",
+      "display_name": "Waikiki 🌊☀️🐚",
+      "code": "WKK",
+      "resort_name": "Marriott Vacation Club, Waikiki",
+      "address": "2080 Kalakaua Avenue, Honolulu, Oʻahu, Hawaiʻi",
+      "timezone": "Pacific/Honolulu",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-01-30"
+                },
+                {
+                  "start": "2025-03-28",
+                  "end": "2025-04-17"
+                },
+                {
+                  "start": "2025-04-25",
+                  "end": "2025-06-05"
+                },
+                {
+                  "start": "2025-08-29",
+                  "end": "2025-11-20"
+                },
+                {
+                  "start": "2025-12-05",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "1BR": 450,
+                    "0Studio": 325
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "1BR": 650,
+                    "0Studio": 450
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-01-31",
+                  "end": "2025-02-13"
+                },
+                {
+                  "start": "2025-02-21",
+                  "end": "2025-03-27"
+                },
+                {
+                  "start": "2025-06-06",
+                  "end": "2025-07-03"
+                },
+                {
+                  "start": "2025-07-11",
+                  "end": "2025-08-28"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "0Studio": 375,
+                    "1BR": 525
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "0Studio": 525,
+                    "1BR": 750
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "room_points": {
+                "0Studio": 3150,
+                "1BR": 4300
+              }
+            },
+            {
+              "name": "Easter2",
+              "room_points": {
+                "0Studio": 3150,
+                "1BR": 4300
+              },
+              "global_reference": "Easter2"
+            },
+            {
+              "name": "Independence Day",
+              "room_points": {
+                "0Studio": 2925,
+                "1BR": 4125
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "room_points": {
+                "0Studio": 2525,
+                "1BR": 3550
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "room_points": {
+                "1BR": 4300,
+                "0Studio": 3150
+              }
+            },
+            {
+              "name": "Christmas",
+              "room_points": {
+                "1BR": 4300,
+                "0Studio": 3150
+              }
+            },
+            {
+              "name": "NewYear",
+              "room_points": {
+                "0Studio": 3325,
+                "1BR": 4925
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-01-29"
+                },
+                {
+                  "start": "2026-03-27",
+                  "end": "2026-04-02"
+                },
+                {
+                  "start": "2026-04-10",
+                  "end": "2026-06-04"
+                },
+                {
+                  "start": "2026-08-28",
+                  "end": "2026-11-19"
+                },
+                {
+                  "start": "2026-12-04",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "1BR": 450,
+                    "0Studio": 325
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "1BR": 650,
+                    "0Studio": 450
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-01-30",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-02-20",
+                  "end": "2026-03-26"
+                },
+                {
+                  "start": "2026-06-05",
+                  "end": "2026-07-02"
+                },
+                {
+                  "start": "2026-07-10",
+                  "end": "2026-08-27"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "0Studio": 375,
+                    "1BR": 525
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "0Studio": 525,
+                    "1BR": 750
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "room_points": {
+                "0Studio": 3150,
+                "1BR": 4300
+              }
+            },
+            {
+              "name": "Easter2",
+              "room_points": {
+                "0Studio": 3150,
+                "1BR": 4300
+              },
+              "global_reference": "Easter2"
+            },
+            {
+              "name": "Independence Day",
+              "room_points": {
+                "0Studio": 2925,
+                "1BR": 4125
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "room_points": {
+                "0Studio": 2525,
+                "1BR": 3550
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "room_points": {
+                "1BR": 4300,
+                "0Studio": 3150
+              }
+            },
+            {
+              "name": "Christmas",
+              "room_points": {
+                "1BR": 4300,
+                "0Studio": 3150
+              }
+            },
+            {
+              "name": "NewYear",
+              "room_points": {
+                "0Studio": 3325,
+                "1BR": 4925
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "waiohai-beach-club",
+      "display_name": "Waiohai Beach Club🌊☀️🐚",
+      "code": "WBC",
+      "resort_name": "Marriott's Waiohai Beach Club",
+      "address": "2249 Poipu Road, Kōloa, Kauaʻi, HI 96756, USA",
+      "timezone": "Pacific/Honolulu",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-01-30"
+                },
+                {
+                  "start": "2025-03-28",
+                  "end": "2025-04-17"
+                },
+                {
+                  "start": "2025-04-25",
+                  "end": "2025-05-01"
+                },
+                {
+                  "start": "2025-05-09",
+                  "end": "2025-06-05"
+                },
+                {
+                  "start": "2025-08-29",
+                  "end": "2025-11-20"
+                },
+                {
+                  "start": "2025-12-05",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "2BR Island": 525,
+                    "2BR Ocean": 625,
+                    "2BR IslandAP": 770,
+                    "2BR OceanAP": 880
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 525,
+                    "2BR Ocean": 625,
+                    "2BR IslandAP": 550,
+                    "2BR OceanAP": 630
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR Ocean": 950,
+                    "2BR IslandAP": 950,
+                    "2BR OceanAP": 1090
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-01-31",
+                  "end": "2025-02-13"
+                },
+                {
+                  "start": "2025-02-21",
+                  "end": "2025-03-27"
+                },
+                {
+                  "start": "2025-06-06",
+                  "end": "2025-07-03"
+                },
+                {
+                  "start": "2025-07-11",
+                  "end": "2025-08-08"
+                },
+                {
+                  "start": "2025-08-15",
+                  "end": "2025-08-28"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR Ocean": 725,
+                    "2BR IslandAP": 770,
+                    "2BR OceanAP": 880
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR Ocean": 725,
+                    "2BR IslandAP": 550,
+                    "2BR OceanAP": 630
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 925,
+                    "2BR Ocean": 1125,
+                    "2BR IslandAP": 950,
+                    "2BR OceanAP": 1090
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "room_points": {
+                "2BR Island": 5075,
+                "2BR Ocean": 6175,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "Easter2",
+              "room_points": {
+                "2BR Island": 5075,
+                "2BR Ocean": 6175,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              },
+              "global_reference": "Easter2"
+            },
+            {
+              "name": "Independence Day",
+              "room_points": {
+                "2BR Island": 4650,
+                "2BR Ocean": 5875,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "room_points": {
+                "2BR Island": 4225,
+                "2BR Ocean": 5025,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "room_points": {
+                "2BR Island": 5075,
+                "2BR Ocean": 6175,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "Christmas",
+              "room_points": {
+                "2BR Island": 5075,
+                "2BR Ocean": 6175,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "NewYear",
+              "room_points": {
+                "2BR Island": 5550,
+                "2BR Ocean": 6450,
+                "2BR IslandAP": 5870,
+                "2BR OceanAP": 6760
+              }
+            },
+            {
+              "name": "AP1",
+              "global_reference": "AP1",
+              "room_points": {
+                "2BR Island": 4225,
+                "2BR IslandAP": 5870,
+                "2BR Ocean": 5025,
+                "2BR OceanAP": 6760
+              }
+            },
+            {
+              "name": "AP2",
+              "global_reference": "AP2",
+              "room_points": {
+                "2BR Island": 4850,
+                "2BR IslandAP": 5870,
+                "2BR Ocean": 5875,
+                "2BR OceanAP": 6760
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-01-29"
+                },
+                {
+                  "start": "2026-03-27",
+                  "end": "2026-04-02"
+                },
+                {
+                  "start": "2026-04-10",
+                  "end": "2026-04-30"
+                },
+                {
+                  "start": "2026-05-08",
+                  "end": "2026-06-04"
+                },
+                {
+                  "start": "2026-08-28",
+                  "end": "2026-11-19"
+                },
+                {
+                  "start": "2026-12-04",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "2BR Island": 525,
+                    "2BR Ocean": 625,
+                    "2BR IslandAP": 770,
+                    "2BR OceanAP": 880
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 525,
+                    "2BR Ocean": 625,
+                    "2BR IslandAP": 550,
+                    "2BR OceanAP": 630
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR Ocean": 950,
+                    "2BR IslandAP": 950,
+                    "2BR OceanAP": 1090
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-01-30",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-02-20",
+                  "end": "2026-03-26"
+                },
+                {
+                  "start": "2026-06-05",
+                  "end": "2026-07-02"
+                },
+                {
+                  "start": "2026-07-10",
+                  "end": "2026-08-13"
+                },
+                {
+                  "start": "2026-08-21",
+                  "end": "2026-08-27"
+                }
+              ],
+              "day_categories": {
+                "sun": {
+                  "day_pattern": [
+                    "Sun"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR Ocean": 725,
+                    "2BR IslandAP": 770,
+                    "2BR OceanAP": 880
+                  }
+                },
+                "mon_thu": {
+                  "day_pattern": [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR Ocean": 725,
+                    "2BR IslandAP": 550,
+                    "2BR OceanAP": 630
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 925,
+                    "2BR Ocean": 1125,
+                    "2BR IslandAP": 950,
+                    "2BR OceanAP": 1090
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "room_points": {
+                "2BR Island": 5075,
+                "2BR Ocean": 6175,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "Easter2",
+              "room_points": {
+                "2BR Island": 5075,
+                "2BR Ocean": 6175,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              },
+              "global_reference": "Easter2"
+            },
+            {
+              "name": "Independence Day",
+              "room_points": {
+                "2BR Island": 4650,
+                "2BR Ocean": 5875,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "room_points": {
+                "2BR Island": 4225,
+                "2BR Ocean": 5025,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "room_points": {
+                "2BR Island": 5075,
+                "2BR Ocean": 6175,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "Christmas",
+              "room_points": {
+                "2BR Island": 5075,
+                "2BR Ocean": 6175,
+                "2BR IslandAP": 4870,
+                "2BR OceanAP": 5560
+              }
+            },
+            {
+              "name": "NewYear",
+              "room_points": {
+                "2BR Island": 5550,
+                "2BR Ocean": 6450,
+                "2BR IslandAP": 5870,
+                "2BR OceanAP": 6760
+              }
+            },
+            {
+              "name": "AP1",
+              "global_reference": "AP1",
+              "room_points": {
+                "2BR Island": 4225,
+                "2BR IslandAP": 5870,
+                "2BR Ocean": 5025,
+                "2BR OceanAP": 6760
+              }
+            },
+            {
+              "name": "AP2",
+              "global_reference": "AP2",
+              "room_points": {
+                "2BR Island": 4850,
+                "2BR IslandAP": 5870,
+                "2BR Ocean": 5875,
+                "2BR OceanAP": 6760
               }
             }
           ]
