@@ -1479,20 +1479,20 @@ def render_gantt_charts_v2(
     tabs = st.tabs([f"📅 {year}" for year in years])
     for tab, year in zip(tabs, years):
         with tab:
+            # --- FIX: Retrieve season AND holiday counts ---
+            year_data = working.get("years", {}).get(year, {})
+            n_seasons = len(year_data.get("seasons", []))
+            n_holidays = len(year_data.get("holidays", []))
+            
+            # Sum them up so the chart allocates space for both
+            total_rows = n_seasons + n_holidays
+
             fig = create_gantt_chart_from_working(
                 working,
                 year,
                 data,
-                height=max(
-                    400,
-                    len(
-                        working.get("years", {})
-                        .get(year, {})
-                        .get("seasons", [])
-                    )
-                    * 35
-                    + 150,
-                ),
+                # Calculate height based on the total number of items
+                height=max(400, total_rows * 35 + 150),
             )
             st.plotly_chart(fig, width="stretch")
 # ----------------------------------------------------------------------
