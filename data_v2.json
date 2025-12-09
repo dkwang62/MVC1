@@ -22551,59 +22551,58 @@
           "holidays": [
             {
               "name": "Presidents Day",
+              "global_reference": "Presidents Day",
               "room_points": {
                 "0Studio": 3150,
                 "1BR": 4300
-              },
-            "global_reference": "Presidents Day"  
+              }
             },
             {
               "name": "Easter2",
+              "global_reference": "Easter2",
               "room_points": {
                 "0Studio": 3150,
                 "1BR": 4300
-              },
-              "global_reference": "Easter2"
+              }
             },
             {
               "name": "Independence Day",
+              "global_reference": "Independence Day",
               "room_points": {
                 "0Studio": 2925,
                 "1BR": 4125
-              },
-              "global_reference": "Independence Day"
+              }
             },
             {
               "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "0Studio": 2525,
                 "1BR": 3550
-              },
-              "global_reference": "Thanksgiving1"
+              }
             },
             {
               "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
               "room_points": {
                 "1BR": 4300,
                 "0Studio": 3150
-              },
-              "global_reference": "Thanksgiving2"
+              }
             },
             {
               "name": "Christmas",
+              "global_reference": "Christmas",
               "room_points": {
                 "1BR": 4300,
                 "0Studio": 3150
-              },
-              "global_reference": "Christmas"
-            },
+              }            },
             {
               "name": "NewYear",
+              "global_reference": "NewYear",
               "room_points": {
                 "0Studio": 3325,
                 "1BR": 4925
-              },
-              "global_reference": "NewYear"
+              }
             }
           ]
         },
@@ -22709,59 +22708,59 @@
           "holidays": [
             {
               "name": "Presidents Day",
+              "global_reference":"Presidents Day",
               "room_points": {
                 "0Studio": 3150,
                 "1BR": 4300
-              },
-              "global_reference":"Presidents Day"
+              }
             },
             {
               "name": "Easter2",
+              "global_reference": "Easter2",
               "room_points": {
                 "0Studio": 3150,
                 "1BR": 4300
-              },
-              "global_reference": "Easter2"
+              }
             },
             {
               "name": "Independence Day",
+              "global_reference": "Independence Day",
               "room_points": {
                 "0Studio": 2925,
                 "1BR": 4125
-              },
-              "global_reference": "Independence Day"
+              }
             },
             {
               "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "0Studio": 2525,
                 "1BR": 3550
-              },
-              "global_reference": "Thanksgiving1"
+              }
             },
             {
               "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
               "room_points": {
                 "1BR": 4300,
                 "0Studio": 3150
-              },
-              "global_reference": "Thanksgiving2"
+              }
             },
             {
               "name": "Christmas",
+              "global_reference": "Christmas",
               "room_points": {
                 "1BR": 4300,
                 "0Studio": 3150
-              },
-              "global_reference": "Christmas"
+              }
             },
             {
               "name": "NewYear",
+              "global_reference": "NewYear",
               "room_points": {
                 "0Studio": 3325,
                 "1BR": 4925
-              },
-              "global_reference": "NewYear"
+              }
             }
           ]
         }
@@ -22913,93 +22912,93 @@
           "holidays": [
             {
               "name": "Presidents Day",
+              "global_reference":"Presidents Day",
               "room_points": {
                 "2BR Island": 5075,
                 "2BR Ocean": 6175,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference":"Presidents Day"
+              }
             },
             {
               "name": "Easter2",
+              "global_reference": "Easter2",
               "room_points": {
                 "2BR Island": 5075,
                 "2BR Ocean": 6175,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Easter2"
+              }
             },
             {
               "name": "Independence Day",
+              "global_reference": "Independence Day",
               "room_points": {
                 "2BR Island": 4650,
                 "2BR Ocean": 5875,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference"
+              }
             },
             {
               "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "2BR Island": 4225,
                 "2BR Ocean": 5025,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Thanksgiving1"
+              }
             },
             {
               "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
               "room_points": {
                 "2BR Island": 5075,
                 "2BR Ocean": 6175,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Thanksgiving2"
+              }
             },
             {
               "name": "Christmas",
+              "global_reference": "Christmas",
               "room_points": {
                 "2BR Island": 5075,
                 "2BR Ocean": 6175,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Christmas"
+              }
             },
             {
               "name": "NewYear",
+              "global_reference": "NewYear",
               "room_points": {
                 "2BR Island": 5550,
                 "2BR Ocean": 6450,
                 "2BR IslandAP": 5870,
                 "2BR OceanAP": 6760
-              },
-              "global_reference": "NewYear"
+              }
             },
             {
               "name": "AP1",
+              "global_reference": "AP1",
               "room_points": {
                 "2BR Island": 4225,
                 "2BR IslandAP": 5870,
                 "2BR Ocean": 5025,
                 "2BR OceanAP": 6760
-              },
-              "global_reference": "AP1"
+              }
             },
             {
               "name": "AP2",
+              "global_reference": "AP2",
               "room_points": {
                 "2BR Island": 4850,
                 "2BR IslandAP": 5870,
                 "2BR Ocean": 5875,
                 "2BR OceanAP": 6760
-              },
-              "global_reference": "AP2"
+              }
             }
           ]
         },
@@ -23141,93 +23140,93 @@
           "holidays": [
             {
               "name": "Presidents Day",
+              "global_reference": "Presidents Day",
               "room_points": {
                 "2BR Island": 5075,
                 "2BR Ocean": 6175,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Presidents Day"
+              }
             },
             {
               "name": "Easter2",
+              "global_reference": "Easter2",
               "room_points": {
                 "2BR Island": 5075,
                 "2BR Ocean": 6175,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Easter2"
+              }
             },
             {
               "name": "Independence Day",
+              "global_reference": "Independence Day",
               "room_points": {
                 "2BR Island": 4650,
                 "2BR Ocean": 5875,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Independence Day"
+              }
             },
             {
               "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
               "room_points": {
                 "2BR Island": 4225,
                 "2BR Ocean": 5025,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Thanksgiving1"
+              }
             },
             {
               "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
               "room_points": {
                 "2BR Island": 5075,
                 "2BR Ocean": 6175,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Thanksgiving2"
+              }
             },
             {
               "name": "Christmas",
+              "global_reference": "Christmas",
               "room_points": {
                 "2BR Island": 5075,
                 "2BR Ocean": 6175,
                 "2BR IslandAP": 4870,
                 "2BR OceanAP": 5560
-              },
-              "global_reference": "Christmas"
+              }
             },
             {
               "name": "NewYear",
+              "global_reference": "NewYear",
               "room_points": {
                 "2BR Island": 5550,
                 "2BR Ocean": 6450,
                 "2BR IslandAP": 5870,
                 "2BR OceanAP": 6760
-              },
-              "global_reference": "NewYear"
+              }
             },
             {
               "name": "AP1",
+              "global_reference": "AP1",
               "room_points": {
                 "2BR Island": 4225,
                 "2BR IslandAP": 5870,
                 "2BR Ocean": 5025,
                 "2BR OceanAP": 6760
-              },
-              "global_reference": "AP1"
+              }
             },
             {
               "name": "AP2",
+              "global_reference": "AP2",
               "room_points": {
                 "2BR Island": 4850,
                 "2BR IslandAP": 5870,
                 "2BR Ocean": 5875,
                 "2BR OceanAP": 6760
-              },
-              "global_reference": "AP2"
+              }
             }
           ]
         }
