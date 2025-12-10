@@ -11,19 +11,12 @@ from typing import List, Dict, Any
 
 COMMON_TZ_ORDER = [
     "Pacific/Honolulu",      # Hawaii (farthest west)
-    "America/Anchorage",     # Alaska
     "America/Los_Angeles",   # US West Coast
     "America/Mazatlan",      # Baja California Sur (west of Denver & Chicago)
     "America/Denver",        # Mountain US
-    "America/Edmonton",      # Canada Mountain
     "America/Chicago",       # Central US
-    "America/Winnipeg",      # Canada Central
-    "America/Cancun",        # Quintana Roo (east of Chicago before New York)
     "America/New_York",      # US East Coast
-    "America/Toronto",       # Canada East
-    "America/Halifax",       # Atlantic Canada
     "America/Puerto_Rico",   # Caribbean / Aruba / Bahamas / USVI
-    "America/St_Johns",      # Newfoundland
 
     # Europe (Eastward from Americas)
     "Europe/London",
@@ -33,8 +26,6 @@ COMMON_TZ_ORDER = [
     # Asia-Pacific (moving eastward)
     "Asia/Bangkok",
     "Asia/Singapore",
-    "Asia/Makassar",         # Bali region
-    "Asia/Tokyo",
 
     # Far East / Oceania
     "Australia/Sydney"
