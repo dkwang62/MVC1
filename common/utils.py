@@ -8,15 +8,41 @@ from typing import List, Dict, Any
 # ----------------------------------------------------------------------
 
 # Logical West → East ordering for common MVC timezones
+
 COMMON_TZ_ORDER = [
-    "Pacific/Honolulu", "America/Anchorage", "America/Los_Angeles", "America/Denver",
-    "America/Chicago", "America/New_York", "America/Vancouver", "America/Edmonton",
-    "America/Winnipeg", "America/Toronto", "America/Halifax", "America/St_Johns",
-    "US/Hawaii", "US/Alaska", "US/Pacific", "US/Mountain", "US/Central", "US/Eastern",
-    "America/Aruba", "America/St_Thomas", "Asia/Denpasar",  # Aruba, Virgin Islands, Bali
-    "Europe/London", "Europe/Paris", "Europe/Madrid",  # Europe
-    "Asia/Bangkok", "Asia/Singapore", "Asia/Tokyo", "Australia/Sydney"
+    "Pacific/Honolulu",      # Hawaii (farthest west)
+    "America/Anchorage",     # Alaska
+    "America/Los_Angeles",   # US West Coast
+    "America/Mazatlan",      # Baja California Sur (west of Denver & Chicago)
+    "America/Denver",        # Mountain US
+    "America/Edmonton",      # Canada Mountain
+    "America/Chicago",       # Central US
+    "America/Winnipeg",      # Canada Central
+    "America/Cancun",        # Quintana Roo (east of Chicago before New York)
+    "America/New_York",      # US East Coast
+    "America/Toronto",       # Canada East
+    "America/Halifax",       # Atlantic Canada
+    "America/Puerto_Rico",   # Caribbean / Aruba / Bahamas / USVI
+    "America/St_Johns",      # Newfoundland
+
+    # Europe (Eastward from Americas)
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Madrid",
+
+    # Asia-Pacific (moving eastward)
+    "Asia/Bangkok",
+    "Asia/Singapore",
+    "Asia/Makassar",         # Bali region
+    "Asia/Tokyo",
+
+    # Far East / Oceania
+    "Australia/Sydney"
 ]
+
+
+
+
 
 TZ_TO_REGION = {
     "Pacific/Honolulu": "Hawaii",
