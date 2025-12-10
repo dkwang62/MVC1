@@ -1299,10 +1299,6 @@ def render_resort_summary_v2(working: Dict[str, Any]):
             rows.append(row)
     if rows:
         df = pd.DataFrame(rows, columns=["Season"] + room_types)
-        st.caption(
-            "Season rows show 7-night totals computed from nightly rates. "
-            "Holiday rows show weekly totals directly from holiday points (no extra calculations)."
-        )
         st.dataframe(df, width="stretch", hide_index=True)
     else:
         st.info("💡 No rate or holiday data available")
