@@ -12,7 +12,6 @@ from typing import List, Dict, Any
 COMMON_TZ_ORDER = [
     "Pacific/Honolulu",      # Hawaii (farthest west)
     "America/Los_Angeles",   # US West Coast
-    "America/Mazatlan",      # Baja California Sur (west of Denver & Chicago)
     "America/Denver",        # Mountain US
     "America/Chicago",       # Central US
     "America/New_York",      # US East Coast
