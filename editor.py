@@ -232,6 +232,7 @@ def render_sidebar_actions(data: Dict[str, Any], current_resort_id: Optional[str
     with st.sidebar.expander("Operations", expanded=False):
         tab_import, tab_current = st.tabs(["Import/New", "Current"])
         
+        # --- TAB 1: IMPORT / NEW ---
         with tab_import:
             st.caption("Create New")
             new_name = st.text_input("Resort Name", key="sb_new_resort_name", placeholder="e.g. Pulse NYC")
@@ -287,6 +288,7 @@ def render_sidebar_actions(data: Dict[str, Any], current_resort_id: Optional[str
                 except Exception as e:
                     st.error("Invalid file")
 
+        # --- TAB 2: CURRENT RESORT ACTIONS ---
         with tab_current:
             if not current_resort_id:
                 st.info("Select a resort from the grid first.")
@@ -296,11 +298,9 @@ def render_sidebar_actions(data: Dict[str, Any], current_resort_id: Optional[str
                     st.markdown(f"**Source:** {curr_resort.get('display_name')}")
                     
                     # --- Clone Logic with Manual ID/Name Input ---
-                    # Calculate defaults
                     default_name = f"{curr_resort.get('display_name')} (Copy)"
                     default_id = generate_resort_id(default_name)
                     
-                    # Ensure default ID is unique to start with
                     resorts = data.get("resorts", [])
                     existing_ids = {r.get("id") for r in resorts}
                     if default_id in existing_ids:
@@ -310,7 +310,6 @@ def render_sidebar_actions(data: Dict[str, Any], current_resort_id: Optional[str
                             c += 1
                             default_id = f"{base_def_id}-{c}"
                             
-                    # Inputs
                     new_clone_name = st.text_input("New Name", value=default_name, key=f"clone_name_{current_resort_id}")
                     new_clone_id = st.text_input("New ID", value=default_id, key=f"clone_id_{current_resort_id}")
 
@@ -334,6 +333,25 @@ def render_sidebar_actions(data: Dict[str, Any], current_resort_id: Optional[str
                             save_data()
                             st.success(f"Cloned to {new_clone_name}")
                             st.rerun()
+                    
+                    st.divider()
+                    
+                    # --- Download Just This Resort ---
+                    single_resort_wrapper = {
+                        "schema_version": "2.0.0",
+                        "resorts": [curr_resort]
+                    }
+                    single_json = json.dumps(single_resort_wrapper, indent=2, ensure_ascii=False)
+                    safe_filename = f"{curr_resort.get('id', 'resort')}.json"
+                    
+                    st.download_button(
+                        label="⬇️ Download This Resort",
+                        data=single_json,
+                        file_name=safe_filename,
+                        mime="application/json",
+                        key="sb_download_single",
+                        width="stretch"
+                    )
                     
                     st.divider()
                     
@@ -769,6 +787,10 @@ def sync_holiday_room_points_across_years(
 # RESORT BASIC INFO EDITOR
 # ----------------------------------------------------------------------
 def edit_resort_basics(working: Dict[str, Any], resort_id: str):
+    """
+    Renders editable fields for resort_name, timezone, address, AND display_name.
+    Returns nothing – directly mutates the working dict.
+    """
     st.markdown("### Basic Resort Information")
     col_disp, col_code = st.columns([3, 1])
     with col_disp:
