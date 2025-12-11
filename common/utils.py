@@ -12,15 +12,20 @@ from typing import List, Dict, Any
 # This list is the PRIMARY source of truth for "west to east"
 # ordering within each region.
 COMMON_TZ_ORDER = [
+    # Hawaii / Alaska / West Coast
     "Pacific/Honolulu",      # Hawaii
     "America/Anchorage",     # Alaska
     "America/Los_Angeles",   # US / Canada West Coast
+
+    # Mexico / Mountain / Central
     "America/Mazatlan",      # Baja California Sur (Los Cabos)
     "America/Denver",        # US Mountain
     "America/Edmonton",      # Canada Mountain
     "America/Chicago",       # US Central
     "America/Winnipeg",      # Canada Central
     "America/Cancun",        # Quintana Roo (Cancún)
+
+    # Eastern / Atlantic / Caribbean
     "America/New_York",      # US East
     "America/Toronto",       # Canada East
     "America/Halifax",       # Atlantic Canada
@@ -58,12 +63,12 @@ US_STATE_CODES = {
     "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA",
     "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
     "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT",
-    "VA", "WA", "WV", "WI", "WY", "DC"
+    "VA", "WA", "WV", "WI", "WY", "DC",
 }
 
 # Canadian provinces (kept in same region bucket as USA for navigation)
 CA_PROVINCES = {
-    "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"
+    "AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT",
 }
 
 # Caribbean / Atlantic codes we group with USA region
@@ -78,15 +83,19 @@ EUROPE_CODES = {"ES", "FR", "GB", "UK", "PT", "IT", "DE", "NL", "IE"}
 # Asia + Australia country codes we currently support
 ASIA_AU_CODES = {"TH", "ID", "SG", "JP", "CN", "MY", "PH", "VN", "AU"}
 
-
 # Fixed reference date to avoid DST variability in offset calculations
 _REF_DT = datetime(2025, 1, 15, 12, 0, 0)
+
+# ----------------------------------------------------------------------
+# TIMEZONE OFFSET HELPERS
+# ----------------------------------------------------------------------
 
 
 def get_timezone_offset_minutes(tz_name: str) -> int:
     """Return offset from UTC in minutes for a given timezone.
 
     Used only as a tie-breaker within the same COMMON_TZ_ORDER bucket.
+    We use a fixed reference date to avoid DST-vs-standard-time issues.
     """
     try:
         tz = pytz.timezone(tz_name)
@@ -103,10 +112,29 @@ def get_timezone_offset_minutes(tz_name: str) -> int:
         return 0
 
 
+def get_timezone_offset(tz_name: str) -> float:
+    """Backwards-compatible helper: UTC offset in HOURS.
+
+    Old utils.py exposed get_timezone_offset() returning a float number
+    of hours. We keep that signature but implement it using the new
+    minute-based helper so behaviour stays consistent.
+    """
+    minutes = get_timezone_offset_minutes(tz_name)
+    return minutes / 60.0
+
+
+# ----------------------------------------------------------------------
+# REGION HELPERS (CODE + TIMEZONE)
+# ----------------------------------------------------------------------
+
+
 def _region_from_code(code: str) -> int:
     """Internal helper: region strictly from resort.code."""
     if not code:
         return REGION_FALLBACK
+
+    # Normalize two-letter country / state codes
+    code = code.upper()
 
     if code in US_STATE_CODES:
         return REGION_US_CARIBBEAN
@@ -179,6 +207,67 @@ def get_region_priority(resort: Dict[str, Any]) -> int:
     return _region_from_timezone(tz)
 
 
+# ----------------------------------------------------------------------
+# REGION LABELS (BACKWARDS-COMPATIBLE get_region_label)
+# ----------------------------------------------------------------------
+
+# Legacy-style human-friendly labels keyed by timezone.
+# This is used by get_region_label(tz: str) to keep the old UI contract.
+TZ_TO_REGION = {
+    # Hawaii / Alaska / West Coast
+    "Pacific/Honolulu": "Hawaii",
+    "America/Anchorage": "Alaska",
+    "America/Los_Angeles": "US West Coast",
+
+    # Mexico / Mountain / Central
+    "America/Mazatlan": "Mexico (Pacific)",
+    "America/Denver": "US Mountain",
+    "America/Edmonton": "Canada Mountain",
+    "America/Chicago": "US Central",
+    "America/Winnipeg": "Canada Central",
+    "America/Cancun": "Mexico (Caribbean)",
+
+    # Eastern / Atlantic / Caribbean
+    "America/New_York": "US East Coast",
+    "America/Toronto": "Canada East",
+    "America/Halifax": "Atlantic Canada",
+    "America/Puerto_Rico": "Caribbean",
+    "America/St_Johns": "Newfoundland",
+
+    # Europe
+    "Europe/London": "UK / Ireland",
+    "Europe/Paris": "Western Europe",
+    "Europe/Madrid": "Western Europe",
+
+    # Asia / Australia
+    "Asia/Bangkok": "SE Asia",
+    "Asia/Singapore": "SE Asia",
+    "Asia/Makassar": "Indonesia",
+    "Asia/Tokyo": "Japan",
+    "Australia/Brisbane": "Australia (QLD)",
+    "Australia/Sydney": "Australia",
+}
+
+
+def get_region_label(tz: str) -> str:
+    """Backwards-compatible timezone → region label helper.
+
+    The old utils.py exposed get_region_label(tz: str) which is used
+    by common.ui. We preserve that API here.
+
+    If the timezone is not in TZ_TO_REGION, we fall back to the last
+    component of the tz name (e.g. 'Europe/Paris' → 'Paris').
+    """
+    if not tz:
+        return "Unknown"
+    return TZ_TO_REGION.get(tz, tz.split("/")[-1] if "/" in tz else tz)
+
+
+# ----------------------------------------------------------------------
+# RESORT SORTING
+# ----------------------------------------------------------------------
+
+
 def sort_resorts_by_timezone(resorts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """Sort resorts first by REGION, then West → East within each region.
 
@@ -192,7 +281,7 @@ def sort_resorts_by_timezone(resorts: List[Dict[str, Any]]) -> List[Dict[str, An
     Within each region, sort:
         1. By COMMON_TZ_ORDER index (West → East)
         2. Then by UTC offset in minutes (tie-breaker)
-        3. Then alphabetically by display_name
+        3. Then alphabetically by display_name / resort_name
     """
 
     def sort_key(r: Dict[str, Any]):
@@ -210,3 +299,13 @@ def sort_resorts_by_timezone(resorts: List[Dict[str, Any]]) -> List[Dict[str, An
         return (region_prio, tz_index, offset_minutes, name)
 
     return sorted(resorts, key=sort_key)
+
+
+def sort_resorts_west_to_east(resorts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Backwards-compatible alias used by common.ui.
+
+    Historically, utils.py exposed sort_resorts_west_to_east().
+    Internally we now use sort_resorts_by_timezone(), but the external
+    behaviour (West → East ordering grouped by region) is the same.
+    """
+    return sort_resorts_by_timezone(resorts)
