@@ -332,6 +332,10 @@ def render_resort_grid(
             if region_label in ["Mexico (Pacific)", "Mexico (Caribbean)", "Costa_Rica"]:
                 region_label = "Central America"
             
+            # Custom grouping: Consolidate SE Asia + Australia as "Asia Pacific"
+            if region_label in ["SE Asia", "Indonesia", "Japan", "Australia (QLD)", "Australia"]:
+                region_label = "Asia Pacific"
+            
             if region_label not in region_groups:
                 region_groups[region_label] = []
             region_groups[region_label].append(resort)
