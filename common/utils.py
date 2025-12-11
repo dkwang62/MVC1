@@ -7,7 +7,7 @@ from typing import List, Dict, Any
 # =============================================
 # 2. West to East Sorting – Regional groups, then West→East within region
 # =============================================
-
+from typing import Dict, Any
 
 # Logical West → East ordering for common MVC timezones.
 # This list is the PRIMARY source of truth for "west to east"
@@ -40,8 +40,8 @@ COMMON_TZ_ORDER = [
 
     # Asia / Australia
     "Asia/Bangkok",
-    "Asia/Singapore",
-    "Asia/Makassar",         # Bali region (Denpasar alias)
+    "Asia/Singapore",        # used for Bali in data_v2.json
+    "Asia/Makassar",         # Bali region (Denpasar alias, if used later)
     "Asia/Tokyo",
     "Australia/Brisbane",    # Surfers Paradise
     "Australia/Sydney",
@@ -128,34 +128,39 @@ def _extract_country_or_region_code(resort: Dict[str, Any]) -> str:
 
 
 def _region_from_code_or_country(resort: Dict[str, Any]) -> int:
-    """Internal helper: region inferred from any country/region code field."""
+    """Internal helper: region inferred from any country/region code field.
+
+    IMPORTANT for Bali:
+    - Codes like 'ID' should be treated as Indonesia (Asia), not Idaho (US state),
+      so we check Asia/Australia and Europe BEFORE US states.
+    """
     code = _extract_country_or_region_code(resort)
     if not code:
         return REGION_FALLBACK
 
-    # USA states / DC
-    if code in US_STATE_CODES:
-        return REGION_US_CARIBBEAN
+    # 1) Asia / Australia first (so 'ID' → Asia, not Idaho)
+    if code in ASIA_AU_CODES:
+        return REGION_ASIA_AU
 
-    # Canada
-    if code in CA_PROVINCES or code == "CA":
-        return REGION_US_CARIBBEAN
-
-    # Caribbean
-    if code in CARIBBEAN_CODES:
-        return REGION_US_CARIBBEAN
-
-    # Mexico / Costa Rica
-    if code in MEX_CENTRAL_CODES:
-        return REGION_MEX_CENTRAL
-
-    # Europe
+    # 2) Europe
     if code in EUROPE_CODES:
         return REGION_EUROPE
 
-    # Asia / Australia
-    if code in ASIA_AU_CODES:
-        return REGION_ASIA_AU
+    # 3) Mexico / Costa Rica
+    if code in MEX_CENTRAL_CODES:
+        return REGION_MEX_CENTRAL
+
+    # 4) Canada
+    if code in CA_PROVINCES or code == "CA":
+        return REGION_US_CARIBBEAN
+
+    # 5) Caribbean
+    if code in CARIBBEAN_CODES:
+        return REGION_US_CARIBBEAN
+
+    # 6) USA states / DC / generic 'US'
+    if code in US_STATE_CODES or code == "US":
+        return REGION_US_CARIBBEAN
 
     return REGION_FALLBACK
 
@@ -193,10 +198,10 @@ def get_region_priority(resort: Dict[str, Any]) -> int:
         3: Asia + Australia
         99: fallback / unknown
 
-    FIX FOR BALI:
-    - If timezone clearly says Europe or Asia/Australia, we TRUST the timezone.
-      (So Bali: tz='Asia/Singapore' → Asia/AU, even though code='ID' is also a US state.)
-    - Otherwise (Americas / unknown), we use the code if available.
+    Rules:
+    - If timezone clearly says Europe or Asia/Australia, TRUST the timezone.
+      (So Bali: tz='Asia/Singapore' → Asia/AU, even though code='ID' exists as a US state.)
+    - Otherwise (Americas / unknown), use the code if available.
     """
     tz = resort.get("timezone") or ""
 
