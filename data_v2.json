@@ -270,7 +270,7 @@
     {
       "id": "aruba-ocean",
       "display_name": "Aruba Ocean🌴 🌊",
-      "code": "AO",
+      "code": "AW",
       "resort_name": "Marriott's Aruba Ocean Club",
       "address": "L.G. Smith Boulevard 99, Palm Beach, Aruba",
       "timezone": "America/Puerto_Rico",
@@ -784,7 +784,7 @@
     {
       "id": "aruba-surf",
       "display_name": "Aruba Surf🌴 🌊",
-      "code": "AS",
+      "code": "AW",
       "resort_name": "Marriott's Aruba Surf Club",
       "address": "L.G. Smith Boulevard 103, Palm Beach, Aruba",
       "timezone": "America/Puerto_Rico",
@@ -1480,7 +1480,7 @@
     {
       "id": "bali-gardens",
       "display_name": "Bali Gardens🌴",
-      "code": "BG",
+      "code": "ID",
       "resort_name": "Marriott's Bali Nusa Dua Gardens",
       "address": "Kawasan Pariwisata Lot SW1, Nusa Dua, Bali 80363, Indonesia",
       "timezone": "Asia/Singapore",
@@ -1846,7 +1846,7 @@
     {
       "id": "bali-terrace",
       "display_name": "Bali Terrace🌴",
-      "code": "BT",
+      "code": "ID",
       "resort_name": "Marriott's Bali Nusa Dua Terrace",
       "address": "Kawasan Pariwisata ITDC Lot SW 4-5, Nusa Dua, Bali 80363, Indonesia",
       "timezone": "Asia/Singapore",
@@ -2212,7 +2212,7 @@
     {
       "id": "birch-vail",
       "display_name": "Birch Vail⛷️🏔️",
-      "code": "BV",
+      "code": "CO",
       "resort_name": "Marriott's StreamSide Birch at Vail",
       "address": "2284 South Frontage Road West, Vail, CO 81657, USA",
       "timezone": "America/Denver",
@@ -2682,7 +2682,7 @@
     {
       "id": "boston",
       "display_name": "Boston🌆",
-      "code": "B",
+      "code": "MA",
       "resort_name": "Marriott Vacation Club at Custom House, Boston",
       "address": "3 McKinley Square, Boston, MA 02109, USA",
       "timezone": "America/New_York",
@@ -2954,7 +2954,7 @@
     {
       "id": "canyon-villas-arizona",
       "display_name": "Canyon Villas🌵",
-      "code": "CVA",
+      "code": "AZ",
       "resort_name": "Marriott's Canyon Villas",
       "address": "5220 East Marriott Drive, Phoenix, AZ 85054, USA",
       "timezone": "America/Denver",
@@ -3402,7 +3402,7 @@
     {
       "id": "chateau-vegas",
       "display_name": "Chateau Vegas🌆",
-      "code": "CV",
+      "code": "NV",
       "resort_name": "Marriott's Grand Chateau",
       "address": "75 East Harmon Avenue, Las Vegas, NV 89109, USA",
       "timezone": "America/Los_Angeles",
@@ -3668,7 +3668,7 @@
     {
       "id": "crystal-shores",
       "display_name": "Crystal Shorest☀️🐚",
-      "code": "CS",
+      "code": "FL",
       "resort_name": "Marriott's Crystal Shores",
       "address": "600 South Collier Boulevard, Marco Island, FL 34145, USA",
       "timezone": "America/New_York",
@@ -4306,7 +4306,7 @@
     {
       "id": "cypress-orlando",
       "display_name": "Cypress Orlando🎢",
-      "code": "CO",
+      "code": "FL",
       "resort_name": "Marriott's Cypress Harbour",
       "address": "11251 Harbour Villa Road, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
@@ -4672,7 +4672,7 @@
     {
       "id": "desert-springs-ii",
       "display_name": "Desert Springs II🏌️",
-      "code": "DSI",
+      "code": "CA",
       "resort_name": "Marriott's Desert Springs Villas II",
       "address": "1091 Pinehurst Lane, Palm Desert, CA 92260, USA",
       "timezone": "America/Los_Angeles",
@@ -5120,7 +5120,7 @@
     {
       "id": "doral-miami",
       "display_name": "Doral Miami🌆🏌️",
-      "code": "DM",
+      "code": "FL",
       "resort_name": "Marriott's Villas at Doral",
       "address": "4101 NW 87th Avenue, Miami, FL 33178, USA",
       "timezone": "America/New_York",
@@ -5838,7 +5838,7 @@
     {
       "id": "frenchman-s-cove",
       "display_name": "Frenchman's Cove☀️🐚",
-      "code": "FC",
+      "code": "VI",
       "resort_name": "Marriott's Frenchman's Cove",
       "address": "7338 Estate Bakkeroe, St. Thomas, VI 00802, U.S. Virgin Islands",
       "timezone": "America/Puerto_Rico",
@@ -6228,7 +6228,7 @@
     {
       "id": "grande-vista-orlando",
       "display_name": "Grande Vista Orlando🎢",
-      "code": "GVO",
+      "code": "FL",
       "resort_name": "Marriott's Grande Vista",
       "address": "5925 Avenida Vista, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
@@ -6666,7 +6666,7 @@
     {
       "id": "imperial-orlando",
       "display_name": "Imperial Orlando🎢",
-      "code": "IO",
+      "code": "FL",
       "resort_name": "Marriott's Imperial Palms Villas",
       "address": "8404 Vacation Way, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
@@ -7032,7 +7032,7 @@
     {
       "id": "kauai-beach",
       "display_name": "Kauai Beach🌊☀️🐚",
-      "code": "KB",
+      "code": "HI",
       "resort_name": "Marriott's Kaua'i Beach Club",
       "address": "3610 Rice Street, Lihue, HI 96766, USA",
       "timezone": "Pacific/Honolulu",
@@ -7556,7 +7556,7 @@
     {
       "id": "khao-lak",
       "display_name": "Khao Lak🌴",
-      "code": "KL",
+      "code": "TH",
       "resort_name": "Marriott Vacation Club, Khao Lak Beach Resort",
       "address": "43/17 Moo 3, Khuk Khak, Takua Pa, Phang Nga 82220, Thailand",
       "timezone": "Asia/Bangkok",
@@ -7824,7 +7824,7 @@
     {
       "id": "lakeshore-orlando",
       "display_name": "Lakeshore Orlando🎢",
-      "code": "LO",
+      "code": "FL",
       "resort_name": "Marriott's Lakeshore Reserve",
       "address": "11248 Lakeshore Reserve Drive, Orlando, FL 32837, USA",
       "timezone": "America/New_York",
@@ -8334,7 +8334,7 @@
     {
       "id": "maui-ocean",
       "display_name": "Maui Ocean🌊☀️🐚",
-      "code": "MO",
+      "code": "HI",
       "resort_name": "Marriott's Maui Ocean Club",
       "address": "100 Nohea Kai Drive, Lahaina, HI 96761, USA",
       "timezone": "Pacific/Honolulu",
@@ -8902,7 +8902,7 @@
     {
       "id": "marbella-beach",
       "display_name": "Marbella ☀️🐚",
-      "code": "MB",
+      "code": "ES",
       "resort_name": "Marriott's Marbella Beach Resort",
       "address": "Carretera de Cádiz, Km 193, 29604 Marbella, Málaga, Spain",
       "timezone": "Europe/Madrid",
@@ -9408,7 +9408,7 @@
     {
       "id": "mountainside-utah",
       "display_name": "Mountainside Utah⛷️🏔️",
-      "code": "MU",
+      "code": "UT",
       "resort_name": "Marriott's MountainSide",
       "address": "1305 Lowell Avenue, Park City, UT 84060, USA",
       "timezone": "America/Denver",
@@ -9878,7 +9878,7 @@
     {
       "id": "newport-coast",
       "display_name": "Newport Coast🌆🎢",
-      "code": "NC",
+      "code": "CA",
       "resort_name": "Marriott's Newport Coast Villas",
       "address": "23000 Newport Coast Drive, Newport Coast, CA 92657, USA",
       "timezone": "America/Los_Angeles",
@@ -10158,7 +10158,7 @@
     {
       "id": "ocean-pointe",
       "display_name": "Ocean Pointe☀️🐚",
-      "code": "OP",
+      "code": "FL",
       "resort_name": "Marriott's Ocean Pointe",
       "address": "71 Ocean Avenue, Palm Beach Shores, FL 33404, USA",
       "timezone": "America/New_York",
@@ -10676,7 +10676,7 @@
     {
       "id": "panama-florida",
       "display_name": "Panama Florida☀️🐚",
-      "code": "PF",
+      "code": "FL",
       "resort_name": "Marriott's Legends Edge at Bay Point",
       "address": "4000 Marriott Drive, Panama City, FL 32408, USA",
       "timezone": "America/New_York",
@@ -10996,7 +10996,7 @@
     {
       "id": "phuket-beach-club",
       "display_name": "Phuket Beach 🌴",
-      "code": "PBC",
+      "code": "TH",
       "resort_name": "Marriott's Phuket Beach Club",
       "address": "230 Moo 3, Mai Khao, Phuket 83110, Thailand",
       "timezone": "Asia/Bangkok",
@@ -11248,7 +11248,7 @@
     {
       "id": "playa-andaluza",
       "display_name": "Playa Andaluza☀️🐚",
-      "code": "PA",
+      "code": "ES",
       "resort_name": "Marriott's Playa Andaluza, Spain",
       "address": "Carretera de Cádiz, Km 168, 29680 Estepona, Málaga, Spain",
       "timezone": "Europe/Madrid",
@@ -11838,7 +11838,7 @@
     {
       "id": "pulse-san-diego",
       "display_name": "Pulse San Diego🌆",
-      "code": "PSD",
+      "code": "CA",
       "resort_name": "Marriott Vacation Club, San Diego",
       "address": "701 A Street, San Diego, CA 92101, USA",
       "timezone": "America/Los_Angeles",
@@ -12356,7 +12356,7 @@
     {
       "id": "pulse-san-francisco",
       "display_name": "Pulse San Francisco🌆",
-      "code": "PSF",
+      "code": "CA",
       "resort_name": "Marriott Vacation Club, San Francisco",
       "address": "780 Mission Street, San Francisco, CA 94103, USA",
       "timezone": "America/Los_Angeles",
@@ -12862,7 +12862,7 @@
     {
       "id": "residence-tahoe",
       "display_name": "Residence Tahoe⛷️",
-      "code": "RT",
+      "code": "CA",
       "resort_name": "Marriott Grand Residence Club, Lake Tahoe",
       "address": "1001 Heavenly Village Way, South Lake Tahoe, CA 96150, USA",
       "timezone": "America/Los_Angeles",
@@ -13328,7 +13328,7 @@
     {
       "id": "ritz-san-francisco",
       "display_name": "Ritz San Francisco🌆",
-      "code": "RSF",
+      "code": "CA",
       "resort_name": "The Ritz-Carlton Club, San Francisco",
       "address": "690 Market Street, San Francisco, CA 94104, USA",
       "timezone": "America/Los_Angeles",
@@ -13804,7 +13804,7 @@
     {
       "id": "ritz-tahoe",
       "display_name": "Ritz Tahoe⛷️",
-      "code": "RT",
+      "code": "CA",
       "resort_name": "The Ritz-Carlton Club, Lake Tahoe",
       "address": "13051 Ritz-Carlton Highlands Drive, Truckee, CA 96161, USA",
       "timezone": "America/Los_Angeles",
@@ -14334,7 +14334,7 @@
     {
       "id": "ritz-vail",
       "display_name": "Ritz Vail⛷️🏔️",
-      "code": "RV",
+      "code": "CO",
       "resort_name": "The Ritz-Carlton Club, Vail",
       "address": "728 West Lionshead Circle, Vail, CO 81657, USA",
       "timezone": "America/Denver",
@@ -14900,7 +14900,7 @@
     {
       "id": "sabal-orlando",
       "display_name": "Sabal Orlando🎢",
-      "code": "SO",
+      "code": "FL",
       "resort_name": "Marriott's Sabal Palms",
       "address": "8805 World Center Drive, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
@@ -15266,7 +15266,7 @@
     {
       "id": "shadow-ridge",
       "display_name": "Shadow Ridge🏌️",
-      "code": "SR",
+      "code": "CA",
       "resort_name": "Marriott's Shadow Ridge",
       "address": "9003 Shadow Ridge Road, Palm Desert, CA 92211, USA",
       "timezone": "America/Los_Angeles",
@@ -15714,7 +15714,7 @@
     {
       "id": "sheraton-kauai",
       "display_name": "Sheraton Kauai 🌊☀️🐚",
-      "code": "SK",
+      "code": "HI",
       "resort_name": "Sheraton Kauai Resort Villas",
       "address": "2440 Hoonani Road, Koloa, HI 96756, USA",
       "timezone": "Pacific/Honolulu",
@@ -16062,7 +16062,7 @@
     {
       "id": "sheraton-scottsdale",
       "display_name": "Sheraton Scottsdale🌵",
-      "code": "SS",
+      "code": "AZ",
       "resort_name": "Sheraton Desert Oasis, Scottsdale",
       "address": "17700 North Hayden Road, Scottsdale, AZ 85255, USA",
       "timezone": "America/Denver",
@@ -16510,7 +16510,7 @@
     {
       "id": "suenos-costarica",
       "display_name": "Suenos CostaRica🌴",
-      "code": "SC",
+      "code": "CR",
       "resort_name": "Marriott Vacation Club at Los Sueños, Costa Rica",
       "address": "800 meters west of Herradura Entrance, Playa Herradura, Garabito, Puntarenas, Costa Rica",
       "timezone": "America/Chicago",
@@ -16894,7 +16894,7 @@
     {
       "id": "surfers-paradise",
       "display_name": "Surfers Paradise☀️🐚",
-      "code": "SP",
+      "code": "AU",
       "resort_name": "Marriott Vacation Club at Surfers Paradise",
       "address": "158 Ferny Avenue, Surfers Paradise, QLD 4217, Australia",
       "timezone": "Australia/Brisbane",
@@ -17304,7 +17304,7 @@
     {
       "id": "village-paris",
       "display_name": "Village Paris🎢",
-      "code": "VP",
+      "code": "FR",
       "resort_name": "Marriott's Village d'Ile-de-France",
       "address": "1 Allée de l'Orme Rond, 77700 Bailly-Romainvilliers, France",
       "timezone": "Europe/Paris",
@@ -17678,7 +17678,7 @@
     {
       "id": "waikoloa-ocean",
       "display_name": "Waikoloa🌴",
-      "code": "WO",
+      "code": "HI",
       "resort_name": "Marriott's Waikoloa Ocean Club",
       "address": "69-275 Waikoloa Beach Drive, Waikoloa, HI 96738, USA",
       "timezone": "Pacific/Honolulu",
@@ -18114,7 +18114,7 @@
     {
       "id": "westin-ka-anapali",
       "display_name": "Westin Ka'anapali🌴",
-      "code": "WK",
+      "code": "HI",
       "resort_name": "The Westin Kā'anapali Ocean Resort Villas",
       "address": "6 Kai Ala Drive, Lahaina, HI 96761, USA",
       "timezone": "Pacific/Honolulu",
@@ -18594,7 +18594,7 @@
     {
       "id": "willow-branson",
       "display_name": "Willow Branson🎤🏔️",
-      "code": "WB",
+      "code": "MO",
       "resort_name": "Marriott's Willow Ridge Lodge",
       "address": "2929 Green Mountain Drive, Branson, MO 65616, USA",
       "timezone": "America/Chicago",
@@ -18910,7 +18910,7 @@
     {
       "id": "harbour-lake-orlando",
       "display_name": "Harbour Lake 🎢",
-      "code": "HLO",
+      "code": "FL",
       "resort_name": "Marriott's Harbour Lake",
       "address": "7102 Grand Horizons Boulevard, Orlando, FL 32821, USA",
       "timezone": "America/New_York",
@@ -19324,7 +19324,7 @@
     {
       "id": "washington-dc",
       "display_name": "Washington DC🌆",
-      "code": "WD",
+      "code": "DC",
       "resort_name": "Marriott Vacation Club at The Mayflower, Washington, D.C.",
       "address": "1127 Connecticut Avenue NW, Washington, DC 20036, USA",
       "timezone": "America/New_York",
@@ -19874,7 +19874,7 @@
     {
       "id": "ko-olina-beach",
       "display_name": "Ko Olina🌴",
-      "code": "KOB",
+      "code": "HI",
       "resort_name": "Marriott's Ko Olina Beach Club",
       "address": "92-161 Waipahe Place, Kapolei, HI 96707, USA",
       "timezone": "Pacific/Honolulu",
@@ -20760,7 +20760,7 @@
     {
       "id": "phuket-mai-khao",
       "display_name": "Phuket Mai Khao🌴",
-      "code": "PMK",
+      "code": "TH",
       "resort_name": "Marriott's Mai Khao Resort",
       "address": "234 Moo 3, Mai Khao, Phuket 83110, Thailand",
       "timezone": "Asia/Bangkok",
@@ -21030,7 +21030,7 @@
     {
       "id": "mallorca-son-antem",
       "display_name": "Mallorca☀️🐚🏌️",
-      "code": "MSA",
+      "code": "ES",
       "resort_name": "Marriott's Club Son Antem",
       "address": "Carretera MA 19, salida 20, Llucmajor, 07620, Mallorca, Spain",
       "timezone": "Europe/Madrid",
@@ -21508,7 +21508,7 @@
     {
       "id": "residence-tahoe-copy",
       "display_name": "Timber Lodge Tahoe⛷️",
-      "code": "TL",
+      "code": "CA",
       "resort_name": "Marriott's Timber Lodge",
       "address": "4100 Lake Tahoe Boulevard, South Lake Tahoe, CA 96150",
       "timezone": "America/Los_Angeles",
@@ -22002,7 +22002,7 @@
     {
       "id": "birch-vail-copy",
       "display_name": "Beckenridge Colorado🏔️",
-      "code": "BC",
+      "code": "CO",
       "resort_name": "Marriott's Mountain Valley Lodge",
       "address": "655 Columbine Road, Breckenridge, CO 80424",
       "timezone": "America/Denver",
@@ -22444,7 +22444,7 @@
     {
       "id": "waikiki",
       "display_name": "Waikiki 🌊☀️🐚",
-      "code": "WKK",
+      "code": "HI",
       "resort_name": "Marriott Vacation Club, Waikiki",
       "address": "2080 Kalakaua Avenue, Honolulu, Oʻahu, Hawaiʻi",
       "timezone": "Pacific/Honolulu",
@@ -22770,7 +22770,7 @@
     {
       "id": "waiohai-beach-club",
       "display_name": "Waiohai Beach🌊☀️🐚",
-      "code": "WBC",
+      "code": "HI",
       "resort_name": "Marriott's Waiohai Beach Club",
       "address": "2249 Poipu Road, Kōloa, Kauaʻi, HI 96756, USA",
       "timezone": "Pacific/Honolulu",
@@ -23236,7 +23236,7 @@
     {
       "id": "harborside-atlantis",
       "display_name": "Bahamas☀️🐚",
-      "code": "HARBORSIDE",
+      "code": "BS",
       "resort_name": "Harborside Resort at Atlantis",
       "address": "One Casino Drive, Paradise Island, The Bahamas",
       "timezone": "America/Puerto_Rico",
@@ -23698,7 +23698,7 @@
     {
       "id": "lagunamar-ocean-resort",
       "display_name": "Westin Lagunamar☀️🐚",
-      "code": "LAGUNAMAR",
+      "code": "MX",
       "resort_name": "The Westin Lagunamar Ocean Resort",
       "address": "Boulevard Kukulcán Km 12.5, Lt 18, Zona Hotelera, Cancún, Quintana Roo 77500, Mexico",
       "timezone": "America/New_York",
@@ -24124,7 +24124,7 @@
     {
       "id": "los-cabos-baja-point",
       "display_name": "Westin Baja Point☀️🐚",
-      "code": "CABOS-BAJA",
+      "code": "MX",
       "resort_name": "The Westin Los Cabos Resort Villas & Spa, Baja Point",
       "address": "Carretera Transpeninsular KM 22.5, Los Cabos, Baja California Sur 23400, Mexico",
       "timezone": "America/Denver",
@@ -24570,7 +24570,7 @@
     {
       "id": "los-cabos-main",
       "display_name": "Westin Los Cabos☀️🐚",
-      "code": "CABOS-MAIN",
+      "code": "MX",
       "resort_name": "The Westin Los Cabos Resort Villas & Spa",
       "address": "Carretera Transpeninsular Km 22.5, Los Cabos, Baja California Sur 23400, Mexico",
       "timezone": "America/Denver",
