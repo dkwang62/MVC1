@@ -16513,7 +16513,7 @@
       "code": "CR",
       "resort_name": "Marriott Vacation Club at Los Sueños, Costa Rica",
       "address": "800 meters west of Herradura Entrance, Playa Herradura, Garabito, Puntarenas, Costa Rica",
-      "timezone": "America/Chicago",
+      "timezone": "America/Costa_Rica",
       "years": {
         "2025": {
           "seasons": [
@@ -23701,7 +23701,7 @@
       "code": "MX",
       "resort_name": "The Westin Lagunamar Ocean Resort",
       "address": "Boulevard Kukulcán Km 12.5, Lt 18, Zona Hotelera, Cancún, Quintana Roo 77500, Mexico",
-      "timezone": "America/New_York",
+      "timezone": "America/Cancun",
       "years": {
         "2025": {
           "seasons": [
@@ -24127,7 +24127,7 @@
       "code": "MX",
       "resort_name": "The Westin Los Cabos Resort Villas & Spa, Baja Point",
       "address": "Carretera Transpeninsular KM 22.5, Los Cabos, Baja California Sur 23400, Mexico",
-      "timezone": "America/Denver",
+      "timezone": "America/Mazatlan",
       "years": {
         "2025": {
           "seasons": [
@@ -24573,7 +24573,7 @@
       "code": "MX",
       "resort_name": "The Westin Los Cabos Resort Villas & Spa",
       "address": "Carretera Transpeninsular Km 22.5, Los Cabos, Baja California Sur 23400, Mexico",
-      "timezone": "America/Denver",
+      "timezone": "America/Mazatlan",
       "years": {
         "2025": {
           "seasons": [
