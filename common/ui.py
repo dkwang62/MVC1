@@ -322,14 +322,19 @@ def render_resort_grid(
 
         sorted_resorts = sort_resorts_west_to_east(resorts)
         
-        # Group by region for better visual organization
+        # Group by region with custom grouping logic
         region_groups = {}
         for resort in sorted_resorts:
             tz = resort.get("timezone", "UTC")
-            region = get_region_label(tz)
-            if region not in region_groups:
-                region_groups[region] = []
-            region_groups[region].append(resort)
+            region_label = get_region_label(tz)
+            
+            # Custom grouping: Consolidate Mexico + Costa Rica as "Central America"
+            if region_label in ["Mexico (Pacific)", "Mexico (Caribbean)", "Costa_Rica"]:
+                region_label = "Central America"
+            
+            if region_label not in region_groups:
+                region_groups[region_label] = []
+            region_groups[region_label].append(resort)
         
         # Display by region
         for region, region_resorts in region_groups.items():
