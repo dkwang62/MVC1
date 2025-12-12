@@ -13,7 +13,7 @@ from aggrid_editor import (
     render_season_dates_grid,
     render_season_points_grid,
     render_holiday_points_grid
-
+)
 # ----------------------------------------------------------------------
 # CONSTANTS
 # ----------------------------------------------------------------------
