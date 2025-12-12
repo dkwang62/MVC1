@@ -1,4 +1,4 @@
-# 
+# aggrid_editor.py
 """
 AG Grid integration for MVC Editor - handles:
 1. Global holiday dates (year-specific)
@@ -15,114 +15,119 @@ from datetime import datetime
 import copy
 
 # ==============================================================================
-# GLOBAL HOLIDAY DATES EDITOR - IMPROVED VERSION
+# GLOBAL HOLIDAY DATES EDITOR
 # ==============================================================================
+
+def flatten_global_holidays_to_df(data: Dict[str, Any], years: List[str]) -> pd.DataFrame:
+    """Convert global holidays to flat DataFrame."""
+    rows = []
+    global_holidays = data.get("global_holidays", {})
+    
+    for year in sorted(years):
+        year_holidays = global_holidays.get(year, {})
+        for holiday_name, holiday_data in sorted(year_holidays.items()):
+            rows.append({
+                "Year": year,
+                "Holiday Name": holiday_name,
+                "Start Date": holiday_data.get("start_date", ""),
+                "End Date": holiday_data.get("end_date", ""),
+                "Type": holiday_data.get("type", "other"),
+                "Regions": ", ".join(holiday_data.get("regions", ["global"]))
+            })
+    
+    return pd.DataFrame(rows)
+
+def rebuild_global_holidays_from_df(df: pd.DataFrame, data: Dict[str, Any]):
+    """Convert DataFrame back to nested global holidays structure."""
+    global_holidays = {}
+    
+    for _, row in df.iterrows():
+        year = str(row["Year"])
+        holiday_name = str(row["Holiday Name"]).strip()
+        
+        if not holiday_name:
+            continue
+            
+        if year not in global_holidays:
+            global_holidays[year] = {}
+        
+        regions = [r.strip() for r in str(row["Regions"]).split(",") if r.strip()]
+        if not regions:
+            regions = ["global"]
+        
+        global_holidays[year][holiday_name] = {
+            "start_date": str(row["Start Date"]),
+            "end_date": str(row["End Date"]),
+            "type": str(row["Type"]),
+            "regions": regions
+        }
+    
+    data["global_holidays"] = global_holidays
+
 def render_global_holidays_grid(data: Dict[str, Any], years: List[str]):
-    """Render AG Grid for global holiday dates with proper date pickers."""
+    """Render AG Grid for global holiday dates."""
     st.markdown("### 🎅 Global Holiday Calendar (Year-Specific)")
     st.caption("Edit holiday dates for each year. These dates are referenced by all resorts.")
-
+    
     df = flatten_global_holidays_to_df(data, years)
-
+    
     if df.empty:
-        st.info("No global holidays defined yet. You can add them here.")
+        st.info("No global holidays defined. Add holidays using the form below.")
         df = pd.DataFrame(columns=["Year", "Holiday Name", "Start Date", "End Date", "Type", "Regions"])
-        df = df.astype({"Year": "str", "Holiday Name": "str", "Start Date": "object", "End Date": "object", "Type": "str", "Regions": "str"})
-
-    # Ensure date columns are string for editing (AG Grid date picker works with ISO strings)
-    for col in ["Start Date", "End Date"]:
-        if col in df.columns:
-            df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime('%Y-%m-%d').fillna("")
-
-    # Configure AG Grid with real date picker
+    
+    # Configure AG Grid
     gb = GridOptionsBuilder.from_dataframe(df)
-    
-    gb.configure_default_column(
-        editable=True,
-        resizable=True,
-        filterable=True,
-        sortable=True,
-        wrapText=True,
-        autoHeight=True
-    )
-    
-    gb.configure_column("Year", editable=True, width=90)
-    gb.configure_column("Holiday Name", editable=True, width=220)
-    
-    # Proper date picker columns
-    gb.configure_column(
-        "Start Date",
-        type=["dateColumnFilter", "customDateTimeFormat"],
-        valueFormatter="value ? new Date(value).toLocaleDateString() : ''",
-        valueParser="value ? new Date(value).toISOString().slice(0,10) : null",
-        cellEditor="agDateCellEditor",
-        cellEditorPopup=True,
-        width=140
-    )
-    gb.configure_column(
-        "End Date",
-        type=["dateColumnFilter", "customDateTimeFormat"],
-        valueFormatter="value ? new Date(value).toLocaleDateString() : ''",
-        valueParser="value ? new Date(value).toISOString().slice(0,10) : null",
-        cellEditor="agDateCellEditor",
-        cellEditorPopup=True,
-        width=140
-    )
-    
-    gb.configure_column("Type", editable=True, width=110)
-    gb.configure_column("Regions", editable=True, width=180)
-
+    gb.configure_default_column(editable=True, resizable=True, filterable=True, sortable=True)
+    gb.configure_column("Year", editable=True, type=["numericColumn"], width=80)
+    gb.configure_column("Holiday Name", editable=True, width=200)
+    gb.configure_column("Start Date", editable=True, width=120)
+    gb.configure_column("End Date", editable=True, width=120)
+    gb.configure_column("Type", editable=True, width=100)
+    gb.configure_column("Regions", editable=True, width=150)
     gb.configure_selection(selection_mode="multiple", use_checkbox=True)
     gb.configure_grid_options(
         enableRangeSelection=True,
         enableFillHandle=True,
         suppressRowClickSelection=False,
-        rowHeight=40,
-        domLayout="normal"
+        rowHeight=35
     )
-
+    
     grid_response = AgGrid(
         df,
         gridOptions=gb.build(),
-        update_mode=GridUpdateMode.VALUE_CHANGED | GridUpdateMode.SELECTION_CHANGED,
+        update_mode=GridUpdateMode.VALUE_CHANGED,
         data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
         allow_unsafe_jscode=True,
         theme='streamlit',
-        height=500,
-        fit_columns_on_grid_load=False,
-        reload_data=False,
-        key="global_holidays_grid"  # Important: prevents conflicts
+        height=400,
+        reload_data=False
     )
-
+    
     edited_df = grid_response['data']
-
-    col1, col2, col3 = st.columns([2.5, 2, 1])
-
+    
+    col1, col2, col3 = st.columns([2, 2, 1])
+    
     with col1:
         if st.button("💾 Save Changes to Global Holidays", type="primary", use_container_width=True):
             try:
-                # Clean and validate
-                edited_df = edited_df.dropna(subset=["Holiday Name"])
-                edited_df["Holiday Name"] = edited_df["Holiday Name"].str.strip()
-                edited_df = edited_df[edited_df["Holiday Name"] != ""]
-                
                 rebuild_global_holidays_from_df(edited_df, data)
-                st.success("✅ Global holidays saved successfully!")
+                st.success("✅ Global holidays saved!")
                 st.rerun()
             except Exception as e:
                 st.error(f"Error saving: {e}")
-
+    
     with col2:
         selected_rows = grid_response.get('selected_rows', [])
-        if selected_rows and st.button("🗑️ Delete Selected Row(s)", use_container_width=True, type="secondary"):
-            selected_indices = [r['_selectedRowNodeInfo']['nodeRowIndex'] for r in selected_rows]
+        if selected_rows and st.button("🗑️ Delete Selected", use_container_width=True):
+            # Remove selected rows
+            selected_indices = [row['_selectedRowNodeInfo']['nodeRowIndex'] for row in selected_rows]
             edited_df = edited_df.drop(edited_df.index[selected_indices]).reset_index(drop=True)
             rebuild_global_holidays_from_df(edited_df, data)
-            st.success(f"Deleted {len(selected_rows)} row(s)")
+            st.success(f"✅ Deleted {len(selected_rows)} holiday(s)")
             st.rerun()
-
+    
     with col3:
-        if st.button("🔄 Reset Grid", use_container_width=True):
+        if st.button("🔄 Reset", use_container_width=True):
             st.rerun()
 
 # ==============================================================================
