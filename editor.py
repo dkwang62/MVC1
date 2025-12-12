@@ -1740,16 +1740,20 @@ Restarting the app resets everything to the default dataset, so be sure to save 
                 BASE_YEAR = "2025"  # or your preferred base year
                 render_season_points_grid(working, BASE_YEAR, current_resort_id)
 
-        with tab6:
-            render_excel_export_import(working, current_resort_id, data)
     
-    st.markdown("---")
+            st.markdown("---")
     
-    # Holiday points (applies to all years)
-    with st.expander("🎄 Edit Holiday Points", expanded=True):
-        render_holiday_points_grid(working, BASE_YEAR, current_resort_id)
+            # Holiday points (applies to all years)
+            with st.expander("🎄 Edit Holiday Points", expanded=True):
+                render_holiday_points_grid(working, BASE_YEAR, current_resort_id)
             
-    st.markdown("---")
+            st.markdown("---")
+
+            with tab6:
+            render_excel_export_import(working, current_resort_id, data)
+
+    
+    
     render_global_settings_v2(data, years)
     st.markdown(
         """
