@@ -1699,13 +1699,14 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         render_resort_card(resort_name, timezone, address)
         render_save_button_v2(data, working, current_resort_id)
         
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
             [
                 "📊 Overview",
                 "📅 Season Dates",
                 "💰 Room Points",
                 "🎄 Holidays",
-                "📋 Spreadsheet View"  # NEW!
+                "📋 Spreadsheet View",
+                "📁 Excel/Sheets",
             ]
         )
         with tab1:
@@ -1727,7 +1728,7 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         with tab5:
             st.markdown("## 📊 Spreadsheet-Style Editors")
             st.info("✨ Excel-like editing with copy/paste, drag-fill, and multi-select. Changes auto-sync across years where applicable.")
-    
+
             # Season dates (year-specific)
             with st.expander("📅 Edit Season Dates", expanded=True):
                 render_season_dates_grid(working, current_resort_id)
@@ -1738,6 +1739,9 @@ Restarting the app resets everything to the default dataset, so be sure to save 
             with st.expander("🎯 Edit Season Points", expanded=True):
                 BASE_YEAR = "2025"  # or your preferred base year
                 render_season_points_grid(working, BASE_YEAR, current_resort_id)
+
+        with tab6:
+            render_excel_export_import(working, current_resort_id, data)
     
     st.markdown("---")
     
