@@ -8,6 +8,11 @@ import copy
 import re
 from datetime import datetime, timedelta, date
 from typing import Dict, List, Any, Optional, Tuple, Set
+from aggrid_editor import (
+    render_global_holidays_grid,
+    render_season_dates_grid,
+    render_season_points_grid,
+    render_holiday_points_grid
 
 # ----------------------------------------------------------------------
 # CONSTANTS
@@ -1611,7 +1616,13 @@ def render_global_settings_v2(data: Dict[str, Any], years: List[str]):
         "<div class='section-header'>⚙️ Global Configuration</div>",
         unsafe_allow_html=True,
     )
-    with st.expander("🎅 Global Holiday Calendar", expanded=False):
+    
+    # NEW: AG Grid option
+    with st.expander("🎅 Global Holiday Calendar (AG Grid)", expanded=False):
+        render_global_holidays_grid(data, years)
+    
+    # Keep existing form-based editor as backup
+    with st.expander("🎅 Global Holiday Calendar (Classic)", expanded=False):
         render_global_holiday_dates_editor_v2(data, years)
 
 # ----------------------------------------------------------------------
@@ -1693,6 +1704,7 @@ Restarting the app resets everything to the default dataset, so be sure to save 
                 "📅 Season Dates",
                 "💰 Room Points",
                 "🎄 Holidays",
+                "📋 Spreadsheet View"  # NEW!
             ]
         )
         with tab1:
@@ -1711,6 +1723,26 @@ Restarting the app resets everything to the default dataset, so be sure to save 
             render_holidays_summary_table(working) 
             st.markdown("---")
             render_holiday_management_v2(working, years, current_resort_id, data) 
+        with tab5:
+            st.markdown("## 📊 Spreadsheet-Style Editors")
+            st.info("✨ Excel-like editing with copy/paste, drag-fill, and multi-select. Changes auto-sync across years where applicable.")
+    
+            # Season dates (year-specific)
+            with st.expander("📅 Edit Season Dates", expanded=True):
+                render_season_dates_grid(working, current_resort_id)
+    
+            st.markdown("---")
+    
+            # Season points (applies to all years)
+            with st.expander("🎯 Edit Season Points", expanded=True):
+                BASE_YEAR = "2025"  # or your preferred base year
+                render_season_points_grid(working, BASE_YEAR, current_resort_id)
+    
+    st.markdown("---")
+    
+    # Holiday points (applies to all years)
+    with st.expander("🎄 Edit Holiday Points", expanded=True):
+        render_holiday_points_grid(working, BASE_YEAR, current_resort_id)
             
     st.markdown("---")
     render_global_settings_v2(data, years)
