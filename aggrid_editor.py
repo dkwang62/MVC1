@@ -23,11 +23,27 @@ def flatten_global_holidays_to_df(data: Dict[str, Any], years: List[str]) -> pd.
     rows = []
     global_holidays = data.get("global_holidays", {})
     
-    for year in sorted(years):
+    # Debug: Check what we're getting
+    if not global_holidays:
+        st.warning("⚠️ DEBUG: No 'global_holidays' key found in data")
+        return pd.DataFrame()
+    
+    # Get ALL years from global_holidays, not just the provided years list
+    all_years = sorted(global_holidays.keys())
+    
+    if not all_years:
+        st.warning("⚠️ DEBUG: global_holidays exists but is empty")
+        return pd.DataFrame()
+    
+    for year in all_years:
         year_holidays = global_holidays.get(year, {})
+        
+        if not year_holidays:
+            continue
+            
         for holiday_name, holiday_data in sorted(year_holidays.items()):
             rows.append({
-                "Year": year,
+                "Year": str(year),
                 "Holiday Name": holiday_name,
                 "Start Date": holiday_data.get("start_date", ""),
                 "End Date": holiday_data.get("end_date", ""),
@@ -35,7 +51,17 @@ def flatten_global_holidays_to_df(data: Dict[str, Any], years: List[str]) -> pd.
                 "Regions": ", ".join(holiday_data.get("regions", ["global"]))
             })
     
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    
+    # Debug output
+    if df.empty:
+        st.error("⚠️ DEBUG: DataFrame is empty after processing")
+        st.write("Available years in global_holidays:", list(global_holidays.keys()))
+        st.write("Sample data structure:", str(global_holidays)[:500])
+    else:
+        st.success(f"✅ Loaded {len(df)} holiday entries from {len(df['Year'].unique())} years")
+    
+    return df
 
 def rebuild_global_holidays_from_df(df: pd.DataFrame, data: Dict[str, Any]):
     """Convert DataFrame back to nested global holidays structure."""
@@ -71,17 +97,32 @@ def render_global_holidays_grid(data: Dict[str, Any], years: List[str]):
     
     df = flatten_global_holidays_to_df(data, years)
     
+    # Always show the grid, even if empty
     if df.empty:
-        st.info("No global holidays defined. Add holidays using the form below.")
+        st.warning("⚠️ No global holidays found. The grid below is empty - you can add holidays using the Classic editor below, or by editing your JSON file directly.")
+        # Create empty dataframe with proper structure
         df = pd.DataFrame(columns=["Year", "Holiday Name", "Start Date", "End Date", "Type", "Regions"])
+        # Add one sample row to show structure
+        df = pd.DataFrame([{
+            "Year": "2025",
+            "Holiday Name": "Example Holiday",
+            "Start Date": "2025-01-01",
+            "End Date": "2025-01-07",
+            "Type": "other",
+            "Regions": "global"
+        }])
+        st.info("👆 Example row shown above - delete this and add your own holidays in the Classic editor, then return here to edit them.")
+    
+    # Show data preview
+    st.caption(f"📊 Showing {len(df)} holiday entries")
     
     # Configure AG Grid
     gb = GridOptionsBuilder.from_dataframe(df)
     gb.configure_default_column(editable=True, resizable=True, filterable=True, sortable=True)
-    gb.configure_column("Year", editable=True, type=["numericColumn"], width=80)
+    gb.configure_column("Year", editable=True, width=80)
     gb.configure_column("Holiday Name", editable=True, width=200)
-    gb.configure_column("Start Date", editable=True, width=120)
-    gb.configure_column("End Date", editable=True, width=120)
+    gb.configure_column("Start Date", editable=True, width=130)
+    gb.configure_column("End Date", editable=True, width=130)
     gb.configure_column("Type", editable=True, width=100)
     gb.configure_column("Regions", editable=True, width=150)
     gb.configure_selection(selection_mode="multiple", use_checkbox=True)
@@ -89,21 +130,30 @@ def render_global_holidays_grid(data: Dict[str, Any], years: List[str]):
         enableRangeSelection=True,
         enableFillHandle=True,
         suppressRowClickSelection=False,
-        rowHeight=35
+        rowHeight=40
     )
     
-    grid_response = AgGrid(
-        df,
-        gridOptions=gb.build(),
-        update_mode=GridUpdateMode.VALUE_CHANGED,
-        data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
-        allow_unsafe_jscode=True,
-        theme='streamlit',
-        height=400,
-        reload_data=False
-    )
-    
-    edited_df = grid_response['data']
+    try:
+        grid_response = AgGrid(
+            df,
+            gridOptions=gb.build(),
+            update_mode=GridUpdateMode.VALUE_CHANGED,
+            data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
+            allow_unsafe_jscode=True,
+            theme='streamlit',
+            height=min(400, max(150, len(df) * 45 + 50)),
+            reload_data=False,
+            key="global_holidays_grid"
+        )
+        
+        edited_df = grid_response['data']
+    except Exception as e:
+        st.error(f"Error rendering grid: {e}")
+        st.write("Debug info:")
+        st.write(f"DataFrame shape: {df.shape}")
+        st.write(f"DataFrame columns: {df.columns.tolist()}")
+        st.dataframe(df)
+        return
     
     col1, col2, col3 = st.columns([2, 2, 1])
     
