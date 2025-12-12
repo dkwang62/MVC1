@@ -3,23 +3,20 @@ import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 
 
-def _build_gb(df: pd.DataFrame, editable: bool = True) -> dict:
+def _build_gb(df: pd.DataFrame, editable: bool = True) -> GridOptionsBuilder:
     gb = GridOptionsBuilder.from_dataframe(df)
     gb.configure_default_column(editable=editable, resizable=True)
     gb.configure_grid_options(stopEditingWhenCellsLoseFocus=True)
     return gb
 
 
-def render_global_holidays_grid(data: dict) -> dict:
-    """
-    Global Holiday Calendar (Year-Specific).
-    Expects: data["global_holidays"] = { "2025": ["2025-12-25", ...], "2026": [...] }
-    Returns updated data dict (only when user clicks Save).
-    """
+def render_global_holidays_grid(working: dict) -> None:
+    """Edits working['global_holidays'] in-place (when Save clicked)."""
+
     st.markdown("## 🎅 Global Holiday Calendar (Year-Specific)")
     st.caption("Edit holiday dates for each year. These dates are referenced by all resorts.")
 
-    global_holidays = data.get("global_holidays", {}) or {}
+    global_holidays = (working.get("global_holidays") or {})
 
     rows = []
     for year, dates in global_holidays.items():
@@ -44,7 +41,7 @@ def render_global_holidays_grid(data: dict) -> dict:
         update_mode=GridUpdateMode.VALUE_CHANGED,
         height=320,
         allow_unsafe_jscode=True,
-        key="global_holidays_aggrid",  # IMPORTANT: unique key
+        key="global_holidays_aggrid",  # critical unique key
     )
 
     updated_df = grid["data"]
@@ -52,7 +49,7 @@ def render_global_holidays_grid(data: dict) -> dict:
     c1, c2 = st.columns([3, 1])
     with c1:
         if st.button("💾 Save Changes to Global Holidays"):
-            new_global_holidays = {}
+            new_global_holidays: dict[str, list[str]] = {}
             for _, row in updated_df.iterrows():
                 if pd.isna(row.get("year")) or pd.isna(row.get("date")):
                     continue
@@ -62,39 +59,38 @@ def render_global_holidays_grid(data: dict) -> dict:
                     continue
                 new_global_holidays.setdefault(year, []).append(date_str)
 
-            # de-dupe and sort
             for y in list(new_global_holidays.keys()):
                 new_global_holidays[y] = sorted(set(new_global_holidays[y]))
 
-            data["global_holidays"] = new_global_holidays
+            working["global_holidays"] = new_global_holidays
             st.success("Global holidays updated.")
 
     with c2:
         if st.button("🔄 Reset"):
             st.rerun()
 
-    return data
 
+def render_season_dates_grid(working: dict, resort_id: str) -> None:
+    """
+    Reads/writes:
+      working['resorts'][resort_id]['season_dates']
+    (If your actual nesting differs, adjust the two getter lines below.)
+    """
+    resorts = working.get("resorts") or {}
+    resort = resorts.get(resort_id) or {}
+    season_dates = resort.get("season_dates") or {}
 
-def render_season_dates_grid(resort_id: str, season_dates: dict) -> dict:
-    """
-    Expects season_dates like:
-    {
-      "Low": [{"start":"2025-01-01","end":"2025-02-01"}, ...],
-      "High": [...]
-    }
-    Returns updated structure in same format.
-    """
+    if not isinstance(season_dates, dict):
+        st.error(f"season_dates is not a dict for resort_id={resort_id}. Got: {type(season_dates)}")
+        return
+
     rows = []
-    season_dates = season_dates or {}
     for season, ranges in season_dates.items():
         for r in (ranges or []):
             rows.append(
-                {
-                    "season": str(season),
-                    "start": str(r.get("start", "")),
-                    "end": str(r.get("end", "")),
-                }
+                {"season": str(season),
+                 "start": str(r.get("start", "")),
+                 "end": str(r.get("end", ""))}
             )
 
     df = pd.DataFrame(rows, columns=["season", "start", "end"])
@@ -109,7 +105,7 @@ def render_season_dates_grid(resort_id: str, season_dates: dict) -> dict:
         gridOptions=gb.build(),
         update_mode=GridUpdateMode.VALUE_CHANGED,
         height=260,
-        key=f"season_dates_aggrid__{resort_id}",  # unique per resort
+        key=f"season_dates_aggrid__{resort_id}",
     )
 
     updated = {}
@@ -121,28 +117,38 @@ def render_season_dates_grid(resort_id: str, season_dates: dict) -> dict:
             continue
         updated.setdefault(season, []).append({"start": start, "end": end})
 
-    return updated
+    c1, c2 = st.columns([3, 1])
+    with c1:
+        if st.button("💾 Save Season Dates", key=f"save_season_dates__{resort_id}"):
+            resort["season_dates"] = updated
+            resorts[resort_id] = resort
+            working["resorts"] = resorts
+            st.success("Season dates updated.")
+    with c2:
+        if st.button("🔄 Reset", key=f"reset_season_dates__{resort_id}"):
+            st.rerun()
 
 
-def render_season_points_grid(resort_id: str, season_points: dict) -> dict:
+def render_season_points_grid(working: dict, resort_id: str) -> None:
     """
-    Expects season_points like:
-    {
-      "Low": {"Sun-Thu": 1000, "Fri-Sat": 1200},
-      "High": {"Sun-Thu": 1500, "Fri-Sat": 1800}
-    }
-    Returns same structure.
+    Reads/writes:
+      working['resorts'][resort_id]['season_points']
     """
-    season_points = season_points or {}
+    resorts = working.get("resorts") or {}
+    resort = resorts.get(resort_id) or {}
+    season_points = resort.get("season_points") or {}
+
+    if not isinstance(season_points, dict):
+        st.error(f"season_points is not a dict for resort_id={resort_id}. Got: {type(season_points)}")
+        return
+
     rows = []
     for season, points in season_points.items():
         points = points or {}
         rows.append(
-            {
-                "season": str(season),
-                "Sun-Thu": points.get("Sun-Thu", ""),
-                "Fri-Sat": points.get("Fri-Sat", ""),
-            }
+            {"season": str(season),
+             "Sun-Thu": points.get("Sun-Thu", ""),
+             "Fri-Sat": points.get("Fri-Sat", "")}
         )
 
     df = pd.DataFrame(rows, columns=["season", "Sun-Thu", "Fri-Sat"])
@@ -157,7 +163,7 @@ def render_season_points_grid(resort_id: str, season_points: dict) -> dict:
         gridOptions=gb.build(),
         update_mode=GridUpdateMode.VALUE_CHANGED,
         height=240,
-        key=f"season_points_aggrid__{resort_id}",  # unique per resort
+        key=f"season_points_aggrid__{resort_id}",
     )
 
     updated = {}
@@ -170,28 +176,38 @@ def render_season_points_grid(resort_id: str, season_points: dict) -> dict:
             "Fri-Sat": row.get("Fri-Sat", ""),
         }
 
-    return updated
+    c1, c2 = st.columns([3, 1])
+    with c1:
+        if st.button("💾 Save Season Points", key=f"save_season_points__{resort_id}"):
+            resort["season_points"] = updated
+            resorts[resort_id] = resort
+            working["resorts"] = resorts
+            st.success("Season points updated.")
+    with c2:
+        if st.button("🔄 Reset", key=f"reset_season_points__{resort_id}"):
+            st.rerun()
 
 
-def render_holiday_points_grid(resort_id: str, holiday_points: dict) -> dict:
+def render_holiday_points_grid(working: dict, resort_id: str) -> None:
     """
-    Optional helper, in case editor.py imports it.
-    Expects holiday_points like:
-    {
-      "Holiday": {"Sun-Thu": 2000, "Fri-Sat": 2400}
-    }
-    Returns same structure.
+    Reads/writes:
+      working['resorts'][resort_id]['holiday_points']
     """
-    holiday_points = holiday_points or {}
+    resorts = working.get("resorts") or {}
+    resort = resorts.get(resort_id) or {}
+    holiday_points = resort.get("holiday_points") or {}
+
+    if not isinstance(holiday_points, dict):
+        st.error(f"holiday_points is not a dict for resort_id={resort_id}. Got: {type(holiday_points)}")
+        return
+
     rows = []
     for label, points in holiday_points.items():
         points = points or {}
         rows.append(
-            {
-                "label": str(label),
-                "Sun-Thu": points.get("Sun-Thu", ""),
-                "Fri-Sat": points.get("Fri-Sat", ""),
-            }
+            {"label": str(label),
+             "Sun-Thu": points.get("Sun-Thu", ""),
+             "Fri-Sat": points.get("Fri-Sat", "")}
         )
 
     df = pd.DataFrame(rows, columns=["label", "Sun-Thu", "Fri-Sat"])
@@ -206,7 +222,7 @@ def render_holiday_points_grid(resort_id: str, holiday_points: dict) -> dict:
         gridOptions=gb.build(),
         update_mode=GridUpdateMode.VALUE_CHANGED,
         height=220,
-        key=f"holiday_points_aggrid__{resort_id}",  # unique per resort
+        key=f"holiday_points_aggrid__{resort_id}",
     )
 
     updated = {}
@@ -219,4 +235,13 @@ def render_holiday_points_grid(resort_id: str, holiday_points: dict) -> dict:
             "Fri-Sat": row.get("Fri-Sat", ""),
         }
 
-    return updated
+    c1, c2 = st.columns([3, 1])
+    with c1:
+        if st.button("💾 Save Holiday Points", key=f"save_holiday_points__{resort_id}"):
+            resort["holiday_points"] = updated
+            resorts[resort_id] = resort
+            working["resorts"] = resorts
+            st.success("Holiday points updated.")
+    with c2:
+        if st.button("🔄 Reset", key=f"reset_holiday_points__{resort_id}"):
+            st.rerun()
