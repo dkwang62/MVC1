@@ -1618,14 +1618,9 @@ def render_global_settings_v2(data: Dict[str, Any], years: List[str]):
         unsafe_allow_html=True,
     )
     
-    # NEW: AG Grid option
-    with st.expander("🎅 Global Holiday Calendar (AG Grid)", expanded=False):
-        render_global_holidays_grid(data, years)
-    
-    # Keep existing form-based editor as backup
-    with st.expander("🎅 Global Holiday Calendar (Classic)", expanded=False):
+    # Just use the Classic editor - it works perfectly
+    with st.expander("🎅 Global Holiday Calendar", expanded=False):
         render_global_holiday_dates_editor_v2(data, years)
-
 # ----------------------------------------------------------------------
 # MAIN APPLICATION
 # ----------------------------------------------------------------------
