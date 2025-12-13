@@ -1,126 +1,62 @@
 import streamlit as st
-from aggrid_editor import (
-    render_global_holidays_grid,
-    render_season_dates_grid,
-    render_season_points_grid,
-    render_holiday_points_grid,
-)
+from common.ui import setup_page
+import calculator
+import editor
 
-# Optional: if you have other modules like calculator
-# from calculator import calculator
+# Set page config first
+setup_page()
 
 def main():
-    st.set_page_config(page_title="MVC Editor", layout="wide")
-    st.title("🏖️ MVC Resort Data Editor")
-
-    # Initialize session state if not already done
+    # --- 1. SESSION STATE FOR NAVIGATION ---
+    # We use 'app_phase' to track: 'renter', 'owner', 'editor'
     if "app_phase" not in st.session_state:
-        st.session_state.app_phase = "editor"  # or "calculator", etc.
-    if "data" not in st.session_state:
-        st.session_state.data = {}
-    if "current_resort" not in st.session_state:
-        st.session_state.current_resort = None
+        st.session_state.app_phase = "renter"
 
-    # Sidebar for navigation / phase selection (optional)
+    # --- 2. SIDEBAR NAVIGATION CONTROLS ---
     with st.sidebar:
         st.header("Navigation")
-        phase = st.radio(
-            "Select Mode",
-            options=["editor", "calculator", "other"],
-            index=0 if st.session_state.app_phase == "editor" else 1
-        )
-        st.session_state.app_phase = phase
+        
+        # LOGIC: RENTER MODE
+        if st.session_state.app_phase == "renter":
+            st.info("Currently: **Renter Mode**")
+            st.markdown("---")
+            if st.button("Go to Owner Mode ➡️", use_container_width=True):
+                st.session_state.app_phase = "owner"
+                st.rerun()
 
-        st.divider()
-        st.caption("MVC Data Editor • Global & Resort Configuration")
+        # LOGIC: OWNER MODE
+        elif st.session_state.app_phase == "owner":
+            if st.button("⬅️ Back to Renter", use_container_width=True):
+                st.session_state.app_phase = "renter"
+                st.rerun()
+            
+            st.markdown("---")
+            st.info("Currently: **Owner Mode**")
+            st.markdown("---")
+            
+            if st.button("Go to Editor 🛠️", use_container_width=True):
+                st.session_state.app_phase = "editor"
+                st.rerun()
 
-    # ======================================================================
-    # EDITOR PHASE
-    # ======================================================================
-    if st.session_state.app_phase == "editor":
-        st.header("📊 Data Editor Mode")
+        # LOGIC: EDITOR MODE
+        elif st.session_state.app_phase == "editor":
+            if st.button("⬅️ Back to Calculator", use_container_width=True):
+                st.session_state.app_phase = "owner"
+                st.rerun()
+            st.markdown("---")
+            st.info("Currently: **Data Editor**")
 
-        # Ensure data is loaded
-        if not st.session_state.data:
-            st.warning("No data loaded yet.")
-            uploaded_file = st.file_uploader("Upload your JSON data file", type=["json"])
-            if uploaded_file:
-                import json
-                try:
-                    st.session_state.data = json.load(uploaded_file)
-                    st.success("Data loaded successfully!")
-                    st.rerun()
-                except Exception as e:
-                    st.error(f"Failed to load JSON: {e}")
-            return
-
-        data = st.session_state.data
-
-        # Extract years for global holidays
-        years = sorted(data.get("years", {}).keys())
-        if not years:
-            st.error("No years defined in data['years']. Please check your JSON structure.")
-            return
-
-        # Resort selection
-        resorts = data.get("resorts", {})
-        if not resorts:
-            st.error("No resorts found in data['resorts'].")
-            return
-
-        resort_names = list(resorts.keys())
-        selected_resort = st.selectbox(
-            "Select Resort to Edit",
-            options=resort_names,
-            index=0 if st.session_state.current_resort not in resort_names else resort_names.index(st.session_state.current_resort)
-        )
-        st.session_state.current_resort = selected_resort
-
-        working = resorts[selected_resort]
-        base_year = years[0]  # You can make this configurable if needed
-
-        st.subheader(f"Editing: **{selected_resort}** | Base Year: **{base_year}**")
-
-        # ====================== Render All Editor Grids ======================
-        render_global_holidays_grid(data, years)
-
-        st.divider()
-
-        render_season_dates_grid(working, selected_resort)
-
-        st.divider()
-
-        render_season_points_grid(working, base_year, selected_resort)
-
-        st.divider()
-
-        render_holiday_points_grid(working, base_year, selected_resort)
-
-        # Optional: Save / Export button at the bottom
-        st.divider()
-        col1, col2 = st.columns([1, 3])
-        with col1:
-            if st.button("💾 Download Updated JSON", type="primary", width="stretch"):
-                import json
-                json_str = json.dumps(data, indent=2)
-                st.download_button(
-                    label="Download JSON File",
-                    data=json_str,
-                    file_name=f"mvc_data_updated_{selected_resort}.json",
-                    mime="application/json"
-                )
-
-    # ======================================================================
-    # CALCULATOR PHASE (placeholder - replace with your actual code)
-    # ======================================================================
-    elif st.session_state.app_phase == "calculator":
-        st.header("🧮 Points Calculator Mode")
-        st.info("Calculator mode not implemented in this snippet.")
-        # calculator.run(forced_mode="Owner")  # Uncomment and adjust if you have it
-
-    else:
-        st.header("Other Mode")
-        st.write("This section can be customized.")
+    # --- 3. MAIN PAGE ROUTING ---
+    if st.session_state.app_phase == "renter":
+        # Run calculator in Renter Mode
+        calculator.run(forced_mode="Renter")
+        
+    elif st.session_state.app_phase == "owner":
+        # Run calculator in Owner Mode
+        calculator.run(forced_mode="Owner")
+        
+    elif st.session_state.app_phase == "editor":
+        editor.run()
 
 if __name__ == "__main__":
     main()
