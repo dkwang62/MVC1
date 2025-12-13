@@ -1619,7 +1619,12 @@ def render_global_settings_v2(data: Dict[str, Any], years: List[str]):
     )
     
     # NEW: AG Grid option
+
+    
     with st.expander("🎅 Global Holiday Calendar (AG Grid)", expanded=False):
+        st.write("DEBUG: About to call render_global_holidays_grid")
+        st.write(f"DEBUG: data has keys: {list(data.keys()) if data else 'None'}")
+        st.write(f"DEBUG: years = {years}")
         render_global_holidays_grid(data, years)
     
     # Keep existing form-based editor as backup
