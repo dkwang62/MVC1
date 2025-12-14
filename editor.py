@@ -575,10 +575,18 @@ def render_season_dates_editor_v2(
     )
     render_season_rename_panel_v2(working, resort_id)
     all_names = get_all_season_names_for_resort(working)
-    for year in years:
+    
+    # Sort years descending: latest year first (e.g., 2026, 2025, 2024...)
+    sorted_years = sorted(years, reverse=True)
+    
+    for year_idx, year in enumerate(sorted_years):
         year_obj = ensure_year_structure(working, year)
         seasons = year_obj.get("seasons", [])
-        with st.expander(f"📆 {year} Seasons", expanded=True):
+        
+        # Each full year is now in its own collapsible expander
+        # Latest year expanded by default
+        with st.expander(f"📆 {year} Seasons", expanded=(year_idx == 0)):
+            # Add new season form (applies to all years)
             col1, col2 = st.columns([4, 1])
             with col1:
                 new_season_name = st.text_input(
@@ -591,7 +599,7 @@ def render_season_dates_editor_v2(
                     st.button(
                         "➕ Add",
                         key=rk(resort_id, "add_season_all_years", year),
-                        width="stretch",
+                        use_container_width=True,
                     )
                     and new_season_name
                 ):
@@ -612,6 +620,11 @@ def render_season_dates_editor_v2(
                             )
                         st.success(f"✅ Added '{name}'")
                         st.rerun()
+            
+            # Render each season for this year
+            if not seasons:
+                st.info("No seasons defined yet for this year.")
+            
             for idx, season in enumerate(seasons):
                 render_single_season_v2(working, year, season, idx, resort_id)
 
