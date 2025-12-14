@@ -1849,89 +1849,108 @@ def render_year_generator(data: Dict[str, Any]):
 # ----------------------------------------------------------------------
 # GLOBAL SETTINGS (Maintenance Fees Removed)
 # ----------------------------------------------------------------------
-def render_global_holiday_dates_editor_v2(
+Pythondef render_global_holiday_dates_editor_v2(
     data: Dict[str, Any], years: List[str]
 ):
     global_holidays = data.setdefault("global_holidays", {})
-    for year in years:
-        st.markdown(f"**📆 {year}**")
+    
+    # Sort years descending: latest year first
+    sorted_years = sorted(years, reverse=True)
+    
+    for year_idx, year in enumerate(sorted_years):
         holidays = global_holidays.setdefault(year, {})
-        for i, (name, obj) in enumerate(list(holidays.items())):
-            with st.expander(f"🎉 {name}", expanded=False):
-                col1, col2, col3 = st.columns([3, 3, 1])
-                with col1:
-                    new_start = st.date_input(
-                        "Start date",
-                        safe_date(obj.get("start_date") or f"{year}-01-01"),
-                        key=f"ghs_{year}_{i}",
+        
+        # Each entire year (holidays list + add new form) is now nested in an expander
+        with st.expander(f"📆 {year}", expanded=(year_idx == 0)):  # Latest year expanded by default
+            if not holidays:
+                st.info("No global holidays defined for this year yet.")
+            
+            # Existing holidays
+            for i, (name, obj) in enumerate(list(holidays.items())):
+                with st.expander(f"🎉 {name}", expanded=False):
+                    col1, col2, col3 = st.columns([3, 3, 1])
+                    with col1:
+                        new_start = st.date_input(
+                            "Start date",
+                            safe_date(obj.get("start_date") or f"{year}-01-01"),
+                            key=f"ghs_{year}_{i}",
+                        )
+                    with col2:
+                        new_end = st.date_input(
+                            "End date",
+                            safe_date(obj.get("end_date") or f"{year}-01-07"),
+                            key=f"ghe_{year}_{i}",
+                        )
+                    with col3:
+                        if st.button("🗑️", key=f"ghd_{year}_{i}"):
+                            del holidays[name]
+                            save_data()
+                            st.rerun()
+                    
+                    obj["start_date"] = new_start.isoformat()
+                    obj["end_date"] = new_end.isoformat()
+                    
+                    new_type = st.text_input(
+                        "Type",
+                        value=obj.get("type", "other"),
+                        key=f"ght_{year}_{i}",
                     )
-                with col2:
-                    new_end = st.date_input(
-                        "End date",
-                        safe_date(obj.get("end_date") or f"{year}-01-07"),
-                        key=f"ghe_{year}_{i}",
+                    obj["type"] = new_type or "other"
+                    
+                    regions_str = ", ".join(obj.get("regions", []))
+                    new_regions = st.text_input(
+                        "Regions (comma-separated)",
+                        value=regions_str,
+                        key=f"ghr_{year}_{i}",
                     )
-                with col3:
-                    if st.button("🗑️", key=f"ghd_{year}_{i}"):
-                        del holidays[name]
-                        save_data()
-                        st.rerun()
-                obj["start_date"] = new_start.isoformat()
-                obj["end_date"] = new_end.isoformat()
-                new_type = st.text_input(
-                    "Type",
-                    value=obj.get("type", "other"),
-                    key=f"ght_{year}_{i}",
+                    obj["regions"] = [
+                        r.strip() for r in new_regions.split(",") if r.strip()
+                    ]
+                    
+                    save_data()
+            
+            # Separator before the "Add new" form
+            st.markdown("---")
+            
+            # Form to add a new holiday for this year
+            col1, col2, col3 = st.columns([3, 2, 2])
+            with col1:
+                new_name = st.text_input(
+                    "New holiday name",
+                    key=f"gh_new_name_{year}",
+                    placeholder="e.g., New Year",
                 )
-                obj["type"] = new_type or "other"
-                regions_str = ", ".join(obj.get("regions", []))
-                new_regions = st.text_input(
-                    "Regions (comma-separated)",
-                    value=regions_str,
-                    key=f"ghr_{year}_{i}",
+            with col2:
+                new_start = st.date_input(
+                    "Start",
+                    datetime.strptime(f"{year}-01-01", "%Y-%m-%d").date(),
+                    key=f"gh_new_start_{year}",
                 )
-                obj["regions"] = [
-                    r.strip() for r in new_regions.split(",") if r.strip()
-                ]
-                save_data()
-        st.markdown("---")
-        col1, col2, col3 = st.columns([3, 2, 2])
-        with col1:
-            new_name = st.text_input(
-                "New holiday name",
-                key=f"gh_new_name_{year}",
-                placeholder="e.g., New Year",
-            )
-        with col2:
-            new_start = st.date_input(
-                "Start",
-                datetime.strptime(f"{year}-01-01", "%Y-%m-%d").date(),
-                key=f"gh_new_start_{year}",
-            )
-        with col3:
-            new_end = st.date_input(
-                "End",
-                datetime.strptime(f"{year}-01-07", "%Y-%m-%d").date(),
-                key=f"gh_new_end_{year}",
-            )
-        if (
-            st.button(
+            with col3:
+                new_end = st.date_input(
+                    "End",
+                    datetime.strptime(f"{year}-01-07", "%Y-%m-%d").date(),
+                    key=f"gh_new_end_{year}",
+                )
+            
+            if st.button(
                 "➕ Add Global Holiday",
                 key=f"gh_add_{year}",
-                width="stretch",
-            )
-            and new_name
-            and new_name not in holidays
-        ):
-            holidays[new_name] = {
-                "start_date": new_start.isoformat(),
-                "end_date": new_end.isoformat(),
-                "type": "other",
-                "regions": ["global"],
-            }
-            save_data()
-            st.rerun()
-
+                use_container_width=True,
+            ):
+                if not new_name:
+                    st.error("Please enter a holiday name.")
+                elif new_name in holidays:
+                    st.error(f"A holiday named '{new_name}' already exists for {year}.")
+                else:
+                    holidays[new_name] = {
+                        "start_date": new_start.isoformat(),
+                        "end_date": new_end.isoformat(),
+                        "type": "other",
+                        "regions": ["global"],
+                    }
+                    save_data()
+                    st.rerun()
 def render_global_settings_v2(data: Dict[str, Any], years: List[str]):
     st.markdown(
         "<div class='section-header'>⚙️ Global Configuration</div>",
