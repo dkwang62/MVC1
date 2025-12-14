@@ -1940,11 +1940,7 @@ def render_global_settings_v2(data: Dict[str, Any], years: List[str]):
     # NEW: Year Generator
     with st.expander("📅 Year Generator (Clone & Offset)", expanded=False):
         render_year_generator(data)
-    
-    # NEW: AG Grid option
-    with st.expander("🎅 Global Holiday Calendar (AG Grid)", expanded=False):
-        render_global_holidays_grid(data, years)
-    
+        
     # Keep existing form-based editor as backup
     with st.expander("🎅 Global Holiday Calendar (Classic)", expanded=False):
         render_global_holiday_dates_editor_v2(data, years)
