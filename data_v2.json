@@ -25060,6 +25060,452 @@
           ]
         }
       }
+    },
+    {
+      "id": "pulse-newyork",
+      "display_name": "Pulse New York🌆",
+      "code": "NY",
+      "resort_name": "Marriott Vacation Club Pulse, New York City",
+      "address": "33 W 37th St, New York, NY 10018, USA",
+      "timezone": "America/New_York",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-02-13"
+                },
+                {
+                  "start": "2025-02-21",
+                  "end": "2025-02-27"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2King": 375,
+                    "1Queen": 325,
+                    "3King Street": 450,
+                    "4Double Street": 450,
+                    "5King Empire": 525,
+                    "6King Deluxe": 425,
+                    "7Double Deluxe": 425
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2King": 525,
+                    "1Queen": 450,
+                    "3King Street": 625,
+                    "4Double Street": 625,
+                    "5King Empire": 725,
+                    "6King Deluxe": 575,
+                    "7Double Deluxe": 575
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-02-28",
+                  "end": "2025-05-22"
+                },
+                {
+                  "start": "2025-05-30",
+                  "end": "2025-07-03"
+                },
+                {
+                  "start": "2025-07-11",
+                  "end": "2025-08-28"
+                },
+                {
+                  "start": "2025-09-05",
+                  "end": "2025-11-20"
+                },
+                {
+                  "start": "2025-12-05",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2King": 525,
+                    "1Queen": 450,
+                    "3King Street": 625,
+                    "4Double Street": 625,
+                    "5King Empire": 725,
+                    "6King Deluxe": 575,
+                    "7Double Deluxe": 575
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2King": 725,
+                    "1Queen": 650,
+                    "3King Street": 900,
+                    "4Double Street": 900,
+                    "5King Empire": 1025,
+                    "6King Deluxe": 800,
+                    "7Double Deluxe": 800
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "2King": 3150,
+                "1Queen": 2725,
+                "3King Street": 3900,
+                "4Double Street": 3900,
+                "5King Empire": 4575,
+                "6King Deluxe": 3575,
+                "7Double Deluxe": 3575
+              }
+            },
+            {
+              "name": "Memorial Day",
+              "global_reference": "Memorial Day",
+              "room_points": {
+                "2King": 4350,
+                "1Queen": 3825,
+                "3King Street": 5425,
+                "4Double Street": 5425,
+                "5King Empire": 6275,
+                "6King Deluxe": 4850,
+                "7Double Deluxe": 4850
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "2King": 4350,
+                "1Queen": 3825,
+                "3King Street": 5425,
+                "4Double Street": 5425,
+                "5King Empire": 6275,
+                "6King Deluxe": 4850,
+                "7Double Deluxe": 4850
+              }
+            },
+            {
+              "name": "Labor Day",
+              "global_reference": "Labor Day",
+              "room_points": {
+                "2King": 4350,
+                "1Queen": 3825,
+                "3King Street": 5425,
+                "4Double Street": 5425,
+                "5King Empire": 6275,
+                "6King Deluxe": 4850,
+                "7Double Deluxe": 4850
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
+              "room_points": {
+                "2King": 4725,
+                "1Queen": 4050,
+                "3King Street": 5625,
+                "4Double Street": 5625,
+                "5King Empire": 6525,
+                "6King Deluxe": 5175,
+                "7Double Deluxe": 5175
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "2King": 4725,
+                "1Queen": 4050,
+                "3King Street": 5625,
+                "4Double Street": 5625,
+                "5King Empire": 6525,
+                "6King Deluxe": 5175,
+                "7Double Deluxe": 5175
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2King": 4350,
+                "1Queen": 3825,
+                "3King Street": 5425,
+                "4Double Street": 5425,
+                "5King Empire": 6275,
+                "6King Deluxe": 4850,
+                "7Double Deluxe": 4850
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2King": 4875,
+                "1Queen": 4250,
+                "3King Street": 5850,
+                "4Double Street": 5850,
+                "5King Empire": 6825,
+                "6King Deluxe": 5375,
+                "7Double Deluxe": 5375
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-02-20",
+                  "end": "2026-02-26"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2King": 375,
+                    "1Queen": 325,
+                    "3King Street": 450,
+                    "4Double Street": 450,
+                    "5King Empire": 525,
+                    "6King Deluxe": 425,
+                    "7Double Deluxe": 425
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2King": 525,
+                    "1Queen": 450,
+                    "3King Street": 625,
+                    "4Double Street": 625,
+                    "5King Empire": 725,
+                    "6King Deluxe": 575,
+                    "7Double Deluxe": 575
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-02-27",
+                  "end": "2026-05-21"
+                },
+                {
+                  "start": "2026-05-29",
+                  "end": "2026-07-02"
+                },
+                {
+                  "start": "2026-07-10",
+                  "end": "2026-09-03"
+                },
+                {
+                  "start": "2026-09-11",
+                  "end": "2026-11-19"
+                },
+                {
+                  "start": "2026-12-04",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2King": 525,
+                    "1Queen": 450,
+                    "3King Street": 625,
+                    "4Double Street": 625,
+                    "5King Empire": 725,
+                    "6King Deluxe": 575,
+                    "7Double Deluxe": 575
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2King": 725,
+                    "1Queen": 650,
+                    "3King Street": 900,
+                    "4Double Street": 900,
+                    "5King Empire": 1025,
+                    "6King Deluxe": 800,
+                    "7Double Deluxe": 800
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "2King": 3150,
+                "1Queen": 2725,
+                "3King Street": 3900,
+                "4Double Street": 3900,
+                "5King Empire": 4575,
+                "6King Deluxe": 3575,
+                "7Double Deluxe": 3575
+              }
+            },
+            {
+              "name": "Memorial Day",
+              "global_reference": "Memorial Day",
+              "room_points": {
+                "2King": 4350,
+                "1Queen": 3825,
+                "3King Street": 5425,
+                "4Double Street": 5425,
+                "5King Empire": 6275,
+                "6King Deluxe": 4850,
+                "7Double Deluxe": 4850
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "2King": 4350,
+                "1Queen": 3825,
+                "3King Street": 5425,
+                "4Double Street": 5425,
+                "5King Empire": 6275,
+                "6King Deluxe": 4850,
+                "7Double Deluxe": 4850
+              }
+            },
+            {
+              "name": "Labor Day",
+              "global_reference": "Labor Day",
+              "room_points": {
+                "2King": 4350,
+                "1Queen": 3825,
+                "3King Street": 5425,
+                "4Double Street": 5425,
+                "5King Empire": 6275,
+                "6King Deluxe": 4850,
+                "7Double Deluxe": 4850
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
+              "room_points": {
+                "2King": 4725,
+                "1Queen": 4050,
+                "3King Street": 5625,
+                "4Double Street": 5625,
+                "5King Empire": 6525,
+                "6King Deluxe": 5175,
+                "7Double Deluxe": 5175
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "2King": 4725,
+                "1Queen": 4050,
+                "3King Street": 5625,
+                "4Double Street": 5625,
+                "5King Empire": 6525,
+                "6King Deluxe": 5175,
+                "7Double Deluxe": 5175
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2King": 4350,
+                "1Queen": 3825,
+                "3King Street": 5425,
+                "4Double Street": 5425,
+                "5King Empire": 6275,
+                "6King Deluxe": 4850,
+                "7Double Deluxe": 4850
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2King": 4875,
+                "1Queen": 4250,
+                "3King Street": 5850,
+                "4Double Street": 5850,
+                "5King Empire": 6825,
+                "6King Deluxe": 5375,
+                "7Double Deluxe": 5375
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "migration_notes": {
