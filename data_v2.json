@@ -8672,7 +8672,7 @@
     },
     {
       "id": "frenchman-s-cove",
-      "display_name": "Frenchman's Cove☀️🐚",
+      "display_name": "Frenchman's Cove🌴☀️🐚",
       "code": "VI",
       "resort_name": "Marriott's Frenchman's Cove",
       "address": "7338 Estate Bakkeroe, St. Thomas, VI 00802, U.S. Virgin Islands",
@@ -37936,6 +37936,658 @@
                 "5King Empire": 6825,
                 "6King Deluxe": 5375,
                 "7Double Deluxe": 5375
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "westin-stjohn",
+      "display_name": "Westin St. John🌴☀️🐚",
+      "code": "VI",
+      "resort_name": "The Westin St. John Resort Villas",
+      "address": "300B Chocolate Hole, St. John, VI 00830, USA",
+      "timezone": "America/Puerto_Rico",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "Peak Season",
+              "periods": [
+                {
+                  "start": "2025-02-07",
+                  "end": "2025-02-13"
+                },
+                {
+                  "start": "2025-02-21",
+                  "end": "2025-04-10"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 325,
+                    "1-BDRM Villa": 450,
+                    "2-BDRM Villa": 700,
+                    "3-BDRM Villa": 900
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 450,
+                    "1-BDRM Villa": 650,
+                    "2-BDRM Villa": 1000,
+                    "3-BDRM Villa": 1300
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-02-06"
+                },
+                {
+                  "start": "2025-04-11",
+                  "end": "2025-05-01"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 275,
+                    "1-BDRM Villa": 400,
+                    "2-BDRM Villa": 625,
+                    "3-BDRM Villa": 825
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 400,
+                    "1-BDRM Villa": 575,
+                    "2-BDRM Villa": 900,
+                    "3-BDRM Villa": 1175
+                  }
+                }
+              }
+            },
+            {
+              "name": "Shoulder Season",
+              "periods": [
+                {
+                  "start": "2025-05-02",
+                  "end": "2025-07-03"
+                },
+                {
+                  "start": "2025-07-11",
+                  "end": "2025-09-04"
+                },
+                {
+                  "start": "2025-11-07",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 225,
+                    "1-BDRM Villa": 300,
+                    "2-BDRM Villa": 475,
+                    "3-BDRM Villa": 625
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 300,
+                    "1-BDRM Villa": 425,
+                    "2-BDRM Villa": 650,
+                    "3-BDRM Villa": 850
+                  }
+                }
+              }
+            },
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-09-05",
+                  "end": "2025-11-06"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 150,
+                    "1-BDRM Villa": 225,
+                    "2-BDRM Villa": 350,
+                    "3-BDRM Villa": 450
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 225,
+                    "1-BDRM Villa": 300,
+                    "2-BDRM Villa": 475,
+                    "3-BDRM Villa": 625
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "Studio": 3025,
+                "1-BDRM Villa": 4325,
+                "2-BDRM Villa": 6650,
+                "3-BDRM Villa": 8650
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "Studio": 1725,
+                "1-BDRM Villa": 2350,
+                "2-BDRM Villa": 3675,
+                "3-BDRM Villa": 4825
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "Studio": 2850,
+                "1-BDRM Villa": 4100,
+                "2-BDRM Villa": 6250,
+                "3-BDRM Villa": 8175
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "Studio": 3550,
+                "1-BDRM Villa": 5125,
+                "2-BDRM Villa": 7850,
+                "3-BDRM Villa": 10200
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "Peak Season",
+              "periods": [
+                {
+                  "start": "2026-02-06",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-02-20",
+                  "end": "2026-04-09"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 325,
+                    "1-BDRM Villa": 450,
+                    "2-BDRM Villa": 700,
+                    "3-BDRM Villa": 900
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 450,
+                    "1-BDRM Villa": 650,
+                    "2-BDRM Villa": 1000,
+                    "3-BDRM Villa": 1300
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-02-05"
+                },
+                {
+                  "start": "2026-04-10",
+                  "end": "2026-04-30"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 275,
+                    "1-BDRM Villa": 400,
+                    "2-BDRM Villa": 625,
+                    "3-BDRM Villa": 825
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 400,
+                    "1-BDRM Villa": 575,
+                    "2-BDRM Villa": 900,
+                    "3-BDRM Villa": 1175
+                  }
+                }
+              }
+            },
+            {
+              "name": "Shoulder Season",
+              "periods": [
+                {
+                  "start": "2026-05-01",
+                  "end": "2026-07-02"
+                },
+                {
+                  "start": "2026-07-10",
+                  "end": "2026-09-03"
+                },
+                {
+                  "start": "2026-11-06",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 225,
+                    "1-BDRM Villa": 300,
+                    "2-BDRM Villa": 475,
+                    "3-BDRM Villa": 625
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 300,
+                    "1-BDRM Villa": 425,
+                    "2-BDRM Villa": 650,
+                    "3-BDRM Villa": 850
+                  }
+                }
+              }
+            },
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-09-04",
+                  "end": "2026-11-05"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 150,
+                    "1-BDRM Villa": 225,
+                    "2-BDRM Villa": 350,
+                    "3-BDRM Villa": 450
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 225,
+                    "1-BDRM Villa": 300,
+                    "2-BDRM Villa": 475,
+                    "3-BDRM Villa": 625
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "Studio": 3025,
+                "1-BDRM Villa": 4325,
+                "2-BDRM Villa": 6650,
+                "3-BDRM Villa": 8650
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "Studio": 1725,
+                "1-BDRM Villa": 2350,
+                "2-BDRM Villa": 3675,
+                "3-BDRM Villa": 4825
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "Studio": 2850,
+                "1-BDRM Villa": 4100,
+                "2-BDRM Villa": 6250,
+                "3-BDRM Villa": 8175
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "Studio": 3550,
+                "1-BDRM Villa": 5125,
+                "2-BDRM Villa": 7850,
+                "3-BDRM Villa": 10200
+              }
+            }
+          ]
+        },
+        "2027": {
+          "seasons": [
+            {
+              "name": "Peak Season",
+              "periods": [
+                {
+                  "start": "2027-02-05",
+                  "end": "2027-02-11"
+                },
+                {
+                  "start": "2027-02-19",
+                  "end": "2027-04-08"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 325,
+                    "1-BDRM Villa": 450,
+                    "2-BDRM Villa": 700,
+                    "3-BDRM Villa": 900
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 450,
+                    "1-BDRM Villa": 650,
+                    "2-BDRM Villa": 1000,
+                    "3-BDRM Villa": 1300
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2027-01-03",
+                  "end": "2027-02-04"
+                },
+                {
+                  "start": "2027-04-09",
+                  "end": "2027-04-29"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 275,
+                    "1-BDRM Villa": 400,
+                    "2-BDRM Villa": 625,
+                    "3-BDRM Villa": 825
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 400,
+                    "1-BDRM Villa": 575,
+                    "2-BDRM Villa": 900,
+                    "3-BDRM Villa": 1175
+                  }
+                }
+              }
+            },
+            {
+              "name": "Shoulder Season",
+              "periods": [
+                {
+                  "start": "2027-04-30",
+                  "end": "2027-07-01"
+                },
+                {
+                  "start": "2027-07-09",
+                  "end": "2027-09-02"
+                },
+                {
+                  "start": "2027-11-05",
+                  "end": "2027-12-23"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 225,
+                    "1-BDRM Villa": 300,
+                    "2-BDRM Villa": 475,
+                    "3-BDRM Villa": 625
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 300,
+                    "1-BDRM Villa": 425,
+                    "2-BDRM Villa": 650,
+                    "3-BDRM Villa": 850
+                  }
+                }
+              }
+            },
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2027-09-03",
+                  "end": "2027-11-04"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "Studio": 150,
+                    "1-BDRM Villa": 225,
+                    "2-BDRM Villa": 350,
+                    "3-BDRM Villa": 450
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "Studio": 225,
+                    "1-BDRM Villa": 300,
+                    "2-BDRM Villa": 475,
+                    "3-BDRM Villa": 625
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "Studio": 3025,
+                "1-BDRM Villa": 4325,
+                "2-BDRM Villa": 6650,
+                "3-BDRM Villa": 8650
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "Studio": 1725,
+                "1-BDRM Villa": 2350,
+                "2-BDRM Villa": 3675,
+                "3-BDRM Villa": 4825
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "Studio": 2850,
+                "1-BDRM Villa": 4100,
+                "2-BDRM Villa": 6250,
+                "3-BDRM Villa": 8175
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "Studio": 3550,
+                "1-BDRM Villa": 5125,
+                "2-BDRM Villa": 7850,
+                "3-BDRM Villa": 10200
               }
             }
           ]
