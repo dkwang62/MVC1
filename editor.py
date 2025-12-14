@@ -8,6 +8,7 @@ import copy
 import re
 from datetime import datetime, timedelta, date
 from typing import Dict, List, Any, Optional, Tuple, Set
+from sheets_export_import import render_excel_export_import
 import time
 from aggrid_editor import (
     render_global_holidays_grid,
@@ -2018,13 +2019,14 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         render_resort_card(resort_name, timezone, address)
         render_save_button_v2(data, working, current_resort_id)
         
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
             [
                 "📊 Overview",
                 "📅 Season Dates",
                 "💰 Room Points",
                 "🎄 Holidays",
-                "📋 Spreadsheet View"  # NEW!
+                "📋 Spreadsheet View",
+                "📁 Excel/Sheets",
             ]
         )
         with tab1:
@@ -2057,6 +2059,8 @@ Restarting the app resets everything to the default dataset, so be sure to save 
             with st.expander("🎯 Edit Season Points", expanded=True):
                 BASE_YEAR = "2025"  # or your preferred base year
                 render_season_points_grid(working, BASE_YEAR, current_resort_id)
+        with tab6:
+            render_excel_export_import(working, current_resort_id, data)
     
     st.markdown("---")
     
