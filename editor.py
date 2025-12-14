@@ -1594,15 +1594,13 @@ def generate_new_year_for_resort(
     return new_year_data
 
 def render_year_generator(data: Dict[str, Any]):
-    """Render the year generator UI."""
+    """Render the year generator UI with Holiday AND Season previews."""
     st.info("""
     **💡 How it works:**
     1. Select a source year to copy from.
     2. Enter the new target year.
-    3. **Adjust the Date Offset:** The tool suggests an offset (e.g., 365 days), but you can change this.
-       * Use **364** to keep the same day of the week (52 weeks).
-       * Use **365** (or 366) to keep the same calendar date.
-    4. Review the preview and click Generate.
+    3. **Adjust the Date Offset:** Use **364** to keep the same day of the week, or **365/366** for the same calendar date.
+    4. **Preview:** Check both Holidays and Resort Seasons to ensure alignment.
     """)
     
     # Get available years
@@ -1638,16 +1636,13 @@ def render_year_generator(data: Dict[str, Any]):
     
     st.markdown("---")
 
-    # --- CHANGED SECTION: EDITABLE OFFSET ---
-    # Calculate the default/suggested offset
+    # --- OFFSET SETTINGS ---
     suggested_offset = calculate_date_offset(int(source_year), target_year)
     
     st.markdown("#### ⚙️ Date Adjustment settings")
     col_off1, col_off2 = st.columns([1, 1])
     
     with col_off1:
-        # We use a unique key based on source/target so the default value updates when years change,
-        # but the user can still edit it.
         days_offset = st.number_input(
             "Date Offset (Days to Add)",
             value=suggested_offset,
@@ -1658,19 +1653,20 @@ def render_year_generator(data: Dict[str, Any]):
 
     with col_off2:
         if days_offset % 7 == 0:
-            st.success(f"✅ Offset {days_offset} is a multiple of 7. Day of the week will be preserved (e.g. Friday remains Friday).")
+            st.success(f"✅ Offset {days_offset} is a multiple of 7. Day of the week will be preserved.")
         else:
             st.warning(f"⚠️ Offset {days_offset} is NOT a multiple of 7. Day of the week will shift.")
 
     # --- PREVIEW SECTION ---
     st.markdown("#### 📊 Preview")
     
-    # Preview sample dates
-    with st.expander("🔍 Preview Date Adjustments", expanded=True):
+    pv_tab1, pv_tab2 = st.tabs(["🌎 Global Holidays", "🏨 Resort Seasons"])
+    
+    # TAB 1: Global Holidays Preview
+    with pv_tab1:
         source_holidays = data.get("global_holidays", {}).get(source_year, {})
         if source_holidays:
             preview_data = []
-            # Show first 5 holidays as a sample
             for holiday_name, holiday_data in list(source_holidays.items())[:5]:
                 old_start = holiday_data.get("start_date", "")
                 old_end = holiday_data.get("end_date", "")
@@ -1682,11 +1678,50 @@ def render_year_generator(data: Dict[str, Any]):
                     "Old Dates": f"{old_start} to {old_end}",
                     "New Dates": f"{new_start} to {new_end}"
                 })
-            
-            if preview_data:
-                st.dataframe(pd.DataFrame(preview_data), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(preview_data), use_container_width=True, hide_index=True)
         else:
-            st.info("No holidays in source year to preview")
+            st.info("No holidays in source year.")
+
+    # TAB 2: Resort Seasons Preview
+    with pv_tab2:
+        resorts = data.get("resorts", [])
+        resorts_with_source = [r for r in resorts if source_year in r.get("years", {})]
+        
+        if resorts_with_source:
+            # Let user pick a resort to inspect
+            sample_resort_name = st.selectbox(
+                "Select a resort to preview season shifts:",
+                options=[r.get("display_name") for r in resorts_with_source],
+                key="season_preview_resort_select"
+            )
+            
+            sample_resort = next((r for r in resorts_with_source if r.get("display_name") == sample_resort_name), None)
+            
+            if sample_resort:
+                season_preview = []
+                # Look at seasons in the source year
+                source_seasons = sample_resort["years"][source_year].get("seasons", [])
+                
+                for s in source_seasons:
+                    s_name = s.get("name", "Unnamed")
+                    for p in s.get("periods", []):
+                        old_s = p.get("start", "")
+                        old_e = p.get("end", "")
+                        new_s = adjust_date_string(old_s, days_offset)
+                        new_e = adjust_date_string(old_e, days_offset)
+                        
+                        season_preview.append({
+                            "Season": s_name,
+                            "Old Range": f"{old_s} to {old_e}",
+                            "New Range": f"{new_s} to {new_e}"
+                        })
+                
+                if season_preview:
+                    st.dataframe(pd.DataFrame(season_preview), use_container_width=True, hide_index=True)
+                else:
+                    st.warning("This resort has no seasons defined for the source year.")
+        else:
+            st.warning(f"No resorts found with data for {source_year}.")
     
     st.markdown("---")
     
@@ -1702,23 +1737,17 @@ def render_year_generator(data: Dict[str, Any]):
         )
     with col_scope2:
         include_resorts = st.checkbox(
-            "🏨 Resort Data",
+            "🏨 Resort Data (Seasons)",
             value=True,
-            help="Create season dates for all resorts"
+            help="Create season dates for all resorts by applying the date offset"
         )
     
     if not include_global_holidays and not include_resorts:
         st.warning("⚠️ Please select at least one option to generate.")
         return
     
-    # Show what will be affected
-    if include_resorts:
-        resorts = data.get("resorts", [])
-        resorts_with_source = [
-            r for r in resorts 
-            if source_year in r.get("years", {})
-        ]
-        st.caption(f"Will generate data for **{len(resorts_with_source)} resorts** that have {source_year} data")
+    if include_resorts and resorts_with_source:
+        st.caption(f"Will generate data for **{len(resorts_with_source)} resorts** that have {source_year} data.")
     
     st.markdown("---")
     
@@ -1768,12 +1797,17 @@ def render_year_generator(data: Dict[str, Any]):
                     
                     # Show success
                     if changes_made:
+                        # CRITICAL FIX: Clear the "Working Resorts" cache. 
+                        # This prevents the app from later overwriting your new 2028 data 
+                        # with an old "in-progress" copy of the resort you were just looking at.
+                        st.session_state.working_resorts = {} 
+                        
                         save_data() # Update last save time
                         st.success(f"🎉 Successfully generated year {target_year}!")
                         for msg in changes_made:
                             st.write(msg)
                         
-                        st.info("💾 Don't forget to **commit to memory** and **download** your updated JSON!")
+                        st.info("💾 The working memory has been refreshed. You can now download your updated JSON!")
                         st.balloons()
                         time.sleep(1)
                         st.rerun()
