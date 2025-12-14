@@ -1,9 +1,9 @@
 # aggrid_editor.py
 """
 AG Grid integration for MVC Editor - handles:
-2. Resort season dates (year-specific)
-3. Resort season points (applies to all years)
-4. Resort holiday points (applies to all years)
+1. Resort season dates (year-specific)
+2. Resort season points (applies to all years)
+3. Resort holiday points (applies to all years)
 """
 
 import pandas as pd
@@ -14,12 +14,14 @@ from datetime import datetime
 import copy
 
 
-
 # ==============================================================================
 # RESORT SEASON DATES EDITOR (Year-Specific)
 # ==============================================================================
 def flatten_season_dates_to_df(working: Dict[str, Any]) -> pd.DataFrame:
     """Convert season dates to flat DataFrame."""
+    if not working or "years" not in working:
+        return pd.DataFrame()
+    
     rows = []
    
     for year, year_obj in working.get("years", {}).items():
@@ -45,6 +47,9 @@ def flatten_season_dates_to_df(working: Dict[str, Any]) -> pd.DataFrame:
 
 def rebuild_season_dates_from_df(df: pd.DataFrame, working: Dict[str, Any]):
     """Convert DataFrame back to season dates structure - preserves day_categories."""
+    if working is None:
+        return
+    
     new_periods_map = {}
    
     for _, row in df.iterrows():
@@ -85,7 +90,7 @@ def render_season_dates_grid(working: Dict[str, Any], resort_id: str):
     df = flatten_season_dates_to_df(working)
    
     if df.empty:
-        st.info("No season dates defined. Add seasons in the Season Dates tab first.")
+        st.info("No season dates defined yet, or no resort data loaded. Add seasons in the Season Dates tab first.")
         return
    
     # Configure AG Grid
@@ -109,7 +114,7 @@ def render_season_dates_grid(working: Dict[str, Any], resort_id: str):
         data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
         allow_unsafe_jscode=True,
         theme='streamlit',
-        height=500,  # Increased height to accommodate more rows comfortably
+        height=500,
         reload_data=False
     )
    
@@ -136,13 +141,16 @@ def render_season_dates_grid(working: Dict[str, Any], resort_id: str):
 
 def flatten_season_points_to_df(working: Dict[str, Any], base_year: str) -> pd.DataFrame:
     """Convert season points to flat DataFrame using base year."""
-    rows = []
+    if not working or "years" not in working:
+        return pd.DataFrame()
     
     years_data = working.get("years", {})
     if base_year not in years_data:
         return pd.DataFrame()
     
     base_year_obj = years_data[base_year]
+    
+    rows = []
     
     for season in base_year_obj.get("seasons", []):
         season_name = season.get("name", "")
@@ -165,6 +173,9 @@ def flatten_season_points_to_df(working: Dict[str, Any], base_year: str) -> pd.D
 
 def rebuild_season_points_from_df(df: pd.DataFrame, working: Dict[str, Any], base_year: str):
     """Convert DataFrame back to season points - syncs to all years."""
+    if working is None:
+        return
+    
     # Build new points structure
     season_points_map = {}
     
@@ -211,7 +222,7 @@ def render_season_points_grid(working: Dict[str, Any], base_year: str, resort_id
     df = flatten_season_points_to_df(working, base_year)
     
     if df.empty:
-        st.info("No season points defined. Add seasons and room types first.")
+        st.info("No season points defined yet, or selected base year not available. Add seasons and room types first.")
         return
     
     # Configure AG Grid
@@ -262,13 +273,16 @@ def render_season_points_grid(working: Dict[str, Any], base_year: str, resort_id
 
 def flatten_holiday_points_to_df(working: Dict[str, Any], base_year: str) -> pd.DataFrame:
     """Convert holiday points to flat DataFrame using base year."""
-    rows = []
+    if not working or "years" not in working:
+        return pd.DataFrame()
     
     years_data = working.get("years", {})
     if base_year not in years_data:
         return pd.DataFrame()
     
     base_year_obj = years_data[base_year]
+    
+    rows = []
     
     for holiday in base_year_obj.get("holidays", []):
         holiday_name = holiday.get("name", "")
@@ -287,6 +301,9 @@ def flatten_holiday_points_to_df(working: Dict[str, Any], base_year: str) -> pd.
 
 def rebuild_holiday_points_from_df(df: pd.DataFrame, working: Dict[str, Any], base_year: str):
     """Convert DataFrame back to holiday points - syncs to all years."""
+    if working is None:
+        return
+    
     # Build new points structure
     holiday_points_map = {}
     
@@ -319,7 +336,7 @@ def render_holiday_points_grid(working: Dict[str, Any], base_year: str, resort_i
     df = flatten_holiday_points_to_df(working, base_year)
     
     if df.empty:
-        st.info("No holidays defined. Add holidays in the Holidays tab first.")
+        st.info("No holidays defined yet, or selected base year not available. Add holidays in the Holidays tab first.")
         return
     
     # Configure AG Grid
