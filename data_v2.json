@@ -331,8 +331,8 @@
         ]
       },
       "Chinese New Year": {
-        "start_date": "2027-02-12",
-        "end_date": "2027-02-18",
+        "start_date": "2027-02-05",
+        "end_date": "2027-02-11",
         "type": "secular_holiday",
         "regions": [
           "Asia"
