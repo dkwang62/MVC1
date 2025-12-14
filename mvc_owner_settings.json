@@ -6,8 +6,8 @@
   "useful_life": 20,
   "discount_tier": "Presidential",
   "include_maintenance": true,
-  "include_capital": false,
-  "include_depreciation": false,
+  "include_capital": true,
+  "include_depreciation": true,
   "renter_rate": 0.82,
   "renter_discount_tier": "Ordinary",
   "preferred_resort_id": "phuket-mai-khao"
