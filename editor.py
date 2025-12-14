@@ -1597,10 +1597,12 @@ def render_year_generator(data: Dict[str, Any]):
     """Render the year generator UI."""
     st.info("""
     **💡 How it works:**
-    1. Select a source year to copy from
-    2. Enter the new target year
-    3. The tool calculates the date offset automatically
-    4. All dates are adjusted while preserving season/holiday structures
+    1. Select a source year to copy from.
+    2. Enter the new target year.
+    3. **Adjust the Date Offset:** The tool suggests an offset (e.g., 365 days), but you can change this.
+       * Use **364** to keep the same day of the week (52 weeks).
+       * Use **365** (or 366) to keep the same calendar date.
+    4. Review the preview and click Generate.
     """)
     
     # Get available years
@@ -1634,29 +1636,41 @@ def render_year_generator(data: Dict[str, Any]):
         st.error(f"❌ Year {target_year} already exists! Choose a different target year or delete the existing one first.")
         return
     
-    # Calculate offset
-    days_offset = calculate_date_offset(int(source_year), target_year)
-    
     st.markdown("---")
+
+    # --- CHANGED SECTION: EDITABLE OFFSET ---
+    # Calculate the default/suggested offset
+    suggested_offset = calculate_date_offset(int(source_year), target_year)
     
-    # Show preview
+    st.markdown("#### ⚙️ Date Adjustment settings")
+    col_off1, col_off2 = st.columns([1, 1])
+    
+    with col_off1:
+        # We use a unique key based on source/target so the default value updates when years change,
+        # but the user can still edit it.
+        days_offset = st.number_input(
+            "Date Offset (Days to Add)",
+            value=suggested_offset,
+            step=1,
+            help="Positive adds days, negative subtracts. 364 preserves day-of-week; 365 preserves calendar date.",
+            key=f"offset_input_{source_year}_{target_year}" 
+        )
+
+    with col_off2:
+        if days_offset % 7 == 0:
+            st.success(f"✅ Offset {days_offset} is a multiple of 7. Day of the week will be preserved (e.g. Friday remains Friday).")
+        else:
+            st.warning(f"⚠️ Offset {days_offset} is NOT a multiple of 7. Day of the week will shift.")
+
+    # --- PREVIEW SECTION ---
     st.markdown("#### 📊 Preview")
     
-    col_info1, col_info2, col_info3 = st.columns(3)
-    with col_info1:
-        st.metric("Source Year", source_year)
-    with col_info2:
-        st.metric("Target Year", target_year_str)
-    with col_info3:
-        sign = "+" if days_offset >= 0 else ""
-        st.metric("Date Offset", f"{sign}{days_offset} days")
-    
     # Preview sample dates
-    with st.expander("🔍 Preview Date Adjustments", expanded=False):
+    with st.expander("🔍 Preview Date Adjustments", expanded=True):
         source_holidays = data.get("global_holidays", {}).get(source_year, {})
         if source_holidays:
-            st.caption("Sample holiday date adjustments:")
             preview_data = []
+            # Show first 5 holidays as a sample
             for holiday_name, holiday_data in list(source_holidays.items())[:5]:
                 old_start = holiday_data.get("start_date", "")
                 old_end = holiday_data.get("end_date", "")
@@ -1718,7 +1732,7 @@ def render_year_generator(data: Dict[str, Any]):
             use_container_width=True
         ):
             try:
-                with st.spinner(f"Generating {target_year} from {source_year}..."):
+                with st.spinner(f"Generating {target_year} from {source_year} with offset {days_offset}..."):
                     changes_made = []
                     
                     # Generate global holidays
@@ -1775,7 +1789,6 @@ def render_year_generator(data: Dict[str, Any]):
     with col_btn2:
         if st.button("🔄 Reset", use_container_width=True):
             st.rerun()
-
 # ----------------------------------------------------------------------
 # GLOBAL SETTINGS (Maintenance Fees Removed)
 # ----------------------------------------------------------------------
