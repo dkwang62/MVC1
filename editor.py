@@ -1849,7 +1849,7 @@ def render_year_generator(data: Dict[str, Any]):
 # ----------------------------------------------------------------------
 # GLOBAL SETTINGS (Maintenance Fees Removed)
 # ----------------------------------------------------------------------
-Pythondef render_global_holiday_dates_editor_v2(
+def render_global_holiday_dates_editor_v2(
     data: Dict[str, Any], years: List[str]
 ):
     global_holidays = data.setdefault("global_holidays", {})
