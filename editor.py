@@ -1281,25 +1281,29 @@ def render_gantt_charts_v2(
         "<div class='section-header'>📊 Visual Timeline</div>",
         unsafe_allow_html=True,
     )
-    
+   
     sort_holidays_chronologically(working, data)
+   
+    # Sort years descending: latest year first (e.g., 2026, 2025, 2024...)
+    sorted_years = sorted(years, reverse=True)
+   
+    # Create tabs with latest year on the left
+    tabs = st.tabs([f"📅 {year}" for year in sorted_years])
     
-    tabs = st.tabs([f"📅 {year}" for year in years])
-    for tab, year in zip(tabs, years):
+    for tab, year in zip(tabs, sorted_years):
         with tab:
             year_data = working.get("years", {}).get(year, {})
             n_seasons = len(year_data.get("seasons", []))
             n_holidays = len(year_data.get("holidays", []))
-            
+           
             total_rows = n_seasons + n_holidays
-
             fig = create_gantt_chart_from_working(
                 working,
                 year,
                 data,
                 height=max(400, total_rows * 35 + 150),
             )
-            st.plotly_chart(fig, width="stretch")
+            st.plotly_chart(fig, use_container_width=True)  # Better responsiveness
 
 # ----------------------------------------------------------------------
 # RESORT SUMMARY HELPERS
