@@ -157,56 +157,71 @@ def handle_file_upload():
                 except Exception as e:
                     st.error(f"❌ Error: {str(e)}")
 
+
+
 def create_download_button_v2(data: Dict[str, Any]):
     st.sidebar.markdown("### 📥 Memory to File")
-    if "download_verified" not in st.session_state:
-        st.session_state.download_verified = False
-    with st.sidebar.expander("💾 Save & Download", expanded=False):
-        current_id = st.session_state.get("current_resort_id")
-        working_resorts = st.session_state.get("working_resorts", {})
-        has_unsaved_changes = False
-       
-        if current_id and current_id in working_resorts:
-            working_copy = working_resorts[current_id]
-            committed_copy = find_resort_by_id(data, current_id)
-            if committed_copy != working_copy:
-                has_unsaved_changes = True
-        
+    
+    # 1. Check for unsaved changes in the currently open resort
+    current_id = st.session_state.get("current_resort_id")
+    working_resorts = st.session_state.get("working_resorts", {})
+    has_unsaved_changes = False
+    
+    if current_id and current_id in working_resorts:
+        working_copy = working_resorts[current_id]
+        committed_copy = find_resort_by_id(data, current_id)
+        if committed_copy != working_copy:
+            has_unsaved_changes = True
+    
+    with st.sidebar.expander("💾 Save & Download", expanded=True):
         if has_unsaved_changes:
-            st.session_state.download_verified = False
-            st.warning("⚠️ Unsaved changes pending.")
+            st.warning("⚠️ You have unsaved edits in the current resort.")
+            st.caption("Commit these changes to memory before downloading.")
+            
             if st.button("🧠 COMMIT TO MEMORY", type="primary", width="stretch"):
+                # Commit the changes
                 commit_working_to_data_v2(data, working_resorts[current_id], current_id)
-                st.toast("Committed to memory.", icon="✅")
+                st.toast("Changes committed to memory!", icon="✅")
                 st.rerun()
-            st.caption("You must commit changes to memory before proceeding.")
-        elif not st.session_state.download_verified:
-            st.info("ℹ️ Memory updated.")
-            if st.button("🔍 Verify that memory is up to date", width="stretch"):
-                st.session_state.download_verified = True
-                st.rerun()
-            st.caption("Please confirm the current memory state is correct to unlock the download.")
         else:
-            st.success("✅ Verified & Ready.")
+            # 2. If no unsaved changes, show download immediately
+            st.success("✅ Memory is up to date.")
+            
             filename = st.text_input(
                 "File name",
-                value="data_v2.json",
+                value="resort_data_v2.json",
                 key="download_filename_input",
             ).strip()
-            if not filename:
-                filename = "data_v2.json"
+            
             if not filename.lower().endswith(".json"):
                 filename += ".json"
-            json_data = json.dumps(data, indent=2, ensure_ascii=False)
-            st.download_button(
-                label="⬇️ DOWNLOAD JSON FILE",
-                data=json_data,
-                file_name=filename,
-                mime="application/json",
-                key="download_v2_btn",
-                type="primary",
-                width="stretch",
-            )
+            
+            # Helper to handle Date objects if any slipped into the data
+            def json_serial(obj):
+                if isinstance(obj, (datetime, date)):
+                    return obj.isoformat()
+                raise TypeError (f"Type {type(obj)} not serializable")
+
+            try:
+                # Serialize with custom date handler
+                json_data = json.dumps(
+                    data, 
+                    indent=2, 
+                    ensure_ascii=False,
+                    default=json_serial 
+                )
+                
+                st.download_button(
+                    label="⬇️ DOWNLOAD JSON FILE",
+                    data=json_data,
+                    file_name=filename,
+                    mime="application/json",
+                    key="download_v2_btn",
+                    type="primary", 
+                    width="stretch",
+                )
+            except Exception as e:
+                st.error(f"Serialization Error: {e}")
 
 def handle_file_verification():
     with st.sidebar.expander("🔍 Verify File", expanded=False):
@@ -424,13 +439,20 @@ def handle_resort_switch_v2(
                 st.stop()
     st.session_state.previous_resort_id = current_resort_id
 
-def commit_working_to_data_v2(
-    data: Dict[str, Any], working: Dict[str, Any], resort_id: str
-):
+def commit_working_to_data_v2(data: Dict[str, Any], working: Dict[str, Any], resort_id: str):
     idx = find_resort_index(data, resort_id)
+    
     if idx is not None:
+        # Update existing resort
         data["resorts"][idx] = copy.deepcopy(working)
-        save_data()
+    else:
+        # SAFETY NET: If this is a new resort being edited that wasn't in the list yet
+        # (Though your creation logic usually adds it first, this prevents crashes)
+        if "resorts" not in data:
+            data["resorts"] = []
+        data["resorts"].append(copy.deepcopy(working))
+        
+    save_data() # Update timestamp
 
 def render_save_button_v2(
     data: Dict[str, Any], working: Dict[str, Any], resort_id: str
@@ -2062,3 +2084,12 @@ Restarting the app resets everything to the default dataset, so be sure to save 
 
 if __name__ == "__main__":
     run()
+    current_resort_id = st.session_state.current_resort_id
+    working = load_resort(data, current_resort_id)
+    committed = find_resort_by_id(data, current_resort_id)
+
+    # Visual Indicator Logic
+    if working and committed and working != committed:
+        st.warning("⚠️ You have unsaved changes in this resort. Data is NOT saved to memory yet.")
+    elif working:
+        st.caption("✅ All changes in this resort are saved to memory (Ready to Download).")
