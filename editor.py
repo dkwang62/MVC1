@@ -8,13 +8,14 @@ import copy
 import re
 from datetime import datetime, timedelta, date
 from typing import Dict, List, Any, Optional, Tuple, Set
-from sheets_export_import import render_excel_export_import
+import time
 from aggrid_editor import (
     render_global_holidays_grid,
     render_season_dates_grid,
     render_season_points_grid,
     render_holiday_points_grid,
 )
+
 # ----------------------------------------------------------------------
 # CONSTANTS
 # ----------------------------------------------------------------------
@@ -1527,6 +1528,255 @@ def render_validation_panel_v2(
             st.success("✅ All validation checks passed!")
 
 # ----------------------------------------------------------------------
+# YEAR GENERATOR LOGIC
+# ----------------------------------------------------------------------
+def calculate_date_offset(source_year: int, target_year: int) -> int:
+    """
+    Calculate the number of days between same calendar dates in different years.
+    Accounts for leap years properly.
+    """
+    source_date = datetime(source_year, 1, 1)
+    target_date = datetime(target_year, 1, 1)
+    delta = target_date - source_date
+    return delta.days
+
+def adjust_date_string(date_str: str, days_offset: int) -> str:
+    """Adjust a date string by adding/subtracting days."""
+    try:
+        original_date = datetime.strptime(date_str, "%Y-%m-%d")
+        new_date = original_date + timedelta(days=days_offset)
+        return new_date.strftime("%Y-%m-%d")
+    except Exception:
+        return date_str
+
+def generate_new_year_global_holidays(
+    data: Dict[str, Any],
+    source_year: str,
+    target_year: str,
+    days_offset: int
+) -> Dict[str, Any]:
+    """Generate global holidays for a new year based on a source year."""
+    source_holidays = data.get("global_holidays", {}).get(source_year, {})
+    if not source_holidays:
+        return {}
+    new_holidays = {}
+    for holiday_name, holiday_data in source_holidays.items():
+        new_holiday = copy.deepcopy(holiday_data)
+        if "start_date" in new_holiday:
+            new_holiday["start_date"] = adjust_date_string(
+                new_holiday["start_date"], days_offset
+            )
+        if "end_date" in new_holiday:
+            new_holiday["end_date"] = adjust_date_string(
+                new_holiday["end_date"], days_offset
+            )
+        new_holidays[holiday_name] = new_holiday
+    return new_holidays
+
+def generate_new_year_for_resort(
+    resort: Dict[str, Any],
+    source_year: str,
+    target_year: str,
+    days_offset: int
+) -> Dict[str, Any]:
+    """Generate year data for a resort based on a source year."""
+    source_year_data = resort.get("years", {}).get(source_year)
+    if not source_year_data:
+        return {}
+    new_year_data = copy.deepcopy(source_year_data)
+    # Adjust season dates
+    for season in new_year_data.get("seasons", []):
+        for period in season.get("periods", []):
+            if "start" in period:
+                period["start"] = adjust_date_string(period["start"], days_offset)
+            if "end" in period:
+                period["end"] = adjust_date_string(period["end"], days_offset)
+    return new_year_data
+
+def render_year_generator(data: Dict[str, Any]):
+    """Render the year generator UI."""
+    st.info("""
+    **💡 How it works:**
+    1. Select a source year to copy from
+    2. Enter the new target year
+    3. The tool calculates the date offset automatically
+    4. All dates are adjusted while preserving season/holiday structures
+    """)
+    
+    # Get available years
+    existing_years = sorted(data.get("global_holidays", {}).keys())
+    
+    if not existing_years:
+        st.warning("⚠️ No years found in global holidays. Add at least one year first.")
+        return
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        source_year = st.selectbox(
+            "Source Year (copy from)",
+            options=existing_years,
+            key="year_gen_source"
+        )
+    with col2:
+        target_year = st.number_input(
+            "Target Year (create new)",
+            min_value=2020,
+            max_value=2050,
+            value=int(source_year) + 1 if source_year else 2027,
+            step=1,
+            key="year_gen_target"
+        )
+    
+    target_year_str = str(target_year)
+    
+    # Check if target year already exists
+    if target_year_str in existing_years:
+        st.error(f"❌ Year {target_year} already exists! Choose a different target year or delete the existing one first.")
+        return
+    
+    # Calculate offset
+    days_offset = calculate_date_offset(int(source_year), target_year)
+    
+    st.markdown("---")
+    
+    # Show preview
+    st.markdown("#### 📊 Preview")
+    
+    col_info1, col_info2, col_info3 = st.columns(3)
+    with col_info1:
+        st.metric("Source Year", source_year)
+    with col_info2:
+        st.metric("Target Year", target_year_str)
+    with col_info3:
+        sign = "+" if days_offset >= 0 else ""
+        st.metric("Date Offset", f"{sign}{days_offset} days")
+    
+    # Preview sample dates
+    with st.expander("🔍 Preview Date Adjustments", expanded=False):
+        source_holidays = data.get("global_holidays", {}).get(source_year, {})
+        if source_holidays:
+            st.caption("Sample holiday date adjustments:")
+            preview_data = []
+            for holiday_name, holiday_data in list(source_holidays.items())[:5]:
+                old_start = holiday_data.get("start_date", "")
+                old_end = holiday_data.get("end_date", "")
+                new_start = adjust_date_string(old_start, days_offset)
+                new_end = adjust_date_string(old_end, days_offset)
+                
+                preview_data.append({
+                    "Holiday": holiday_name,
+                    "Old Dates": f"{old_start} to {old_end}",
+                    "New Dates": f"{new_start} to {new_end}"
+                })
+            
+            if preview_data:
+                st.dataframe(pd.DataFrame(preview_data), use_container_width=True, hide_index=True)
+        else:
+            st.info("No holidays in source year to preview")
+    
+    st.markdown("---")
+    
+    # Scope selection
+    st.markdown("#### 🎯 What to Generate")
+    
+    col_scope1, col_scope2 = st.columns(2)
+    with col_scope1:
+        include_global_holidays = st.checkbox(
+            "📅 Global Holidays",
+            value=True,
+            help="Create global holiday calendar for the new year"
+        )
+    with col_scope2:
+        include_resorts = st.checkbox(
+            "🏨 Resort Data",
+            value=True,
+            help="Create season dates for all resorts"
+        )
+    
+    if not include_global_holidays and not include_resorts:
+        st.warning("⚠️ Please select at least one option to generate.")
+        return
+    
+    # Show what will be affected
+    if include_resorts:
+        resorts = data.get("resorts", [])
+        resorts_with_source = [
+            r for r in resorts 
+            if source_year in r.get("years", {})
+        ]
+        st.caption(f"Will generate data for **{len(resorts_with_source)} resorts** that have {source_year} data")
+    
+    st.markdown("---")
+    
+    # Generate button
+    col_btn1, col_btn2 = st.columns([3, 1])
+    
+    with col_btn1:
+        if st.button(
+            f"✨ Generate Year {target_year}",
+            type="primary",
+            use_container_width=True
+        ):
+            try:
+                with st.spinner(f"Generating {target_year} from {source_year}..."):
+                    changes_made = []
+                    
+                    # Generate global holidays
+                    if include_global_holidays:
+                        new_global_holidays = generate_new_year_global_holidays(
+                            data, source_year, target_year_str, days_offset
+                        )
+                        if new_global_holidays:
+                            if "global_holidays" not in data:
+                                data["global_holidays"] = {}
+                            
+                            data["global_holidays"][target_year_str] = new_global_holidays
+                            changes_made.append(
+                                f"✅ Created {len(new_global_holidays)} global holidays"
+                            )
+                    
+                    # Generate resort data
+                    if include_resorts:
+                        resorts_updated = 0
+                        for resort in data.get("resorts", []):
+                            if source_year in resort.get("years", {}):
+                                new_year_data = generate_new_year_for_resort(
+                                    resort, source_year, target_year_str, days_offset
+                                )
+                                if new_year_data:
+                                    resort["years"][target_year_str] = new_year_data
+                                    resorts_updated += 1
+                        
+                        if resorts_updated > 0:
+                            changes_made.append(
+                                f"✅ Updated {resorts_updated} resorts"
+                            )
+                    
+                    # Show success
+                    if changes_made:
+                        save_data() # Update last save time
+                        st.success(f"🎉 Successfully generated year {target_year}!")
+                        for msg in changes_made:
+                            st.write(msg)
+                        
+                        st.info("💾 Don't forget to **commit to memory** and **download** your updated JSON!")
+                        st.balloons()
+                        time.sleep(1)
+                        st.rerun()
+                    else:
+                        st.warning("⚠️ No changes were made. Check your source year has data.")
+                
+            except Exception as e:
+                st.error(f"❌ Error generating year: {str(e)}")
+                import traceback
+                with st.expander("🐛 Debug Info"):
+                    st.code(traceback.format_exc())
+    
+    with col_btn2:
+        if st.button("🔄 Reset", use_container_width=True):
+            st.rerun()
+
+# ----------------------------------------------------------------------
 # GLOBAL SETTINGS (Maintenance Fees Removed)
 # ----------------------------------------------------------------------
 def render_global_holiday_dates_editor_v2(
@@ -1618,9 +1868,18 @@ def render_global_settings_v2(data: Dict[str, Any], years: List[str]):
         unsafe_allow_html=True,
     )
     
-    # Just use the Classic editor - it works perfectly
-    with st.expander("🎅 Global Holiday Calendar", expanded=False):
+    # NEW: Year Generator
+    with st.expander("📅 Year Generator (Clone & Offset)", expanded=False):
+        render_year_generator(data)
+    
+    # NEW: AG Grid option
+    with st.expander("🎅 Global Holiday Calendar (AG Grid)", expanded=False):
+        render_global_holidays_grid(data, years)
+    
+    # Keep existing form-based editor as backup
+    with st.expander("🎅 Global Holiday Calendar (Classic)", expanded=False):
         render_global_holiday_dates_editor_v2(data, years)
+
 # ----------------------------------------------------------------------
 # MAIN APPLICATION
 # ----------------------------------------------------------------------
@@ -1694,14 +1953,13 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         render_resort_card(resort_name, timezone, address)
         render_save_button_v2(data, working, current_resort_id)
         
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(
             [
                 "📊 Overview",
                 "📅 Season Dates",
                 "💰 Room Points",
                 "🎄 Holidays",
-                "📋 Spreadsheet View",
-                "📁 Excel/Sheets",
+                "📋 Spreadsheet View"  # NEW!
             ]
         )
         with tab1:
@@ -1723,7 +1981,7 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         with tab5:
             st.markdown("## 📊 Spreadsheet-Style Editors")
             st.info("✨ Excel-like editing with copy/paste, drag-fill, and multi-select. Changes auto-sync across years where applicable.")
-
+    
             # Season dates (year-specific)
             with st.expander("📅 Edit Season Dates", expanded=True):
                 render_season_dates_grid(working, current_resort_id)
@@ -1734,21 +1992,14 @@ Restarting the app resets everything to the default dataset, so be sure to save 
             with st.expander("🎯 Edit Season Points", expanded=True):
                 BASE_YEAR = "2025"  # or your preferred base year
                 render_season_points_grid(working, BASE_YEAR, current_resort_id)
-
     
-            st.markdown("---")
+    st.markdown("---")
     
-            # Holiday points (applies to all years)
-            with st.expander("🎄 Edit Holiday Points", expanded=True):
-                render_holiday_points_grid(working, BASE_YEAR, current_resort_id)
+    # Holiday points (applies to all years)
+    with st.expander("🎄 Edit Holiday Points", expanded=True):
+        render_holiday_points_grid(working, BASE_YEAR, current_resort_id)
             
-            st.markdown("---")
-
-        with tab6:
-            render_excel_export_import(working, current_resort_id, data)
-
-    
-    
+    st.markdown("---")
     render_global_settings_v2(data, years)
     st.markdown(
         """
