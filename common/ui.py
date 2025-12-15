@@ -314,40 +314,49 @@ def render_resort_grid(
     title: str = "🏨 Select a Resort",
 ) -> None:
     """Enhanced resort grid with better visual grouping by region."""
-    
-    with st.expander(title, expanded=False):
+
+    # --- state: should we show the picker UI? ---
+    if "show_resort_picker" not in st.session_state:
+        # show it on first load; after a selection, we will set it False
+        st.session_state.show_resort_picker = True
+
+    slot = st.empty()
+
+    # If hidden, show a small control to reopen it and exit early
+    if not st.session_state.show_resort_picker:
+        with slot.container():
+            if st.button("Change resort", key="btn_change_resort"):
+                st.session_state.show_resort_picker = True
+                st.rerun()
+        return
+
+    # Otherwise render the expander (opened by default for selection)
+    with slot.expander(title, expanded=True):
         if not resorts:
             st.info("No resorts available.")
             return
 
         sorted_resorts = sort_resorts_west_to_east(resorts)
-        
-        # Group by region with custom grouping logic
+
         region_groups = {}
         for resort in sorted_resorts:
             tz = resort.get("timezone", "UTC")
             region_label = get_region_label(tz)
-            
-            # Custom grouping: Consolidate Mexico + Costa Rica as "Central America"
+
             if region_label in ["Mexico (Pacific)", "Mexico (Caribbean)", "Costa_Rica"]:
                 region_label = "Central America"
-            
-            # Custom grouping: Consolidate SE Asia + Australia as "Asia Pacific"
+
             if region_label in ["SE Asia", "Indonesia", "Japan", "Australia (QLD)", "Australia"]:
                 region_label = "Asia Pacific"
-            
-            if region_label not in region_groups:
-                region_groups[region_label] = []
-            region_groups[region_label].append(resort)
-        
-        # Display by region
+
+            region_groups.setdefault(region_label, []).append(resort)
+
         for region, region_resorts in region_groups.items():
             st.markdown(f"**{region}**")
-            
-            # Calculate grid layout
+
             num_cols = min(6, len(region_resorts))
             cols = st.columns(num_cols)
-            
+
             for idx, resort in enumerate(region_resorts):
                 col = cols[idx % num_cols]
                 with col:
@@ -355,7 +364,7 @@ def render_resort_grid(
                     name = resort.get("display_name", rid or f"Resort {idx+1}")
                     is_current = current_resort_key in (rid, name)
                     btn_type = "primary" if is_current else "secondary"
-                    
+
                     if st.button(
                         name,
                         key=f"resort_btn_{rid or name}",
@@ -364,11 +373,16 @@ def render_resort_grid(
                     ):
                         st.session_state.current_resort_id = rid
                         st.session_state.current_resort = name
+
                         if "delete_confirm" in st.session_state:
                             st.session_state.delete_confirm = False
+
+                        # Hide picker (effectively “collapses” it by removing it)
+                        st.session_state.show_resort_picker = False
                         st.rerun()
-            
+
             st.markdown("<br>", unsafe_allow_html=True)
+
 
 def render_info_callout(message: str, type: str = "info", icon: str = "ℹ️"):
     """Render a friendly callout box."""
