@@ -748,7 +748,7 @@ def main(forced_mode: str = "Renter") -> None:
             with c1:
                 current_val = st.session_state.get("pref_maint_rate", 0.55)
                 val_rate = st.number_input(
-                    "Annual Maintenance Fee ($/point)",
+                    "Maintenance ($/point)",
                     value=current_val,
                     key="widget_maint_rate",
                     step=0.01, min_value=0.0
@@ -865,19 +865,35 @@ def main(forced_mode: str = "Renter") -> None:
 
     
 
-    # --- RESULTS ---
-    # Minimal Explainer just above results
+# --- RESULTS ---
+    # First, perform the calculation
+    res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
+
+    # Now build the enhanced settings caption (safe to use res.total_points)
     discount_display = "None"
     if disc_mul < 1.0:
         pct = int((1.0 - disc_mul) * 100)
         policy_label = "Executive" if disc_mul == 0.75 else "Presidential/Chairman" if disc_mul == 0.7 else "Custom"
-        discount_display = f"✅ {pct}% Off ({policy_label})"
-    
-    rate_label = "Maintenance Fee Rate" if mode == UserMode.OWNER else "Rental Rate"
-    st.caption(f"⚙️ Settings: {rate_label}: **${rate_to_use:.2f}/pt** • Points Discount: **{discount_display}**")
+        discount_display = f"✅ {pct}% Off points ({policy_label})"
 
-    res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
+    rate_label = "Maintenance " if mode == UserMode.OWNER else "Rental Rate"
 
+    settings_parts = []
+    settings_parts.append(f"{rate_label}: ${rate_to_use:.2f}/pt")
+
+    if mode == UserMode.OWNER:
+        purchase_per_pt = st.session_state.get("pref_purchase_price", 18.0)
+        total_purchase = purchase_per_pt * res.total_points  # Now safe — res exists
+        useful_life = st.session_state.get("pref_useful_life", 10)
+
+        settings_parts.append(f"Purchase USD {total_purchase:,.0f}")
+        settings_parts.append(f"Useful Life: **{useful_life} yrs**")
+
+    settings_parts.append(f"**{discount_display}**")
+
+    st.caption(f"⚙️ Settings: " + " • ".join(settings_parts))
+
+    # Now display metrics (rest of your existing code)
     if mode == UserMode.OWNER:
         cols = st.columns(5)
         cols[0].metric("Total Points", f"{res.total_points:,}")
