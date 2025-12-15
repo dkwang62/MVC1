@@ -674,6 +674,23 @@ def main(forced_mode: str = "Renter") -> None:
     rate_to_use = 0.50
     disc_mul = 1.0
 
+    # --- RESORT SELECTION ---
+    if resorts_full and st.session_state.current_resort_id is None:
+        if "pref_resort_id" in st.session_state and any(r.get("id") == st.session_state.pref_resort_id for r in resorts_full):
+            st.session_state.current_resort_id = st.session_state.pref_resort_id
+        else:
+            st.session_state.current_resort_id = resorts_full[0].get("id")
+
+    render_resort_grid(resorts_full, st.session_state.current_resort_id)
+    resort_obj = next((r for r in resorts_full if r.get("id") == st.session_state.current_resort_id), None)
+
+    if not resort_obj: return
+
+    r_name = resort_obj.get("display_name")
+    info = repo.get_resort_info(r_name)
+    render_resort_card(info["full_name"], info["timezone"], info["address"])
+    # st.divider()
+
     with st.expander("⚙️ Settings", expanded=False):
         if mode == UserMode.OWNER:
             c1, c2 = st.columns(2)
@@ -793,23 +810,9 @@ def main(forced_mode: str = "Renter") -> None:
         disc_mul = 0.75 if "Executive" in opt else 0.7 if "Presidential" in opt or "Chairman" in opt else 1.0
         if owner_params: owner_params["disc_mul"] = disc_mul
 
-    # --- RESORT SELECTION ---
-    if resorts_full and st.session_state.current_resort_id is None:
-        if "pref_resort_id" in st.session_state and any(r.get("id") == st.session_state.pref_resort_id for r in resorts_full):
-            st.session_state.current_resort_id = st.session_state.pref_resort_id
-        else:
-            st.session_state.current_resort_id = resorts_full[0].get("id")
 
-    render_resort_grid(resorts_full, st.session_state.current_resort_id)
-    resort_obj = next((r for r in resorts_full if r.get("id") == st.session_state.current_resort_id), None)
 
-    if not resort_obj: return
-
-    r_name = resort_obj.get("display_name")
-    info = repo.get_resort_info(r_name)
-    render_resort_card(info["full_name"], info["timezone"], info["address"])
-    # st.divider()
-
+    
     # --- CALCULATOR INPUTS ---
     c1, c2, c3, c4 = st.columns([2, 1, 2, 2])
     with c1:
