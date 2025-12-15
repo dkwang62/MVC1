@@ -690,6 +690,57 @@ def main(forced_mode: str = "Renter") -> None:
     info = repo.get_resort_info(r_name)
     render_resort_card(info["full_name"], info["timezone"], info["address"])
     # st.divider()
+    # --- CALCULATOR INPUTS ---
+    c1, c2, c3, c4 = st.columns([2, 1, 2, 2])
+    with c1:
+        # Get available years for the date picker
+        available_years = get_unique_years_from_data(st.session_state.data)
+        min_date = datetime.now().date()
+        max_date = datetime.now().date() + timedelta(days=365*2)
+        
+        if available_years:
+            min_y = int(available_years[0])
+            max_y = int(available_years[-1])
+            min_date = date(min_y, 1, 1)
+            max_date = date(max_y, 12, 31)
+            
+        checkin = st.date_input(
+            "Check-in", 
+            value=st.session_state.calc_checkin, 
+            min_value=min_date,
+            max_value=max_date,
+            key="calc_checkin_widget"
+        )
+        st.session_state.calc_checkin = checkin
+
+    if not st.session_state.calc_checkin_user_set and checkin != st.session_state.calc_initial_default:
+        st.session_state.calc_checkin_user_set = True
+    with c2: nights = st.number_input("Nights", 1, 60, 7)
+
+    if st.session_state.calc_checkin_user_set:
+        adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
+    else:
+        adj_in, adj_n, adj = checkin, nights, False
+
+    if adj:
+        st.info(f"Adjusted to holiday: {adj_in.strftime('%b %d')} - {(adj_in+timedelta(days=adj_n-1)).strftime('%b %d')}")
+
+    pts, _ = calc._get_daily_points(calc.repo.get_resort(r_name), adj_in)
+    if not pts:
+        rd = calc.repo.get_resort(r_name)
+        if rd and str(adj_in.year) in rd.years:
+             yd = rd.years[str(adj_in.year)]
+             if yd.seasons: pts = yd.seasons[0].day_categories[0].room_points
+
+    room_types = sorted(pts.keys()) if pts else []
+    if not room_types:
+        st.error("No room data available.")
+        return
+
+    with c3: room_sel = st.selectbox("Room Type", room_types)
+    with c4: comp_rooms = st.multiselect("Compare With", [r for r in room_types if r != room_sel])
+
+    st.divider()
 
     with st.expander("⚙️ Settings", expanded=False):
         if mode == UserMode.OWNER:
@@ -813,57 +864,6 @@ def main(forced_mode: str = "Renter") -> None:
 
 
     
-    # --- CALCULATOR INPUTS ---
-    c1, c2, c3, c4 = st.columns([2, 1, 2, 2])
-    with c1:
-        # Get available years for the date picker
-        available_years = get_unique_years_from_data(st.session_state.data)
-        min_date = datetime.now().date()
-        max_date = datetime.now().date() + timedelta(days=365*2)
-        
-        if available_years:
-            min_y = int(available_years[0])
-            max_y = int(available_years[-1])
-            min_date = date(min_y, 1, 1)
-            max_date = date(max_y, 12, 31)
-            
-        checkin = st.date_input(
-            "Check-in", 
-            value=st.session_state.calc_checkin, 
-            min_value=min_date,
-            max_value=max_date,
-            key="calc_checkin_widget"
-        )
-        st.session_state.calc_checkin = checkin
-
-    if not st.session_state.calc_checkin_user_set and checkin != st.session_state.calc_initial_default:
-        st.session_state.calc_checkin_user_set = True
-    with c2: nights = st.number_input("Nights", 1, 60, 7)
-
-    if st.session_state.calc_checkin_user_set:
-        adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
-    else:
-        adj_in, adj_n, adj = checkin, nights, False
-
-    if adj:
-        st.info(f"Adjusted to holiday: {adj_in.strftime('%b %d')} - {(adj_in+timedelta(days=adj_n-1)).strftime('%b %d')}")
-
-    pts, _ = calc._get_daily_points(calc.repo.get_resort(r_name), adj_in)
-    if not pts:
-        rd = calc.repo.get_resort(r_name)
-        if rd and str(adj_in.year) in rd.years:
-             yd = rd.years[str(adj_in.year)]
-             if yd.seasons: pts = yd.seasons[0].day_categories[0].room_points
-
-    room_types = sorted(pts.keys()) if pts else []
-    if not room_types:
-        st.error("No room data available.")
-        return
-
-    with c3: room_sel = st.selectbox("Room Type", room_types)
-    with c4: comp_rooms = st.multiselect("Compare With", [r for r in room_types if r != room_sel])
-
-    st.divider()
 
     # --- RESULTS ---
     # Minimal Explainer just above results
