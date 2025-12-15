@@ -1431,8 +1431,10 @@ def validate_resort_data_v2(
     all_days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"}
     all_rooms = set(get_all_room_types_for_resort(working))
     global_holidays = data.get("global_holidays", {})
+
     for year in years:
         year_obj = working.get("years", {}).get(year, {})
+
         # Day pattern coverage
         for season in year_obj.get("seasons", []):
             sname = season.get("name", "(Unnamed)")
@@ -1459,6 +1461,7 @@ def validate_resort_data_v2(
                     issues.append(
                         f"[{year}] Season '{sname}' missing rooms: {', '.join(sorted(missing_rooms))}"
                     )
+
         # Holiday references and room coverage
         for h in year_obj.get("holidays", []):
             hname = h.get("name", "(Unnamed)")
@@ -1467,63 +1470,53 @@ def validate_resort_data_v2(
                 issues.append(
                     f"[{year}] Holiday '{hname}' references missing global holiday '{global_ref}'"
                 )
-            if all_rooms and isinstance(
-                rp := h.get("room_points", {}), dict
-            ):
+            if all_rooms and isinstance(rp := h.get("room_points", {}), dict):
                 if missing_rooms := all_rooms - set(rp.keys()):
                     issues.append(
                         f"[{year}] Holiday '{hname}' missing rooms: {', '.join(sorted(missing_rooms))}"
                     )
-        # GAP detection
+
+        # GAP and OVERLAP detection
         try:
             year_start = date(int(year), 1, 1)
             year_end = date(int(year), 12, 31)
         except Exception:
             continue
+
         covered_ranges = []
         gh_year = global_holidays.get(year, {})
-        # Season ranges
+
+        # Collect season periods
         for season in year_obj.get("seasons", []):
             for period in season.get("periods", []):
                 try:
-                    start = datetime.strptime(
-                        period.get("start", ""), "%Y-%m-%d"
-                    ).date()
-                    end = datetime.strptime(
-                        period.get("end", ""), "%Y-%m-%d"
-                    ).date()
+                    start = datetime.strptime(period.get("start", ""), "%Y-%m-%d").date()
+                    end = datetime.strptime(period.get("end", ""), "%Y-%m-%d").date()
                     if start <= end:
                         covered_ranges.append(
-                            (
-                                start,
-                                end,
-                                f"Season '{season.get('name', '(Unnamed)')}'",
-                            )
+                            (start, end, f"Season '{season.get('name', '(Unnamed)')}'")
                         )
                 except Exception:
                     continue
-        # Holiday ranges (from global calendar)
+
+        # Collect holiday ranges (from global calendar)
         for h in year_obj.get("holidays", []):
             global_ref = h.get("global_reference") or h.get("name")
             if gh := gh_year.get(global_ref):
                 try:
-                    start = datetime.strptime(
-                        gh.get("start_date", ""), "%Y-%m-%d"
-                    ).date()
-                    end = datetime.strptime(
-                        gh.get("end_date", ""), "%Y-%m-%d"
-                    ).date()
+                    start = datetime.strptime(gh.get("start_date", ""), "%Y-%m-%d").date()
+                    end = datetime.strptime(gh.get("end_date", ""), "%Y-%m-%d").date()
                     if start <= end:
                         covered_ranges.append(
-                            (
-                                start,
-                                end,
-                                f"Holiday '{h.get('name', '(Unnamed)')}'",
-                            )
+                            (start, end, f"Holiday '{h.get('name', '(Unnamed)')}'")
                         )
                 except Exception:
                     continue
+
+        # Sort ranges by start date
         covered_ranges.sort(key=lambda x: x[0])
+
+        # === GAP DETECTION ===
         if covered_ranges:
             if covered_ranges[0][0] > year_start:
                 gap_days = (covered_ranges[0][0] - year_start).days
@@ -1531,17 +1524,19 @@ def validate_resort_data_v2(
                     f"[{year}] GAP: {gap_days} days from {year_start} to "
                     f"{covered_ranges[0][0] - timedelta(days=1)} (before first range)"
                 )
+
             for i in range(len(covered_ranges) - 1):
                 current_end = covered_ranges[i][1]
                 next_start = covered_ranges[i + 1][0]
                 if next_start > current_end + timedelta(days=1):
                     gap_start = current_end + timedelta(days=1)
                     gap_end = next_start - timedelta(days=1)
-                    gap_days = (next_start - current_end - timedelta(days=1)).days
+                    gap_days = (gap_end - gap_start).days + 1
                     issues.append(
                         f"[{year}] GAP: {gap_days} days from {gap_start} to {gap_end} "
                         f"(between {covered_ranges[i][2]} and {covered_ranges[i+1][2]})"
                     )
+
             if covered_ranges[-1][1] < year_end:
                 gap_days = (year_end - covered_ranges[-1][1]).days
                 issues.append(
@@ -1549,15 +1544,27 @@ def validate_resort_data_v2(
                     f"{covered_ranges[-1][1] + timedelta(days=1)} to {year_end} (after last range)"
                 )
         else:
-            issues.append(
-                f"[{year}] No date ranges defined (entire year is uncovered)"
-            )
-    return issues
+            issues.append(f"[{year}] No date ranges defined (entire year is uncovered)")
 
+        # === OVERLAP DETECTION ===
+        if covered_ranges:
+            for i in range(len(covered_ranges) - 1):
+                current_end = covered_ranges[i][1]
+                next_start = covered_ranges[i + 1][0]
+                if current_end >= next_start:
+                    overlap_start = next_start
+                    overlap_end = current_end
+                    overlap_days = (overlap_end - overlap_start).days + 1
+                    issues.append(
+                        f"[{year}] OVERLAP: {overlap_days} days from {overlap_start} to {overlap_end} "
+                        f"(between {covered_ranges[i][2]} and {covered_ranges[i+1][2]})"
+                    )
+
+    return issues
 def render_validation_panel_v2(
     working: Dict[str, Any], data: Dict[str, Any], years: List[str]
 ):
-    with st.expander("🔍 Data Validation", expanded=False):
+    with st.expander("🔍 Date gaps or overlaps", expanded=False):
         issues = validate_resort_data_v2(working, data, years)
         if issues:
             st.error(f"**Found {len(issues)} issue(s):**")
@@ -2054,23 +2061,22 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         render_resort_card(resort_name, timezone, address)
         render_save_button_v2(data, working, current_resort_id)
         
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
+        tab1, tab2, tab3, tab4, tab5 = st.tabs(
             [
                 "📊 Overview",
                 "📅 Season Dates",
                 "💰 Room Points",
                 "🎄 Holidays",
-                "📋 Spreadsheet View",
-                "📁 Excel/Sheets",
+                "📋 Spreadsheet",
             ]
         )
         with tab1:
+            edit_resort_basics(working, current_resort_id)
             render_seasons_summary_table(working)
             render_holidays_summary_table(working)
-            edit_resort_basics(working, current_resort_id)
         with tab2:
-            render_gantt_charts_v2(working, years, data)
             render_validation_panel_v2(working, data, years)
+            render_gantt_charts_v2(working, years, data)            
             render_season_dates_editor_v2(working, years, current_resort_id)
         with tab3:
             render_seasons_summary_table(working) 
@@ -2085,25 +2091,19 @@ Restarting the app resets everything to the default dataset, so be sure to save 
             st.info("✨ Excel-like editing with copy/paste, drag-fill, and multi-select. Changes auto-sync across years where applicable.")
     
             # Season dates (year-specific)
-            with st.expander("📅 Edit Season Dates", expanded=True):
+            with st.expander("📅 Edit Season Dates", expanded=False):
                 render_season_dates_grid(working, current_resort_id)
     
-            st.markdown("---")
-    
             # Season points (applies to all years)
-            with st.expander("🎯 Edit Season Points", expanded=True):
+            with st.expander("🎯 Edit Season Points", expanded=False):
                 # BASE_YEAR = "2025"  # or your preferred base year
-                # render_season_points_grid(working, BASE_YEAR, current_resort_id)
                 render_season_points_grid(working, BASE_YEAR_FOR_POINTS, current_resort_id)
-        with tab6:
+
+            # Holiday points (applies to all years)
+            with st.expander("🎄 Edit Holiday Points", expanded=False):
+                render_holiday_points_grid(working, BASE_YEAR_FOR_POINTS, current_resort_id)
+            st.markdown("---")
             render_excel_export_import(working, current_resort_id, data)
-    
-    st.markdown("---")
-    
-    # Holiday points (applies to all years)
-    with st.expander("🎄 Edit Holiday Points", expanded=True):
-        render_holiday_points_grid(working, BASE_YEAR_FOR_POINTS, current_resort_id)
-        # render_holiday_points_grid(working, BASE_YEAR, current_resort_id)
             
     st.markdown("---")
     render_global_settings_v2(data, years)
