@@ -585,25 +585,46 @@ def main():
         chars = [c for c in chars if n==0 or compounds[c]]
 
         for c in sorted(chars, key=lambda x: get_stroke_count(x) or 999):
-            meta = component_map.get(c, {}).get("meta", {})
-            fd = {
-                "Pinyin": clean_field(meta.get("pinyin", "—")),
-                "Strokes": f"{get_stroke_count(c)} strokes" if get_stroke_count(c) else "unknown",
-                "Radical": clean_field(meta.get("radical", "—")),
-                "Decomposition": format_decomposition(c),
-                "Definition": clean_field(meta.get("definition", "—")),
-                "Etymology": get_etymology_text(meta),
-            }
-            det = " · ".join(f"<strong>{k}:</strong> {v}" for k, v in fd.items())
-            
-            c1, c2 = st.columns([1, 10])
-            with c1:
-                st.button(c, key=f"res_{c}", use_container_width=True)
-            with c2:
-                st.markdown(f"<div class='char-card'><div class='details'>{det}</div></div>", unsafe_allow_html=True)
-                if compounds.get(c):
-                    st.markdown(f"<div style='padding:10px; background:#f1f8e9; border-radius:8px; margin-top:5px;'><strong>{st.session_state.display_mode}:</strong> {' '.join(sorted(compounds[c]))}</div>", unsafe_allow_html=True)
-                st.markdown("<div style='height: 30px'></div>", unsafe_allow_html=True)
+
+            # --- per-card actions row ---
+            a1, a2 = st.columns([2, 8], vertical_alignment="center")
+
+            with a1:
+                if st.button("Stroke order", key=f"stroke_{c}", use_container_width=True):
+                    st.session_state.stroke_view_char = c[:1]
+                    st.session_state.stroke_view_active = True
+                    st.rerun()
+
+            with a2:
+                # keep your existing card rendering here
+                meta = component_map.get(c, {}).get("meta", {})
+                fd = {
+                    "Pinyin": clean_field(meta.get("pinyin", "—")),
+                    "Strokes": f"{get_stroke_count(c)} strokes" if get_stroke_count(c) else "unknown",
+                    "Definition": clean_field(meta.get("definition", "—")),
+                    "Radical": clean_field(meta.get("radical", "—")),
+                    "Decomposition": clean_field(meta.get("decomposition", "—")),
+                }
+
+                st.markdown(
+                    f"""
+                    <div style="border:1px solid #eee; border-radius:12px; padding:12px; background:#fff;">
+                    <div style="display:flex; gap:14px; align-items:flex-start;">
+                        <div style="font-size:44px; line-height:1;">{c}</div>
+                        <div style="flex:1;">
+                        <div style="display:grid; grid-template-columns: 120px 1fr; row-gap:4px; column-gap:10px;">
+                            <div><b>Pinyin</b></div><div>{fd["Pinyin"]}</div>
+                            <div><b>Strokes</b></div><div>{fd["Strokes"]}</div>
+                            <div><b>Radical</b></div><div>{fd["Radical"]}</div>
+                            <div><b>Decomposition</b></div><div>{fd["Decomposition"]}</div>
+                            <div><b>Definition</b></div><div>{fd["Definition"]}</div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
 
         if chars and n:
             with st.expander("Export Compounds"):
