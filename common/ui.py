@@ -369,7 +369,7 @@ def render_resort_grid(
                         name,
                         key=f"resort_btn_{rid or name}",
                         type=btn_type,
-                        use_container_width=True,
+                        width="stretch",
                     ):
                         st.session_state.current_resort_id = rid
                         st.session_state.current_resort = name
