@@ -8,7 +8,7 @@
   "include_maintenance": true,
   "include_capital": true,
   "include_depreciation": true,
-  "renter_rate": 0.82,
+  "renter_rate": 0.83,
   "renter_discount_tier": "Ordinary",
   "preferred_resort_id": "phuket-mai-khao"
 }
