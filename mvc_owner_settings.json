@@ -1,6 +1,6 @@
 {
   "maintenance_rate": 0.52,
-  "purchase_price": 18.0,
+  "purchase_price": 3.5,
   "capital_cost_pct": 5.0,
   "salvage_value": 3.0,
   "useful_life": 20,
@@ -10,5 +10,5 @@
   "include_depreciation": true,
   "renter_rate": 0.83,
   "renter_discount_tier": "Ordinary",
-  "preferred_resort_id": "phuket-mai-khao"
+  "preferred_resort_id": "ko-olina-beach"
 }
