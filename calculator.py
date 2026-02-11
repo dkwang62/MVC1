@@ -644,10 +644,14 @@ def main(forced_mode: str = "Renter") -> None:
         st.session_state.calc_nights = nights
     
     with c3:
-        # Calculate and display checkout date
+        # Calculate and display checkout date with proper alignment
         checkout_date = checkin + timedelta(days=nights)
-        st.markdown("**Check-out**")
-        st.markdown(f"<p style='font-size: 1.1rem; margin-top: 0.5rem;'>{checkout_date.strftime('%b %d, %Y')}</p>", unsafe_allow_html=True)
+        st.text_input(
+            "Check-out",
+            value=checkout_date.strftime('%Y/%m/%d'),
+            disabled=True,
+            key="checkout_display"
+        )
 
     # Always adjust for holidays when dates overlap
     adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
@@ -844,7 +848,7 @@ def main(forced_mode: str = "Renter") -> None:
             for idx, row in enumerate(all_room_data):
                 is_selected = has_selection and st.session_state.selected_room_type == row['Room Type']
                 
-                cols = st.columns([3, 2, 2, 1])
+                cols = st.columns([3, 2, 2, 1.5])
                 with cols[0]:
                     # Add visual indicator for selected room
                     if is_selected:
@@ -857,11 +861,11 @@ def main(forced_mode: str = "Renter") -> None:
                     cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
                     st.write(f"${row[cost_label]:,.0f}")
                 with cols[3]:
-                    # Simplified button - just tick icon for selected, empty for unselected
+                    # Button with calendar icon and "Dates" text
                     if is_selected:
-                        st.button("✓", key=f"select_{row['_select']}", use_container_width=True, type="primary", disabled=True)
+                        st.button("📅 Dates", key=f"select_{row['_select']}", use_container_width=True, type="primary", disabled=True)
                     else:
-                        if st.button("✓", key=f"select_{row['_select']}", use_container_width=True, type="secondary"):
+                        if st.button("📅 Dates", key=f"select_{row['_select']}", use_container_width=True, type="secondary"):
                             st.session_state.selected_room_type = row['Room Type']
                             st.rerun()
     
