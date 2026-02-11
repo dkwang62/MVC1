@@ -1,192 +1,410 @@
-Calculator.py Reorganization - Changes Summary
-Overview
-The calculator.py file has been reorganized to improve the user flow by showing all available room types first, then allowing users to select a room type to see detailed breakdowns.
-Major Changes
-1. Removed Features
-A. Room Type Comparison Feature (Completely Removed)
+# UX Improvements - Smart Show/Hide Behavior
 
-Removed: ComparisonResult dataclass (lines 74-77)
-Removed: compare_stays() method in MVCCalculator class (lines 367-460)
-Removed: Room comparison UI section with charts (lines 928-938)
-Removed: comp_rooms multiselect input widget
-Removed: Comparison pivot table and charts display
-Reasoning: The ALL room types table now serves as the comparison tool, making the separate comparison feature redundant
+## Overview
+The interface now intelligently shows and hides sections based on user context, creating a cleaner, more focused experience.
 
-B. Removed Imports
+---
 
-Removed: from collections import defaultdict (no longer needed after removing compare_stays)
+## Implemented Improvements
 
-2. Simplified User Inputs
-Before:
+### 1. ✅ ALL Room Types Table - Smart Expander
+**Previous Behavior:**
+- Always visible, taking up screen space
+- No visual indication of which room was selected
+- Selection persisted when changing resorts (wrong room types!)
 
-Check-in date
-Number of nights
-Room type selection (selectbox)
-Compare with (multiselect for additional room types)
+**New Behavior:**
+- **Expanded by default** when no room is selected (user needs to make a choice)
+- **Automatically collapses** when a room is selected (user has made their choice, focus shifts to details)
+- **Re-expands when resort changes** (clears invalid selection)
+- Can still be manually expanded to compare or change selection
+- **Visual indicator:** Selected room shows "✓ Room Name (Selected)"
+- **Button state:** Selected room button shows "Selected" and is disabled/primary colored
 
-After:
+**Benefits:**
+- Guides user attention to the next action
+- Reduces visual clutter after selection
+- Makes it clear which room is currently selected
+- Prevents showing invalid room types from previous resort
+- User can still expand to compare or change selection
 
-Check-in date only
-Number of nights only
+---
 
-Changed code (lines 694-730):
+### 2. ✅ Resort Change Detection - Auto-Clear Selection
+**New Feature:**
+- Tracks current resort ID in session state (`last_resort_id`)
+- Detects when user changes resort
+- **Automatically clears room type selection** when resort changes
+- Forces ALL rooms table to expand for new resort
 
-Removed c3 and c4 columns from the input layout
-Changed from 4-column layout to 2-column layout
-Removed room type selectbox widget
-Removed "Compare With" multiselect widget
-Added automatic room selection reset when check-in date or nights change
+**Benefits:**
+- Prevents confusion from showing wrong room types
+- Each resort has different room types
+- User is prompted to make a new selection
+- Clean state for each resort
 
-3. New User Flow
-Step 1: Resort Selection & Basic Inputs
-User selects resort, enters check-in date and number of nights (unchanged).
-Step 2: Settings Expander
-Configuration options (rates, discounts, costs) moved to collapsible expander at the top (unchanged functionality, just repositioned).
-Step 3: ALL Room Types Table (NEW FIRST RESULTS)
-New section (lines 743-789):
+---
 
-Displays a list of ALL available room types for the selected resort
-Shows for each room type:
+### 3. ✅ Holiday Adjustment - Prominent Alert
+**Previous Behavior:**
+- Small info message showing adjusted dates
+- Easy to miss
+- Didn't explain what changed or why
+- Only showed when user explicitly changed check-in date
 
-Room Type name
-Total Points required
-Total Cost/Rent
-"Select" button
+**New Behavior:**
+- **Always checks for holidays** - no matter how dates were set
+- **Prominent warning box** with holiday icon (⚠️)
+- **Clear explanation** of what happened
+- **Shows original vs adjusted dates**
+- **Lists specific changes:**
+  - Check-in date change (if applicable)
+  - Nights extended (if applicable)
+- **Final adjusted stay dates** clearly displayed
+- Shows even on page load if default dates overlap a holiday
 
+**Example Alert:**
+```
+🎉 Holiday Period Detected!
 
-Calculations performed for all room types upfront
-User clicks "Select" button to choose a room type
-Selection is stored in st.session_state.selected_room_type
+Your dates overlap with a holiday period. To get holiday pricing, 
+your reservation has been adjusted:
 
-Step 4: Detailed Breakdown (Shown After Selection)
-Modified section (lines 791-850):
+Check-in moved from Mar 15 to Mar 14 and 
+Stay extended from 7 nights to 10 nights
 
-Only displays when a room type has been selected
-Shows detailed breakdown for the selected room type:
+New stay: Mar 14, 2025 - Mar 23, 2025 (10 nights)
+```
 
-Settings caption with rate, purchase info, discount status
-Metrics (Points, Cost, Maintenance, Capital, Depreciation)
-Daily Breakdown (in expander)
-Season and Holiday Calendar (in expander)
+**Benefits:**
+- User immediately understands what changed
+- Clear explanation of why (holiday pricing)
+- Shows both original and new dates
+- Reduces confusion about point calculations
+- Makes holiday logic transparent
 
+---
 
+### 4. ✅ Detailed Results - Conditional Display
+**Previous Behavior:**
+- Some elements visible even without room selection
 
-4. State Management Improvements
-Session State Variables:
+**New Behavior:**
+- **Only shows when a room is selected:**
+  - Room type header (📊 Room Name)
+  - "Change Room" button
+  - Settings caption
+  - Metrics (Points, Cost, Maintenance, etc.)
+  - Daily Breakdown (visible directly, not in expander)
 
-selected_room_type: Stores the currently selected room type
-calc_nights: Stores the number of nights (persists across resort changes)
+**Benefits:**
+- Clean initial state - only shows comparison table
+- All detail views appear only after making a selection
+- Clear visual hierarchy
+- Daily breakdown immediately visible for transparency
 
-Live Update Behavior:
-When user changes check-in date or number of nights:
+---
 
-The ALL room types table immediately recalculates and updates to show new costs/points
-If a room type was previously selected, the detailed breakdown also immediately updates with the new dates
-No reset - the selected room type remains selected, just with updated calculations
-This allows users to see how costs change across dates without losing their room selection
+### 5. ✅ Change Room Button
+**New Feature:**
+- **Location:** Top-right of detailed results section
+- **Label:** "↩️ Change Room"
+- **Action:** Clears selection and returns to expanded ALL rooms table
 
-Persistent Nights Value:
-The nights input value is now stored in st.session_state.calc_nights:
+**Benefits:**
+- Easy way to compare different rooms without scrolling
+- One-click return to selection mode
+- Clear call-to-action for changing selection
 
-Initialized to 7 on first load
-Persists when user changes resorts - prevents reverting to default 7 nights
-Updates whenever user changes the value
-Ensures the ALL room types table always reflects the actual nights value selected by the user
+---
 
-5. Preserved Features
-The following features remain completely unchanged:
-✅ All calculation logic in calculate_breakdown() method
-✅ Holiday adjustment logic
-✅ Discount policy calculations
-✅ Owner vs Renter mode differences
-✅ Maintenance, Capital Cost, Depreciation calculations
-✅ Settings save/load functionality
-✅ Season and Holiday Calendar with Gantt chart
-✅ 7-Night cost table for all seasons/holidays
-✅ All data structures and repository methods
-✅ Helper functions (get_all_room_types_for_resort, build_season_cost_table, etc.)
-Code Structure Changes
-Before:
+### 6. ✅ Daily Breakdown - Always Visible
+**Previous Behavior:**
+- Hidden in expander, collapsed by default
+- Required user to expand to see day-by-day details
+
+**New Behavior:**
+- **Always visible** when room is selected
+- Displayed directly after metrics
+- No expander - immediately accessible
+- Shows complete day-by-day breakdown of points and costs
+
+**Benefits:**
+- Key information immediately visible
+- No extra clicks needed
+- Users can see daily breakdown alongside summary metrics
+- More transparent pricing view
+
+---
+
+### 7. ✅ Season & Holiday Calendar - Independent Display
+**Previous Behavior:**
+- Only showed when room was selected
+- Buried at the end of detailed breakdown
+
+**New Behavior:**
+- **Always available** regardless of room selection
+- **Moved to separate section** after a divider
+- Collapsed by default but accessible anytime
+- Shows 7-night cost table for all room types
+
+**Benefits:**
+- Users can explore seasonal patterns before selecting a room
+- Helps inform room selection decision
+- Useful reference regardless of whether user has selected a room
+
+---
+
+### 8. ✅ Visual Hierarchy Improvements
+**Implemented:**
+- Clear section dividers
+- Consistent expander behavior
+- Visual selection indicators
+- Button state changes (primary/secondary/disabled)
+- Contextual headers
+
+---
+
+## User Flow Comparison
+
+### Before (Old Flow):
+```
 1. Resort Selection
-2. Inputs: Check-in, Nights, Room Type, Compare With
-3. Settings Expander
-4. Calculate for selected room → Show metrics
-5. Daily Breakdown (expander)
-6. All Room Types table (expander)
-7. Comparison section (if comp_rooms selected)
-8. Season/Holiday Calendar (expander)
-After:
+2. Check-in + Nights
+3. Settings Expander (collapsed)
+4. ALL Room Types - always visible, no selection indicator
+5. After selecting room:
+   - Detailed metrics
+   - Daily breakdown expander
+   - Season calendar expander (buried in room details)
+```
+
+### After (New Flow):
+```
 1. Resort Selection
-2. Inputs: Check-in, Nights only
-3. Settings Expander
-4. ALL Room Types Table (with Select buttons) ← NEW FIRST RESULTS
-5. IF room selected:
-   - Detailed Breakdown for selected room
+2. Check-in + Nights
+3. Settings Expander (collapsed)
+
+[No room selected state:]
+4. ALL Room Types Expander (EXPANDED)
+   - Clear comparison of all options
+   - Select buttons
+5. Season & Holiday Calendar (available but collapsed)
+   - Can explore before selecting
+
+[Room selected state:]
+4. ALL Room Types Expander (COLLAPSED)
+   - Shows ✓ for selected room
+   - Can expand to change selection
+5. Detailed Results
+   - Header with "Change Room" button
+   - Settings caption
    - Metrics
-   - Daily Breakdown (expander)
-   - Season/Holiday Calendar (expander)
-UI Improvements
-Better User Experience:
+   - Daily Breakdown (visible directly)
+6. Season & Holiday Calendar (still available)
+```
 
-Simpler initial inputs - Users don't need to know room types before seeing options
-Visual comparison - ALL room types table shows all options at once
-Informed selection - Users can see points and costs before selecting
-Clear flow - Linear progression from broad overview to specific details
-Automatic reset - Changing dates/nights returns user to room selection
+---
 
-Visual Layout:
+## Smart Behaviors Summary
 
-Room types displayed in clean rows with columns for:
+| Element | No Selection State | Room Selected State | User Control |
+|---------|-------------------|---------------------|--------------|
+| ALL Room Types | Expanded | Collapsed | Can toggle manually |
+| Selected Room Indicator | - | ✓ shown, button disabled | - |
+| Change Room Button | Hidden | Visible | Click to clear selection |
+| Detailed Results Header | Hidden | Visible | - |
+| Metrics | Hidden | Visible | - |
+| Daily Breakdown | Hidden | Visible (direct display) | - |
+| Season Calendar | Collapsed | Collapsed | Expands manually |
 
-Room Type name (bold)
-Points (formatted with commas)
-Cost (formatted as currency)
-Select button (full width in column)
+---
 
+## Code Implementation Details
 
+### Selection State Detection
+```python
+has_selection = "selected_room_type" in st.session_state and st.session_state.selected_room_type is not None
+```
 
-Lines Changed Summary
-SectionLinesChange TypeImports8Removed defaultdictDataclasses74-77Removed ComparisonResultMVCCalculator.compare_stays367-460Removed entire methodSession state defaults549-557Added calc_nights initializationNights input widget616-628Changed to use persistent session state valueMain inputs section594-628Simplified from 4-col to 2-col, added persistent nightsResults section743-850Complete reorganization: new ALL table + conditional detailed viewRemoved comparisonN/ARemoved comparison UI and charts
-Testing Recommendations
+### Smart Expander
+```python
+with st.expander("🏠 All Room Types", expanded=not has_selection):
+    # Expands when has_selection is False
+    # Collapses when has_selection is True
+```
 
-Test room selection flow:
+### Visual Indicator in Table
+```python
+if is_selected:
+    st.write(f"**✓ {row['Room Type']}** (Selected)")
+else:
+    st.write(f"**{row['Room Type']}**")
+```
 
-Select resort → Enter dates → See ALL rooms table → Select room → See details
+### Button State Management
+```python
+button_label = "Selected" if is_selected else "Select"
+button_type = "primary" if is_selected else "secondary"
+st.button(button_label, type=button_type, disabled=is_selected)
+```
 
+### Conditional Display
+```python
+if has_selection:
+    # Show detailed results
+    # Show change room button
+    # Show metrics
+    # Show daily breakdown
+```
 
-Test live update behavior:
+---
 
-Select a room → Change check-in date → Verify ALL rooms table updates immediately
-Verify detailed breakdown updates immediately with new calculations
-Select a room → Change nights → Verify both ALL table and breakdown update instantly
-Verify selected room type stays selected through date/night changes
+## Additional Recommendations for Future Enhancement
 
+### 1. Sticky Summary Bar (Advanced)
+When scrolling through daily breakdown, show a sticky bar at top with:
+- Selected room type
+- Total points
+- Total cost
+- Change Room button
 
-Test both modes:
+### 2. Quick Compare (Advanced)
+Add a "Compare" checkbox next to each room in the ALL table:
+- User can check 2-3 rooms
+- Shows side-by-side comparison
+- Separate from selection
 
-Verify Owner mode shows Maintenance, Capital, Depreciation
-Verify Renter mode shows Rental costs
+### 3. Booking Intent Indicator (Optional)
+Add visual cues based on user's likely intent:
+- Green highlight for best value
+- Orange for peak pricing
+- Blue for off-peak deals
 
+### 4. Search/Filter (If many room types)
+If resort has >10 room types:
+- Add search box
+- Filter by point range
+- Filter by cost range
 
-Test all room types:
+### 5. Saved Comparisons (Advanced)
+Allow users to save favorite room/date combinations:
+- Stored in session state
+- Quick recall
+- Export as PDF
 
-Verify all room types calculate correctly in the ALL table
-Verify each room type shows correct detailed breakdown when selected
+---
 
+## Testing Checklist
 
-Test settings:
+### Resort Change Behavior
+- [ ] Select a room type at Resort A
+- [ ] Change to Resort B
+- [ ] Verify room selection is cleared
+- [ ] Verify ALL Rooms expander is expanded
+- [ ] Verify room types shown are for Resort B (not Resort A)
+- [ ] Select a room type at Resort B
+- [ ] Change back to Resort A
+- [ ] Verify selection cleared again and expander expanded
 
-Verify changing rates/discounts updates ALL rooms table
-Verify changing rates/discounts updates detailed breakdown
-Verify save/load settings still works
+### Holiday Adjustment Alert
+- [ ] Enter dates that don't include a holiday
+- [ ] Verify no alert shown
+- [ ] Enter dates that overlap a holiday period
+- [ ] Verify prominent warning box appears
+- [ ] Verify alert shows original check-in date
+- [ ] Verify alert shows adjusted check-in date (if changed)
+- [ ] Verify alert shows original nights
+- [ ] Verify alert shows adjusted nights (if changed)
+- [ ] Verify alert shows complete adjusted date range
+- [ ] Verify alert uses warning style (⚠️ icon)
 
+### Smart Expander Behavior
+- [ ] ALL Rooms expander is expanded on page load (no selection)
+- [ ] ALL Rooms expander collapses after selecting a room
+- [ ] ALL Rooms expander re-expands after changing resort
+- [ ] Can manually expand ALL Rooms when room is selected
+- [ ] Expander stays in user's chosen state until selection changes
 
+### Visual Indicators
+- [ ] Selected room shows ✓ and "(Selected)" text
+- [ ] Selected room button shows "Selected" label
+- [ ] Selected room button is primary colored
+- [ ] Selected room button is disabled
+- [ ] Non-selected rooms show "Select" button in secondary color
 
-Migration Notes
-If you have existing code that references:
+### Change Room Button
+- [ ] Not visible when no room selected
+- [ ] Visible when room is selected
+- [ ] Clicking it clears selection
+- [ ] After clicking, ALL Rooms expander re-expands
 
-ComparisonResult: This no longer exists
-compare_stays(): This method has been removed
-comp_rooms variable: This is no longer used
+### Conditional Display
+- [ ] Metrics hidden when no selection
+- [ ] Metrics visible when room selected
+- [ ] Daily Breakdown hidden when no selection
+- [ ] Daily Breakdown visible directly when room selected (not in expander)
+- [ ] Daily Breakdown shows complete date-by-date details
 
-The ALL room types table functionality is built-in to the main flow and doesn't require any external references.
+### Season Calendar
+- [ ] Visible when no room selected
+- [ ] Visible when room is selected
+- [ ] Always collapsed by default
+- [ ] Located after main results section
+
+### State Persistence
+- [ ] Selection persists when changing dates
+- [ ] Selection clears when changing resorts
+- [ ] ALL Rooms table updates with new calculations
+- [ ] Detailed breakdown updates with new calculations
+- [ ] Expander states respect selection changes
+- [ ] Holiday adjustments recalculate on date changes
+- [ ] Nights value persists across resort changes
+
+---
+
+## User Benefits
+
+1. **Cleaner Initial View**
+   - Only see what's needed for decision-making
+   - Not overwhelmed by details before selecting
+
+2. **Progressive Disclosure**
+   - Information reveals as needed
+   - Natural flow from broad to specific
+
+3. **Clear Visual Hierarchy**
+   - Know what's selected
+   - Know what to do next
+
+4. **Easy Navigation**
+   - One-click to change selection
+   - Manual control over expanders when needed
+
+5. **Context-Aware Interface**
+   - Interface adapts to user's current task
+   - Reduces cognitive load
+
+6. **Persistent Comparison**
+   - Season calendar always accessible
+   - Can inform decision at any point
+
+---
+
+## Accessibility Notes
+
+- All interactive elements maintain keyboard navigation
+- Button states clearly indicated (disabled/enabled)
+- Visual indicators supplemented with text labels
+- Expanders remain manually controllable
+- Screen readers will announce state changes
+
+---
+
+## Performance Considerations
+
+- Calculations performed once per render
+- Results cached in local variables
+- No unnecessary re-calculations
+- Expander state changes don't trigger full re-render
+- Conditional rendering reduces DOM complexity
