@@ -903,9 +903,9 @@ def main(forced_mode: str = "Renter") -> None:
             cols[1].metric("Total Rent", f"${res.financial_total:,.0f}")
             if res.discount_applied: st.success(f"✨ Discount Applied: {len(res.discounted_days)} days")
 
-        # Daily Breakdown - in expander, collapsed by default
-        with st.expander("📅 Daily Breakdown", expanded=False):
-            st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
+        # Daily Breakdown - displayed directly (not in expander)
+        st.markdown("#### 📅 Daily Breakdown")
+        st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
     
     # --- SEASON AND HOLIDAY CALENDAR (Always available, independent of selection) ---
     st.divider()
