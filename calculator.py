@@ -643,11 +643,8 @@ def main(forced_mode: str = "Renter") -> None:
         # Update session state with current value
         st.session_state.calc_nights = nights
 
-    # Adjust for holidays if user has set a check-in date
-    if st.session_state.calc_checkin_user_set:
-        adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
-    else:
-        adj_in, adj_n, adj = checkin, nights, False
+    # Always adjust for holidays when dates overlap
+    adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
 
     if adj:
         # Holiday adjustment occurred - show prominent alert
