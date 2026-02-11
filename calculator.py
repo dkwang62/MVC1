@@ -603,8 +603,8 @@ def main(forced_mode: str = "Renter") -> None:
     info = repo.get_resort_info(r_name)
     render_resort_card(info["full_name"], info["timezone"], info["address"])
     
-    # --- CALCULATOR INPUTS: Only Check-in and Nights ---
-    c1, c2 = st.columns([2, 1])
+    # --- CALCULATOR INPUTS: Check-in, Nights, and calculated Checkout ---
+    c1, c2, c3 = st.columns([2, 1, 2])
     with c1:
         # Get available years for the date picker
         available_years = get_unique_years_from_data(st.session_state.data)
@@ -642,6 +642,12 @@ def main(forced_mode: str = "Renter") -> None:
         
         # Update session state with current value
         st.session_state.calc_nights = nights
+    
+    with c3:
+        # Calculate and display checkout date
+        checkout_date = checkin + timedelta(days=nights)
+        st.markdown("**Check-out**")
+        st.markdown(f"<p style='font-size: 1.1rem; margin-top: 0.5rem;'>{checkout_date.strftime('%b %d, %Y')}</p>", unsafe_allow_html=True)
 
     # Always adjust for holidays when dates overlap
     adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
@@ -807,60 +813,77 @@ def main(forced_mode: str = "Renter") -> None:
         disc_mul = 0.75 if "Executive" in opt else 0.7 if "Presidential" in opt or "Chairman" in opt else 1.0
         if owner_params: owner_params["disc_mul"] = disc_mul
 
-    # --- FIRST RESULTS: ALL ROOM TYPES TABLE ---
+    # --- ROOM TYPE SELECTION/DISPLAY ---
     # Determine if we should expand the ALL rooms table
     has_selection = "selected_room_type" in st.session_state and st.session_state.selected_room_type is not None
+    is_single_room_resort = len(room_types) == 1
     
-    with st.expander("🏠 All Room Types", expanded=not has_selection):
-        st.caption(f"Comparing all room types for {adj_n}-night stay from {adj_in.strftime('%b %d, %Y')}")
-        
-        # Calculate costs for all room types
-        all_room_data = []
-        for rm in room_types:
-            room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
-            cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
-            all_room_data.append({
-                "Room Type": rm,
-                "Points": room_res.total_points,
-                cost_label: room_res.financial_total,
-                "_select": rm  # Hidden column for button key
-            })
-        
-        # Display the table with select buttons
-        for idx, row in enumerate(all_room_data):
-            is_selected = has_selection and st.session_state.selected_room_type == row['Room Type']
+    # Auto-select if single room type and no selection yet
+    if is_single_room_resort and not has_selection:
+        st.session_state.selected_room_type = room_types[0]
+        has_selection = True
+    
+    # Calculate costs for all room types (needed for both display modes)
+    all_room_data = []
+    for rm in room_types:
+        room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
+        cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
+        all_room_data.append({
+            "Room Type": rm,
+            "Points": room_res.total_points,
+            cost_label: room_res.financial_total,
+            "_select": rm
+        })
+    
+    # Only show room selection UI if multiple room types exist
+    if not is_single_room_resort:
+        with st.expander("🏠 All Room Types", expanded=not has_selection):
+            st.caption(f"Comparing all room types for {adj_n}-night stay from {adj_in.strftime('%b %d, %Y')}")
             
-            cols = st.columns([3, 2, 2, 1])
-            with cols[0]:
-                # Add visual indicator for selected room
-                if is_selected:
-                    st.write(f"**✓ {row['Room Type']}** (Selected)")
-                else:
-                    st.write(f"**{row['Room Type']}**")
-            with cols[1]:
-                st.write(f"{row['Points']:,} points")
-            with cols[2]:
-                cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
-                st.write(f"${row[cost_label]:,.0f}")
-            with cols[3]:
-                button_label = "Selected" if is_selected else "Select"
-                button_type = "primary" if is_selected else "secondary"
-                if st.button(button_label, key=f"select_{row['_select']}", use_container_width=True, type=button_type, disabled=is_selected):
-                    st.session_state.selected_room_type = row['Room Type']
-                    st.rerun()
+            # Display the table with select buttons
+            for idx, row in enumerate(all_room_data):
+                is_selected = has_selection and st.session_state.selected_room_type == row['Room Type']
+                
+                cols = st.columns([3, 2, 2, 1])
+                with cols[0]:
+                    # Add visual indicator for selected room
+                    if is_selected:
+                        st.write(f"**✓ {row['Room Type']}** (Selected)")
+                    else:
+                        st.write(f"**{row['Room Type']}**")
+                with cols[1]:
+                    st.write(f"{row['Points']:,} points")
+                with cols[2]:
+                    cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
+                    st.write(f"${row[cost_label]:,.0f}")
+                with cols[3]:
+                    # Simplified button - just tick icon for selected, empty for unselected
+                    if is_selected:
+                        st.button("✓", key=f"select_{row['_select']}", use_container_width=True, type="primary", disabled=True)
+                    else:
+                        if st.button("✓", key=f"select_{row['_select']}", use_container_width=True, type="secondary"):
+                            st.session_state.selected_room_type = row['Room Type']
+                            st.rerun()
     
     # --- DETAILED BREAKDOWN (Only shown when room type is selected) ---
     if has_selection:
         room_sel = st.session_state.selected_room_type
         
-        # Add a clear selection button
+        # Header with calendar icon and room type description, Change Room button on right
         col_header, col_clear = st.columns([4, 1])
         with col_header:
-            st.markdown(f"### 📊 {room_sel}")
+            # Show info note for single room resorts
+            if is_single_room_resort:
+                st.markdown(f"### 📅 {room_sel}")
+                st.caption("ℹ️ This resort has only one room type")
+            else:
+                st.markdown(f"### 📅 {room_sel}")
         with col_clear:
-            if st.button("↩️ Change Room", use_container_width=True):
-                del st.session_state.selected_room_type
-                st.rerun()
+            # Only show Change Room button if multiple room types exist
+            if not is_single_room_resort:
+                if st.button("↩️ Change Room", use_container_width=True):
+                    del st.session_state.selected_room_type
+                    st.rerun()
         
         # Calculate the breakdown for selected room
         res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
@@ -903,8 +926,7 @@ def main(forced_mode: str = "Renter") -> None:
             cols[1].metric("Total Rent", f"${res.financial_total:,.0f}")
             if res.discount_applied: st.success(f"✨ Discount Applied: {len(res.discounted_days)} days")
 
-        # Daily Breakdown - displayed directly (not in expander)
-        st.markdown("#### 📅 Daily Breakdown")
+        # Daily Breakdown - displayed directly without subtitle (self-explanatory)
         st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
     
     # --- SEASON AND HOLIDAY CALENDAR (Always available, independent of selection) ---
