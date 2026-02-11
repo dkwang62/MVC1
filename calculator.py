@@ -777,46 +777,59 @@ def main(forced_mode: str = "Renter") -> None:
         if owner_params: owner_params["disc_mul"] = disc_mul
 
     # --- FIRST RESULTS: ALL ROOM TYPES TABLE ---
-    st.markdown("### 🏠 Available Room Types")
-    st.caption(f"Showing all room types for {adj_n}-night stay from {adj_in.strftime('%b %d, %Y')}")
+    # Determine if we should expand the ALL rooms table
+    has_selection = "selected_room_type" in st.session_state and st.session_state.selected_room_type is not None
     
-    # Calculate costs for all room types
-    all_room_data = []
-    for rm in room_types:
-        room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
-        cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
-        all_room_data.append({
-            "Room Type": rm,
-            "Points": room_res.total_points,
-            cost_label: room_res.financial_total,
-            "_select": rm  # Hidden column for button key
-        })
-    
-    # Display the table
-    all_rooms_df = pd.DataFrame(all_room_data)
-    
-    # Create columns for the table and select buttons
-    for idx, row in all_rooms_df.iterrows():
-        cols = st.columns([3, 2, 2, 1])
-        with cols[0]:
-            st.write(f"**{row['Room Type']}**")
-        with cols[1]:
-            st.write(f"{row['Points']:,} points")
-        with cols[2]:
+    with st.expander("🏠 All Room Types", expanded=not has_selection):
+        st.caption(f"Comparing all room types for {adj_n}-night stay from {adj_in.strftime('%b %d, %Y')}")
+        
+        # Calculate costs for all room types
+        all_room_data = []
+        for rm in room_types:
+            room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
             cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
-            st.write(f"${row[cost_label]:,.0f}")
-        with cols[3]:
-            if st.button("Select", key=f"select_{row['_select']}", use_container_width=True):
-                st.session_state.selected_room_type = row['Room Type']
-                st.rerun()
+            all_room_data.append({
+                "Room Type": rm,
+                "Points": room_res.total_points,
+                cost_label: room_res.financial_total,
+                "_select": rm  # Hidden column for button key
+            })
+        
+        # Display the table with select buttons
+        for idx, row in enumerate(all_room_data):
+            is_selected = has_selection and st.session_state.selected_room_type == row['Room Type']
+            
+            cols = st.columns([3, 2, 2, 1])
+            with cols[0]:
+                # Add visual indicator for selected room
+                if is_selected:
+                    st.write(f"**✓ {row['Room Type']}** (Selected)")
+                else:
+                    st.write(f"**{row['Room Type']}**")
+            with cols[1]:
+                st.write(f"{row['Points']:,} points")
+            with cols[2]:
+                cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
+                st.write(f"${row[cost_label]:,.0f}")
+            with cols[3]:
+                button_label = "Selected" if is_selected else "Select"
+                button_type = "primary" if is_selected else "secondary"
+                if st.button(button_label, key=f"select_{row['_select']}", use_container_width=True, type=button_type, disabled=is_selected):
+                    st.session_state.selected_room_type = row['Room Type']
+                    st.rerun()
     
-    st.divider()
-    
-    # --- DETAILED BREAKDOWN (Only shown after room type selection) ---
-    if "selected_room_type" in st.session_state:
+    # --- DETAILED BREAKDOWN (Only shown when room type is selected) ---
+    if has_selection:
         room_sel = st.session_state.selected_room_type
         
-        st.markdown(f"### 📊 Detailed Breakdown: {room_sel}")
+        # Add a clear selection button
+        col_header, col_clear = st.columns([4, 1])
+        with col_header:
+            st.markdown(f"### 📊 {room_sel}")
+        with col_clear:
+            if st.button("↩️ Change Room", use_container_width=True):
+                del st.session_state.selected_room_type
+                st.rerun()
         
         # Calculate the breakdown for selected room
         res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
@@ -859,25 +872,26 @@ def main(forced_mode: str = "Renter") -> None:
             cols[1].metric("Total Rent", f"${res.financial_total:,.0f}")
             if res.discount_applied: st.success(f"✨ Discount Applied: {len(res.discounted_days)} days")
 
-        # Daily Breakdown
+        # Daily Breakdown - in expander, collapsed by default
         with st.expander("📅 Daily Breakdown", expanded=False):
             st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
+    
+    # --- SEASON AND HOLIDAY CALENDAR (Always available, independent of selection) ---
+    st.divider()
+    year_str = str(adj_in.year)
+    res_data = calc.repo.get_resort(r_name)
+    if res_data and year_str in res_data.years:
+        with st.expander("📅 Season & Holiday Calendar", expanded=False):
+            st.plotly_chart(create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {})), use_container_width=True)
 
-        # Season and Holiday Calendar
-        year_str = str(adj_in.year)
-        res_data = calc.repo.get_resort(r_name)
-        if res_data and year_str in res_data.years:
-            with st.expander("📅 Season and Holiday Calendar", expanded=False):
-                st.plotly_chart(create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {})), use_container_width=True)
-
-                cost_df = build_season_cost_table(res_data, int(year_str), rate_to_use, disc_mul, mode, owner_params)
-                if cost_df is not None:
-                    title = "7-Night Rental Costs" if mode == UserMode.RENTER else "7-Night Ownership Costs"
-                    note = " — Discount applied" if disc_mul < 1 else ""
-                    st.markdown(f"**{title}** @ ${rate_to_use:.2f}/pt{note}")
-                    st.dataframe(cost_df, use_container_width=True, hide_index=True)
-                else:
-                    st.info("No season or holiday pricing data for this year.")
+            cost_df = build_season_cost_table(res_data, int(year_str), rate_to_use, disc_mul, mode, owner_params)
+            if cost_df is not None:
+                title = "7-Night Rental Costs" if mode == UserMode.RENTER else "7-Night Ownership Costs"
+                note = " — Discount applied" if disc_mul < 1 else ""
+                st.markdown(f"**{title}** @ ${rate_to_use:.2f}/pt{note}")
+                st.dataframe(cost_df, use_container_width=True, hide_index=True)
+            else:
+                st.info("No season or holiday pricing data for this year.")
 
 def run(forced_mode: str = "Renter") -> None:
     main(forced_mode)
