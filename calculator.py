@@ -644,13 +644,15 @@ def main(forced_mode: str = "Renter") -> None:
         st.session_state.calc_nights = nights
     
     with c3:
-        # Calculate and display checkout date with proper alignment
+        # Calculate checkout date - this recalculates on every render
         checkout_date = checkin + timedelta(days=nights)
-        st.text_input(
+        
+        # Display as a date_input that's disabled (read-only)
+        st.date_input(
             "Check-out",
-            value=checkout_date.strftime('%Y/%m/%d'),
+            value=checkout_date,
             disabled=True,
-            key="checkout_display"
+            key=f"checkout_display_{checkout_date.strftime('%Y%m%d')}"  # Unique key forces update
         )
 
     # Always adjust for holidays when dates overlap
