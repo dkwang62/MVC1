@@ -552,6 +552,10 @@ def main(forced_mode: str = "Renter") -> None:
         st.session_state.calc_initial_default = initial_default
         st.session_state.calc_checkin = initial_default
         st.session_state.calc_checkin_user_set = False
+    
+    # Initialize nights default
+    if "calc_nights" not in st.session_state:
+        st.session_state.calc_nights = 7
 
     if not st.session_state.data:
         st.warning("Please open the Editor and upload/merge data_v2.json first.")
@@ -617,7 +621,16 @@ def main(forced_mode: str = "Renter") -> None:
         st.session_state.calc_checkin_user_set = True
         
     with c2:
-        nights = st.number_input("Nights", 1, 60, 7, key="nights_input")
+        nights = st.number_input(
+            "Nights", 
+            min_value=1, 
+            max_value=60, 
+            value=st.session_state.calc_nights,
+            key="nights_input"
+        )
+        
+        # Update session state with current value
+        st.session_state.calc_nights = nights
 
     # Adjust for holidays if user has set a check-in date
     if st.session_state.calc_checkin_user_set:
