@@ -610,25 +610,14 @@ def main(forced_mode: str = "Renter") -> None:
             key="calc_checkin_widget"
         )
         
-        # Detect if user changed the date - if so, reset room selection
-        if checkin != st.session_state.calc_checkin:
-            st.session_state.calc_checkin = checkin
-            if "selected_room_type" in st.session_state:
-                del st.session_state.selected_room_type
+        # Update session state with new check-in date
+        st.session_state.calc_checkin = checkin
 
     if not st.session_state.calc_checkin_user_set and checkin != st.session_state.calc_initial_default:
         st.session_state.calc_checkin_user_set = True
         
     with c2:
         nights = st.number_input("Nights", 1, 60, 7, key="nights_input")
-        
-        # Detect if user changed nights - if so, reset room selection
-        if "last_nights" not in st.session_state:
-            st.session_state.last_nights = nights
-        if nights != st.session_state.last_nights:
-            st.session_state.last_nights = nights
-            if "selected_room_type" in st.session_state:
-                del st.session_state.selected_room_type
 
     # Adjust for holidays if user has set a check-in date
     if st.session_state.calc_checkin_user_set:
