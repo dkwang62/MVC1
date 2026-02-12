@@ -261,7 +261,7 @@ class MVCCalculator:
                     cost = math.ceil(eff * rate)
 
                 row = {
-                    "Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {holiday.end_date.strftime('%b %d')})",
+                    "Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {holiday.end_date.strftime('%b %d')}) [{holiday_days} days]",
                     "Day": "", "Points": eff
                 }
 
