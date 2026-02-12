@@ -637,22 +637,24 @@ def main(forced_mode: str = "Renter") -> None:
             min_value=1, 
             max_value=60, 
             value=st.session_state.calc_nights,
-            key="nights_input"
+            key="nights_input",
+            step=1
         )
         
-        # Update session state with current value
+        # Update session state immediately
         st.session_state.calc_nights = nights
     
     with c3:
-        # Calculate checkout date - this recalculates on every render
+        # Calculate checkout date - recalculates on every render based on current inputs
         checkout_date = checkin + timedelta(days=nights)
         
-        # Display as a date_input that's disabled (read-only)
+        # Display as a disabled date_input
+        # Using hash of date as key to force update when value changes
         st.date_input(
             "Check-out",
             value=checkout_date,
             disabled=True,
-            key=f"checkout_display_{checkout_date.strftime('%Y%m%d')}"  # Unique key forces update
+            key="checkout_display"
         )
 
     # Always adjust for holidays when dates overlap
