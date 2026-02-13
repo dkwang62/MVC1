@@ -456,9 +456,8 @@ def render_gantt_image(resort_data: ResortData, year_str: str, global_holidays: 
     # Grid and styling
     ax.grid(True, axis='x', alpha=0.3)
     
-    # Simple title - just resort name and year
-    resort_name = resort_data.name.replace("Marriott's ", "").replace(" - Marriott Vacation Club", "")
-    ax.set_title(f"{resort_name} - {year_str}", pad=12, size=12)
+    # Use the original resort name from data - don't strip anything
+    ax.set_title(f"{resort_data.name} - {year_str}", pad=12, size=12)
     
     # Legend
     legend_elements = [
