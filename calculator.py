@@ -951,7 +951,7 @@ def main(forced_mode: str = "Renter") -> None:
             gantt_img = create_gantt_chart_image(res_data, year_str, st.session_state.data.get("global_holidays", {}))
             
             if gantt_img:
-                st.image(gantt_img, use_column_width=True)
+                st.image(gantt_img, use_container_width=True)
             else:
                 st.info("No season or holiday calendar data available for this year.")
 
