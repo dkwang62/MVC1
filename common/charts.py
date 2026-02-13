@@ -1,261 +1,294 @@
-# common/charts.py
-from __future__ import annotations
-
-from datetime import datetime, date, timedelta
-from typing import Dict, Any, Optional, List
-
+# calculator.py
+import math
+import json
+import os
+from dataclasses import dataclass
+from datetime import datetime, timedelta, date
+from enum import Enum
+from typing import List, Dict, Optional, Tuple, Any
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
+import streamlit as st
+from common.ui import render_resort_card, render_resort_grid, render_page_header
+# FIX: Updated import name to match charts.py
+from common.charts import create_gantt_chart_from_resort_data
+from common.data import ensure_data_in_session
 
-# ======================================================================
-# COLOUR MAP: Peak / High / Mid / Low / Holiday
-# ======================================================================
+# ==============================================================================
+# LAYER 1: DOMAIN MODELS
+# ==============================================================================
+class UserMode(Enum):
+    RENTER = "Renter"
+    OWNER = "Owner"
 
-COLOR_MAP: Dict[str, str] = {
-    "Peak": "#D73027",     # Hot red
-    "High": "#FC8D59",     # Orange
-    "Mid": "#FEE08B",      # Gold / yellow
-    "Low": "#1F78B4",      # Cool blue
-    "Holiday": "#D73027",  # Purple
-    "No Data": "#A6CEE3",  # Soft blue fallback
-}
+class DiscountPolicy(Enum):
+    NONE = "None"
+    EXECUTIVE = "within_30_days"
+    PRESIDENTIAL = "within_60_days"
 
+@dataclass
+class Holiday:
+    name: str
+    start_date: date
+    end_date: date
+    room_points: Dict[str, int]
 
-def _season_bucket(season_name: str) -> str:
-    """
-    Map an arbitrary season name to one of:
-        Peak, High, Mid, Low, No Data
-    """
-    name = (season_name or "").strip().lower()
+@dataclass
+class DayCategory:
+    days: List[str]
+    room_points: Dict[str, int]
 
-    if "peak" in name:
-        return "Peak"
-    if "high" in name:
-        return "High"
-    if "mid" in name or "shoulder" in name:
-        return "Mid"
-    if "low" in name:
-        return "Low"
+@dataclass
+class SeasonPeriod:
+    start: date
+    end: date
 
-    return "No Data"
+@dataclass
+class Season:
+    name: str
+    periods: List[SeasonPeriod]
+    day_categories: List[DayCategory]
 
+@dataclass
+class ResortData:
+    id: str
+    name: str
+    years: Dict[str, "YearData"]
 
-# ======================================================================
-# CALCULATOR-SIDE GANTT (ResortData / YearData objects)
-# ======================================================================
+@dataclass
+class YearData:
+    holidays: List[Holiday]
+    seasons: List[Season]
 
-def create_gantt_chart_from_resort_data(
-    resort_data: Any,
-    year: str,
-    global_holidays: Optional[Dict[str, Dict[str, Dict[str, str]]]] = None,
-    height: int = 500,
-) -> go.Figure:
-    """
-    Build a season + holiday Gantt chart for the calculator app.
-    """
-    rows: List[Dict[str, Any]] = []
+@dataclass
+class CalculationResult:
+    breakdown_df: pd.DataFrame
+    total_points: int
+    financial_total: float
+    discount_applied: bool
+    discounted_days: List[str]
+    m_cost: float = 0.0
+    c_cost: float = 0.0
+    d_cost: float = 0.0
 
-    if not hasattr(resort_data, "years") or year not in resort_data.years:
-        today = datetime.now()
-        rows.append(
-            {
-                "Task": "No Data",
-                "Start": today,
-                "Finish": today + timedelta(days=1),
-                "Type": "No Data",
-            }
+# ==============================================================================
+# LAYER 2: REPOSITORY
+# ==============================================================================
+class MVCRepository:
+    def __init__(self, raw_data: dict):
+        self._raw = raw_data
+        self._resort_cache: Dict[str, ResortData] = {}
+        self._global_holidays = self._parse_global_holidays()
+
+    def get_resort_list_full(self) -> List[Dict[str, Any]]:
+        return self._raw.get("resorts", [])
+
+    def _parse_global_holidays(self) -> Dict[str, Dict[str, Tuple[date, date]]]:
+        parsed: Dict[str, Dict[str, Tuple[date, date]]] = {}
+        for year, hols in self._raw.get("global_holidays", {}).items():
+            parsed[year] = {}
+            for name, data in hols.items():
+                try:
+                    parsed[year][name] = (
+                        datetime.strptime(data["start_date"], "%Y-%m-%d").date(),
+                        datetime.strptime(data["end_date"], "%Y-%m-%d").date(),
+                    )
+                except Exception:
+                    continue
+        return parsed
+
+    def get_resort(self, resort_name: str) -> Optional[ResortData]:
+        if resort_name in self._resort_cache:
+            return self._resort_cache[resort_name]
+        raw_r = next(
+            (r for r in self._raw.get("resorts", []) if r["display_name"] == resort_name),
+            None,
         )
-    else:
-        yd = resort_data.years[year]
-
-        # Seasons
-        for season in getattr(yd, "seasons", []):
-            sname = getattr(season, "name", "(Unnamed)")
-            bucket = _season_bucket(sname)
-            periods = getattr(season, "periods", [])
-            for i, p in enumerate(periods, 1):
-                start: date = getattr(p, "start", None)
-                end: date = getattr(p, "end", None)
-                if isinstance(start, date) and isinstance(end, date) and start <= end:
-                    start_dt = datetime(start.year, start.month, start.day)
-                    end_dt = datetime(end.year, end.month, end.day)
-                    rows.append(
-                        {
-                            "Task": f"{sname} #{i}",
-                            "Start": start_dt,
-                            "Finish": end_dt,
-                            "Type": bucket,
-                        }
+        if not raw_r:
+            return None
+        years_data: Dict[str, YearData] = {}
+        for year_str, y_content in raw_r.get("years", {}).items():
+            holidays: List[Holiday] = []
+            for h in y_content.get("holidays", []):
+                ref = h.get("global_reference")
+                if ref and ref in self._global_holidays.get(year_str, {}):
+                    g_dates = self._global_holidays[year_str][ref]
+                    holidays.append(
+                        Holiday(
+                            name=h.get("name", ref),
+                            start_date=g_dates[0],
+                            end_date=g_dates[1],
+                            room_points=h.get("room_points", {}),
+                        )
                     )
+            seasons: List[Season] = []
+            for s in y_content.get("seasons", []):
+                periods: List[SeasonPeriod] = []
+                for p in s.get("periods", []):
+                    try:
+                        periods.append(
+                            SeasonPeriod(
+                                start=datetime.strptime(p["start"], "%Y-%m-%d").date(),
+                                end=datetime.strptime(p["end"], "%Y-%m-%d").date(),
+                            )
+                        )
+                    except Exception:
+                        continue
 
-        # Holidays
-        for h in getattr(yd, "holidays", []):
-            hname = getattr(h, "name", "(Unnamed)")
-            start: date = getattr(h, "start_date", None)
-            end: date = getattr(h, "end_date", None)
-            if isinstance(start, date) and isinstance(end, date) and start <= end:
-                start_dt = datetime(start.year, start.month, start.day)
-                end_dt = datetime(end.year, end.month, end.day)
-                rows.append(
-                    {
-                        "Task": hname,
-                        "Start": start_dt,
-                        "Finish": end_dt,
-                        "Type": "Holiday",
-                    }
-                )
-
-        if not rows:
-            today = datetime.now()
-            rows.append(
-                {
-                    "Task": "No Data",
-                    "Start": today,
-                    "Finish": today + timedelta(days=1),
-                    "Type": "No Data",
-                }
-            )
-
-    df = pd.DataFrame(rows)
-    df["Start"] = pd.to_datetime(df["Start"])
-    df["Finish"] = pd.to_datetime(df["Finish"])
-
-    # FIX: Clean the resort name to avoid 'tofu' boxes in static image rendering
-    raw_name = getattr(resort_data, 'name', 'Resort')
-    clean_name = "".join(c for c in raw_name if ord(c) < 128)
-
-    fig = px.timeline(
-        df,
-        x_start="Start",
-        x_end="Finish",
-        y="Task",
-        color="Type",
-        title=f"{clean_name} – {year} Timeline",
-        height=height if height is not None else max(400, len(df) * 35),
-        color_discrete_map=COLOR_MAP,
-    )
-
-    fig.update_yaxes(autorange="reversed")
-    fig.update_xaxes(tickformat="%d %b %Y")
-    fig.update_traces(
-        hovertemplate="<b>%{y}</b><br>"
-        "Start: %{base|%d %b %Y}<br>"
-        "End: %{x|%d %b %Y}<extra></extra>"
-    )
-    fig.update_layout(
-        showlegend=True,
-        xaxis_title="Date",
-        yaxis_title="Period",
-        font=dict(size=12),
-        plot_bgcolor="rgba(0,0,0,0)",
-        paper_bgcolor="rgba(0,0,0,0)",
-    )
-
-    return fig
-
-
-# ======================================================================
-# EDITOR-SIDE GANTT (working dict + global_holidays from data)
-# ======================================================================
-
-def create_gantt_chart_from_working(
-    working: Dict[str, Any],
-    year: str,
-    data: Dict[str, Any],
-    height: Optional[int] = None,
-) -> go.Figure:
-    """
-    Build a season + holiday Gantt chart for the editor UI.
-    """
-    rows: List[Dict[str, Any]] = []
-
-    year_obj = working.get("years", {}).get(year, {})
-
-    for season in year_obj.get("seasons", []):
-        sname = season.get("name", "(Unnamed)")
-        bucket = _season_bucket(sname)
-        for i, p in enumerate(season.get("periods", []), 1):
-            try:
-                start_dt = datetime.strptime(p.get("start"), "%Y-%m-%d")
-                end_dt = datetime.strptime(p.get("end"), "%Y-%m-%d")
-                if start_dt <= end_dt:
-                    rows.append(
-                        {
-                            "Task": f"{sname} #{i}",
-                            "Start": start_dt,
-                            "Finish": end_dt,
-                            "Type": bucket,
-                        }
+                day_cats: List[DayCategory] = []
+                for cat in s.get("day_categories", {}).values():
+                    day_cats.append(
+                        DayCategory(
+                            days=cat.get("day_pattern", []),
+                            room_points=cat.get("room_points", {}),
+                        )
                     )
-            except Exception:
-                continue
+                seasons.append(Season(name=s["name"], periods=periods, day_categories=day_cats))
 
-    gh_year = data.get("global_holidays", {}).get(year, {})
-    for h in year_obj.get("holidays", []):
-        global_ref = h.get("global_reference") or h.get("name")
-        if gh := gh_year.get(global_ref):
-            try:
-                start_dt = datetime.strptime(gh.get("start_date"), "%Y-%m-%d")
-                end_dt = datetime.strptime(gh.get("end_date"), "%Y-%m-%d")
-                if start_dt <= end_dt:
-                    rows.append(
-                        {
-                            "Task": h.get("name", "(Unnamed)"),
-                            "Start": start_dt,
-                            "Finish": end_dt,
-                            "Type": "Holiday",
-                        }
-                    )
-            except Exception:
-                continue
-
-    if not rows:
-        today = datetime.now()
-        rows.append(
-            {
-                "Task": "No Data",
-                "Start": today,
-                "Finish": today + timedelta(days=1),
-                "Type": "No Data",
-            }
+            years_data[year_str] = YearData(holidays=holidays, seasons=seasons)
+        
+        # FIX: Ensure 'name' uses plain resort_name for clean chart titles
+        resort_obj = ResortData(
+            id=raw_r["id"], 
+            name=raw_r.get("resort_name", raw_r["display_name"]), 
+            years=years_data
         )
+        self._resort_cache[resort_name] = resort_obj
+        return resort_obj
 
-    df = pd.DataFrame(rows)
-    df["Start"] = pd.to_datetime(df["Start"])
-    df["Finish"] = pd.to_datetime(df["Finish"])
+    def get_resort_info(self, resort_name: str) -> Dict[str, str]:
+        raw_r = next((r for r in self._raw.get("resorts", []) if r["display_name"] == resort_name), None)
+        if raw_r:
+            return {
+                "full_name": raw_r.get("resort_name", resort_name),
+                "timezone": raw_r.get("timezone", "Unknown"),
+                "address": raw_r.get("address", "Address not available"),
+            }
+        return {"full_name": resort_name, "timezone": "Unknown", "address": "Address not available"}
 
-    fig_height = height if height is not None else max(400, len(df) * 35)
+# ==============================================================================
+# LAYER 3: SERVICE
+# ==============================================================================
+class MVCCalculator:
+    def __init__(self, repo: MVCRepository):
+        self.repo = repo
 
-    # Clean display name for the editor side as well
-    raw_name = working.get('display_name', 'Resort')
-    clean_name = "".join(c for c in raw_name if ord(c) < 128)
+    def _get_daily_points(self, resort: ResortData, day: date) -> Tuple[Dict[str, int], Optional[Holiday]]:
+        year_str = str(day.year)
+        if year_str not in resort.years: return {}, None
+        yd = resort.years[year_str]
+        for h in yd.holidays:
+            if h.start_date <= day <= h.end_date: return h.room_points, h
+        dow_map = {0: "Mon", 1: "Tue", 2: "Wed", 3: "Thu", 4: "Fri", 5: "Sat", 6: "Sun"}
+        dow = dow_map[day.weekday()]
+        for s in yd.seasons:
+            for p in s.periods:
+                if p.start <= day <= p.end:
+                    for cat in s.day_categories:
+                        if dow in cat.days: return cat.room_points, None
+        return {}, None
 
-    fig = px.timeline(
-        df,
-        x_start="Start",
-        x_end="Finish",
-        y="Task",
-        color="Type",
-        title=f"{clean_name} – {year} Timeline",
-        height=fig_height,
-        color_discrete_map=COLOR_MAP,
-    )
+    def calculate_breakdown(
+        self, resort_name: str, room: str, checkin: date, nights: int,
+        user_mode: UserMode, rate: float, discount_policy: DiscountPolicy = DiscountPolicy.NONE,
+        owner_config: Optional[dict] = None,
+    ) -> CalculationResult:
+        resort = self.repo.get_resort(resort_name)
+        if not resort: return CalculationResult(pd.DataFrame(), 0, 0.0, False, [])
 
-    fig.update_yaxes(autorange="reversed")
-    fig.update_xaxes(tickformat="%d %b %Y")
-    fig.update_traces(
-        hovertemplate="<b>%{y}</b><br>"
-        "Start: %{base|%d %b %Y}<br>"
-        "End: %{x|%d %b %Y}<extra></extra>"
-    )
-    fig.update_layout(
-        showlegend=True,
-        xaxis_title="Date",
-        yaxis_title="Period",
-        font=dict(size=12),
-        plot_bgcolor="rgba(0,0,0,0)",
-        paper_bgcolor="rgba(0,0,0,0)",
-    )
+        rate = round(float(rate), 2)
+        rows, tot_eff_pts, tot_financial = [], 0, 0.0
+        tot_m = tot_c = tot_d = 0.0
+        disc_applied, disc_days = False, []
+        is_owner = user_mode == UserMode.OWNER
+        processed_holidays, i = set(), 0
 
-    return fig
+        while i < nights:
+            d = checkin + timedelta(days=i)
+            pts_map, holiday = self._get_daily_points(resort, d)
+
+            if holiday and holiday.name not in processed_holidays:
+                processed_holidays.add(holiday.name)
+                raw = pts_map.get(room, 0)
+                eff, is_disc = raw, False
+
+                mul = 1.0
+                if is_owner: mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
+                else: mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
+                
+                if mul < 1.0:
+                    eff, is_disc = math.floor(raw * mul), True
+                    disc_applied = True
+                    holiday_days = (holiday.end_date - holiday.start_date).days + 1
+                    for j in range(holiday_days): disc_days.append((holiday.start_date + timedelta(days=j)).strftime("%Y-%m-%d"))
+
+                cost, m, c, dp = 0.0, 0.0, 0.0, 0.0
+                if is_owner and owner_config:
+                    m = math.ceil(eff * rate)
+                    if owner_config.get("inc_c"): c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
+                    if owner_config.get("inc_d"): dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
+                    cost = m + c + dp
+                else: cost = math.ceil(eff * rate)
+
+                row = {"Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {holiday.end_date.strftime('%b %d')})", "Points": eff}
+                if is_owner:
+                    row.update({"Maintenance": m, "Total Cost": cost})
+                    if owner_config.get("inc_c"): row["Capital Cost"] = c
+                    if owner_config.get("inc_d"): row["Depreciation"] = dp
+                else: row[room] = cost
+                rows.append(row); tot_eff_pts += eff
+                i += (holiday.end_date - holiday.start_date).days + 1
+
+            else:
+                raw = pts_map.get(room, 0)
+                eff, is_disc = raw, False
+                mul = 1.0
+                if is_owner: mul = owner_config.get("disc_mul", 1.0) if owner_config else 1.0
+                else: mul = 0.7 if discount_policy == DiscountPolicy.PRESIDENTIAL else 0.75 if discount_policy == DiscountPolicy.EXECUTIVE else 1.0
+                
+                if mul < 1.0:
+                    eff, is_disc = math.floor(raw * mul), True
+                    disc_applied = True; disc_days.append(d.strftime("%Y-%m-%d"))
+
+                cost, m, c, dp = 0.0, 0.0, 0.0, 0.0
+                if is_owner and owner_config:
+                    m = math.ceil(eff * rate)
+                    if owner_config.get("inc_c"): c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
+                    if owner_config.get("inc_d"): dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
+                    cost = m + c + dp
+                else: cost = math.ceil(eff * rate)
+
+                row = {"Date": d.strftime("%Y-%m-%d (%a)"), "Points": eff}
+                if is_owner:
+                    row.update({"Maintenance": m, "Total Cost": cost})
+                    if owner_config.get("inc_c"): row["Capital Cost"] = c
+                    if owner_config.get("inc_d"): row["Depreciation"] = dp
+                else: row[room] = cost
+                rows.append(row); tot_eff_pts += eff; i += 1
+
+        df = pd.DataFrame(rows)
+        if not df.empty:
+            for col in [c for c in df.columns if c not in ["Date", "Points"]]:
+                df[col] = df[col].apply(lambda x: f"${x:,.0f}")
+
+        # Final Financial Totals
+        if is_owner and owner_config:
+            tot_m, tot_c, tot_d = math.ceil(tot_eff_pts * rate), 0.0, 0.0
+            if owner_config.get("inc_c"): tot_c = math.ceil(tot_eff_pts * owner_config.get("cap_rate", 0.0))
+            if owner_config.get("inc_d"): tot_d = math.ceil(tot_eff_pts * owner_config.get("dep_rate", 0.0))
+            tot_financial = tot_m + tot_c + tot_d
+        else: tot_financial = math.ceil(tot_eff_pts * rate)
+
+        return CalculationResult(df, tot_eff_pts, tot_financial, disc_applied, list(set(disc_days)), tot_m, tot_c, tot_d)
+
+    def adjust_holiday(self, resort_name, checkin, nights):
+        resort = self.repo.get_resort(resort_name)
+        if not resort or str(checkin.year) not in resort.years: return checkin, nights, False
+        end = checkin + timedelta(days=nights - 1)
+        overlapping = [h for h in resort.years[str(checkin.year)].holidays if h.start_date <= end and h.end_date >= checkin]
+        if not overlapping: return checkin, nights, False
+        s, e = min(h.start_date for h in overlapping), max(h.end_date for h in overlapping)
+        adj_s, adj_e = min(checkin, s), max(end, e)
+        return adj_s, (adj_e - adj_s).days + 1, True
+
+# ... [Include get_all_room_types_for_resort, build_season_cost_table, and main/run from your previous file here] ...
