@@ -436,7 +436,7 @@ def render_gantt_image(resort_data: ResortData, year_str: str, global_holidays: 
         return None
     
     # Create figure
-    fig, ax = plt.subplots(figsize=(12, max(4, len(rows) * 0.5)))
+    fig, ax = plt.subplots(figsize=(10, max(3, len(rows) * 0.5)))
     
     # Draw bars
     for i, (label, start, end, typ) in enumerate(rows):
@@ -449,29 +449,27 @@ def render_gantt_image(resort_data: ResortData, year_str: str, global_holidays: 
     ax.set_yticklabels([label for label, _, _, _ in rows])
     ax.invert_yaxis()
     
-    # Format x-axis
+    # Format x-axis with simple month names (no year)
     ax.xaxis.set_major_locator(mdates.MonthLocator())
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-    ax.xaxis.set_minor_locator(mdates.DayLocator(bymonthday=[1, 15]))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b"))
     
     # Grid and styling
-    ax.grid(True, axis='x', alpha=0.3, linestyle='--')
-    ax.set_title(f"{resort_data.name} – {year_str} Timeline", pad=15, size=14, weight='bold')
-    ax.set_xlabel("Date", size=11)
+    ax.grid(True, axis='x', alpha=0.3)
+    
+    # Simple title - just resort name and year
+    resort_name = resort_data.name.replace("Marriott's ", "").replace(" - Marriott Vacation Club", "")
+    ax.set_title(f"{resort_name} - {year_str}", pad=12, size=12)
     
     # Legend
     legend_elements = [
-        plt.Rectangle((0,0), 1, 1, facecolor=GANTT_COLORS[k], edgecolor='black', linewidth=0.5, label=k) 
+        plt.Rectangle((0,0), 1, 1, facecolor=GANTT_COLORS[k], label=k) 
         for k in GANTT_COLORS if any(t == k for _, _, _, t in rows)
     ]
-    ax.legend(handles=legend_elements, loc='upper right', bbox_to_anchor=(1.0, 1.0), framealpha=0.9)
-    
-    # Tight layout
-    plt.tight_layout()
+    ax.legend(handles=legend_elements, loc='upper right', bbox_to_anchor=(1, 1))
     
     # Convert to image
     buf = io.BytesIO()
-    plt.savefig(buf, format='png', bbox_inches='tight', dpi=150, facecolor='white')
+    plt.savefig(buf, format='png', bbox_inches='tight', dpi=150)
     plt.close(fig)
     buf.seek(0)
     
