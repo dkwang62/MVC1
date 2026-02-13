@@ -7,3 +7,4 @@ plotly
 streamlit-aggrid
 openpyxl
 streamlit>=1.40.0      # Added to fix Altair conflict
+matplotlib
