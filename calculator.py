@@ -1,7 +1,7 @@
+# calculator.py
 import math
 import json
 import os
-import io
 from dataclasses import dataclass
 from datetime import datetime, timedelta, date
 from enum import Enum
@@ -9,11 +9,8 @@ from typing import List, Dict, Optional, Tuple, Any
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-from PIL import Image
 from common.ui import render_resort_card, render_resort_grid, render_page_header
-from common.charts import create_gantt_chart_from_resort_data
+from common.charts import create_gantt_chart_image
 from common.data import ensure_data_in_session
 
 # ==============================================================================
@@ -148,8 +145,12 @@ class MVCRepository:
                 seasons.append(Season(name=s["name"], periods=periods, day_categories=day_cats))
 
             years_data[year_str] = YearData(holidays=holidays, seasons=seasons)
+        
+        # FIX: Use 'resort_name' (plain text) instead of 'display_name' (UI with emojis)
         resort_obj = ResortData(
-            id=raw_r["id"], name=raw_r["display_name"], years=years_data
+            id=raw_r["id"], 
+            name=raw_r.get("resort_name", raw_r.get("display_name", "Resort")), 
+            years=years_data
         )
         self._resort_cache[resort_name] = resort_obj
         return resort_obj
@@ -391,89 +392,6 @@ def get_all_room_types_for_resort(resort_data: ResortData) -> List[str]:
             rooms.update(holiday.room_points.keys())
     return sorted(rooms)
 
-# ==============================================================================
-# GANTT CHART IMAGE RENDERING (Matplotlib)
-# ==============================================================================
-GANTT_COLORS = {
-    "Peak": "#D73027", 
-    "High": "#FC8D59", 
-    "Mid": "#FEE08B", 
-    "Low": "#91BFDB", 
-    "Holiday": "#9C27B0"
-}
-
-def season_bucket(name: str) -> str:
-    """Map season name to color bucket."""
-    n = (name or "").lower()
-    if "peak" in n: return "Peak"
-    if "high" in n: return "High"
-    if "mid" in n or "shoulder" in n: return "Mid"
-    if "low" in n: return "Low"
-    return "Low"
-
-@st.cache_data(ttl=3600)
-def render_gantt_image(resort_data: ResortData, year_str: str, global_holidays: dict) -> Optional[Image.Image]:
-    """Render Gantt chart as matplotlib image."""
-    rows = []
-    
-    if year_str not in resort_data.years:
-        return None
-    
-    yd = resort_data.years[year_str]
-    
-    # Add seasons
-    for s in yd.seasons:
-        name = s.name
-        bucket = season_bucket(name)
-        for p in s.periods:
-            rows.append((name, p.start, p.end, bucket))
-    
-    # Add holidays
-    for h in yd.holidays:
-        rows.append((h.name, h.start_date, h.end_date, "Holiday"))
-    
-    if not rows:
-        return None
-    
-    # Create figure
-    fig, ax = plt.subplots(figsize=(10, max(3, len(rows) * 0.5)))
-    
-    # Draw bars
-    for i, (label, start, end, typ) in enumerate(rows):
-        duration = (end - start).days + 1
-        ax.barh(i, duration, left=mdates.date2num(start), height=0.6, 
-                color=GANTT_COLORS.get(typ, "#999"), edgecolor="black", linewidth=0.5)
-    
-    # Configure axes
-    ax.set_yticks(range(len(rows)))
-    ax.set_yticklabels([label for label, _, _, _ in rows])
-    ax.invert_yaxis()
-    
-    # Format x-axis with simple month names (no year)
-    ax.xaxis.set_major_locator(mdates.MonthLocator())
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b"))
-    
-    # Grid and styling
-    ax.grid(True, axis='x', alpha=0.3)
-    
-    # Use the original resort name from data - don't strip anything
-    ax.set_title(f"{resort_data.name} - {year_str}", pad=12, size=12)
-    
-    # Legend
-    legend_elements = [
-        plt.Rectangle((0,0), 1, 1, facecolor=GANTT_COLORS[k], label=k) 
-        for k in GANTT_COLORS if any(t == k for _, _, _, t in rows)
-    ]
-    ax.legend(handles=legend_elements, loc='upper right', bbox_to_anchor=(1, 1))
-    
-    # Convert to image
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png', bbox_inches='tight', dpi=150)
-    plt.close(fig)
-    buf.seek(0)
-    
-    return Image.open(buf)
-
 def build_season_cost_table(
     resort_data: ResortData,
     year: int,
@@ -556,7 +474,6 @@ TIER_PRESIDENTIAL = "Presidential / Chairman (30% off within 60 days)"
 TIER_OPTIONS = [TIER_NO_DISCOUNT, TIER_EXECUTIVE, TIER_PRESIDENTIAL]
 
 def get_unique_years_from_data(data: Dict[str, Any]) -> List[str]:
-    """Helper to get years from both resorts and global holidays for date picker."""
     years = set()
     for resort in data.get("resorts", []):
         years.update(resort.get("years", {}).keys())
@@ -599,13 +516,11 @@ def apply_settings_from_dict(user_data: dict):
         st.error(f"Error applying settings: {e}")
 
 def main(forced_mode: str = "Renter") -> None:
-    # --- 0. INIT STATE ---
     if "current_resort" not in st.session_state: st.session_state.current_resort = None
     if "current_resort_id" not in st.session_state: st.session_state.current_resort_id = None
     
     ensure_data_in_session()
 
-    # --- 1. AUTO-LOAD LOCAL FILE ON STARTUP ---
     if "settings_auto_loaded" not in st.session_state:
         local_settings = "mvc_owner_settings.json"
         if os.path.exists(local_settings):
@@ -618,7 +533,6 @@ def main(forced_mode: str = "Renter") -> None:
                 pass
         st.session_state.settings_auto_loaded = True
 
-    # --- 2. DEFAULTS ---
     if "pref_maint_rate" not in st.session_state: st.session_state.pref_maint_rate = 0.55
     if "pref_purchase_price" not in st.session_state: st.session_state.pref_purchase_price = 18.0
     if "pref_capital_cost" not in st.session_state: st.session_state.pref_capital_cost = 5.0
@@ -640,7 +554,6 @@ def main(forced_mode: str = "Renter") -> None:
         st.session_state.calc_checkin = initial_default
         st.session_state.calc_checkin_user_set = False
     
-    # Initialize nights default
     if "calc_nights" not in st.session_state:
         st.session_state.calc_nights = 7
 
@@ -652,18 +565,14 @@ def main(forced_mode: str = "Renter") -> None:
     calc = MVCCalculator(repo)
     resorts_full = repo.get_resort_list_full()
 
-    # Determine mode from arg
     mode = UserMode(forced_mode)
-
     render_page_header("Calc", f"{mode.value} Mode", icon="🏨", badge_color="#059669" if mode == UserMode.OWNER else "#2563eb")
 
-    # --- MAIN PAGE: CONFIGURATION EXPANDER (Moved from Sidebar) ---
     owner_params = None
     policy = DiscountPolicy.NONE
     rate_to_use = 0.50
     disc_mul = 1.0
 
-    # --- RESORT SELECTION ---
     if resorts_full and st.session_state.current_resort_id is None:
         if "pref_resort_id" in st.session_state and any(r.get("id") == st.session_state.pref_resort_id for r in resorts_full):
             st.session_state.current_resort_id = st.session_state.pref_resort_id
@@ -677,12 +586,10 @@ def main(forced_mode: str = "Renter") -> None:
 
     r_name = resort_obj.get("display_name")
     
-    # Clear room type selection if resort has changed
     if "last_resort_id" not in st.session_state:
         st.session_state.last_resort_id = st.session_state.current_resort_id
     
     if st.session_state.last_resort_id != st.session_state.current_resort_id:
-        # Resort changed - clear room selection so ALL rooms table expands
         if "selected_room_type" in st.session_state:
             del st.session_state.selected_room_type
         st.session_state.last_resort_id = st.session_state.current_resort_id
@@ -690,10 +597,8 @@ def main(forced_mode: str = "Renter") -> None:
     info = repo.get_resort_info(r_name)
     render_resort_card(info["full_name"], info["timezone"], info["address"])
     
-    # --- CALCULATOR INPUTS: Check-in, Nights, and calculated Checkout ---
     c1, c2, c3 = st.columns([2, 1, 2])
     with c1:
-        # Get available years for the date picker
         available_years = get_unique_years_from_data(st.session_state.data)
         min_date = datetime.now().date()
         max_date = datetime.now().date() + timedelta(days=365*2)
@@ -704,76 +609,35 @@ def main(forced_mode: str = "Renter") -> None:
             min_date = date(min_y, 1, 1)
             max_date = date(max_y, 12, 31)
             
-        checkin = st.date_input(
-            "Check-in", 
-            value=st.session_state.calc_checkin, 
-            min_value=min_date,
-            max_value=max_date,
-            key="calc_checkin_widget"
-        )
-        
-        # Update session state with new check-in date
+        checkin = st.date_input("Check-in", value=st.session_state.calc_checkin, min_value=min_date, max_value=max_date, key="calc_checkin_widget")
         st.session_state.calc_checkin = checkin
 
     if not st.session_state.calc_checkin_user_set and checkin != st.session_state.calc_initial_default:
         st.session_state.calc_checkin_user_set = True
         
     with c2:
-        nights = st.number_input(
-            "Nights", 
-            min_value=1, 
-            max_value=60, 
-            value=st.session_state.calc_nights,
-            key="nights_input",
-            step=1
-        )
-        
-        # Update session state immediately
+        nights = st.number_input("Nights", min_value=1, max_value=60, value=st.session_state.calc_nights, key="nights_input", step=1)
         st.session_state.calc_nights = nights
     
     with c3:
-        # Calculate checkout date - recalculates on every render based on current inputs
         checkout_date = checkin + timedelta(days=nights)
-        
-        # Display as a disabled date_input
-        # Using hash of date as key to force update when value changes
-        st.date_input(
-            "Check-out",
-            value=checkout_date,
-            disabled=True,
-            key="checkout_display"
-        )
+        st.date_input("Check-out", value=checkout_date, disabled=True, key="checkout_display")
 
-    # Always adjust for holidays when dates overlap
     adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
 
     if adj:
-        # Holiday adjustment occurred - show prominent alert
-        original_checkout = checkin + timedelta(days=nights - 1)
         adjusted_checkout = adj_in + timedelta(days=adj_n - 1)
-        
-        # Determine what changed
         date_changed = checkin != adj_in
         nights_changed = nights != adj_n
-        
-        # Build detailed message
         changes = []
         if date_changed:
             changes.append(f"Check-in moved from **{checkin.strftime('%b %d')}** to **{adj_in.strftime('%b %d')}**")
         if nights_changed:
             changes.append(f"Stay extended from **{nights} nights** to **{adj_n} nights**")
-        
         change_text = " and ".join(changes)
         
-        st.warning(
-            f"🎉 **Holiday Period Detected!**\n\n"
-            f"Your dates overlap with a holiday period. To get holiday pricing, your reservation has been adjusted:\n\n"
-            f"{change_text}\n\n"
-            f"**New stay:** {adj_in.strftime('%b %d, %Y')} - {adjusted_checkout.strftime('%b %d, %Y')} ({adj_n} nights)",
-            icon="⚠️"
-        )
+        st.warning(f"🎉 **Holiday Period Detected!**\n\nYour dates overlap with a holiday period. To get holiday pricing, your reservation has been adjusted:\n\n{change_text}\n\n**New stay:** {adj_in.strftime('%b %d, %Y')} - {adjusted_checkout.strftime('%b %d, %Y')} ({adj_n} nights)", icon="⚠️")
 
-    # Get all available room types for this resort
     pts, _ = calc._get_daily_points(calc.repo.get_resort(r_name), adj_in)
     if not pts:
         rd = calc.repo.get_resort(r_name)
@@ -788,22 +652,14 @@ def main(forced_mode: str = "Renter") -> None:
 
     st.divider()
 
-    # --- SETTINGS EXPANDER ---
     with st.expander("⚙️ Settings", expanded=False):
         if mode == UserMode.OWNER:
             c1, c2 = st.columns(2)
             with c1:
                 current_val = st.session_state.get("pref_maint_rate", 0.55)
-                val_rate = st.number_input(
-                    "Maintenance ($/point)",
-                    value=current_val,
-                    key="widget_maint_rate",
-                    step=0.01, min_value=0.0
-                )
-                if val_rate != current_val:
-                    st.session_state.pref_maint_rate = val_rate
+                val_rate = st.number_input("Maintenance ($/point)", value=current_val, key="widget_maint_rate", step=0.01, min_value=0.0)
+                if val_rate != current_val: st.session_state.pref_maint_rate = val_rate
                 rate_to_use = val_rate
-
             with c2:
                 current_tier = st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT)
                 try: t_idx = TIER_OPTIONS.index(current_tier)
@@ -821,7 +677,6 @@ def main(forced_mode: str = "Renter") -> None:
                 st.session_state.pref_inc_d = inc_d
 
             cap, coc, life, salvage = 18.0, 0.06, 15, 3.0
-            
             if inc_c or inc_d:
                 st.markdown("---")
                 rc1, rc2, rc3, rc4 = st.columns(4)
@@ -845,12 +700,8 @@ def main(forced_mode: str = "Renter") -> None:
                         st.session_state.pref_salvage_value = val_salvage
                         salvage = val_salvage
 
-            owner_params = {
-                "disc_mul": 1.0, "inc_m": inc_m, "inc_c": inc_c, "inc_d": inc_d,
-                "cap_rate": cap * coc, "dep_rate": (cap - salvage) / life if life > 0 else 0.0,
-            }
+            owner_params = {"disc_mul": 1.0, "inc_m": inc_m, "inc_c": inc_c, "inc_d": inc_d, "cap_rate": cap * coc, "dep_rate": (cap - salvage) / life if life > 0 else 0.0}
             
-            # Save/Load UI inside Settings Expander
             st.markdown("---")
             sl_col1, sl_col2 = st.columns([3, 1])
             with sl_col1:
@@ -865,42 +716,25 @@ def main(forced_mode: str = "Renter") -> None:
                           st.rerun()
             with sl_col2:
                 current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
-                current_settings = {
-                    "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
-                    "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
-                    "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0),
-                    "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
-                    "useful_life": st.session_state.get("pref_useful_life", 10),
-                    "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT),
-                    "include_maintenance": True,
-                    "include_capital": st.session_state.get("pref_inc_c", True),
-                    "include_depreciation": st.session_state.get("pref_inc_d", True),
-                    "renter_rate": st.session_state.get("renter_rate_val", 0.50),
-                    "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
-                    "preferred_resort_id": current_pref_resort
-                }
+                current_settings = {"maintenance_rate": st.session_state.get("pref_maint_rate", 0.55), "purchase_price": st.session_state.get("pref_purchase_price", 18.0), "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0), "salvage_value": st.session_state.get("pref_salvage_value", 3.0), "useful_life": st.session_state.get("pref_useful_life", 10), "discount_tier": st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT), "include_maintenance": True, "include_capital": st.session_state.get("pref_inc_c", True), "include_depreciation": st.session_state.get("pref_inc_d", True), "renter_rate": st.session_state.get("renter_rate_val", 0.50), "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT), "preferred_resort_id": current_pref_resort}
                 st.download_button("💾 Save Profile", json.dumps(current_settings, indent=2), "mvc_owner_settings.json", "application/json", use_container_width=True)
 
         else:
-            # RENTER MODE CONFIG
             c1, c2 = st.columns(2)
             with c1:
                 curr_rent = st.session_state.get("renter_rate_val", 0.50)
                 renter_rate_input = st.number_input("Rental Cost per Point ($)", value=curr_rent, step=0.01, key="widget_renter_rate")
                 if renter_rate_input != curr_rent: st.session_state.renter_rate_val = renter_rate_input
                 rate_to_use = renter_rate_input
-
             with c2:
                 curr_r_tier = st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT)
                 try: r_idx = TIER_OPTIONS.index(curr_r_tier)
                 except ValueError: r_idx = 0
                 opt = st.radio("Discount tier available:", TIER_OPTIONS, index=r_idx, key="widget_renter_discount_tier")
                 st.session_state.renter_discount_tier = opt
-
             if "Presidential" in opt or "Chairman" in opt: policy = DiscountPolicy.PRESIDENTIAL
             elif "Executive" in opt: policy = DiscountPolicy.EXECUTIVE
 
-        # Common Logic for Discount Multiplier
         if mode == UserMode.OWNER:
              if "Executive" in opt: policy = DiscountPolicy.EXECUTIVE
              elif "Presidential" in opt or "Chairman" in opt: policy = DiscountPolicy.PRESIDENTIAL
@@ -908,82 +742,54 @@ def main(forced_mode: str = "Renter") -> None:
         disc_mul = 0.75 if "Executive" in opt else 0.7 if "Presidential" in opt or "Chairman" in opt else 1.0
         if owner_params: owner_params["disc_mul"] = disc_mul
 
-    # --- ROOM TYPE SELECTION/DISPLAY ---
-    # Determine if we should expand the ALL rooms table
     has_selection = "selected_room_type" in st.session_state and st.session_state.selected_room_type is not None
     is_single_room_resort = len(room_types) == 1
     
-    # Auto-select if single room type and no selection yet
     if is_single_room_resort and not has_selection:
         st.session_state.selected_room_type = room_types[0]
         has_selection = True
     
-    # Calculate costs for all room types (needed for both display modes)
     all_room_data = []
     for rm in room_types:
         room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
         cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
-        all_room_data.append({
-            "Room Type": rm,
-            "Points": room_res.total_points,
-            cost_label: room_res.financial_total,
-            "_select": rm
-        })
+        all_room_data.append({"Room Type": rm, "Points": room_res.total_points, cost_label: room_res.financial_total, "_select": rm})
     
-    # Only show room selection UI if multiple room types exist
     if not is_single_room_resort:
         with st.expander("🏠 All Room Types", expanded=not has_selection):
             st.caption(f"Comparing all room types for {adj_n}-night stay from {adj_in.strftime('%b %d, %Y')}")
-            
-            # Display the table with select buttons
             for idx, row in enumerate(all_room_data):
                 is_selected = has_selection and st.session_state.selected_room_type == row['Room Type']
-                
                 cols = st.columns([3, 2, 2, 1.5])
                 with cols[0]:
-                    # Add visual indicator for selected room
-                    if is_selected:
-                        st.write(f"**✓ {row['Room Type']}** (Selected)")
-                    else:
-                        st.write(f"**{row['Room Type']}**")
-                with cols[1]:
-                    st.write(f"{row['Points']:,} points")
+                    if is_selected: st.write(f"**✓ {row['Room Type']}** (Selected)")
+                    else: st.write(f"**{row['Room Type']}**")
+                with cols[1]: st.write(f"{row['Points']:,} points")
                 with cols[2]:
                     cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
                     st.write(f"${row[cost_label]:,.0f}")
                 with cols[3]:
-                    # Button with calendar icon and "Dates" text
-                    if is_selected:
-                        st.button("📅 Dates", key=f"select_{row['_select']}", use_container_width=True, type="primary", disabled=True)
+                    if is_selected: st.button("📅 Dates", key=f"select_{row['_select']}", use_container_width=True, type="primary", disabled=True)
                     else:
                         if st.button("📅 Dates", key=f"select_{row['_select']}", use_container_width=True, type="secondary"):
                             st.session_state.selected_room_type = row['Room Type']
                             st.rerun()
     
-    # --- DETAILED BREAKDOWN (Only shown when room type is selected) ---
     if has_selection:
         room_sel = st.session_state.selected_room_type
-        
-        # Header with calendar icon and room type description, Change Room button on right
         col_header, col_clear = st.columns([4, 1])
         with col_header:
-            # Show info note for single room resorts
             if is_single_room_resort:
                 st.markdown(f"### 📅 {room_sel}")
                 st.caption("ℹ️ This resort has only one room type")
-            else:
-                st.markdown(f"### 📅 {room_sel}")
+            else: st.markdown(f"### 📅 {room_sel}")
         with col_clear:
-            # Only show Change Room button if multiple room types exist
             if not is_single_room_resort:
                 if st.button("↩️ Change Room", use_container_width=True):
                     del st.session_state.selected_room_type
                     st.rerun()
         
-        # Calculate the breakdown for selected room
         res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
-        
-        # Build enhanced settings caption
         discount_display = "None"
         if disc_mul < 1.0:
             pct = int((1.0 - disc_mul) * 100)
@@ -991,23 +797,18 @@ def main(forced_mode: str = "Renter") -> None:
             discount_display = f"✅ {pct}% Off points ({policy_label})"
 
         rate_label = "Maintenance " if mode == UserMode.OWNER else "Rental Rate"
-
-        settings_parts = []
-        settings_parts.append(f"{rate_label}: ${rate_to_use:.2f}/pt")
+        settings_parts = [f"{rate_label}: ${rate_to_use:.2f}/pt"]
 
         if mode == UserMode.OWNER:
             purchase_per_pt = st.session_state.get("pref_purchase_price", 18.0)
             total_purchase = purchase_per_pt * res.total_points
             useful_life = st.session_state.get("pref_useful_life", 10)
-
             settings_parts.append(f"Purchase USD {total_purchase:,.0f}")
             settings_parts.append(f"Useful Life: **{useful_life} yrs**")
 
         settings_parts.append(f"**{discount_display}**")
-
         st.caption(f"⚙️ Settings: " + " • ".join(settings_parts))
 
-        # Display metrics
         if mode == UserMode.OWNER:
             cols = st.columns(5)
             cols[0].metric("Total Points", f"{res.total_points:,}")
@@ -1021,22 +822,16 @@ def main(forced_mode: str = "Renter") -> None:
             cols[1].metric("Total Rent", f"${res.financial_total:,.0f}")
             if res.discount_applied: st.success(f"✨ Discount Applied: {len(res.discounted_days)} nights")
 
-        # Daily Breakdown - displayed directly without subtitle (self-explanatory)
         st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
     
-    # --- SEASON AND HOLIDAY CALENDAR (Always available, independent of selection) ---
     st.divider()
     year_str = str(adj_in.year)
     res_data = calc.repo.get_resort(r_name)
     if res_data and year_str in res_data.years:
         with st.expander("📅 Season & Holiday Calendar", expanded=False):
-            # Render Gantt chart as static image
-            gantt_img = render_gantt_image(res_data, year_str, st.session_state.data.get("global_holidays", {}))
-            
-            if gantt_img:
-                st.image(gantt_img, use_column_width=True)
-            else:
-                st.info("No season or holiday calendar data available for this year.")
+            gantt_img = create_gantt_chart_image(res_data, year_str, st.session_state.data.get("global_holidays", {}))
+            if gantt_img: st.image(gantt_img, use_column_width=True)
+            else: st.info("No season or holiday calendar data available for this year.")
 
             cost_df = build_season_cost_table(res_data, int(year_str), rate_to_use, disc_mul, mode, owner_params)
             if cost_df is not None:
@@ -1044,8 +839,7 @@ def main(forced_mode: str = "Renter") -> None:
                 note = " — Discount applied" if disc_mul < 1 else ""
                 st.markdown(f"**{title}** @ ${rate_to_use:.2f}/pt{note}")
                 st.dataframe(cost_df, use_container_width=True, hide_index=True)
-            else:
-                st.info("No season or holiday pricing data for this year.")
+            else: st.info("No season or holiday pricing data for this year.")
 
 def run(forced_mode: str = "Renter") -> None:
     main(forced_mode)
