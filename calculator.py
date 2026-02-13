@@ -51,6 +51,7 @@ class Season:
 class ResortData:
     id: str
     name: str
+    resort_name: str  # Full resort name for display
     years: Dict[str, "YearData"]
 
 @dataclass
@@ -145,7 +146,10 @@ class MVCRepository:
 
             years_data[year_str] = YearData(holidays=holidays, seasons=seasons)
         resort_obj = ResortData(
-            id=raw_r["id"], name=raw_r["display_name"], years=years_data
+            id=raw_r["id"], 
+            name=raw_r["display_name"], 
+            resort_name=raw_r.get("resort_name", raw_r["display_name"]),
+            years=years_data
         )
         self._resort_cache[resort_name] = resort_obj
         return resort_obj
