@@ -261,8 +261,8 @@ class MVCCalculator:
                     cost = math.ceil(eff * rate)
 
                 row = {
-                    "Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {holiday.end_date.strftime('%b %d')}) [{holiday_days} days]",
-                    "Day": "", "Points": eff
+                    "Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {holiday.end_date.strftime('%b %d')}) [{holiday_days} nights]",
+                    "Points": eff
                 }
 
                 if is_owner:
@@ -314,7 +314,7 @@ class MVCCalculator:
                 else:
                     cost = math.ceil(eff * rate)
 
-                row = {"Date": d.strftime("%Y-%m-%d"), "Day": d.strftime("%a"), "Points": eff}
+                row = {"Date": d.strftime("%Y-%m-%d (%a)"), "Points": eff}
 
                 if is_owner:
                     row["Maintenance"] = m
@@ -351,7 +351,7 @@ class MVCCalculator:
             tot_d = math.ceil(raw_dep)
 
         if not df.empty:
-            fmt_cols = [c for c in df.columns if c not in ["Date", "Day", "Points"]]
+            fmt_cols = [c for c in df.columns if c not in ["Date", "Points"]]
             for col in fmt_cols:
                 df[col] = df[col].apply(lambda x: f"${x:,.0f}" if isinstance(x, (int, float)) else x)
 
@@ -932,7 +932,7 @@ def main(forced_mode: str = "Renter") -> None:
             cols = st.columns(2)
             cols[0].metric("Total Points", f"{res.total_points:,}")
             cols[1].metric("Total Rent", f"${res.financial_total:,.0f}")
-            if res.discount_applied: st.success(f"✨ Discount Applied: {len(res.discounted_days)} days")
+            if res.discount_applied: st.success(f"✨ Discount Applied: {len(res.discounted_days)} nights")
 
         # Daily Breakdown - displayed directly without subtitle (self-explanatory)
         st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
@@ -943,7 +943,17 @@ def main(forced_mode: str = "Renter") -> None:
     res_data = calc.repo.get_resort(r_name)
     if res_data and year_str in res_data.years:
         with st.expander("📅 Season & Holiday Calendar", expanded=False):
-            st.plotly_chart(create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {})), use_container_width=True)
+            # Generate the Gantt chart
+            fig = create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {}))
+            
+            # Convert to static image and display
+            try:
+                img_bytes = fig.to_image(format="png", width=1400, height=800, scale=2)
+                st.image(img_bytes, use_column_width=True)
+            except Exception as e:
+                # Fallback to interactive chart if image conversion fails (kaleido not installed)
+                st.warning("⚠️ Image rendering not available. Showing interactive chart instead.")
+                st.plotly_chart(fig, use_container_width=True)
 
             cost_df = build_season_cost_table(res_data, int(year_str), rate_to_use, disc_mul, mode, owner_params)
             if cost_df is not None:
