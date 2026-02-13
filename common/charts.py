@@ -392,9 +392,11 @@ def create_gantt_chart_image(
     # Grid and styling
     ax.grid(True, axis='x', alpha=0.3)
     
-    # Title - use original resort name
-    resort_name = getattr(resort_data, "name", "Resort")
-    ax.set_title(f"{resort_name} - {year}", pad=12, size=12)
+    # Title - use resort_name if available, otherwise fall back to name
+    # resort_name is the full name like "Marriott's Kaua'i Beach Club"
+    # name is the display_name which might be shorter
+    resort_title = getattr(resort_data, "resort_name", None) or getattr(resort_data, "name", "Resort")
+    ax.set_title(f"{resort_title} - {year}", pad=12, size=12)
     
     # Legend
     legend_elements = [
