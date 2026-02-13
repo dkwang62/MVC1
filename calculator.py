@@ -1,4 +1,3 @@
-# calculator.py
 import math
 import json
 import os
@@ -9,10 +8,8 @@ from typing import List, Dict, Optional, Tuple, Any
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-
-# Internal imports
 from common.ui import render_resort_card, render_resort_grid, render_page_header
-from common.charts import create_gantt_chart_from_resort_data
+from common.charts import create_gantt_chart_image
 from common.data import ensure_data_in_session
 
 # ==============================================================================
@@ -147,12 +144,8 @@ class MVCRepository:
                 seasons.append(Season(name=s["name"], periods=periods, day_categories=day_cats))
 
             years_data[year_str] = YearData(holidays=holidays, seasons=seasons)
-            
-        # FIX: Use plain 'resort_name' for clean chart titles
         resort_obj = ResortData(
-            id=raw_r["id"], 
-            name=raw_r.get("resort_name", raw_r["display_name"]), 
-            years=years_data
+            id=raw_r["id"], name=raw_r["display_name"], years=years_data
         )
         self._resort_cache[resort_name] = resort_obj
         return resort_obj
@@ -951,10 +944,10 @@ def main(forced_mode: str = "Renter") -> None:
     if res_data and year_str in res_data.years:
         with st.expander("📅 Season & Holiday Calendar", expanded=False):
             # Render Gantt chart as static image using function from charts.py
-            gantt_img = create_gantt_chart_from_resort_data(res_data, year_str, st.session_state.data.get("global_holidays", {}))
+            gantt_img = create_gantt_chart_image(res_data, year_str, st.session_state.data.get("global_holidays", {}))
             
             if gantt_img:
-                st.plotly_chart(gantt_img, use_container_width=True) # Display using Streamlit's plotly chart
+                st.image(gantt_img, use_column_width=True)
             else:
                 st.info("No season or holiday calendar data available for this year.")
 
