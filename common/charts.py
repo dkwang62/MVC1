@@ -26,8 +26,6 @@ def _season_bucket(season_name: str) -> str:
     """
     Map an arbitrary season name to one of:
         Peak, High, Mid, Low, No Data
-
-    Uses simple keyword heuristics based on the season name string.
     """
     name = (season_name or "").strip().lower()
 
@@ -40,7 +38,6 @@ def _season_bucket(season_name: str) -> str:
     if "low" in name:
         return "Low"
 
-    # If nothing matches, fall back
     return "No Data"
 
 
@@ -55,13 +52,11 @@ def create_gantt_chart_from_resort_data(
     height: int = 500,
 ) -> go.Figure:
     """
-    Build a season + holiday Gantt chart for the calculator app using the
-    typed domain objects defined in calculator.py.
+    Build a season + holiday Gantt chart for the calculator app.
     """
     rows: List[Dict[str, Any]] = []
 
     if not hasattr(resort_data, "years") or year not in resort_data.years:
-        # Fallback: trivial "No Data" bar so the chart area still renders
         today = datetime.now()
         rows.append(
             {
@@ -126,13 +121,17 @@ def create_gantt_chart_from_resort_data(
     df["Start"] = pd.to_datetime(df["Start"])
     df["Finish"] = pd.to_datetime(df["Finish"])
 
+    # FIX: Clean the resort name to avoid 'tofu' boxes in static image rendering
+    raw_name = getattr(resort_data, 'name', 'Resort')
+    clean_name = "".join(c for c in raw_name if ord(c) < 128)
+
     fig = px.timeline(
         df,
         x_start="Start",
         x_end="Finish",
         y="Task",
         color="Type",
-        title=f"{getattr(resort_data, 'name', 'Resort')} – {year} Timeline",
+        title=f"{clean_name} – {year} Timeline",
         height=height if height is not None else max(400, len(df) * 35),
         color_discrete_map=COLOR_MAP,
     )
@@ -173,7 +172,6 @@ def create_gantt_chart_from_working(
 
     year_obj = working.get("years", {}).get(year, {})
 
-    # Seasons – dates from working
     for season in year_obj.get("seasons", []):
         sname = season.get("name", "(Unnamed)")
         bucket = _season_bucket(sname)
@@ -193,7 +191,6 @@ def create_gantt_chart_from_working(
             except Exception:
                 continue
 
-    # Holidays – dates from global_holidays in `data`
     gh_year = data.get("global_holidays", {}).get(year, {})
     for h in year_obj.get("holidays", []):
         global_ref = h.get("global_reference") or h.get("name")
@@ -213,7 +210,6 @@ def create_gantt_chart_from_working(
             except Exception:
                 continue
 
-    # Fallback when nothing is defined
     if not rows:
         today = datetime.now()
         rows.append(
@@ -231,13 +227,17 @@ def create_gantt_chart_from_working(
 
     fig_height = height if height is not None else max(400, len(df) * 35)
 
+    # Clean display name for the editor side as well
+    raw_name = working.get('display_name', 'Resort')
+    clean_name = "".join(c for c in raw_name if ord(c) < 128)
+
     fig = px.timeline(
         df,
         x_start="Start",
         x_end="Finish",
         y="Task",
         color="Type",
-        title=f"{working.get('display_name', 'Resort')} – {year} Timeline",
+        title=f"{clean_name} – {year} Timeline",
         height=fig_height,
         color_discrete_map=COLOR_MAP,
     )
