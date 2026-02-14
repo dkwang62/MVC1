@@ -391,9 +391,130 @@ def get_all_room_types_for_resort(resort_data: ResortData) -> List[str]:
             rooms.update(holiday.room_points.keys())
     return sorted(rooms)
 
+def build_season_cost_table(
+    resort_data: ResortData,
+    year: int,
+    rate: float,
+    discount_mul: float,
+    mode: UserMode,
+    owner_params: Optional[dict] = None
+) -> Optional[pd.DataFrame]:
+    yd = resort_data.years.get(str(year))
+    if not yd:
+        return None
 
-def run(forced_mode: str = "Renter") -> None:
-    main(forced_mode)
+    room_types = get_all_room_types_for_resort(resort_data)
+    if not room_types:
+        return None
+
+    rows = []
+
+    # Seasons
+    for season in yd.seasons:
+        name = season.name.strip() or "Unnamed Season"
+        weekly = {}
+        has_data = False
+
+        for dow in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]:
+            for cat in season.day_categories:
+                if dow in cat.days:
+                    rp = cat.room_points
+                    for room in room_types:
+                        pts = rp.get(room, 0)
+                        if pts:
+                            has_data = True
+                        weekly[room] = weekly.get(room, 0) + pts
+                    break
+
+        if has_data:
+            row = {"Season": name}
+            for room in room_types:
+                raw_pts = weekly.get(room, 0)
+                eff_pts = math.floor(raw_pts * discount_mul) if discount_mul < 1 else raw_pts
+                if mode == UserMode.RENTER:
+                    cost = math.ceil(eff_pts * rate)
+                else:
+                    m = math.ceil(eff_pts * rate) if owner_params.get("inc_m", False) else 0
+                    c = math.ceil(eff_pts * owner_params.get("cap_rate", 0.0)) if owner_params.get("inc_c", False) else 0
+                    d = math.ceil(eff_pts * owner_params.get("dep_rate", 0.0)) if owner_params.get("inc_d", False) else 0
+                    cost = m + c + d
+                row[room] = f"${cost:,}"
+            rows.append(row)
+
+    # Holidays
+    for h in yd.holidays:
+        name = h.name.strip() or "Holiday"
+        rp = h.room_points
+        row = {"Season": f"Holiday – {name}"}
+        for room in room_types:
+            raw = rp.get(room, 0)
+            if not raw:
+                row[room] = "—"
+                continue
+            eff = math.floor(raw * discount_mul) if discount_mul < 1 else raw
+            if mode == UserMode.RENTER:
+                cost = math.ceil(eff * rate)
+            else:
+                m = math.ceil(eff * rate) if owner_params.get("inc_m", False) else 0
+                c = math.ceil(eff * owner_params.get("cap_rate", 0.0)) if owner_params.get("inc_c", False) else 0
+                d = math.ceil(eff * owner_params.get("dep_rate", 0.0)) if owner_params.get("inc_d", False) else 0
+                cost = m + c + d
+            row[room] = f"${cost:,}"
+        rows.append(row)
+
+    return pd.DataFrame(rows, columns=["Season"] + room_types) if rows else None
+
+# ==============================================================================
+# MAIN PAGE LOGIC
+# ==============================================================================
+TIER_NO_DISCOUNT = "No Discount"
+TIER_EXECUTIVE = "Executive (25% off within 30 days)"
+TIER_PRESIDENTIAL = "Presidential / Chairman (30% off within 60 days)"
+TIER_OPTIONS = [TIER_NO_DISCOUNT, TIER_EXECUTIVE, TIER_PRESIDENTIAL]
+
+def get_unique_years_from_data(data: Dict[str, Any]) -> List[str]:
+    """Helper to get years from both resorts and global holidays for date picker."""
+    years = set()
+    for resort in data.get("resorts", []):
+        years.update(resort.get("years", {}).keys())
+    if "global_holidays" in data:
+        years.update(data["global_holidays"].keys())
+    return sorted([y for y in years if y.isdigit() and len(y) == 4])
+
+def apply_settings_from_dict(user_data: dict):
+    try:
+        if "maintenance_rate" in user_data: st.session_state.pref_maint_rate = float(user_data["maintenance_rate"])
+        if "purchase_price" in user_data: st.session_state.pref_purchase_price = float(user_data["purchase_price"])
+        if "capital_cost_pct" in user_data: st.session_state.pref_capital_cost = float(user_data["capital_cost_pct"])
+        if "salvage_value" in user_data: st.session_state.pref_salvage_value = float(user_data["salvage_value"])
+        if "useful_life" in user_data: st.session_state.pref_useful_life = int(user_data["useful_life"])
+
+        if "discount_tier" in user_data:
+            raw = str(user_data["discount_tier"])
+            if "Executive" in raw: st.session_state.pref_discount_tier = TIER_EXECUTIVE
+            elif "Presidential" in raw or "Chairman" in raw: st.session_state.pref_discount_tier = TIER_PRESIDENTIAL
+            else: st.session_state.pref_discount_tier = TIER_NO_DISCOUNT
+
+        if "include_capital" in user_data: st.session_state.pref_inc_c = bool(user_data["include_capital"])
+        if "include_depreciation" in user_data: st.session_state.pref_inc_d = bool(user_data["include_depreciation"])
+
+        if "renter_rate" in user_data:
+            st.session_state.renter_rate_val = float(user_data["renter_rate"])
+
+        if "renter_discount_tier" in user_data:
+            raw_r = str(user_data["renter_discount_tier"])
+            if "Executive" in raw_r: st.session_state.renter_discount_tier = TIER_EXECUTIVE
+            elif "Presidential" in raw_r or "Chairman" in raw_r: st.session_state.renter_discount_tier = TIER_PRESIDENTIAL
+            else: st.session_state.renter_discount_tier = TIER_NO_DISCOUNT
+
+        if "preferred_resort_id" in user_data:
+            rid = str(user_data["preferred_resort_id"])
+            st.session_state.pref_resort_id = rid
+            st.session_state.current_resort_id = rid
+
+    except Exception as e:
+        st.error(f"Error applying settings: {e}")
+
 def main(forced_mode: str = "Renter") -> None:
     # --- 0. INIT STATE ---
     if "current_resort" not in st.session_state: st.session_state.current_resort = None
@@ -842,7 +963,6 @@ def main(forced_mode: str = "Renter") -> None:
                 st.dataframe(cost_df, use_container_width=True, hide_index=True)
             else:
                 st.info("No season or holiday pricing data for this year.")
-    
 
 def run(forced_mode: str = "Renter") -> None:
     main(forced_mode)
