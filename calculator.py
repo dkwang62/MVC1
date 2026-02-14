@@ -536,33 +536,15 @@ class PointAuditor:
 def render_data_integrity_check(
     resort_name: str, 
     data: Dict, 
-    repo: "MVCRepository",
-    baseline_resort: str = "Ko Olina🌺"
+    repo: "MVCRepository"
 ):
     """
     Render data integrity checker UI component.
-    Shows variance analysis comparing selected resort against Ko Olina baseline.
-    Ko Olina is recalculated fresh on each check to ensure accuracy.
+    Shows variance analysis comparing selected resort against a user-selected baseline.
+    Baseline is recalculated fresh on each check to ensure accuracy.
     """
-    # Check if baseline resort exists
-    baseline_data = repo.get_resort(baseline_resort)
-    
-    # If Ko Olina doesn't exist, try common variations or let user select
-    if baseline_data is None:
-        # Try variations (including emoji versions)
-        possible_names = [
-            "Ko Olina",
-            "Ko Olina🌺",  # With emoji
-            "Ko'Olina", 
-            "Ko Olina Beach Club",
-            "Marriott's Ko Olina Beach Club",
-            "Ko`Olina"
-        ]
-        for name in possible_names:
-            baseline_data = repo.get_resort(name)
-            if baseline_data:
-                baseline_resort = name
-                break
+    # Get all available resorts for baseline selection
+    all_resorts = [r.get('display_name') for r in data.get('resorts', [])]
     
     # Determine initial expansion state and header based on stored result
     if "integrity_check_result" in st.session_state:
@@ -590,35 +572,50 @@ def render_data_integrity_check(
         expanded = False
     
     with st.expander(header, expanded=expanded):
-        # If baseline resort not found, show error and allow selection
-        if baseline_data is None:
-            st.error(f"⚠️ Baseline resort '{baseline_resort}' not found in data.")
+        st.markdown("Compare this resort's 2025-2026 point variance against a baseline resort to detect data entry errors.")
+        
+        # Baseline resort selector (always shown)
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            # Get current baseline (or use first resort as default)
+            current_baseline = st.session_state.get("selected_baseline", all_resorts[0] if all_resorts else "")
             
-            # Get all available resorts
-            all_resorts = [r.get('display_name') for r in data.get('resorts', [])]
+            # If current baseline is in session but cached results exist, show them
+            baseline_label = "Baseline Resort"
+            if "baseline_check_result" in st.session_state:
+                cached_baseline = st.session_state.baseline_check_result.resort_name
+                baseline_label = f"Baseline Resort (Current: {cached_baseline})"
             
-            st.markdown("**Available resorts:**")
-            st.write(", ".join(all_resorts[:10]))
-            if len(all_resorts) > 10:
-                st.caption(f"...and {len(all_resorts) - 10} more")
-            
-            # Let user select baseline
             selected_baseline = st.selectbox(
-                "Select a baseline resort for comparison:",
+                baseline_label,
                 options=all_resorts,
-                index=0 if all_resorts else 0
+                index=all_resorts.index(current_baseline) if current_baseline in all_resorts else 0,
+                help="Select a resort to use as reference for comparison"
             )
             
-            if st.button("Use This Baseline", type="primary"):
-                st.session_state.custom_baseline = selected_baseline
+            # Update session state if baseline changed
+            if selected_baseline != st.session_state.get("selected_baseline"):
+                st.session_state.selected_baseline = selected_baseline
+                # Clear cached results when baseline changes
+                if "integrity_check_result" in st.session_state:
+                    del st.session_state.integrity_check_result
+                if "baseline_check_result" in st.session_state:
+                    del st.session_state.baseline_check_result
+        
+        with col2:
+            st.markdown("<br>", unsafe_allow_html=True)  # Align with selectbox
+            if st.button("🔄 Change", use_container_width=True, help="Change baseline and clear results"):
+                # Clear results to force recalculation
+                if "integrity_check_result" in st.session_state:
+                    del st.session_state.integrity_check_result
+                if "baseline_check_result" in st.session_state:
+                    del st.session_state.baseline_check_result
                 st.rerun()
-            
-            return
         
-        st.markdown(f"Compare this resort's 2025-2026 point variance against **{baseline_resort}** baseline to detect data entry errors.")
-        st.caption(f"ℹ️ {baseline_resort} is recalculated fresh on each check to ensure accuracy")
+        st.caption(f"ℹ️ {selected_baseline} is recalculated fresh on each check to ensure accuracy")
         
-        # Tolerance slider and check button in columns
+        # Tolerance slider and check button
         col1, col2 = st.columns([3, 1])
         
         with col1:
@@ -636,20 +633,19 @@ def render_data_integrity_check(
             check_button = st.button("🔍 Check Data", use_container_width=True, type="primary")
         
         if check_button:
-            with st.spinner(f"Calculating annual points for {baseline_resort} and {resort_name}..."):
-                # Always calculate Ko Olina fresh
+            with st.spinner(f"Calculating annual points for {selected_baseline} and {resort_name}..."):
                 auditor = PointAuditor(data, repo)
                 
                 try:
                     baseline_result, target_result = auditor.check_resort_variance(
-                        baseline_resort, 
+                        selected_baseline, 
                         resort_name, 
                         tolerance
                     )
                     
                     # Check if we got zero points (likely data issue)
                     if baseline_result.points_2025 == 0 and baseline_result.points_2026 == 0:
-                        st.error(f"❌ No point data found for {baseline_resort}. Please check that 2025 and 2026 data exists.")
+                        st.error(f"❌ No point data found for {selected_baseline}. Please check that 2025 and 2026 data exists.")
                         return
                     
                     if target_result.points_2025 == 0 and target_result.points_2026 == 0:
@@ -753,13 +749,14 @@ def render_data_integrity_check(
                 - **Zero variance**: Years may be identical (check if 2026 data was copied from 2025)
                 - **Zero points**: Resort data missing or years not defined
                 
-                **Why This Baseline:**
+                **Why Use a Baseline:**
                 - Baseline resort is recalculated fresh on each check
                 - Ensures the most accurate reference point
                 - Any changes to baseline data are immediately reflected
+                - Choose a resort with verified, accurate data
                 """)
         else:
-            st.info("👆 Click 'Check Data' to run the integrity analysis")
+            st.info("👆 Select a baseline resort and click 'Check Data' to run the integrity analysis")
 
 
 def build_season_cost_table(
@@ -1337,8 +1334,7 @@ def main(forced_mode: str = "Renter") -> None:
     
     # --- DATA INTEGRITY CHECK (Always available, independent of selection) ---
     st.divider()
-    baseline = st.session_state.get("custom_baseline", "Ko Olina🌺")
-    render_data_integrity_check(r_name, st.session_state.data, repo, baseline_resort=baseline)
+    render_data_integrity_check(r_name, st.session_state.data, repo)
 
 def run(forced_mode: str = "Renter") -> None:
     main(forced_mode)
