@@ -15,6 +15,7 @@ from aggrid_editor import (
     render_season_points_grid,
     render_holiday_points_grid,
 )
+from dataclasses import dataclass
 
 # ----------------------------------------------------------------------
 # CONSTANTS
@@ -1989,6 +1990,335 @@ def render_global_settings_v2(data: Dict[str, Any], years: List[str]):
         render_global_holiday_dates_editor_v2(data, years)
 
 # ----------------------------------------------------------------------
+# DATA INTEGRITY CHECKER - VARIANCE ANALYSIS
+# ----------------------------------------------------------------------
+@dataclass
+class ResortVarianceResult:
+    """Results of variance check for a single resort."""
+    resort_name: str
+    points_2025: int
+    points_2026: int
+    variance_points: int
+    variance_percent: float
+    status: str  # "NORMAL", "WARNING", "ERROR"
+    status_icon: str
+    status_message: str
+
+
+class EditorPointAuditor:
+    """Audits point data integrity by comparing year-over-year variance."""
+    
+    def __init__(self, data_dict: Dict):
+        self.data = data_dict
+        self.global_holidays = data_dict.get("global_holidays", {})
+    
+    def calculate_annual_total(self, resort_id: str, year: int) -> int:
+        """Calculate total points for ALL room types in a specific year."""
+        resort = next((r for r in self.data['resorts'] if r['id'] == resort_id), None)
+        if not resort:
+            return 0
+        
+        year_str = str(year)
+        if year_str not in resort.get('years', {}):
+            return 0
+        
+        y_data = resort['years'][year_str]
+        total_points = 0
+        start_date = date(year, 1, 1)
+        end_date = date(year, 12, 31)
+        current_date = start_date
+        
+        while current_date <= end_date:
+            day_points = self._get_points_for_date(resort, year, current_date)
+            total_points += sum(day_points.values())
+            current_date += timedelta(days=1)
+        
+        return total_points
+    
+    def _get_points_for_date(self, resort: Dict, year: int, target_date: date) -> Dict[str, int]:
+        year_str = str(year)
+        y_data = resort['years'].get(year_str, {})
+        
+        # 1. Check holidays first
+        for h in y_data.get('holidays', []):
+            ref = h.get('global_reference')
+            g_h = self.global_holidays.get(year_str, {}).get(ref, {})
+            if g_h:
+                h_start = datetime.strptime(g_h['start_date'], '%Y-%m-%d').date()
+                h_end = datetime.strptime(g_h['end_date'], '%Y-%m-%d').date()
+                if h_start <= target_date <= h_end:
+                    return h.get('room_points', {})
+        
+        # 2. Check seasons
+        day_name = target_date.strftime('%a')
+        for s in y_data.get('seasons', []):
+            for p in s.get('periods', []):
+                try:
+                    p_start = datetime.strptime(p['start'], '%Y-%m-%d').date()
+                    p_end = datetime.strptime(p['end'], '%Y-%m-%d').date()
+                    if p_start <= target_date <= p_end:
+                        for cat in s.get('day_categories', {}).values():
+                            if day_name in cat.get('day_pattern', []):
+                                return cat.get('room_points', {})
+                except:
+                    continue
+        
+        return {}
+    
+    def check_resort_variance(
+        self, 
+        baseline_id: str, 
+        target_id: str, 
+        tolerance_percent: float
+    ) -> Tuple[ResortVarianceResult, ResortVarianceResult]:
+        baseline_resort = next((r for r in self.data['resorts'] if r['id'] == baseline_id), None)
+        target_resort = next((r for r in self.data['resorts'] if r['id'] == target_id), None)
+        
+        baseline_name = baseline_resort.get('display_name', baseline_id) if baseline_resort else baseline_id
+        target_name = target_resort.get('display_name', target_id) if target_resort else target_id
+        
+        baseline_2025 = self.calculate_annual_total(baseline_id, 2025)
+        baseline_2026 = self.calculate_annual_total(baseline_id, 2026)
+        baseline_variance = baseline_2026 - baseline_2025
+        baseline_percent = (baseline_variance / baseline_2025 * 100) if baseline_2025 > 0 else 0
+        
+        baseline_result = ResortVarianceResult(
+            resort_name=baseline_name,
+            points_2025=baseline_2025,
+            points_2026=baseline_2026,
+            variance_points=baseline_variance,
+            variance_percent=baseline_percent,
+            status="BASELINE",
+            status_icon="📊",
+            status_message="Reference standard"
+        )
+        
+        target_2025 = self.calculate_annual_total(target_id, 2025)
+        target_2026 = self.calculate_annual_total(target_id, 2026)
+        target_variance = target_2026 - target_2025
+        target_percent = (target_variance / target_2025 * 100) if target_2025 > 0 else 0
+        
+        percent_diff = abs(target_percent - baseline_percent)
+        
+        if target_variance < 0:
+            status = "ERROR"
+            icon = "🚨"
+            message = "Negative variance detected - 2026 has fewer points than 2025"
+        elif percent_diff > (tolerance_percent * 2):
+            status = "ERROR"
+            icon = "🚨"
+            message = f"Variance differs from baseline by {percent_diff:.2f}% (threshold: {tolerance_percent * 2:.1f}%)"
+        elif percent_diff > tolerance_percent:
+            status = "WARNING"
+            icon = "⚠️"
+            message = f"Variance differs from baseline by {percent_diff:.2f}% (threshold: {tolerance_percent:.1f}%)"
+        else:
+            status = "NORMAL"
+            icon = "✅"
+            message = f"Variance within tolerance ({percent_diff:.2f}% difference from baseline)"
+        
+        target_result = ResortVarianceResult(
+            resort_name=target_name,
+            points_2025=target_2025,
+            points_2026=target_2026,
+            variance_points=target_variance,
+            variance_percent=target_percent,
+            status=status,
+            status_icon=icon,
+            status_message=message
+        )
+        
+        return baseline_result, target_result
+
+
+def render_data_integrity_tab(data: Dict, current_resort_id: str):
+    st.markdown("## 🔍 Data Quality Assurance")
+    st.markdown("Verify data integrity by comparing 2025-2026 point variance across resorts.")
+    
+    resorts = data.get('resorts', [])
+    resort_options = {r.get('display_name', r['id']): r['id'] for r in resorts}
+    resort_names = list(resort_options.keys())
+    
+    current_resort = next((r for r in resorts if r['id'] == current_resort_id), None)
+    current_name = current_resort.get('display_name', current_resort_id) if current_resort else ""
+    
+    st.info(f"📍 **Currently editing:** {current_name}")
+    
+    col1, col2 = st.columns([3, 1])
+    
+    with col1:
+        baseline_label = "Baseline Resort for Comparison"
+        if "editor_baseline_check_result" in st.session_state:
+            cached_baseline = st.session_state.editor_baseline_check_result.resort_name
+            baseline_label = f"Baseline Resort (Current: {cached_baseline})"
+        
+        selected_baseline_name = st.selectbox(
+            baseline_label,
+            options=resort_names,
+            index=0 if resort_names else 0,
+            help="Select a resort with verified data to use as reference",
+            key="editor_baseline_selector"
+        )
+        
+        selected_baseline_id = resort_options.get(selected_baseline_name)
+        
+    with col2:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("🔄 Clear", use_container_width=True, help="Clear results"):
+            if "editor_integrity_check_result" in st.session_state:
+                del st.session_state.editor_integrity_check_result
+            if "editor_baseline_check_result" in st.session_state:
+                del st.session_state.editor_baseline_check_result
+            st.rerun()
+    
+    st.caption(f"ℹ️ {selected_baseline_name} will be recalculated fresh to ensure accuracy")
+    
+    col1, col2 = st.columns([3, 1])
+    
+    with col1:
+        tolerance = st.slider(
+            "Variance Tolerance (%)",
+            min_value=0.0,
+            max_value=20.0,
+            value=5.0,
+            step=0.5,
+            help=f"Alert thresholds: Warning above tolerance, Error above 2× tolerance",
+            key="editor_tolerance_slider"
+        )
+    
+    with col2:
+        check_button = st.button(
+            "🔍 Check Data", 
+            use_container_width=True, 
+            type="primary",
+            help=f"Compare {current_name} against {selected_baseline_name}"
+        )
+    
+    if check_button:
+        with st.spinner(f"Calculating annual points for {selected_baseline_name} and {current_name}..."):
+            auditor = EditorPointAuditor(data)
+            
+            try:
+                baseline_result, target_result = auditor.check_resort_variance(
+                    selected_baseline_id, 
+                    current_resort_id, 
+                    tolerance
+                )
+                
+                if baseline_result.points_2025 == 0 and baseline_result.points_2026 == 0:
+                    st.error(f"❌ No point data found for {selected_baseline_name}. Check that 2025 and 2026 years exist with seasons/holidays.")
+                    return
+                
+                if target_result.points_2025 == 0 and target_result.points_2026 == 0:
+                    st.error(f"❌ No point data found for {current_name}. Check that 2025 and 2026 years exist with seasons/holidays.")
+                    return
+                
+                st.session_state.editor_integrity_check_result = target_result
+                st.session_state.editor_baseline_check_result = baseline_result
+                st.rerun()
+                
+            except Exception as e:
+                st.error(f"Error during calculation: {str(e)}")
+                import traceback
+                st.code(traceback.format_exc())
+                return
+    
+    if ("editor_integrity_check_result" in st.session_state and 
+        "editor_baseline_check_result" in st.session_state):
+        
+        baseline = st.session_state.editor_baseline_check_result
+        target = st.session_state.editor_integrity_check_result
+        
+        st.divider()
+        
+        st.markdown(f"### 📊 {baseline.resort_name} (Baseline Reference)")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("2025 Total Points", f"{baseline.points_2025:,}")
+        with col2:
+            st.metric("2026 Total Points", f"{baseline.points_2026:,}")
+        with col3:
+            st.metric(
+                "Variance", 
+                f"+{baseline.variance_points:,} pts",
+                f"+{baseline.variance_percent:.2f}%"
+            )
+        
+        st.caption("Expected variance due to leap year (2026 has 366 days)")
+        
+        st.divider()
+        
+        st.markdown(f"### 📍 {target.resort_name} (Current Resort)")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("2025 Total Points", f"{target.points_2025:,}")
+        with col2:
+            st.metric("2026 Total Points", f"{target.points_2026:,}")
+        with col3:
+            st.metric(
+                "Variance", 
+                f"{'+' if target.variance_points >= 0 else ''}{target.variance_points:,} pts",
+                f"{'+' if target.variance_percent >= 0 else ''}{target.variance_percent:.2f}%"
+            )
+        
+        st.divider()
+        
+        st.markdown("### ⚖️ Comparison Analysis")
+        
+        percent_diff = abs(target.variance_percent - baseline.variance_percent)
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric(f"{baseline.resort_name}", f"{baseline.variance_percent:.2f}%")
+        with col2:
+            st.metric(f"{target.resort_name}", f"{target.variance_percent:.2f}%")
+        with col3:
+            st.metric("Difference", f"{percent_diff:.2f}%")
+        
+        if target.status == "ERROR":
+            st.error(f"{target.status_icon} **{target.status}**: {target.status_message}")
+            st.markdown("**Recommended Actions:**")
+            st.markdown("- Review season periods for missing or overlapping dates")
+            st.markdown("- Check holiday definitions for 2026")
+            st.markdown("- Verify room point values weren't accidentally changed")
+        elif target.status == "WARNING":
+            st.warning(f"{target.status_icon} **{target.status}**: {target.status_message}")
+            st.markdown("**Suggested Actions:**")
+            st.markdown("- Review data for potential inconsistencies")
+            st.markdown("- Compare with baseline to understand differences")
+        else:
+            st.success(f"{target.status_icon} **{target.status}**: {target.status_message}")
+        
+        with st.expander("ℹ️ Understanding Results"):
+            st.markdown("""
+            **Status Levels:**
+            - ✅ **NORMAL**: Data appears consistent with baseline pattern
+            - ⚠️ **WARNING**: Some variance detected - review recommended
+            - 🚨 **ERROR**: Significant issues found - likely data entry error
+            
+            **Common Causes of Variance:**
+            - **Leap Year Effect**: 2026 has 366 days (one extra day) - typically adds ~0.27% points
+            - **Missing Dates**: Gaps in season coverage leave days without point values
+            - **Season Pattern Changes**: Different high/low season distribution between years
+            - **Holiday Shifts**: Holidays falling on different dates/day-of-week
+            
+            **Typical Issues:**
+            - **Negative variance**: 2026 incomplete or has fewer days covered
+            - **Zero variance**: Likely copied 2025 data to 2026 without adjustments
+            - **Excessive variance**: Point values changed or duplicate entries
+            - **Zero points**: Years not defined or missing seasons/holidays
+            
+            **Using This Tool:**
+            1. Choose a baseline resort you know has accurate data
+            2. Set tolerance based on how strictly you want to validate
+            3. Check each resort you're editing against the baseline
+            4. Fix any ERRORs before saving
+            5. Review WARNINGs to understand if differences are intentional
+            """)
+    else:
+        st.info("👆 Select a baseline resort and click 'Check Data' to validate this resort's data quality")
+
+# ----------------------------------------------------------------------
 # MAIN APPLICATION
 # ----------------------------------------------------------------------
 def run():
@@ -2061,13 +2391,14 @@ Restarting the app resets everything to the default dataset, so be sure to save 
         render_resort_card(resort_name, timezone, address)
         render_save_button_v2(data, working, current_resort_id)
         
-        tab1, tab2, tab3, tab4, tab5 = st.tabs(
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
             [
                 "📊 Overview",
                 "📅 Season Dates",
                 "💰 Room Points",
                 "🎄 Holidays",
                 "📋 Spreadsheet",
+                "🔍 Data Quality",
             ]
         )
         with tab1:
@@ -2104,6 +2435,9 @@ Restarting the app resets everything to the default dataset, so be sure to save 
                 render_holiday_points_grid(working, BASE_YEAR_FOR_POINTS, current_resort_id)
             st.markdown("---")
             render_excel_export_import(working, current_resort_id, data)
+        
+        with tab6:
+            render_data_integrity_tab(data, current_resort_id)
             
     st.markdown("---")
     render_global_settings_v2(data, years)
