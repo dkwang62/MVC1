@@ -391,6 +391,294 @@ def get_all_room_types_for_resort(resort_data: ResortData) -> List[str]:
             rooms.update(holiday.room_points.keys())
     return sorted(rooms)
 
+# ==============================================================================
+# DATA INTEGRITY CHECKER - VARIANCE ANALYSIS
+# ==============================================================================
+
+@dataclass
+class ResortVarianceResult:
+    """Results of variance check for a single resort."""
+    resort_name: str
+    points_2025: int
+    points_2026: int
+    variance_points: int
+    variance_percent: float
+    status: str  # "NORMAL", "WARNING", "ERROR"
+    status_icon: str
+    status_message: str
+
+class PointAuditor:
+    """Audits point data integrity by comparing year-over-year variance."""
+    
+    def __init__(self, data_dict: Dict, repo: "MVCRepository"):
+        self.data = data_dict
+        self.repo = repo
+        self.global_holidays = data_dict.get("global_holidays", {})
+    
+    def calculate_annual_total(self, resort_name: str, year: int) -> int:
+        """Calculate total points for ALL room types in a specific year."""
+        resort_data = self.repo.get_resort(resort_name)
+        if not resort_data:
+            return 0
+        
+        year_str = str(year)
+        if year_str not in resort_data.years:
+            return 0
+        
+        total_points = 0
+        start_date = date(year, 1, 1)
+        end_date = date(year, 12, 31)
+        current_date = start_date
+        
+        # Iterate through every day of the year
+        while current_date <= end_date:
+            day_points = self._get_points_for_date(resort_data, year, current_date)
+            # Sum all room types for this day
+            total_points += sum(day_points.values())
+            current_date += timedelta(days=1)
+        
+        return total_points
+    
+    def _get_points_for_date(self, resort_data: ResortData, year: int, target_date: date) -> Dict[str, int]:
+        """Get point values for all room types on a specific date."""
+        year_str = str(year)
+        if year_str not in resort_data.years:
+            return {}
+        
+        yd = resort_data.years[year_str]
+        
+        # 1. Check if date falls in a holiday period
+        for holiday in yd.holidays:
+            if holiday.start_date <= target_date <= holiday.end_date:
+                return holiday.room_points
+        
+        # 2. Check seasons
+        day_name = target_date.strftime('%a')  # 'Sun', 'Mon', etc.
+        for season in yd.seasons:
+            for period in season.periods:
+                if period.start <= target_date <= period.end:
+                    # Match day category
+                    for cat in season.day_categories:
+                        if day_name in cat.days:
+                            return cat.room_points
+        
+        return {}
+    
+    def check_resort_variance(
+        self, 
+        baseline_resort: str, 
+        target_resort: str, 
+        tolerance_percent: float
+    ) -> Tuple[ResortVarianceResult, ResortVarianceResult]:
+        """
+        Compare target resort's variance against baseline resort (Ko Olina).
+        
+        Returns: (baseline_result, target_result)
+        """
+        # Calculate baseline (Ko Olina)
+        baseline_2025 = self.calculate_annual_total(baseline_resort, 2025)
+        baseline_2026 = self.calculate_annual_total(baseline_resort, 2026)
+        baseline_variance = baseline_2026 - baseline_2025
+        baseline_percent = (baseline_variance / baseline_2025 * 100) if baseline_2025 > 0 else 0
+        
+        baseline_result = ResortVarianceResult(
+            resort_name=baseline_resort,
+            points_2025=baseline_2025,
+            points_2026=baseline_2026,
+            variance_points=baseline_variance,
+            variance_percent=baseline_percent,
+            status="BASELINE",
+            status_icon="📊",
+            status_message="Reference standard"
+        )
+        
+        # Calculate target resort
+        target_2025 = self.calculate_annual_total(target_resort, 2025)
+        target_2026 = self.calculate_annual_total(target_resort, 2026)
+        target_variance = target_2026 - target_2025
+        target_percent = (target_variance / target_2025 * 100) if target_2025 > 0 else 0
+        
+        # Compare against baseline
+        percent_diff = abs(target_percent - baseline_percent)
+        
+        # Determine status
+        if target_variance < 0:
+            status = "ERROR"
+            icon = "🚨"
+            message = "Negative variance detected - 2026 has fewer points than 2025"
+        elif percent_diff > (tolerance_percent * 2):
+            status = "ERROR"
+            icon = "🚨"
+            message = f"Variance differs from baseline by {percent_diff:.2f}% (threshold: {tolerance_percent * 2:.1f}%)"
+        elif percent_diff > tolerance_percent:
+            status = "WARNING"
+            icon = "⚠️"
+            message = f"Variance differs from baseline by {percent_diff:.2f}% (threshold: {tolerance_percent:.1f}%)"
+        else:
+            status = "NORMAL"
+            icon = "✅"
+            message = f"Variance within tolerance ({percent_diff:.2f}% difference from baseline)"
+        
+        target_result = ResortVarianceResult(
+            resort_name=target_resort,
+            points_2025=target_2025,
+            points_2026=target_2026,
+            variance_points=target_variance,
+            variance_percent=target_percent,
+            status=status,
+            status_icon=icon,
+            status_message=message
+        )
+        
+        return baseline_result, target_result
+
+
+def render_data_integrity_check(
+    resort_name: str, 
+    data: Dict, 
+    repo: "MVCRepository",
+    baseline_resort: str = "Ko Olina"
+):
+    """
+    Render data integrity checker UI component.
+    Shows variance analysis comparing selected resort against Ko Olina baseline.
+    """
+    # Determine initial expansion state and header
+    if "integrity_check_result" in st.session_state:
+        result = st.session_state.integrity_check_result
+        if result.status == "ERROR":
+            header = f"📊 Data Integrity Check {result.status_icon} Significant issues found"
+            expanded = True
+        elif result.status == "WARNING":
+            header = f"📊 Data Integrity Check {result.status_icon} Minor variance detected"
+            expanded = False
+        else:
+            header = f"📊 Data Integrity Check {result.status_icon}"
+            expanded = False
+    else:
+        header = "📊 Data Integrity Check"
+        expanded = False
+    
+    with st.expander(header, expanded=expanded):
+        st.markdown("Compare this resort's 2025-2026 point variance against Ko Olina baseline to detect data entry errors.")
+        
+        # Tolerance slider and check button in columns
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            tolerance = st.slider(
+                "Variance Tolerance (%)",
+                min_value=0.0,
+                max_value=20.0,
+                value=5.0,
+                step=0.5,
+                help=f"Alert thresholds: Warning at {st.session_state.get('tolerance', 5.0):.1f}%, Error at {st.session_state.get('tolerance', 5.0) * 2:.1f}%"
+            )
+            st.session_state.tolerance = tolerance
+        
+        with col2:
+            check_button = st.button("🔍 Check Data", use_container_width=True, type="primary")
+        
+        if check_button:
+            with st.spinner(f"Calculating annual points for {baseline_resort} and {resort_name}..."):
+                auditor = PointAuditor(data, repo)
+                baseline_result, target_result = auditor.check_resort_variance(
+                    baseline_resort, 
+                    resort_name, 
+                    tolerance
+                )
+                
+                # Store result in session state
+                st.session_state.integrity_check_result = target_result
+                st.session_state.baseline_check_result = baseline_result
+                
+                # Force rerun to update expander header
+                st.rerun()
+        
+        # Display results if available
+        if "integrity_check_result" in st.session_state and "baseline_check_result" in st.session_state:
+            baseline = st.session_state.baseline_check_result
+            target = st.session_state.integrity_check_result
+            
+            st.divider()
+            
+            # Baseline section
+            st.markdown(f"### 📊 {baseline.resort_name} Baseline (Reference)")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("2025 Total Points", f"{baseline.points_2025:,}")
+            with col2:
+                st.metric("2026 Total Points", f"{baseline.points_2026:,}")
+            with col3:
+                st.metric(
+                    "Variance", 
+                    f"+{baseline.variance_points:,} pts",
+                    f"+{baseline.variance_percent:.2f}%"
+                )
+            
+            st.caption("Expected variance due to leap year (2026 has 366 days)")
+            
+            st.divider()
+            
+            # Target resort section
+            st.markdown(f"### 📍 {target.resort_name}")
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("2025 Total Points", f"{target.points_2025:,}")
+            with col2:
+                st.metric("2026 Total Points", f"{target.points_2026:,}")
+            with col3:
+                st.metric(
+                    "Variance", 
+                    f"{'+' if target.variance_points >= 0 else ''}{target.variance_points:,} pts",
+                    f"{'+' if target.variance_percent >= 0 else ''}{target.variance_percent:.2f}%"
+                )
+            
+            st.divider()
+            
+            # Comparison analysis
+            st.markdown("### ⚖️ Comparison Analysis")
+            
+            percent_diff = abs(target.variance_percent - baseline.variance_percent)
+            
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Ko Olina Variance", f"{baseline.variance_percent:.2f}%")
+            with col2:
+                st.metric("This Resort Variance", f"{target.variance_percent:.2f}%")
+            with col3:
+                st.metric("Difference from Baseline", f"{percent_diff:.2f}%")
+            
+            # Status message
+            if target.status == "ERROR":
+                st.error(f"{target.status_icon} **{target.status}**: {target.status_message}")
+            elif target.status == "WARNING":
+                st.warning(f"{target.status_icon} **{target.status}**: {target.status_message}")
+            else:
+                st.success(f"{target.status_icon} **{target.status}**: {target.status_message}")
+            
+            # Interpretation help
+            with st.expander("ℹ️ How to Interpret Results"):
+                st.markdown("""
+                **Status Levels:**
+                - ✅ **NORMAL**: Variance within tolerance range - data appears consistent
+                - ⚠️ **WARNING**: Variance differs from Ko Olina but within acceptable range - review recommended
+                - 🚨 **ERROR**: Significant discrepancy or negative variance - likely data entry error
+                
+                **What Causes Variance:**
+                - **Leap Year**: 2026 has 366 days (one extra day) - should add ~0.27% points
+                - **Season Changes**: Different season patterns between years
+                - **Holiday Shifts**: Holidays falling on different dates
+                
+                **Common Issues:**
+                - **Negative variance**: 2026 data incomplete or missing days
+                - **Excessive variance**: Incorrect point values or duplicate entries
+                - **Zero variance**: Years may be identical (check if 2026 data was copied from 2025)
+                """)
+        else:
+            st.info("👆 Click 'Check Data' to run the integrity analysis")
+
+
 def build_season_cost_table(
     resort_data: ResortData,
     year: int,
@@ -963,6 +1251,10 @@ def main(forced_mode: str = "Renter") -> None:
                 st.dataframe(cost_df, use_container_width=True, hide_index=True)
             else:
                 st.info("No season or holiday pricing data for this year.")
+    
+    # --- DATA INTEGRITY CHECK (Always available, independent of selection) ---
+    st.divider()
+    render_data_integrity_check(r_name, st.session_state.data, repo, baseline_resort="Ko Olina")
 
 def run(forced_mode: str = "Renter") -> None:
     main(forced_mode)
