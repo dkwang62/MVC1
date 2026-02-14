@@ -537,13 +537,33 @@ def render_data_integrity_check(
     resort_name: str, 
     data: Dict, 
     repo: "MVCRepository",
-    baseline_resort: str = "Ko Olina"
+    baseline_resort: str = "Ko Olina🌺"
 ):
     """
     Render data integrity checker UI component.
     Shows variance analysis comparing selected resort against Ko Olina baseline.
     Ko Olina is recalculated fresh on each check to ensure accuracy.
     """
+    # Check if baseline resort exists
+    baseline_data = repo.get_resort(baseline_resort)
+    
+    # If Ko Olina doesn't exist, try common variations or let user select
+    if baseline_data is None:
+        # Try variations (including emoji versions)
+        possible_names = [
+            "Ko Olina",
+            "Ko Olina🌺",  # With emoji
+            "Ko'Olina", 
+            "Ko Olina Beach Club",
+            "Marriott's Ko Olina Beach Club",
+            "Ko`Olina"
+        ]
+        for name in possible_names:
+            baseline_data = repo.get_resort(name)
+            if baseline_data:
+                baseline_resort = name
+                break
+    
     # Determine initial expansion state and header based on stored result
     if "integrity_check_result" in st.session_state:
         result = st.session_state.integrity_check_result
@@ -570,6 +590,31 @@ def render_data_integrity_check(
         expanded = False
     
     with st.expander(header, expanded=expanded):
+        # If baseline resort not found, show error and allow selection
+        if baseline_data is None:
+            st.error(f"⚠️ Baseline resort '{baseline_resort}' not found in data.")
+            
+            # Get all available resorts
+            all_resorts = [r.get('display_name') for r in data.get('resorts', [])]
+            
+            st.markdown("**Available resorts:**")
+            st.write(", ".join(all_resorts[:10]))
+            if len(all_resorts) > 10:
+                st.caption(f"...and {len(all_resorts) - 10} more")
+            
+            # Let user select baseline
+            selected_baseline = st.selectbox(
+                "Select a baseline resort for comparison:",
+                options=all_resorts,
+                index=0 if all_resorts else 0
+            )
+            
+            if st.button("Use This Baseline", type="primary"):
+                st.session_state.custom_baseline = selected_baseline
+                st.rerun()
+            
+            return
+        
         st.markdown(f"Compare this resort's 2025-2026 point variance against **{baseline_resort}** baseline to detect data entry errors.")
         st.caption(f"ℹ️ {baseline_resort} is recalculated fresh on each check to ensure accuracy")
         
@@ -594,18 +639,35 @@ def render_data_integrity_check(
             with st.spinner(f"Calculating annual points for {baseline_resort} and {resort_name}..."):
                 # Always calculate Ko Olina fresh
                 auditor = PointAuditor(data, repo)
-                baseline_result, target_result = auditor.check_resort_variance(
-                    baseline_resort, 
-                    resort_name, 
-                    tolerance
-                )
                 
-                # Store results in session state (but will be recalculated next time)
-                st.session_state.integrity_check_result = target_result
-                st.session_state.baseline_check_result = baseline_result
-                
-                # Force rerun to update expander header
-                st.rerun()
+                try:
+                    baseline_result, target_result = auditor.check_resort_variance(
+                        baseline_resort, 
+                        resort_name, 
+                        tolerance
+                    )
+                    
+                    # Check if we got zero points (likely data issue)
+                    if baseline_result.points_2025 == 0 and baseline_result.points_2026 == 0:
+                        st.error(f"❌ No point data found for {baseline_resort}. Please check that 2025 and 2026 data exists.")
+                        return
+                    
+                    if target_result.points_2025 == 0 and target_result.points_2026 == 0:
+                        st.error(f"❌ No point data found for {resort_name}. Please check that 2025 and 2026 data exists.")
+                        return
+                    
+                    # Store results in session state (but will be recalculated next time)
+                    st.session_state.integrity_check_result = target_result
+                    st.session_state.baseline_check_result = baseline_result
+                    
+                    # Force rerun to update expander header
+                    st.rerun()
+                    
+                except Exception as e:
+                    st.error(f"Error during calculation: {str(e)}")
+                    import traceback
+                    st.code(traceback.format_exc())
+                    return
         
         # Display results if available and for current resort
         if ("integrity_check_result" in st.session_state and 
@@ -658,7 +720,7 @@ def render_data_integrity_check(
             
             col1, col2, col3 = st.columns(3)
             with col1:
-                st.metric("Ko Olina Variance", f"{baseline.variance_percent:.2f}%")
+                st.metric(f"{baseline.resort_name} Variance", f"{baseline.variance_percent:.2f}%")
             with col2:
                 st.metric("This Resort Variance", f"{target.variance_percent:.2f}%")
             with col3:
@@ -677,7 +739,7 @@ def render_data_integrity_check(
                 st.markdown("""
                 **Status Levels:**
                 - ✅ **NORMAL**: Variance within tolerance range - data appears consistent
-                - ⚠️ **WARNING**: Variance differs from Ko Olina but within acceptable range - review recommended
+                - ⚠️ **WARNING**: Variance differs from baseline but within acceptable range - review recommended
                 - 🚨 **ERROR**: Significant discrepancy or negative variance - likely data entry error
                 
                 **What Causes Variance:**
@@ -689,11 +751,12 @@ def render_data_integrity_check(
                 - **Negative variance**: 2026 data incomplete or missing days
                 - **Excessive variance**: Incorrect point values or duplicate entries
                 - **Zero variance**: Years may be identical (check if 2026 data was copied from 2025)
+                - **Zero points**: Resort data missing or years not defined
                 
-                **Why Ko Olina as Baseline:**
-                - Ko Olina is recalculated fresh on each check
+                **Why This Baseline:**
+                - Baseline resort is recalculated fresh on each check
                 - Ensures the most accurate reference point
-                - Any changes to Ko Olina data are immediately reflected
+                - Any changes to baseline data are immediately reflected
                 """)
         else:
             st.info("👆 Click 'Check Data' to run the integrity analysis")
@@ -1274,7 +1337,8 @@ def main(forced_mode: str = "Renter") -> None:
     
     # --- DATA INTEGRITY CHECK (Always available, independent of selection) ---
     st.divider()
-    render_data_integrity_check(r_name, st.session_state.data, repo, baseline_resort="Ko Olina")
+    baseline = st.session_state.get("custom_baseline", "Ko Olina🌺")
+    render_data_integrity_check(r_name, st.session_state.data, repo, baseline_resort=baseline)
 
 def run(forced_mode: str = "Renter") -> None:
     main(forced_mode)
