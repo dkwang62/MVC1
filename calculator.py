@@ -542,25 +542,36 @@ def render_data_integrity_check(
     """
     Render data integrity checker UI component.
     Shows variance analysis comparing selected resort against Ko Olina baseline.
+    Ko Olina is recalculated fresh on each check to ensure accuracy.
     """
-    # Determine initial expansion state and header
+    # Determine initial expansion state and header based on stored result
     if "integrity_check_result" in st.session_state:
         result = st.session_state.integrity_check_result
-        if result.status == "ERROR":
-            header = f"📊 Data Integrity Check {result.status_icon} Significant issues found"
-            expanded = True
-        elif result.status == "WARNING":
-            header = f"📊 Data Integrity Check {result.status_icon} Minor variance detected"
-            expanded = False
+        # Only show cached result if it's for the current resort
+        if result.resort_name == resort_name:
+            if result.status == "ERROR":
+                header = f"📊 Data Integrity Check {result.status_icon} Significant issues found"
+                expanded = True
+            elif result.status == "WARNING":
+                header = f"📊 Data Integrity Check {result.status_icon} Minor variance detected"
+                expanded = False
+            else:
+                header = f"📊 Data Integrity Check {result.status_icon}"
+                expanded = False
         else:
-            header = f"📊 Data Integrity Check {result.status_icon}"
+            # Different resort - clear cached results
+            del st.session_state.integrity_check_result
+            if "baseline_check_result" in st.session_state:
+                del st.session_state.baseline_check_result
+            header = "📊 Data Integrity Check"
             expanded = False
     else:
         header = "📊 Data Integrity Check"
         expanded = False
     
     with st.expander(header, expanded=expanded):
-        st.markdown("Compare this resort's 2025-2026 point variance against Ko Olina baseline to detect data entry errors.")
+        st.markdown(f"Compare this resort's 2025-2026 point variance against **{baseline_resort}** baseline to detect data entry errors.")
+        st.caption(f"ℹ️ {baseline_resort} is recalculated fresh on each check to ensure accuracy")
         
         # Tolerance slider and check button in columns
         col1, col2 = st.columns([3, 1])
@@ -581,6 +592,7 @@ def render_data_integrity_check(
         
         if check_button:
             with st.spinner(f"Calculating annual points for {baseline_resort} and {resort_name}..."):
+                # Always calculate Ko Olina fresh
                 auditor = PointAuditor(data, repo)
                 baseline_result, target_result = auditor.check_resort_variance(
                     baseline_resort, 
@@ -588,15 +600,18 @@ def render_data_integrity_check(
                     tolerance
                 )
                 
-                # Store result in session state
+                # Store results in session state (but will be recalculated next time)
                 st.session_state.integrity_check_result = target_result
                 st.session_state.baseline_check_result = baseline_result
                 
                 # Force rerun to update expander header
                 st.rerun()
         
-        # Display results if available
-        if "integrity_check_result" in st.session_state and "baseline_check_result" in st.session_state:
+        # Display results if available and for current resort
+        if ("integrity_check_result" in st.session_state and 
+            "baseline_check_result" in st.session_state and
+            st.session_state.integrity_check_result.resort_name == resort_name):
+            
             baseline = st.session_state.baseline_check_result
             target = st.session_state.integrity_check_result
             
@@ -674,6 +689,11 @@ def render_data_integrity_check(
                 - **Negative variance**: 2026 data incomplete or missing days
                 - **Excessive variance**: Incorrect point values or duplicate entries
                 - **Zero variance**: Years may be identical (check if 2026 data was copied from 2025)
+                
+                **Why Ko Olina as Baseline:**
+                - Ko Olina is recalculated fresh on each check
+                - Ensures the most accurate reference point
+                - Any changes to Ko Olina data are immediately reflected
                 """)
         else:
             st.info("👆 Click 'Check Data' to run the integrity analysis")
