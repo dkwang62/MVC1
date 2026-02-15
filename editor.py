@@ -1997,7 +1997,7 @@ class ResortVarianceResult:
     """Results of variance check for a single resort."""
     resort_name: str
     points_2025: int
-    points_2026: int
+    points_2027: int
     variance_points: int
     variance_percent: float
     status: str  # "NORMAL", "WARNING", "ERROR"
@@ -2078,14 +2078,14 @@ class EditorPointAuditor:
         target_name = target_resort.get('display_name', target_id) if target_resort else target_id
         
         baseline_2025 = self.calculate_annual_total(baseline_id, 2025)
-        baseline_2026 = self.calculate_annual_total(baseline_id, 2026)
-        baseline_variance = baseline_2026 - baseline_2025
+        baseline_2027 = self.calculate_annual_total(baseline_id, 2027)
+        baseline_variance = baseline_2027 - baseline_2025
         baseline_percent = (baseline_variance / baseline_2025 * 100) if baseline_2025 > 0 else 0
         
         baseline_result = ResortVarianceResult(
             resort_name=baseline_name,
             points_2025=baseline_2025,
-            points_2026=baseline_2026,
+            points_2027=baseline_2027,
             variance_points=baseline_variance,
             variance_percent=baseline_percent,
             status="BASELINE",
@@ -2094,8 +2094,8 @@ class EditorPointAuditor:
         )
         
         target_2025 = self.calculate_annual_total(target_id, 2025)
-        target_2026 = self.calculate_annual_total(target_id, 2026)
-        target_variance = target_2026 - target_2025
+        target_2027 = self.calculate_annual_total(target_id, 2027)
+        target_variance = target_2027 - target_2025
         target_percent = (target_variance / target_2025 * 100) if target_2025 > 0 else 0
         
         percent_diff = abs(target_percent - baseline_percent)
@@ -2103,7 +2103,7 @@ class EditorPointAuditor:
         if target_variance < 0:
             status = "ERROR"
             icon = "🚨"
-            message = "Negative variance detected - 2026 has fewer points than 2025"
+            message = "Negative variance detected - 2027 has fewer points than 2025"
         elif percent_diff > (tolerance_percent * 2):
             status = "ERROR"
             icon = "🚨"
@@ -2120,7 +2120,7 @@ class EditorPointAuditor:
         target_result = ResortVarianceResult(
             resort_name=target_name,
             points_2025=target_2025,
-            points_2026=target_2026,
+            points_2027=target_2027,
             variance_points=target_variance,
             variance_percent=target_percent,
             status=status,
@@ -2133,7 +2133,7 @@ class EditorPointAuditor:
 
 def render_data_integrity_tab(data: Dict, current_resort_id: str):
     st.markdown("## 🔍 Data Quality Assurance")
-    st.markdown("Verify data integrity by comparing 2025-2026 point variance across resorts.")
+    st.markdown("Verify data integrity by comparing 2025-2027 point variance across resorts.")
     
     resorts = data.get('resorts', [])
     resort_options = {r.get('display_name', r['id']): r['id'] for r in resorts}
@@ -2205,12 +2205,12 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
                     tolerance
                 )
                 
-                if baseline_result.points_2025 == 0 and baseline_result.points_2026 == 0:
-                    st.error(f"❌ No point data found for {selected_baseline_name}. Check that 2025 and 2026 years exist with seasons/holidays.")
+                if baseline_result.points_2025 == 0 and baseline_result.points_2027 == 0:
+                    st.error(f"❌ No point data found for {selected_baseline_name}. Check that 2025 and 2027 years exist with seasons/holidays.")
                     return
                 
-                if target_result.points_2025 == 0 and target_result.points_2026 == 0:
-                    st.error(f"❌ No point data found for {current_name}. Check that 2025 and 2026 years exist with seasons/holidays.")
+                if target_result.points_2025 == 0 and target_result.points_2027 == 0:
+                    st.error(f"❌ No point data found for {current_name}. Check that 2025 and 2027 years exist with seasons/holidays.")
                     return
                 
                 st.session_state.editor_integrity_check_result = target_result
@@ -2236,15 +2236,15 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
         with col1:
             st.metric("2025 Total Points", f"{baseline.points_2025:,}")
         with col2:
-            st.metric("2026 Total Points", f"{baseline.points_2026:,}")
+            st.metric("2027 Total Points", f"{baseline.points_2027:,}")
         with col3:
             st.metric(
                 "Variance", 
-                f"+{baseline.variance_points:,} pts",
-                f"+{baseline.variance_percent:.2f}%"
+                f"{'+' if baseline.variance_points >= 0 else ''}{baseline.variance_points:,} pts",
+                f"{'+' if baseline.variance_percent >= 0 else ''}{baseline.variance_percent:.2f}%"
             )
         
-        st.caption("Expected variance due to leap year (2026 has 366 days)")
+        st.caption("Expected variance: 2027 has 730 days vs 2025's 365 days (2× leap year effect)")
         
         st.divider()
         
@@ -2253,7 +2253,7 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
         with col1:
             st.metric("2025 Total Points", f"{target.points_2025:,}")
         with col2:
-            st.metric("2026 Total Points", f"{target.points_2026:,}")
+            st.metric("2027 Total Points", f"{target.points_2027:,}")
         with col3:
             st.metric(
                 "Variance", 
@@ -2279,7 +2279,7 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
             st.error(f"{target.status_icon} **{target.status}**: {target.status_message}")
             st.markdown("**Recommended Actions:**")
             st.markdown("- Review season periods for missing or overlapping dates")
-            st.markdown("- Check holiday definitions for 2026")
+            st.markdown("- Check holiday definitions for 2027")
             st.markdown("- Verify room point values weren't accidentally changed")
         elif target.status == "WARNING":
             st.warning(f"{target.status_icon} **{target.status}**: {target.status_message}")
@@ -2297,16 +2297,21 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
             - 🚨 **ERROR**: Significant issues found - likely data entry error
             
             **Common Causes of Variance:**
-            - **Leap Year Effect**: 2026 has 366 days (one extra day) - typically adds ~0.27% points
+            - **Two-Year Span**: 2027 has 730 days vs 2025's 365 days (2× points expected)
+            - **Leap Year in 2026**: 2026 has 366 days, affecting the 2-year calculation
             - **Missing Dates**: Gaps in season coverage leave days without point values
             - **Season Pattern Changes**: Different high/low season distribution between years
             - **Holiday Shifts**: Holidays falling on different dates/day-of-week
             
             **Typical Issues:**
-            - **Negative variance**: 2026 incomplete or has fewer days covered
-            - **Zero variance**: Likely copied 2025 data to 2026 without adjustments
+            - **Negative variance**: 2027 incomplete or has fewer days covered
+            - **Zero variance**: Likely copied 2025 data to 2027 without adjustments
             - **Excessive variance**: Point values changed or duplicate entries
             - **Zero points**: Years not defined or missing seasons/holidays
+            
+            **Expected Variance:**
+            - Normal expectation: ~100% variance (2027 has 2× the days)
+            - Actual may vary slightly due to leap year (366 days in 2026)
             
             **Using This Tool:**
             1. Choose a baseline resort you know has accurate data
