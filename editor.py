@@ -2344,6 +2344,198 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
         else:
             st.success(f"{target.status_icon} **{target.status}**: {target.status_message}")
         
+        # Add diagnostic breakdown
+        with st.expander("🔬 Detailed Diagnostic Breakdown", expanded=False):
+            st.markdown(f"### Analyze {current_name} - {comp_base_year} vs {comp_compare_year}")
+            
+            if st.button("🔍 Run Day-by-Day Analysis", key="diagnostic_button"):
+                with st.spinner("Analyzing all days..."):
+                    auditor = EditorPointAuditor(data)
+                    
+                    # Analyze each year
+                    base_year_int = int(comp_base_year)
+                    compare_year_int = int(comp_compare_year)
+                    
+                    current_resort_data = next((r for r in resorts if r['id'] == current_resort_id), None)
+                    
+                    # Count days by category for base year
+                    base_days_covered = 0
+                    base_days_missing = 0
+                    base_season_days = {}
+                    base_holiday_days = {}
+                    
+                    start_date = date(base_year_int, 1, 1)
+                    end_date = date(base_year_int, 12, 31)
+                    current_date = start_date
+                    
+                    while current_date <= end_date:
+                        day_points = auditor._get_points_for_date(current_resort_data, base_year_int, current_date)
+                        if day_points:
+                            base_days_covered += 1
+                            # Try to identify if it's a holiday or season
+                            is_holiday = False
+                            year_obj = current_resort_data.get('years', {}).get(str(base_year_int), {})
+                            for h in year_obj.get('holidays', []):
+                                ref = h.get('global_reference')
+                                g_h = auditor.global_holidays.get(str(base_year_int), {}).get(ref, {})
+                                if g_h:
+                                    h_start = datetime.strptime(g_h['start_date'], '%Y-%m-%d').date()
+                                    h_end = datetime.strptime(g_h['end_date'], '%Y-%m-%d').date()
+                                    if h_start <= current_date <= h_end:
+                                        h_name = h.get('name', ref)
+                                        base_holiday_days[h_name] = base_holiday_days.get(h_name, 0) + 1
+                                        is_holiday = True
+                                        break
+                            
+                            if not is_holiday:
+                                # It's a season day - find which season
+                                for s in year_obj.get('seasons', []):
+                                    for p in s.get('periods', []):
+                                        try:
+                                            p_start = datetime.strptime(p['start'], '%Y-%m-%d').date()
+                                            p_end = datetime.strptime(p['end'], '%Y-%m-%d').date()
+                                            if p_start <= current_date <= p_end:
+                                                s_name = s.get('name', 'Unknown')
+                                                base_season_days[s_name] = base_season_days.get(s_name, 0) + 1
+                                                break
+                                        except:
+                                            continue
+                        else:
+                            base_days_missing += 1
+                        current_date += timedelta(days=1)
+                    
+                    # Count days for compare year
+                    compare_days_covered = 0
+                    compare_days_missing = 0
+                    compare_season_days = {}
+                    compare_holiday_days = {}
+                    
+                    start_date = date(compare_year_int, 1, 1)
+                    end_date = date(compare_year_int, 12, 31)
+                    current_date = start_date
+                    
+                    while current_date <= end_date:
+                        day_points = auditor._get_points_for_date(current_resort_data, compare_year_int, current_date)
+                        if day_points:
+                            compare_days_covered += 1
+                            is_holiday = False
+                            year_obj = current_resort_data.get('years', {}).get(str(compare_year_int), {})
+                            for h in year_obj.get('holidays', []):
+                                ref = h.get('global_reference')
+                                g_h = auditor.global_holidays.get(str(compare_year_int), {}).get(ref, {})
+                                if g_h:
+                                    h_start = datetime.strptime(g_h['start_date'], '%Y-%m-%d').date()
+                                    h_end = datetime.strptime(g_h['end_date'], '%Y-%m-%d').date()
+                                    if h_start <= current_date <= h_end:
+                                        h_name = h.get('name', ref)
+                                        compare_holiday_days[h_name] = compare_holiday_days.get(h_name, 0) + 1
+                                        is_holiday = True
+                                        break
+                            
+                            if not is_holiday:
+                                for s in year_obj.get('seasons', []):
+                                    for p in s.get('periods', []):
+                                        try:
+                                            p_start = datetime.strptime(p['start'], '%Y-%m-%d').date()
+                                            p_end = datetime.strptime(p['end'], '%Y-%m-%d').date()
+                                            if p_start <= current_date <= p_end:
+                                                s_name = s.get('name', 'Unknown')
+                                                compare_season_days[s_name] = compare_season_days.get(s_name, 0) + 1
+                                                break
+                                        except:
+                                            continue
+                        else:
+                            compare_days_missing += 1
+                        current_date += timedelta(days=1)
+                    
+                    # Display results
+                    st.markdown("#### 📅 Day Coverage Analysis")
+                    
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.markdown(f"**{comp_base_year}**")
+                        st.metric("Days Covered", base_days_covered, help="Days with point values defined")
+                        st.metric("Days Missing", base_days_missing, delta=f"-{base_days_missing}" if base_days_missing > 0 else None, delta_color="inverse")
+                        
+                        if base_season_days:
+                            st.markdown("**Season Days:**")
+                            for season, count in sorted(base_season_days.items()):
+                                st.write(f"• {season}: {count} days")
+                        
+                        if base_holiday_days:
+                            st.markdown("**Holiday Days:**")
+                            for holiday, count in sorted(base_holiday_days.items()):
+                                st.write(f"• {holiday}: {count} days")
+                    
+                    with col2:
+                        st.markdown(f"**{comp_compare_year}**")
+                        st.metric("Days Covered", compare_days_covered, delta=compare_days_covered - base_days_covered, delta_color="normal" if compare_days_covered >= base_days_covered else "inverse")
+                        st.metric("Days Missing", compare_days_missing, delta=f"-{compare_days_missing - base_days_missing}" if compare_days_missing != base_days_missing else None, delta_color="inverse")
+                        
+                        if compare_season_days:
+                            st.markdown("**Season Days:**")
+                            for season, count in sorted(compare_season_days.items()):
+                                base_count = base_season_days.get(season, 0)
+                                diff = count - base_count
+                                diff_str = f" ({'+' if diff > 0 else ''}{diff})" if diff != 0 else ""
+                                st.write(f"• {season}: {count} days{diff_str}")
+                        
+                        if compare_holiday_days:
+                            st.markdown("**Holiday Days:**")
+                            for holiday, count in sorted(compare_holiday_days.items()):
+                                base_count = base_holiday_days.get(holiday, 0)
+                                diff = count - base_count
+                                diff_str = f" ({'+' if diff > 0 else ''}{diff})" if diff != 0 else ""
+                                st.write(f"• {holiday}: {count} days{diff_str}")
+                    
+                    st.divider()
+                    
+                    # Show missing days if any
+                    if compare_days_missing > 0:
+                        st.error(f"⚠️ **{compare_days_missing} days missing in {comp_compare_year}!**")
+                        st.markdown("**Likely Causes:**")
+                        st.markdown("- Season periods don't cover entire year")
+                        st.markdown("- Gaps between season date ranges")
+                        st.markdown("- Holidays not properly defined")
+                        
+                        if st.button("🔍 Show Missing Dates", key="show_missing_dates"):
+                            missing_dates = []
+                            start_date = date(compare_year_int, 1, 1)
+                            end_date = date(compare_year_int, 12, 31)
+                            current_date = start_date
+                            
+                            while current_date <= end_date:
+                                day_points = auditor._get_points_for_date(current_resort_data, compare_year_int, current_date)
+                                if not day_points:
+                                    missing_dates.append(current_date.strftime('%Y-%m-%d (%a)'))
+                                current_date += timedelta(days=1)
+                            
+                            if missing_dates:
+                                st.markdown(f"**Missing dates in {comp_compare_year}:**")
+                                # Show first 20 and last 20
+                                if len(missing_dates) <= 40:
+                                    for d in missing_dates:
+                                        st.write(f"• {d}")
+                                else:
+                                    st.write("**First 20:**")
+                                    for d in missing_dates[:20]:
+                                        st.write(f"• {d}")
+                                    st.write(f"... ({len(missing_dates) - 40} more) ...")
+                                    st.write("**Last 20:**")
+                                    for d in missing_dates[-20:]:
+                                        st.write(f"• {d}")
+                    
+                    elif base_days_missing > 0 and compare_days_missing == 0:
+                        st.success(f"✅ {comp_compare_year} has complete coverage! ({comp_base_year} was missing {base_days_missing} days)")
+                    
+                    elif base_days_missing == 0 and compare_days_missing == 0:
+                        st.success("✅ Both years have complete 365-day coverage!")
+                        
+                        # If coverage is complete but variance exists, it's point value changes
+                        if abs(target.variance_percent) > 1:
+                            st.info("💡 Complete coverage but significant variance detected. This indicates point values changed between years.")
+        
         with st.expander("ℹ️ Understanding Results"):
             st.markdown(f"""
             **Status Levels:**
