@@ -2012,8 +2012,8 @@ class EditorPointAuditor:
         self.data = data_dict
         self.global_holidays = data_dict.get("global_holidays", {})
     
-    def calculate_annual_total(self, resort_id: str, year: int) -> int:
-        """Calculate total points for ALL room types in a specific year."""
+    def calculate_annual_total(self, resort_id: str, year: int, date_range: Optional[Dict] = None) -> int:
+        """Calculate total points for ALL room types in a specific year or date range."""
         resort = next((r for r in self.data['resorts'] if r['id'] == resort_id), None)
         if not resort:
             return 0
@@ -2024,8 +2024,20 @@ class EditorPointAuditor:
         
         y_data = resort['years'][year_str]
         total_points = 0
-        start_date = date(year, 1, 1)
-        end_date = date(year, 12, 31)
+        
+        # Determine date range
+        if date_range:
+            try:
+                start_date = date(year, date_range['start_month'], date_range['start_day'])
+                end_date = date(year, date_range['end_month'], date_range['end_day'])
+            except ValueError:
+                # Invalid date (e.g., Feb 30), fall back to full year
+                start_date = date(year, 1, 1)
+                end_date = date(year, 12, 31)
+        else:
+            start_date = date(year, 1, 1)
+            end_date = date(year, 12, 31)
+        
         current_date = start_date
         
         while current_date <= end_date:
@@ -2071,7 +2083,8 @@ class EditorPointAuditor:
         target_id: str,
         base_year: int,
         compare_year: int,
-        tolerance_percent: float
+        tolerance_percent: float,
+        date_range: Optional[Dict] = None
     ) -> Tuple[ResortVarianceResult, ResortVarianceResult]:
         baseline_resort = next((r for r in self.data['resorts'] if r['id'] == baseline_id), None)
         target_resort = next((r for r in self.data['resorts'] if r['id'] == target_id), None)
@@ -2079,8 +2092,8 @@ class EditorPointAuditor:
         baseline_name = baseline_resort.get('display_name', baseline_id) if baseline_resort else baseline_id
         target_name = target_resort.get('display_name', target_id) if target_resort else target_id
         
-        baseline_base = self.calculate_annual_total(baseline_id, base_year)
-        baseline_compare = self.calculate_annual_total(baseline_id, compare_year)
+        baseline_base = self.calculate_annual_total(baseline_id, base_year, date_range)
+        baseline_compare = self.calculate_annual_total(baseline_id, compare_year, date_range)
         baseline_variance = baseline_compare - baseline_base
         baseline_percent = (baseline_variance / baseline_base * 100) if baseline_base > 0 else 0
         
@@ -2095,8 +2108,8 @@ class EditorPointAuditor:
             status_message="Reference standard"
         )
         
-        target_base = self.calculate_annual_total(target_id, base_year)
-        target_compare = self.calculate_annual_total(target_id, compare_year)
+        target_base = self.calculate_annual_total(target_id, base_year, date_range)
+        target_compare = self.calculate_annual_total(target_id, compare_year, date_range)
         target_variance = target_compare - target_base
         target_percent = (target_variance / target_base * 100) if target_base > 0 else 0
         
@@ -2184,6 +2197,59 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
     
     st.caption(f"ℹ️ Comparing {base_year} → {compare_year} annual point totals")
     
+    # Date Range Selector
+    with st.expander("📆 Customize Date Range (Optional)", expanded=False):
+        st.markdown("Exclude edge periods that cross year boundaries (e.g., New Year's week)")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            use_custom_range = st.checkbox(
+                "Use custom date range",
+                value=False,
+                help="Check this to exclude problematic periods like holidays that cross year boundaries",
+                key="use_custom_date_range"
+            )
+        
+        if use_custom_range:
+            with col2:
+                st.info("💡 Suggested: Jan 8 - Dec 18 excludes New Year's week")
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                start_month = st.selectbox("Start Month", range(1, 13), index=0, key="start_month", format_func=lambda x: datetime(2000, x, 1).strftime('%B'))
+                start_day = st.number_input("Start Day", min_value=1, max_value=31, value=8, key="start_day")
+            
+            with col2:
+                end_month = st.selectbox("End Month", range(1, 13), index=11, key="end_month", format_func=lambda x: datetime(2000, x, 1).strftime('%B'))
+                end_day = st.number_input("End Day", min_value=1, max_value=31, value=18, key="end_day")
+            
+            # Store in session state
+            st.session_state.custom_date_range = {
+                'start_month': start_month,
+                'start_day': start_day,
+                'end_month': end_month,
+                'end_day': end_day
+            }
+            
+            try:
+                # Validate dates (use non-leap year for validation)
+                test_start = date(2023, start_month, start_day)
+                test_end = date(2023, end_month, end_day)
+                
+                # Calculate how many days this covers
+                if test_start <= test_end:
+                    days_included = (test_end - test_start).days + 1
+                    st.caption(f"✓ Will analyze ~{days_included} days per year (excluding edge periods)")
+                else:
+                    st.error("⚠️ Start date must be before end date")
+            except ValueError as e:
+                st.error(f"⚠️ Invalid date: {e}")
+        else:
+            st.session_state.custom_date_range = None
+            st.caption("Using full year (Jan 1 - Dec 31)")
+    
     st.divider()
     
     # Resort Selection
@@ -2238,6 +2304,9 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
         )
     
     if check_button:
+        # Get custom date range if set
+        date_range = st.session_state.get('custom_date_range', None)
+        
         with st.spinner(f"Calculating annual points for {selected_baseline_name} and {current_name}..."):
             auditor = EditorPointAuditor(data)
             
@@ -2247,7 +2316,8 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
                     current_resort_id,
                     int(base_year),
                     int(compare_year),
-                    tolerance
+                    tolerance,
+                    date_range
                 )
                 
                 if baseline_result.points_base == 0 and baseline_result.points_compare == 0:
@@ -2292,9 +2362,14 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
                 f"{'+' if baseline.variance_percent >= 0 else ''}{baseline.variance_percent:.2f}%"
             )
         
-        # Dynamic caption based on year difference
+        # Dynamic caption based on year difference and date range
         year_diff = int(comp_compare_year) - int(comp_base_year)
-        if year_diff == 1:
+        date_range_used = st.session_state.get('custom_date_range')
+        
+        if date_range_used:
+            range_str = f"{datetime(2000, date_range_used['start_month'], date_range_used['start_day']).strftime('%b %d')} - {datetime(2000, date_range_used['end_month'], date_range_used['end_day']).strftime('%b %d')}"
+            st.caption(f"Analyzing custom range: {range_str} (excludes edge periods)")
+        elif year_diff == 1:
             st.caption(f"Single year comparison: {comp_base_year} → {comp_compare_year}")
         elif year_diff == 2:
             st.caption(f"Two-year comparison: {comp_base_year} → {comp_compare_year} (includes leap year if 2026)")
