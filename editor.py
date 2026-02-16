@@ -2468,17 +2468,12 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
     # Resort Selection - Two Resorts WITH HOLIDAY FILTERING
     st.markdown("### 🏨 Select Resorts to Compare")
     
-    # Get timezone/holiday groups
-    resort_timezone_map = {}
+    # Get holiday groups
     resort_holiday_map = {}
     
     for resort in resorts:
         resort_id = resort.get('id')
         resort_name = resort.get('display_name', resort_id)
-        
-        # Get timezone
-        timezone = resort.get('timezone', 'UTC')
-        resort_timezone_map[resort_id] = timezone
         
         # Get holiday weeks used (from base year)
         holidays_used = set()
@@ -2511,15 +2506,13 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
         )
         resort_a_id = resort_options.get(resort_a_name)
         
-        # Show Resort A info
-        resort_a_tz = resort_timezone_map.get(resort_a_id, 'Unknown')
+        # Show Resort A holiday info
         resort_a_holidays = resort_holiday_map.get(resort_a_id, set())
         
-        st.caption(f"🌍 Timezone: {resort_a_tz}")
         if resort_a_holidays:
-            st.caption(f"📅 Holidays: {', '.join(sorted(resort_a_holidays)[:3])}{'...' if len(resort_a_holidays) > 3 else ''}")
+            st.caption(f"📅 {len(resort_a_holidays)} holidays: {', '.join(sorted(resort_a_holidays)[:3])}{'...' if len(resort_a_holidays) > 3 else ''}")
         else:
-            st.caption(f"📅 Holidays: None defined")
+            st.caption(f"📅 No holidays defined")
     
     with col2:
         # Filter Resort B options to only show resorts with SAME holiday calendar
@@ -2531,8 +2524,8 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
         
         if not compatible_resort_ids:
             st.warning("⚠️ No compatible resorts found with matching holiday calendar")
-            st.caption("Resort B must have the exact same holidays as Resort A for accurate comparison")
-            st.info("💡 Tip: Check that both resorts have the same global holiday references defined")
+            st.caption("Resort B must have the exact same holidays as Resort A for 0% variance comparison")
+            st.info("💡 Tip: Check that both resorts reference the same global holidays in their year data")
             return
         
         # Get display names for compatible resorts
@@ -2552,36 +2545,32 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
                            if next((r.get('display_name', r['id']) for r in resorts if r['id'] == rid), rid) == resort_b_name), 
                           None)
         
-        # Show Resort B info
-        resort_b_tz = resort_timezone_map.get(resort_b_id, 'Unknown')
+        # Show Resort B holiday info
         resort_b_holidays = resort_holiday_map.get(resort_b_id, set())
         
-        st.caption(f"🌍 Timezone: {resort_b_tz}")
         if resort_b_holidays:
-            st.caption(f"📅 Holidays: {', '.join(sorted(resort_b_holidays)[:3])}{'...' if len(resort_b_holidays) > 3 else ''}")
+            st.caption(f"📅 {len(resort_b_holidays)} holidays: {', '.join(sorted(resort_b_holidays)[:3])}{'...' if len(resort_b_holidays) > 3 else ''}")
     
     # Show compatibility summary
     if resort_a_id and resort_b_id:
         st.divider()
         
-        # Check holiday match
+        # Verify holiday match (should always match due to filtering, but double-check)
         matching_holidays = resort_a_holidays & resort_b_holidays
-        missing_in_b = resort_a_holidays - resort_b_holidays
-        extra_in_b = resort_b_holidays - resort_a_holidays
         
-        if matching_holidays and not missing_in_b and not extra_in_b:
-            st.success(f"✅ Perfect holiday match: {len(matching_holidays)} holidays in both resorts")
-        elif missing_in_b or extra_in_b:
-            st.warning(f"⚠️ Holiday mismatch detected!")
+        if len(matching_holidays) == len(resort_a_holidays) == len(resort_b_holidays):
+            st.success(f"✅ Perfect holiday match: {len(matching_holidays)} identical holidays in both resorts")
+            if matching_holidays:
+                st.caption(f"Holidays: {', '.join(sorted(matching_holidays))}")
+        else:
+            # This shouldn't happen due to filtering, but handle it gracefully
+            missing_in_b = resort_a_holidays - resort_b_holidays
+            extra_in_b = resort_b_holidays - resort_a_holidays
+            st.error(f"⚠️ Holiday calendar mismatch detected (this shouldn't happen!)")
             if missing_in_b:
                 st.write(f"Missing in {resort_b_name}: {', '.join(sorted(missing_in_b))}")
             if extra_in_b:
                 st.write(f"Extra in {resort_b_name}: {', '.join(sorted(extra_in_b))}")
-        
-        # Timezone warning
-        if resort_a_tz != resort_b_tz:
-            st.warning(f"⚠️ Different timezones: {resort_a_name} ({resort_a_tz}) vs {resort_b_name} ({resort_b_tz})")
-            st.caption("This may cause minor variance due to day-of-week shifts")
     
     if not resort_b_id:
         return
