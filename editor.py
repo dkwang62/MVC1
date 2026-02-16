@@ -2465,8 +2465,40 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
     
     st.divider()
     
-    # Resort Selection - Two Resorts
+    # Resort Selection - Two Resorts WITH HOLIDAY FILTERING
     st.markdown("### 🏨 Select Resorts to Compare")
+    
+    # Get timezone/holiday groups
+    resort_timezone_map = {}
+    resort_holiday_map = {}
+    
+    for resort in resorts:
+        resort_id = resort.get('id')
+        resort_name = resort.get('display_name', resort_id)
+        
+        # Get timezone
+        timezone = resort.get('timezone', 'UTC')
+        resort_timezone_map[resort_id] = timezone
+        
+        # Get holiday weeks used (from base year)
+        holidays_used = set()
+        year_data = resort.get('years', {}).get(base_year, {})
+        for holiday in year_data.get('holidays', []):
+            global_ref = holiday.get('global_reference', holiday.get('name'))
+            if global_ref:
+                holidays_used.add(global_ref)
+        
+        resort_holiday_map[resort_id] = holidays_used
+    
+    # Group resorts by holiday calendar
+    holiday_groups = {}
+    for resort_id, holidays in resort_holiday_map.items():
+        holiday_key = frozenset(holidays)  # Use frozenset as dict key
+        if holiday_key not in holiday_groups:
+            holiday_groups[holiday_key] = []
+        holiday_groups[holiday_key].append(resort_id)
+    
+    # Resort A selection
     col1, col2 = st.columns(2)
     
     with col1:
@@ -2478,19 +2510,80 @@ def render_data_integrity_tab(data: Dict, current_resort_id: str):
             key="integrity_tab_resort_a_selector"
         )
         resort_a_id = resort_options.get(resort_a_name)
+        
+        # Show Resort A info
+        resort_a_tz = resort_timezone_map.get(resort_a_id, 'Unknown')
+        resort_a_holidays = resort_holiday_map.get(resort_a_id, set())
+        
+        st.caption(f"🌍 Timezone: {resort_a_tz}")
+        if resort_a_holidays:
+            st.caption(f"📅 Holidays: {', '.join(sorted(resort_a_holidays)[:3])}{'...' if len(resort_a_holidays) > 3 else ''}")
+        else:
+            st.caption(f"📅 Holidays: None defined")
     
     with col2:
+        # Filter Resort B options to only show resorts with SAME holiday calendar
+        resort_a_holiday_key = frozenset(resort_holiday_map.get(resort_a_id, set()))
+        compatible_resort_ids = holiday_groups.get(resort_a_holiday_key, [])
+        
+        # Remove Resort A from compatible list
+        compatible_resort_ids = [rid for rid in compatible_resort_ids if rid != resort_a_id]
+        
+        if not compatible_resort_ids:
+            st.warning("⚠️ No compatible resorts found with matching holiday calendar")
+            st.caption("Resort B must have the exact same holidays as Resort A for accurate comparison")
+            st.info("💡 Tip: Check that both resorts have the same global holiday references defined")
+            return
+        
+        # Get display names for compatible resorts
+        compatible_resort_names = [
+            next((r.get('display_name', r['id']) for r in resorts if r['id'] == rid), rid)
+            for rid in compatible_resort_ids
+        ]
+        
         resort_b_name = st.selectbox(
-            "Resort B (Compare)",
-            options=resort_names,
-            index=min(1, len(resort_names) - 1) if len(resort_names) > 1 else 0,
-            help="Select second resort for comparison",
+            f"Resort B (Compare) - {len(compatible_resort_names)} compatible",
+            options=compatible_resort_names,
+            index=0,
+            help=f"Only showing resorts with matching holiday calendar ({len(resort_a_holidays)} holidays)",
             key="integrity_tab_resort_b_selector"
         )
-        resort_b_id = resort_options.get(resort_b_name)
+        resort_b_id = next((rid for rid in compatible_resort_ids 
+                           if next((r.get('display_name', r['id']) for r in resorts if r['id'] == rid), rid) == resort_b_name), 
+                          None)
+        
+        # Show Resort B info
+        resort_b_tz = resort_timezone_map.get(resort_b_id, 'Unknown')
+        resort_b_holidays = resort_holiday_map.get(resort_b_id, set())
+        
+        st.caption(f"🌍 Timezone: {resort_b_tz}")
+        if resort_b_holidays:
+            st.caption(f"📅 Holidays: {', '.join(sorted(resort_b_holidays)[:3])}{'...' if len(resort_b_holidays) > 3 else ''}")
     
-    if resort_a_id == resort_b_id:
-        st.warning("⚠️ Please select different resorts to compare.")
+    # Show compatibility summary
+    if resort_a_id and resort_b_id:
+        st.divider()
+        
+        # Check holiday match
+        matching_holidays = resort_a_holidays & resort_b_holidays
+        missing_in_b = resort_a_holidays - resort_b_holidays
+        extra_in_b = resort_b_holidays - resort_a_holidays
+        
+        if matching_holidays and not missing_in_b and not extra_in_b:
+            st.success(f"✅ Perfect holiday match: {len(matching_holidays)} holidays in both resorts")
+        elif missing_in_b or extra_in_b:
+            st.warning(f"⚠️ Holiday mismatch detected!")
+            if missing_in_b:
+                st.write(f"Missing in {resort_b_name}: {', '.join(sorted(missing_in_b))}")
+            if extra_in_b:
+                st.write(f"Extra in {resort_b_name}: {', '.join(sorted(extra_in_b))}")
+        
+        # Timezone warning
+        if resort_a_tz != resort_b_tz:
+            st.warning(f"⚠️ Different timezones: {resort_a_name} ({resort_a_tz}) vs {resort_b_name} ({resort_b_tz})")
+            st.caption("This may cause minor variance due to day-of-week shifts")
+    
+    if not resort_b_id:
         return
     
     st.divider()
