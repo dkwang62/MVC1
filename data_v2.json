@@ -6968,9 +6968,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 80,
                     "1BR": 110,
-                    "2BR": 175
+                    "2BR": 175,
+                    "0Studio": 80
                   }
                 },
                 "fri_sat": {
@@ -6979,9 +6979,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 175,
                     "1BR": 275,
-                    "2BR": 450
+                    "2BR": 450,
+                    "0Studio": 175
                   }
                 }
               }
@@ -7016,9 +7016,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 110,
                     "1BR": 135,
-                    "2BR": 225
+                    "2BR": 225,
+                    "0Studio": 110
                   }
                 },
                 "fri_sat": {
@@ -7027,9 +7027,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 250,
                     "1BR": 325,
-                    "2BR": 575
+                    "2BR": 575,
+                    "0Studio": 250
                   }
                 }
               }
@@ -7060,9 +7060,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 135,
                     "1BR": 175,
-                    "2BR": 300
+                    "2BR": 300,
+                    "0Studio": 135
                   }
                 },
                 "fri_sat": {
@@ -7071,9 +7071,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 300,
                     "1BR": 450,
-                    "2BR": 750
+                    "2BR": 750,
+                    "0Studio": 300
                   }
                 }
               }
@@ -7096,9 +7096,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 160,
                     "1BR": 225,
-                    "2BR": 375
+                    "2BR": 375,
+                    "0Studio": 160
                   }
                 },
                 "fri_sat": {
@@ -7107,9 +7107,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 400,
                     "1BR": 550,
-                    "2BR": 950
+                    "2BR": 950,
+                    "0Studio": 400
                   }
                 }
               }
@@ -7120,45 +7120,45 @@
               "name": "Independence Day",
               "global_reference": "Independence Day",
               "room_points": {
-                "Studio": 900,
                 "1BR": 1225,
-                "2BR": 1775
+                "2BR": 1775,
+                "0Studio": 900
               }
             },
             {
               "name": "Thanksgiving1",
               "global_reference": "Thanksgiving1",
               "room_points": {
-                "Studio": 1400,
                 "1BR": 2000,
-                "2BR": 3000
+                "2BR": 3000,
+                "0Studio": 1400
               }
             },
             {
               "name": "Thanksgiving2",
               "global_reference": "Thanksgiving2",
               "room_points": {
-                "Studio": 1725,
                 "1BR": 2500,
-                "2BR": 3775
+                "2BR": 3775,
+                "0Studio": 1725
               }
             },
             {
               "name": "Christmas",
               "global_reference": "Christmas",
               "room_points": {
-                "Studio": 1400,
                 "1BR": 2000,
-                "2BR": 3000
+                "2BR": 3000,
+                "0Studio": 1400
               }
             },
             {
               "name": "NewYear",
               "global_reference": "NewYear",
               "room_points": {
-                "Studio": 1725,
                 "1BR": 2500,
-                "2BR": 3775
+                "2BR": 3775,
+                "0Studio": 1725
               }
             }
           ]
@@ -7187,9 +7187,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 80,
                     "1BR": 110,
-                    "2BR": 175
+                    "2BR": 175,
+                    "0Studio": 80
                   }
                 },
                 "fri_sat": {
@@ -7198,9 +7198,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 175,
                     "1BR": 275,
-                    "2BR": 450
+                    "2BR": 450,
+                    "0Studio": 175
                   }
                 }
               }
@@ -7235,9 +7235,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 110,
                     "1BR": 135,
-                    "2BR": 225
+                    "2BR": 225,
+                    "0Studio": 110
                   }
                 },
                 "fri_sat": {
@@ -7246,9 +7246,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 250,
                     "1BR": 325,
-                    "2BR": 575
+                    "2BR": 575,
+                    "0Studio": 250
                   }
                 }
               }
@@ -7279,9 +7279,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 135,
                     "1BR": 175,
-                    "2BR": 300
+                    "2BR": 300,
+                    "0Studio": 135
                   }
                 },
                 "fri_sat": {
@@ -7290,9 +7290,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 300,
                     "1BR": 450,
-                    "2BR": 750
+                    "2BR": 750,
+                    "0Studio": 300
                   }
                 }
               }
@@ -7315,9 +7315,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 160,
                     "1BR": 225,
-                    "2BR": 375
+                    "2BR": 375,
+                    "0Studio": 160
                   }
                 },
                 "fri_sat": {
@@ -7326,9 +7326,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 400,
                     "1BR": 550,
-                    "2BR": 950
+                    "2BR": 950,
+                    "0Studio": 400
                   }
                 }
               }
@@ -7339,45 +7339,45 @@
               "name": "Independence Day",
               "global_reference": "Independence Day",
               "room_points": {
-                "Studio": 900,
                 "1BR": 1225,
-                "2BR": 1775
+                "2BR": 1775,
+                "0Studio": 900
               }
             },
             {
               "name": "Thanksgiving1",
               "global_reference": "Thanksgiving1",
               "room_points": {
-                "Studio": 1400,
                 "1BR": 2000,
-                "2BR": 3000
+                "2BR": 3000,
+                "0Studio": 1400
               }
             },
             {
               "name": "Thanksgiving2",
               "global_reference": "Thanksgiving2",
               "room_points": {
-                "Studio": 1725,
                 "1BR": 2500,
-                "2BR": 3775
+                "2BR": 3775,
+                "0Studio": 1725
               }
             },
             {
               "name": "Christmas",
               "global_reference": "Christmas",
               "room_points": {
-                "Studio": 1400,
                 "1BR": 2000,
-                "2BR": 3000
+                "2BR": 3000,
+                "0Studio": 1400
               }
             },
             {
               "name": "NewYear",
               "global_reference": "NewYear",
               "room_points": {
-                "Studio": 1725,
                 "1BR": 2500,
-                "2BR": 3775
+                "2BR": 3775,
+                "0Studio": 1725
               }
             }
           ]
@@ -7406,9 +7406,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 80,
                     "1BR": 110,
-                    "2BR": 175
+                    "2BR": 175,
+                    "0Studio": 80
                   }
                 },
                 "fri_sat": {
@@ -7417,9 +7417,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 175,
                     "1BR": 275,
-                    "2BR": 450
+                    "2BR": 450,
+                    "0Studio": 175
                   }
                 }
               }
@@ -7454,9 +7454,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 110,
                     "1BR": 135,
-                    "2BR": 225
+                    "2BR": 225,
+                    "0Studio": 110
                   }
                 },
                 "fri_sat": {
@@ -7465,9 +7465,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 250,
                     "1BR": 325,
-                    "2BR": 575
+                    "2BR": 575,
+                    "0Studio": 250
                   }
                 }
               }
@@ -7498,9 +7498,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 135,
                     "1BR": 175,
-                    "2BR": 300
+                    "2BR": 300,
+                    "0Studio": 135
                   }
                 },
                 "fri_sat": {
@@ -7509,9 +7509,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 300,
                     "1BR": 450,
-                    "2BR": 750
+                    "2BR": 750,
+                    "0Studio": 300
                   }
                 }
               }
@@ -7534,9 +7534,9 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio": 160,
                     "1BR": 225,
-                    "2BR": 375
+                    "2BR": 375,
+                    "0Studio": 160
                   }
                 },
                 "fri_sat": {
@@ -7545,9 +7545,9 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio": 400,
                     "1BR": 550,
-                    "2BR": 950
+                    "2BR": 950,
+                    "0Studio": 400
                   }
                 }
               }
@@ -7558,45 +7558,45 @@
               "name": "Independence Day",
               "global_reference": "Independence Day",
               "room_points": {
-                "Studio": 900,
                 "1BR": 1225,
-                "2BR": 1775
+                "2BR": 1775,
+                "0Studio": 900
               }
             },
             {
               "name": "Thanksgiving1",
               "global_reference": "Thanksgiving1",
               "room_points": {
-                "Studio": 1400,
                 "1BR": 2000,
-                "2BR": 3000
+                "2BR": 3000,
+                "0Studio": 1400
               }
             },
             {
               "name": "Thanksgiving2",
               "global_reference": "Thanksgiving2",
               "room_points": {
-                "Studio": 1725,
                 "1BR": 2500,
-                "2BR": 3775
+                "2BR": 3775,
+                "0Studio": 1725
               }
             },
             {
               "name": "Christmas",
               "global_reference": "Christmas",
               "room_points": {
-                "Studio": 1400,
                 "1BR": 2000,
-                "2BR": 3000
+                "2BR": 3000,
+                "0Studio": 1400
               }
             },
             {
               "name": "NewYear",
               "global_reference": "NewYear",
               "room_points": {
-                "Studio": 1725,
                 "1BR": 2500,
-                "2BR": 3775
+                "2BR": 3775,
+                "0Studio": 1725
               }
             }
           ]
