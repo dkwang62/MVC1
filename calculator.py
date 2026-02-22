@@ -1,16 +1,703 @@
 import math
 import json
 import os
+import io
 from dataclasses import dataclass
 from datetime import datetime, timedelta, date
 from enum import Enum
 from typing import List, Dict, Optional, Tuple, Any
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
-from common.ui import render_resort_card, render_resort_grid, render_page_header
-from common.charts import create_gantt_chart_image
-from common.data import ensure_data_in_session
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from PIL import Image
+import pytz
+
+# ==============================================================================
+# CONSOLIDATED SHARED HELPERS (formerly common/*)
+# ==============================================================================
+
+DEFAULT_DATA_PATH = "data_v2.json"
+
+
+def load_data() -> Dict[str, Any]:
+    if "data" not in st.session_state or st.session_state.data is None:
+        try:
+            with open(DEFAULT_DATA_PATH, "r") as f:
+                st.session_state.data = json.load(f)
+                st.session_state.uploaded_file_name = DEFAULT_DATA_PATH
+        except FileNotFoundError:
+            st.session_state.data = None
+    return st.session_state.data
+
+
+def ensure_data_in_session(auto_path: str = DEFAULT_DATA_PATH) -> None:
+    if "data" not in st.session_state:
+        st.session_state.data = None
+    if "uploaded_file_name" not in st.session_state:
+        st.session_state.uploaded_file_name = None
+
+    if st.session_state.data is None:
+        try:
+            with open(auto_path, "r") as f:
+                data = json.load(f)
+            if "schema_version" in data and "resorts" in data:
+                st.session_state.data = data
+                st.session_state.uploaded_file_name = auto_path
+                st.toast(
+                    f"✅ Auto-loaded {len(data.get('resorts', []))} resorts from {auto_path}",
+                    icon="✅",
+                )
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            st.toast(f"⚠️ Auto-load error: {e}", icon="⚠️")
+
+
+COMMON_TZ_ORDER = [
+    "Pacific/Honolulu",
+    "America/Anchorage",
+    "America/Los_Angeles",
+    "America/Mazatlan",
+    "America/Denver",
+    "America/Edmonton",
+    "America/Chicago",
+    "America/Winnipeg",
+    "America/Cancun",
+    "America/New_York",
+    "America/Toronto",
+    "America/Halifax",
+    "America/Puerto_Rico",
+    "America/St_Johns",
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Madrid",
+    "Asia/Bangkok",
+    "Asia/Singapore",
+    "Asia/Makassar",
+    "Asia/Tokyo",
+    "Australia/Brisbane",
+    "Australia/Sydney",
+]
+
+REGION_US_CARIBBEAN = 0
+REGION_MEX_CENTRAL = 1
+REGION_EUROPE = 2
+REGION_ASIA_AU = 3
+REGION_FALLBACK = 99
+
+US_STATE_CODES = {
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "IL", "IN", "IA",
+    "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
+    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT",
+    "VA", "WA", "WV", "WI", "WY", "DC",
+}
+CA_PROVINCES = {"AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"}
+CARIBBEAN_CODES = {"AW", "BS", "VI", "PR"}
+MEX_CENTRAL_CODES = {"MX", "CR"}
+EUROPE_CODES = {"ES", "FR", "GB", "UK", "PT", "IT", "DE", "NL", "IE"}
+ASIA_AU_CODES = {"TH", "ID", "SG", "JP", "CN", "MY", "PH", "VN", "AU"}
+_REF_DT = datetime(2025, 1, 15, 12, 0, 0)
+
+TZ_TO_REGION = {
+    "Pacific/Honolulu": "Hawaii",
+    "America/Anchorage": "Alaska",
+    "America/Los_Angeles": "US West Coast",
+    "America/Mazatlan": "Mexico (Pacific)",
+    "America/Denver": "US Mountain",
+    "America/Edmonton": "Canada Mountain",
+    "America/Chicago": "US Central",
+    "America/Winnipeg": "Canada Central",
+    "America/Cancun": "Mexico (Caribbean)",
+    "America/New_York": "US East Coast",
+    "America/Toronto": "Canada East",
+    "America/Halifax": "Atlantic Canada",
+    "America/Puerto_Rico": "Caribbean",
+    "America/St_Johns": "Newfoundland",
+    "Europe/London": "UK / Ireland",
+    "Europe/Paris": "Western Europe",
+    "Europe/Madrid": "Western Europe",
+    "Asia/Bangkok": "SE Asia",
+    "Asia/Singapore": "SE Asia",
+    "Asia/Makassar": "Indonesia",
+    "Asia/Tokyo": "Japan",
+    "Australia/Brisbane": "Australia (QLD)",
+    "Australia/Sydney": "Australia",
+}
+
+
+def get_timezone_offset_minutes(tz_name: str) -> int:
+    try:
+        tz = pytz.timezone(tz_name)
+    except Exception:
+        return 0
+    try:
+        aware = tz.localize(_REF_DT)
+        offset = aware.utcoffset()
+        if offset is None:
+            return 0
+        return int(offset.total_seconds() // 60)
+    except Exception:
+        return 0
+
+
+def _region_from_code(code: str) -> int:
+    if not code:
+        return REGION_FALLBACK
+    code = code.upper()
+    if code in US_STATE_CODES:
+        return REGION_US_CARIBBEAN
+    if code in CA_PROVINCES or code == "CA":
+        return REGION_US_CARIBBEAN
+    if code in CARIBBEAN_CODES:
+        return REGION_US_CARIBBEAN
+    if code in MEX_CENTRAL_CODES:
+        return REGION_MEX_CENTRAL
+    if code in EUROPE_CODES:
+        return REGION_EUROPE
+    if code in ASIA_AU_CODES:
+        return REGION_ASIA_AU
+    return REGION_FALLBACK
+
+
+def _region_from_timezone(tz: str) -> int:
+    if not tz:
+        return REGION_FALLBACK
+    if tz.startswith("America/"):
+        if tz in ("America/Cancun", "America/Mazatlan"):
+            return REGION_MEX_CENTRAL
+        return REGION_US_CARIBBEAN
+    if tz.startswith("Europe/"):
+        return REGION_EUROPE
+    if tz.startswith("Asia/") or tz.startswith("Australia/"):
+        return REGION_ASIA_AU
+    return REGION_FALLBACK
+
+
+def get_region_priority(resort: Dict[str, Any]) -> int:
+    code = (resort.get("code") or "").upper()
+    tz = resort.get("timezone") or ""
+    region = _region_from_code(code)
+    if region != REGION_FALLBACK:
+        return region
+    return _region_from_timezone(tz)
+
+
+def get_region_label(tz: str) -> str:
+    if not tz:
+        return "Unknown"
+    return TZ_TO_REGION.get(tz, tz.split("/")[-1] if "/" in tz else tz)
+
+
+def sort_resorts_by_timezone(resorts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def sort_key(r: Dict[str, Any]):
+        region_prio = get_region_priority(r)
+        tz = r.get("timezone") or "UTC"
+        tz_index = COMMON_TZ_ORDER.index(tz) if tz in COMMON_TZ_ORDER else len(COMMON_TZ_ORDER)
+        offset_minutes = get_timezone_offset_minutes(tz)
+        name = r.get("display_name") or r.get("resort_name") or ""
+        return (region_prio, tz_index, offset_minutes, name)
+
+    return sorted(resorts, key=sort_key)
+
+
+def sort_resorts_west_to_east(resorts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    return sort_resorts_by_timezone(resorts)
+
+
+def setup_page() -> None:
+    st.set_page_config(
+        page_title="MVC Tools",
+        layout="wide",
+        initial_sidebar_state="expanded",
+        menu_items={"About": "Marriott Vacation Club - internal tools"},
+    )
+    st.markdown(
+        """<style>
+        :root {
+            --primary-color: #008080;
+            --primary-hover: #006666;
+            --secondary-color: #4B9FA5;
+            --border-color: #E5E7EB;
+            --card-bg: #FFFFFF;
+            --bg-color: #F9FAFB;
+            --text-color: #111827;
+            --text-muted: #6B7280;
+            --success-bg: #ECFDF5;
+            --success-border: #10B981;
+            --info-bg: #EFF6FF;
+            --info-border: #3B82F6;
+            --warning-bg: #FEF3C7;
+            --warning-border: #F59E0B;
+        }
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+        section[data-testid="stSidebar"] {
+            background-color: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+        }
+        section[data-testid="stSidebar"] .block-container {
+            gap: 0rem !important;
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+        }
+        section[data-testid="stSidebar"] h3 {
+            margin-top: 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+            font-size: 0.875rem !important;
+            font-weight: 600 !important;
+            color: var(--text-muted) !important;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        [data-testid="stExpander"] {
+            margin-bottom: 0.75rem !important;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+        [data-testid="stExpander"]:hover {
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border-color: var(--secondary-color);
+        }
+        section[data-testid="stSidebar"] hr {
+            margin: 1.5rem 0 !important;
+            border-color: var(--border-color);
+            opacity: 0.5;
+        }
+        section[data-testid="stSidebar"] .stTextInput,
+        section[data-testid="stSidebar"] .stNumberInput,
+        section[data-testid="stSidebar"] .stSelectbox {
+            margin-bottom: 0.75rem !important;
+        }
+        .main, [data-testid="stAppViewContainer"] {
+            background-color: var(--bg-color);
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            color: var(--text-color);
+        }
+        .section-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 1rem 0 0.75rem 0;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        .resort-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .resort-card:hover {
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+            transform: translateY(-2px);
+        }
+        .resort-card h2 {
+            margin: 0 0 0.75rem 0;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .resort-meta {
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .resort-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+        .success-box, .info-box, .error-box, .warning-box {
+            padding: 1.25rem 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .success-box {
+            background-color: var(--success-bg);
+            border-color: var(--success-border);
+            color: #065F46;
+        }
+        .info-box {
+            background-color: var(--info-bg);
+            border-color: var(--info-border);
+            color: #1E40AF;
+        }
+        .error-box {
+            background-color: #FEF2F2;
+            border-color: #EF4444;
+            color: #991B1B;
+        }
+        .warning-box {
+            background-color: var(--warning-bg);
+            border-color: var(--warning-border);
+            color: #92400E;
+        }
+        [data-testid="stMetric"] {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .stButton > button {
+            transition: all 0.2s ease;
+            border-radius: 0.5rem;
+            font-weight: 500;
+        }
+        .stButton > button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        [data-testid="stDataFrame"] {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 0.5rem;
+            background-color: transparent;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+        }
+        .stTabs [aria-selected="true"] {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        .help-text {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+        .caption-text {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background-color: #F3F4F6;
+            border-radius: 0.375rem;
+            border-left: 3px solid var(--secondary-color);
+        }
+    </style>
+    """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_page_header(
+    title: str,
+    subtitle: str | None = None,
+    icon: str | None = None,
+    badge_color: str | None = None,
+    description: str | None = None,
+):
+    icon_html = f'<span style="font-size: 2.5rem; margin-right: 0.5rem;">{icon}</span>' if icon else ""
+    subtitle_html = ""
+    if subtitle and badge_color:
+        subtitle_html = f'<span style="display: inline-block; background-color: {badge_color}; color: white; padding: 0.5rem 1rem; border-radius: 2rem; font-weight: 600; font-size: 1rem; margin-left: 1rem; vertical-align: middle;">{subtitle}</span>'
+    elif subtitle:
+        subtitle_html = f'<span style="color: #64748b; margin-left: 1rem; font-size: 1.125rem; vertical-align: middle;">{subtitle}</span>'
+    description_html = ""
+    if description:
+        description_html = f'<p style="color: #6B7280; font-size: 1rem; margin: 1rem 0 0 0; max-width: 800px; line-height: 1.6;">{description}</p>'
+    html = f'<div style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #E5E7EB;"><div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">{icon_html}<h1 style="color: #0f172a; margin: 0; font-size: 2.5rem; display: inline;">{title}</h1>{subtitle_html}</div>{description_html}</div>'
+    st.markdown(html, unsafe_allow_html=True)
+
+
+def render_resort_card(resort_name: str, timezone: str, address: str) -> None:
+    st.markdown(
+        f"""
+        <div class="resort-card">
+          <h2>🏖️ {resort_name}</h2>
+          <div class="resort-meta">
+            <span>🕐 <strong>Timezone:</strong> {timezone}</span>
+            <span>📍 <strong>Location:</strong> {address}</span>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_resort_grid(
+    resorts: List[Dict[str, Any]],
+    current_resort_key: Optional[str],
+    *,
+    title: str = "🏨 Select a Resort",
+    show_change_button: bool = False,
+    picker_state_key: Optional[str] = None,
+    collapse_on_select: bool = False,
+) -> None:
+    picker_open = False
+    if picker_state_key:
+        if picker_state_key not in st.session_state:
+            st.session_state[picker_state_key] = current_resort_key is None
+        picker_open = bool(st.session_state[picker_state_key])
+
+    if show_change_button and current_resort_key and picker_state_key:
+        btn_label = "Done Selecting" if picker_open else "Change Resort"
+        if st.button(btn_label, key=f"{picker_state_key}_change_btn", use_container_width=False):
+            st.session_state[picker_state_key] = not picker_open
+            st.rerun()
+        if not picker_open:
+            return
+
+    with st.expander(title, expanded=picker_open if picker_state_key else False):
+        if not resorts:
+            st.info("No resorts available.")
+            return
+        sorted_resorts = sort_resorts_west_to_east(resorts)
+        region_groups: Dict[str, List[Dict[str, Any]]] = {}
+        for resort in sorted_resorts:
+            tz = resort.get("timezone", "UTC")
+            region_label = get_region_label(tz)
+            if region_label in ["Mexico (Pacific)", "Mexico (Caribbean)", "Costa_Rica"]:
+                region_label = "Central America"
+            if region_label in ["SE Asia", "Indonesia", "Japan", "Australia (QLD)", "Australia"]:
+                region_label = "Asia Pacific"
+            if region_label not in region_groups:
+                region_groups[region_label] = []
+            region_groups[region_label].append(resort)
+
+        for region, region_resorts in region_groups.items():
+            st.markdown(f"**{region}**")
+            num_cols = min(6, len(region_resorts))
+            cols = st.columns(num_cols)
+            for idx, resort in enumerate(region_resorts):
+                col = cols[idx % num_cols]
+                with col:
+                    rid = resort.get("id")
+                    name = resort.get("display_name", rid or f"Resort {idx + 1}")
+                    is_current = current_resort_key in (rid, name)
+                    btn_type = "primary" if is_current else "secondary"
+                    if st.button(
+                        name,
+                        key=f"resort_btn_{rid or name}",
+                        type=btn_type,
+                        use_container_width=True,
+                    ):
+                        st.session_state.current_resort_id = rid
+                        st.session_state.current_resort = name
+                        if collapse_on_select and picker_state_key:
+                            st.session_state[picker_state_key] = False
+                        if "delete_confirm" in st.session_state:
+                            st.session_state.delete_confirm = False
+                        st.rerun()
+            st.markdown("<br>", unsafe_allow_html=True)
+
+
+COLOR_MAP: Dict[str, str] = {
+    "Peak": "#D73027",
+    "High": "#FC8D59",
+    "Mid": "#FEE08B",
+    "Low": "#1F78B4",
+    "Holiday": "#9C27B0",
+    "No Data": "#A6CEE3",
+}
+GANTT_COLORS: Dict[str, str] = {
+    "Peak": "#D73027",
+    "High": "#FC8D59",
+    "Mid": "#FEE08B",
+    "Low": "#91BFDB",
+    "Holiday": "#9C27B0",
+}
+
+
+def _season_bucket(season_name: str) -> str:
+    name = (season_name or "").strip().lower()
+    if "peak" in name:
+        return "Peak"
+    if "high" in name:
+        return "High"
+    if "mid" in name or "shoulder" in name:
+        return "Mid"
+    if "low" in name:
+        return "Low"
+    return "No Data"
+
+
+def create_gantt_chart_from_working(
+    working: Dict[str, Any],
+    year: str,
+    data: Dict[str, Any],
+    height: Optional[int] = None,
+) -> go.Figure:
+    rows: List[Dict[str, Any]] = []
+    year_obj = working.get("years", {}).get(year, {})
+    for season in year_obj.get("seasons", []):
+        sname = season.get("name", "(Unnamed)")
+        bucket = _season_bucket(sname)
+        for i, p in enumerate(season.get("periods", []), 1):
+            try:
+                start_dt = datetime.strptime(p.get("start"), "%Y-%m-%d")
+                end_dt = datetime.strptime(p.get("end"), "%Y-%m-%d")
+                if start_dt <= end_dt:
+                    rows.append(
+                        {
+                            "Task": f"{sname} #{i}",
+                            "Start": start_dt,
+                            "Finish": end_dt,
+                            "Type": bucket,
+                        }
+                    )
+            except Exception:
+                continue
+
+    gh_year = data.get("global_holidays", {}).get(year, {})
+    for h in year_obj.get("holidays", []):
+        global_ref = h.get("global_reference") or h.get("name")
+        if gh := gh_year.get(global_ref):
+            try:
+                start_dt = datetime.strptime(gh.get("start_date"), "%Y-%m-%d")
+                end_dt = datetime.strptime(gh.get("end_date"), "%Y-%m-%d")
+                if start_dt <= end_dt:
+                    rows.append(
+                        {
+                            "Task": h.get("name", "(Unnamed)"),
+                            "Start": start_dt,
+                            "Finish": end_dt,
+                            "Type": "Holiday",
+                        }
+                    )
+            except Exception:
+                continue
+
+    if not rows:
+        today = datetime.now()
+        rows.append({"Task": "No Data", "Start": today, "Finish": today + timedelta(days=1), "Type": "No Data"})
+
+    df = pd.DataFrame(rows)
+    df["Start"] = pd.to_datetime(df["Start"])
+    df["Finish"] = pd.to_datetime(df["Finish"])
+    fig_height = height if height is not None else max(400, len(df) * 35)
+    fig = px.timeline(
+        df,
+        x_start="Start",
+        x_end="Finish",
+        y="Task",
+        color="Type",
+        title=f"{working.get('display_name', 'Resort')} - {year} Timeline",
+        height=fig_height,
+        color_discrete_map=COLOR_MAP,
+    )
+    fig.update_yaxes(autorange="reversed")
+    fig.update_xaxes(tickformat="%d %b %Y")
+    fig.update_traces(
+        hovertemplate="<b>%{y}</b><br>"
+        "Start: %{base|%d %b %Y}<br>"
+        "End: %{x|%d %b %Y}<extra></extra>"
+    )
+    fig.update_layout(
+        showlegend=True,
+        xaxis_title="Date",
+        yaxis_title="Period",
+        font=dict(size=12),
+        plot_bgcolor="rgba(0,0,0,0)",
+        paper_bgcolor="rgba(0,0,0,0)",
+    )
+    return fig
+
+
+def _season_bucket_matplotlib(name: str) -> str:
+    n = (name or "").lower()
+    if "peak" in n:
+        return "Peak"
+    if "high" in n:
+        return "High"
+    if "mid" in n or "shoulder" in n:
+        return "Mid"
+    if "low" in n:
+        return "Low"
+    return "Low"
+
+
+def create_gantt_chart_image(
+    resort_data: Any,
+    year: str,
+    global_holidays: Optional[Dict[str, Dict[str, Dict[str, str]]]] = None,
+) -> Optional[Image.Image]:
+    rows = []
+    if not hasattr(resort_data, "years") or year not in resort_data.years:
+        return None
+    yd = resort_data.years[year]
+    for season in getattr(yd, "seasons", []):
+        name = getattr(season, "name", "Season")
+        bucket = _season_bucket_matplotlib(name)
+        for p in getattr(season, "periods", []):
+            start = getattr(p, "start", None)
+            end = getattr(p, "end", None)
+            if isinstance(start, date) and isinstance(end, date) and start <= end:
+                rows.append((name, start, end, bucket))
+    for h in getattr(yd, "holidays", []):
+        name = getattr(h, "name", "Holiday")
+        start = getattr(h, "start_date", None)
+        end = getattr(h, "end_date", None)
+        if isinstance(start, date) and isinstance(end, date) and start <= end:
+            rows.append((name, start, end, "Holiday"))
+    if not rows:
+        return None
+
+    plt.rcParams["font.family"] = "DejaVu Sans"
+    fig, ax = plt.subplots(figsize=(10, max(3, len(rows) * 0.5)))
+    for i, (label, start, end, typ) in enumerate(rows):
+        duration = (end - start).days + 1
+        ax.barh(
+            i,
+            duration,
+            left=mdates.date2num(start),
+            height=0.6,
+            color=GANTT_COLORS.get(typ, "#999"),
+            edgecolor="black",
+            linewidth=0.5,
+        )
+    ax.set_yticks(range(len(rows)))
+    ax.set_yticklabels([label for label, _, _, _ in rows])
+    ax.invert_yaxis()
+    ax.xaxis.set_major_locator(mdates.MonthLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b"))
+    ax.grid(True, axis="x", alpha=0.3)
+    resort_title = getattr(resort_data, "resort_name", None) or getattr(resort_data, "name", "Resort")
+    ax.set_title(f"{resort_title} - {year}", pad=12, size=12)
+    legend_elements = [
+        plt.Rectangle((0, 0), 1, 1, facecolor=GANTT_COLORS[k], label=k)
+        for k in GANTT_COLORS
+        if any(t == k for _, _, _, t in rows)
+    ]
+    ax.legend(handles=legend_elements, loc="upper right", bbox_to_anchor=(1, 1))
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png", bbox_inches="tight", dpi=150)
+    plt.close(fig)
+    buf.seek(0)
+    return Image.open(buf)
 
 # ==============================================================================
 # LAYER 1: DOMAIN MODELS
@@ -587,7 +1274,14 @@ def main(forced_mode: str = "Renter") -> None:
         else:
             st.session_state.current_resort_id = resorts_full[0].get("id")
 
-    render_resort_grid(resorts_full, st.session_state.current_resort_id)
+    render_resort_grid(
+        resorts_full,
+        st.session_state.current_resort_id,
+        title="🏨 Select Resort",
+        show_change_button=True,
+        picker_state_key="calc_show_resort_picker",
+        collapse_on_select=True,
+    )
     resort_obj = next((r for r in resorts_full if r.get("id") == st.session_state.current_resort_id), None)
 
     if not resort_obj: return
