@@ -1189,19 +1189,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio GV": 200,
-                    "Studio OS": 250,
-                    "Studio OV": 250,
-                    "Studio OF": 325,
                     "1-BDRM GV": 300,
+                    "1-BDRM OF": 450,
                     "1-BDRM OS": 350,
                     "1-BDRM OV": 350,
-                    "1-BDRM OF": 450,
                     "2-BDRM GV": 450,
+                    "2-BDRM OF": 675,
                     "2-BDRM OS": 525,
                     "2-BDRM OV": 525,
-                    "2-BDRM OF": 675,
-                    "3-BDRM OV": 675
+                    "3-BDRM OV": 675,
+                    "Studio GV": 200,
+                    "Studio OF": 325,
+                    "Studio OS": 250,
+                    "Studio OV": 250
                   }
                 },
                 "fri_sat": {
@@ -1210,19 +1210,19 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio GV": 300,
-                    "Studio OS": 350,
-                    "Studio OV": 350,
-                    "Studio OF": 450,
                     "1-BDRM GV": 425,
+                    "1-BDRM OF": 650,
                     "1-BDRM OS": 500,
                     "1-BDRM OV": 500,
-                    "1-BDRM OF": 650,
                     "2-BDRM GV": 650,
+                    "2-BDRM OF": 975,
                     "2-BDRM OS": 750,
                     "2-BDRM OV": 750,
-                    "2-BDRM OF": 975,
-                    "3-BDRM OV": 975
+                    "3-BDRM OV": 975,
+                    "Studio GV": 300,
+                    "Studio OF": 450,
+                    "Studio OS": 350,
+                    "Studio OV": 350
                   }
                 }
               }
@@ -1249,19 +1249,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio GV": 225,
-                    "Studio OS": 275,
-                    "Studio OV": 275,
-                    "Studio OF": 350,
                     "1-BDRM GV": 325,
+                    "1-BDRM OF": 500,
                     "1-BDRM OS": 375,
                     "1-BDRM OV": 375,
-                    "1-BDRM OF": 500,
                     "2-BDRM GV": 500,
+                    "2-BDRM OF": 750,
                     "2-BDRM OS": 600,
                     "2-BDRM OV": 600,
-                    "2-BDRM OF": 750,
-                    "3-BDRM OV": 750
+                    "3-BDRM OV": 750,
+                    "Studio GV": 225,
+                    "Studio OF": 350,
+                    "Studio OS": 275,
+                    "Studio OV": 275
                   }
                 },
                 "fri_sat": {
@@ -1270,19 +1270,19 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio GV": 325,
-                    "Studio OS": 375,
-                    "Studio OV": 375,
-                    "Studio OF": 500,
-                    "1-BDRM GV": 425,
+                    "1-BDRM GV": 475,
+                    "1-BDRM OF": 700,
                     "1-BDRM OS": 550,
                     "1-BDRM OV": 550,
-                    "1-BDRM OF": 700,
                     "2-BDRM GV": 700,
+                    "2-BDRM OF": 1075,
                     "2-BDRM OS": 825,
                     "2-BDRM OV": 825,
-                    "2-BDRM OF": 1075,
-                    "3-BDRM OV": 1075
+                    "3-BDRM OV": 1075,
+                    "Studio GV": 325,
+                    "Studio OF": 500,
+                    "Studio OS": 375,
+                    "Studio OV": 375
                   }
                 }
               }
@@ -1530,19 +1530,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio GV": 200,
-                    "Studio OS": 250,
-                    "Studio OV": 250,
-                    "Studio OF": 325,
                     "1-BDRM GV": 300,
+                    "1-BDRM OF": 450,
                     "1-BDRM OS": 350,
                     "1-BDRM OV": 350,
-                    "1-BDRM OF": 450,
                     "2-BDRM GV": 450,
+                    "2-BDRM OF": 675,
                     "2-BDRM OS": 525,
                     "2-BDRM OV": 525,
-                    "2-BDRM OF": 675,
-                    "3-BDRM OV": 675
+                    "3-BDRM OV": 675,
+                    "Studio GV": 200,
+                    "Studio OF": 325,
+                    "Studio OS": 250,
+                    "Studio OV": 250
                   }
                 },
                 "fri_sat": {
@@ -1551,19 +1551,19 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio GV": 300,
-                    "Studio OS": 350,
-                    "Studio OV": 350,
-                    "Studio OF": 450,
                     "1-BDRM GV": 425,
+                    "1-BDRM OF": 650,
                     "1-BDRM OS": 500,
                     "1-BDRM OV": 500,
-                    "1-BDRM OF": 650,
                     "2-BDRM GV": 650,
+                    "2-BDRM OF": 975,
                     "2-BDRM OS": 750,
                     "2-BDRM OV": 750,
-                    "2-BDRM OF": 975,
-                    "3-BDRM OV": 975
+                    "3-BDRM OV": 975,
+                    "Studio GV": 300,
+                    "Studio OF": 450,
+                    "Studio OS": 350,
+                    "Studio OV": 350
                   }
                 }
               }
@@ -1590,19 +1590,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio GV": 225,
-                    "Studio OS": 275,
-                    "Studio OV": 275,
-                    "Studio OF": 350,
                     "1-BDRM GV": 325,
+                    "1-BDRM OF": 500,
                     "1-BDRM OS": 375,
                     "1-BDRM OV": 375,
-                    "1-BDRM OF": 500,
                     "2-BDRM GV": 500,
+                    "2-BDRM OF": 750,
                     "2-BDRM OS": 600,
                     "2-BDRM OV": 600,
-                    "2-BDRM OF": 750,
-                    "3-BDRM OV": 750
+                    "3-BDRM OV": 750,
+                    "Studio GV": 225,
+                    "Studio OF": 350,
+                    "Studio OS": 275,
+                    "Studio OV": 275
                   }
                 },
                 "fri_sat": {
@@ -1611,19 +1611,19 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio GV": 325,
-                    "Studio OS": 375,
-                    "Studio OV": 375,
-                    "Studio OF": 500,
-                    "1-BDRM GV": 425,
+                    "1-BDRM GV": 475,
+                    "1-BDRM OF": 700,
                     "1-BDRM OS": 550,
                     "1-BDRM OV": 550,
-                    "1-BDRM OF": 700,
                     "2-BDRM GV": 700,
+                    "2-BDRM OF": 1075,
                     "2-BDRM OS": 825,
                     "2-BDRM OV": 825,
-                    "2-BDRM OF": 1075,
-                    "3-BDRM OV": 1075
+                    "3-BDRM OV": 1075,
+                    "Studio GV": 325,
+                    "Studio OF": 500,
+                    "Studio OS": 375,
+                    "Studio OV": 375
                   }
                 }
               }
@@ -1871,19 +1871,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio GV": 200,
-                    "Studio OS": 250,
-                    "Studio OV": 250,
-                    "Studio OF": 325,
                     "1-BDRM GV": 300,
+                    "1-BDRM OF": 450,
                     "1-BDRM OS": 350,
                     "1-BDRM OV": 350,
-                    "1-BDRM OF": 450,
                     "2-BDRM GV": 450,
+                    "2-BDRM OF": 675,
                     "2-BDRM OS": 525,
                     "2-BDRM OV": 525,
-                    "2-BDRM OF": 675,
-                    "3-BDRM OV": 675
+                    "3-BDRM OV": 675,
+                    "Studio GV": 200,
+                    "Studio OF": 325,
+                    "Studio OS": 250,
+                    "Studio OV": 250
                   }
                 },
                 "fri_sat": {
@@ -1892,19 +1892,19 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio GV": 300,
-                    "Studio OS": 350,
-                    "Studio OV": 350,
-                    "Studio OF": 450,
                     "1-BDRM GV": 425,
+                    "1-BDRM OF": 650,
                     "1-BDRM OS": 500,
                     "1-BDRM OV": 500,
-                    "1-BDRM OF": 650,
                     "2-BDRM GV": 650,
+                    "2-BDRM OF": 975,
                     "2-BDRM OS": 750,
                     "2-BDRM OV": 750,
-                    "2-BDRM OF": 975,
-                    "3-BDRM OV": 975
+                    "3-BDRM OV": 975,
+                    "Studio GV": 300,
+                    "Studio OF": 450,
+                    "Studio OS": 350,
+                    "Studio OV": 350
                   }
                 }
               }
@@ -1931,19 +1931,19 @@
                     "Thu"
                   ],
                   "room_points": {
-                    "Studio GV": 225,
-                    "Studio OS": 275,
-                    "Studio OV": 275,
-                    "Studio OF": 350,
                     "1-BDRM GV": 325,
+                    "1-BDRM OF": 500,
                     "1-BDRM OS": 375,
                     "1-BDRM OV": 375,
-                    "1-BDRM OF": 500,
                     "2-BDRM GV": 500,
+                    "2-BDRM OF": 750,
                     "2-BDRM OS": 600,
                     "2-BDRM OV": 600,
-                    "2-BDRM OF": 750,
-                    "3-BDRM OV": 750
+                    "3-BDRM OV": 750,
+                    "Studio GV": 225,
+                    "Studio OF": 350,
+                    "Studio OS": 275,
+                    "Studio OV": 275
                   }
                 },
                 "fri_sat": {
@@ -1952,19 +1952,19 @@
                     "Sat"
                   ],
                   "room_points": {
-                    "Studio GV": 325,
-                    "Studio OS": 375,
-                    "Studio OV": 375,
-                    "Studio OF": 500,
-                    "1-BDRM GV": 425,
+                    "1-BDRM GV": 475,
+                    "1-BDRM OF": 700,
                     "1-BDRM OS": 550,
                     "1-BDRM OV": 550,
-                    "1-BDRM OF": 700,
                     "2-BDRM GV": 700,
+                    "2-BDRM OF": 1075,
                     "2-BDRM OS": 825,
                     "2-BDRM OV": 825,
-                    "2-BDRM OF": 1075,
-                    "3-BDRM OV": 1075
+                    "3-BDRM OV": 1075,
+                    "Studio GV": 325,
+                    "Studio OF": 500,
+                    "Studio OS": 375,
+                    "Studio OV": 375
                   }
                 }
               }
