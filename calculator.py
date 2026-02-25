@@ -2,10 +2,11 @@ import math
 import json
 import os
 import io
+import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta, date
 from enum import Enum
-from typing import List, Dict, Optional, Tuple, Any
+from typing import List, Dict, Optional, Tuple, Any, Union
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -891,14 +892,25 @@ class MVCCalculator:
 
     def calculate_breakdown(
         self, resort_name: str, room: str, checkin: date, nights: int,
-        user_mode: UserMode, rate: float, discount_policy: DiscountPolicy = DiscountPolicy.NONE,
+        user_mode: UserMode, rate: Union[float, Dict[str, float]], discount_policy: DiscountPolicy = DiscountPolicy.NONE,
         owner_config: Optional[dict] = None,
     ) -> CalculationResult:
         resort = self.repo.get_resort(resort_name)
         if not resort:
             return CalculationResult(pd.DataFrame(), 0, 0.0, False, [])
 
-        rate = round(float(rate), 2)
+        def _rate_for_stay() -> float:
+            if isinstance(rate, dict):
+                y = str(checkin.year)
+                if y in rate:
+                    return round(float(rate[y]), 2)
+                if rate:
+                    first_key = sorted(rate.keys())[0]
+                    return round(float(rate[first_key]), 2)
+                return 0.0
+            return round(float(rate), 2)
+        stay_rate = _rate_for_stay()
+
         rows: List[Dict[str, Any]] = []
         tot_eff_pts = 0
         tot_financial = 0.0
@@ -939,17 +951,18 @@ class MVCCalculator:
                     for j in range(holiday_days):
                         disc_days.append((holiday.start_date + timedelta(days=j)).strftime("%Y-%m-%d"))
 
+                curr_rate = stay_rate
                 cost = 0.0
                 m = c = dp = 0.0
                 if is_owner and owner_config:
-                    m = math.ceil(eff * rate)
+                    m = math.ceil(eff * curr_rate)
                     if owner_config.get("inc_c", False):
                         c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
                     if owner_config.get("inc_d", False):
                         dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
                     cost = m + c + dp
                 else:
-                    cost = math.ceil(eff * rate)
+                    cost = math.ceil(eff * curr_rate)
 
                 row = {
                     "Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {holiday.end_date.strftime('%b %d')}) [{holiday_days} nights]",
@@ -968,6 +981,10 @@ class MVCCalculator:
 
                 rows.append(row)
                 tot_eff_pts += eff
+                tot_financial += cost
+                tot_m += m
+                tot_c += c
+                tot_d += dp
                 i += holiday_days
 
             elif not holiday:
@@ -993,17 +1010,18 @@ class MVCCalculator:
                     disc_applied = True
                     disc_days.append(d.strftime("%Y-%m-%d"))
 
+                curr_rate = stay_rate
                 cost = 0.0
                 m = c = dp = 0.0
                 if is_owner and owner_config:
-                    m = math.ceil(eff * rate)
+                    m = math.ceil(eff * curr_rate)
                     if owner_config.get("inc_c", False):
                         c = math.ceil(eff * owner_config.get("cap_rate", 0.0))
                     if owner_config.get("inc_d", False):
                         dp = math.ceil(eff * owner_config.get("dep_rate", 0.0))
                     cost = m + c + dp
                 else:
-                    cost = math.ceil(eff * rate)
+                    cost = math.ceil(eff * curr_rate)
 
                 row = {"Date": d.strftime("%Y-%m-%d (%a)"), "Points": eff}
 
@@ -1018,28 +1036,15 @@ class MVCCalculator:
                     row[room] = cost
                 rows.append(row)
                 tot_eff_pts += eff
+                tot_financial += cost
+                tot_m += m
+                tot_c += c
+                tot_d += dp
                 i += 1
             else:
                 i += 1
 
         df = pd.DataFrame(rows)
-
-        if user_mode == UserMode.RENTER:
-            tot_financial = math.ceil(tot_eff_pts * rate)
-
-        elif user_mode == UserMode.OWNER and owner_config:
-            raw_maint = tot_eff_pts * rate
-            raw_cap = 0.0
-            if owner_config.get("inc_c", False):
-                raw_cap = tot_eff_pts * owner_config.get("cap_rate", 0.0)
-            raw_dep = 0.0
-            if owner_config.get("inc_d", False):
-                raw_dep = tot_eff_pts * owner_config.get("dep_rate", 0.0)
-            tot_financial = math.ceil(raw_maint + raw_cap + raw_dep)
-
-            tot_m = math.ceil(raw_maint)
-            tot_c = math.ceil(raw_cap)
-            tot_d = math.ceil(raw_dep)
 
         if not df.empty:
             fmt_cols = [c for c in df.columns if c not in ["Date", "Points"]]
@@ -1159,6 +1164,17 @@ TIER_EXECUTIVE = "Executive (25% off within 30 days)"
 TIER_PRESIDENTIAL = "Presidential / Chairman (30% off within 60 days)"
 TIER_OPTIONS = [TIER_NO_DISCOUNT, TIER_EXECUTIVE, TIER_PRESIDENTIAL]
 
+DEFAULT_RENTER_RATE_BY_YEAR = {
+    "2025": 0.81,
+    "2026": 0.83,
+    "2027": 0.85,
+}
+DEFAULT_MAINT_RATE_BY_YEAR = {
+    "2025": 0.49,
+    "2026": 0.51,
+    "2027": 0.53,
+}
+
 def get_unique_years_from_data(data: Dict[str, Any]) -> List[str]:
     """Helper to get years from both resorts and global holidays for date picker."""
     years = set()
@@ -1170,7 +1186,9 @@ def get_unique_years_from_data(data: Dict[str, Any]) -> List[str]:
 
 def apply_settings_from_dict(user_data: dict):
     try:
-        if "maintenance_rate" in user_data: st.session_state.pref_maint_rate = float(user_data["maintenance_rate"])
+        # Backward-compatible scalar values
+        if "maintenance_rate" in user_data:
+            st.session_state.pref_maint_rate = float(user_data["maintenance_rate"])
         if "purchase_price" in user_data: st.session_state.pref_purchase_price = float(user_data["purchase_price"])
         if "capital_cost_pct" in user_data: st.session_state.pref_capital_cost = float(user_data["capital_cost_pct"])
         if "salvage_value" in user_data: st.session_state.pref_salvage_value = float(user_data["salvage_value"])
@@ -1199,6 +1217,41 @@ def apply_settings_from_dict(user_data: dict):
             st.session_state.pref_resort_id = rid
             st.session_state.current_resort_id = rid
 
+        # Year-specific rates (new and legacy map formats).
+        maint_map = dict(st.session_state.get("pref_maint_rate_by_year", DEFAULT_MAINT_RATE_BY_YEAR))
+        rent_map = dict(st.session_state.get("renter_rate_by_year", DEFAULT_RENTER_RATE_BY_YEAR))
+
+        if "maintenance_rate_by_year" in user_data and isinstance(user_data["maintenance_rate_by_year"], dict):
+            for k, v in user_data["maintenance_rate_by_year"].items():
+                try:
+                    maint_map[str(k)] = float(v)
+                except Exception:
+                    continue
+        if "renter_rate_by_year" in user_data and isinstance(user_data["renter_rate_by_year"], dict):
+            for k, v in user_data["renter_rate_by_year"].items():
+                try:
+                    rent_map[str(k)] = float(v)
+                except Exception:
+                    continue
+
+        # Flat keyed format: maintenance_rate_2025, renter_rate_2026, etc.
+        for k, v in user_data.items():
+            m1 = re.fullmatch(r"maintenance_rate_(\d{4})", str(k))
+            if m1:
+                try:
+                    maint_map[m1.group(1)] = float(v)
+                except Exception:
+                    pass
+            m2 = re.fullmatch(r"renter_rate_(\d{4})", str(k))
+            if m2:
+                try:
+                    rent_map[m2.group(1)] = float(v)
+                except Exception:
+                    pass
+
+        st.session_state.pref_maint_rate_by_year = maint_map
+        st.session_state.renter_rate_by_year = rent_map
+
     except Exception as e:
         st.error(f"Error applying settings: {e}")
 
@@ -1223,7 +1276,12 @@ def main(forced_mode: str = "Renter") -> None:
         st.session_state.settings_auto_loaded = True
 
     # --- 2. DEFAULTS ---
-    if "pref_maint_rate" not in st.session_state: st.session_state.pref_maint_rate = 0.55
+    if "pref_maint_rate_by_year" not in st.session_state:
+        st.session_state.pref_maint_rate_by_year = dict(DEFAULT_MAINT_RATE_BY_YEAR)
+    if "renter_rate_by_year" not in st.session_state:
+        st.session_state.renter_rate_by_year = dict(DEFAULT_RENTER_RATE_BY_YEAR)
+    if "pref_maint_rate" not in st.session_state:
+        st.session_state.pref_maint_rate = DEFAULT_MAINT_RATE_BY_YEAR.get("2025", 0.49)
     if "pref_purchase_price" not in st.session_state: st.session_state.pref_purchase_price = 18.0
     if "pref_capital_cost" not in st.session_state: st.session_state.pref_capital_cost = 5.0
     if "pref_salvage_value" not in st.session_state: st.session_state.pref_salvage_value = 3.0
@@ -1234,7 +1292,8 @@ def main(forced_mode: str = "Renter") -> None:
     if "pref_inc_c" not in st.session_state: st.session_state.pref_inc_c = True
     if "pref_inc_d" not in st.session_state: st.session_state.pref_inc_d = True
 
-    if "renter_rate_val" not in st.session_state: st.session_state.renter_rate_val = 0.50
+    if "renter_rate_val" not in st.session_state:
+        st.session_state.renter_rate_val = DEFAULT_RENTER_RATE_BY_YEAR.get("2025", 0.81)
     if "renter_discount_tier" not in st.session_state: st.session_state.renter_discount_tier = TIER_NO_DISCOUNT
 
     today = datetime.now().date()
@@ -1265,6 +1324,7 @@ def main(forced_mode: str = "Renter") -> None:
     owner_params = None
     policy = DiscountPolicy.NONE
     rate_to_use = 0.50
+    rate_for_calc: Union[float, Dict[str, float]] = rate_to_use
     disc_mul = 1.0
 
     # --- RESORT SELECTION ---
@@ -1358,6 +1418,25 @@ def main(forced_mode: str = "Renter") -> None:
     # Always adjust for holidays when dates overlap
     adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
 
+    # Active pricing year defaults (based on effective adjusted check-in year).
+    active_year = str(adj_in.year)
+    maint_map = st.session_state.get("pref_maint_rate_by_year", {})
+    rent_map = st.session_state.get("renter_rate_by_year", {})
+    if active_year not in maint_map:
+        maint_map[active_year] = DEFAULT_MAINT_RATE_BY_YEAR.get(
+            active_year,
+            st.session_state.get("pref_maint_rate", DEFAULT_MAINT_RATE_BY_YEAR.get("2025", 0.49)),
+        )
+    if active_year not in rent_map:
+        rent_map[active_year] = DEFAULT_RENTER_RATE_BY_YEAR.get(
+            active_year,
+            st.session_state.get("renter_rate_val", DEFAULT_RENTER_RATE_BY_YEAR.get("2025", 0.81)),
+        )
+    st.session_state.pref_maint_rate_by_year = maint_map
+    st.session_state.renter_rate_by_year = rent_map
+    st.session_state.pref_maint_rate = float(maint_map[active_year])
+    st.session_state.renter_rate_val = float(rent_map[active_year])
+
     if adj:
         # Holiday adjustment occurred - show prominent alert
         original_checkout = checkin + timedelta(days=nights - 1)
@@ -1404,16 +1483,37 @@ def main(forced_mode: str = "Renter") -> None:
         if mode == UserMode.OWNER:
             c1, c2 = st.columns(2)
             with c1:
-                current_val = st.session_state.get("pref_maint_rate", 0.55)
-                val_rate = st.number_input(
-                    "Maintenance ($/point)",
-                    value=current_val,
-                    key="widget_maint_rate",
-                    step=0.01, min_value=0.0
+                st.markdown("**Maintenance ($/point) - by year**")
+                maint_years = sorted(
+                    {y for y in get_unique_years_from_data(st.session_state.data) if y.isdigit()},
+                    key=int,
                 )
-                if val_rate != current_val:
-                    st.session_state.pref_maint_rate = val_rate
-                rate_to_use = val_rate
+                if not maint_years:
+                    maint_years = sorted(st.session_state.get("pref_maint_rate_by_year", {}).keys(), key=int)
+                for yr in maint_years:
+                    curr_val = float(
+                        st.session_state.pref_maint_rate_by_year.get(
+                            yr,
+                            DEFAULT_MAINT_RATE_BY_YEAR.get(yr, st.session_state.get("pref_maint_rate", 0.49)),
+                        )
+                    )
+                    new_val = st.number_input(
+                        f"{yr}",
+                        value=curr_val,
+                        key=f"widget_maint_rate_{yr}",
+                        step=0.01,
+                        min_value=0.0,
+                    )
+                    st.session_state.pref_maint_rate_by_year[yr] = new_val
+
+                rate_to_use = float(
+                    st.session_state.pref_maint_rate_by_year.get(
+                        active_year,
+                        DEFAULT_MAINT_RATE_BY_YEAR.get(active_year, 0.49),
+                    )
+                )
+                st.session_state.pref_maint_rate = rate_to_use
+                rate_for_calc = dict(st.session_state.pref_maint_rate_by_year)
 
             with c2:
                 current_tier = st.session_state.get("pref_discount_tier", TIER_NO_DISCOUNT)
@@ -1476,8 +1576,14 @@ def main(forced_mode: str = "Renter") -> None:
                           st.rerun()
             with sl_col2:
                 current_pref_resort = st.session_state.current_resort_id if st.session_state.current_resort_id else ""
+                maint_map = st.session_state.get("pref_maint_rate_by_year", {})
+                rent_map = st.session_state.get("renter_rate_by_year", {})
                 current_settings = {
                     "maintenance_rate": st.session_state.get("pref_maint_rate", 0.55),
+                    "maintenance_rate_by_year": st.session_state.get("pref_maint_rate_by_year", {}),
+                    "maintenance_rate_2025": float(maint_map.get("2025", DEFAULT_MAINT_RATE_BY_YEAR["2025"])),
+                    "maintenance_rate_2026": float(maint_map.get("2026", DEFAULT_MAINT_RATE_BY_YEAR["2026"])),
+                    "maintenance_rate_2027": float(maint_map.get("2027", DEFAULT_MAINT_RATE_BY_YEAR["2027"])),
                     "purchase_price": st.session_state.get("pref_purchase_price", 18.0),
                     "capital_cost_pct": st.session_state.get("pref_capital_cost", 5.0),
                     "salvage_value": st.session_state.get("pref_salvage_value", 3.0),
@@ -1486,7 +1592,11 @@ def main(forced_mode: str = "Renter") -> None:
                     "include_maintenance": True,
                     "include_capital": st.session_state.get("pref_inc_c", True),
                     "include_depreciation": st.session_state.get("pref_inc_d", True),
-                    "renter_rate": st.session_state.get("renter_rate_val", 0.50),
+                    "renter_rate": st.session_state.get("renter_rate_val", DEFAULT_RENTER_RATE_BY_YEAR.get("2025", 0.81)),
+                    "renter_rate_by_year": st.session_state.get("renter_rate_by_year", {}),
+                    "renter_rate_2025": float(rent_map.get("2025", DEFAULT_RENTER_RATE_BY_YEAR["2025"])),
+                    "renter_rate_2026": float(rent_map.get("2026", DEFAULT_RENTER_RATE_BY_YEAR["2026"])),
+                    "renter_rate_2027": float(rent_map.get("2027", DEFAULT_RENTER_RATE_BY_YEAR["2027"])),
                     "renter_discount_tier": st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT),
                     "preferred_resort_id": current_pref_resort
                 }
@@ -1496,10 +1606,36 @@ def main(forced_mode: str = "Renter") -> None:
             # RENTER MODE CONFIG
             c1, c2 = st.columns(2)
             with c1:
-                curr_rent = st.session_state.get("renter_rate_val", 0.50)
-                renter_rate_input = st.number_input("Rental Cost per Point ($)", value=curr_rent, step=0.01, key="widget_renter_rate")
-                if renter_rate_input != curr_rent: st.session_state.renter_rate_val = renter_rate_input
-                rate_to_use = renter_rate_input
+                st.markdown("**Rental Cost per Point ($) - by year**")
+                renter_years = sorted(
+                    {y for y in get_unique_years_from_data(st.session_state.data) if y.isdigit()},
+                    key=int,
+                )
+                if not renter_years:
+                    renter_years = sorted(st.session_state.get("renter_rate_by_year", {}).keys(), key=int)
+                for yr in renter_years:
+                    curr_val = float(
+                        st.session_state.renter_rate_by_year.get(
+                            yr,
+                            DEFAULT_RENTER_RATE_BY_YEAR.get(yr, st.session_state.get("renter_rate_val", 0.81)),
+                        )
+                    )
+                    new_val = st.number_input(
+                        f"{yr}",
+                        value=curr_val,
+                        step=0.01,
+                        key=f"widget_renter_rate_{yr}",
+                    )
+                    st.session_state.renter_rate_by_year[yr] = new_val
+
+                rate_to_use = float(
+                    st.session_state.renter_rate_by_year.get(
+                        active_year,
+                        DEFAULT_RENTER_RATE_BY_YEAR.get(active_year, 0.81),
+                    )
+                )
+                st.session_state.renter_rate_val = rate_to_use
+                rate_for_calc = dict(st.session_state.renter_rate_by_year)
 
             with c2:
                 curr_r_tier = st.session_state.get("renter_discount_tier", TIER_NO_DISCOUNT)
@@ -1532,7 +1668,7 @@ def main(forced_mode: str = "Renter") -> None:
     # Calculate costs for all room types (needed for both display modes)
     all_room_data = []
     for rm in room_types:
-        room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
+        room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_for_calc, policy, owner_params)
         cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
         all_room_data.append({
             "Room Type": rm,
@@ -1592,7 +1728,7 @@ def main(forced_mode: str = "Renter") -> None:
                     st.rerun()
         
         # Calculate the breakdown for selected room
-        res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_to_use, policy, owner_params)
+        res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_for_calc, policy, owner_params)
         
         # Build enhanced settings caption
         discount_display = "None"
