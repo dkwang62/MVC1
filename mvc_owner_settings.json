@@ -1,5 +1,7 @@
 {
-  "maintenance_rate": 0.52,
+  "maintenance_rate_2025": 0.49,
+  "maintenance_rate_2026": 0.51,
+  "maintenance_rate_2027": 0.53,
   "purchase_price": 3.5,
   "capital_cost_pct": 5.0,
   "salvage_value": 3.0,
@@ -8,7 +10,9 @@
   "include_maintenance": true,
   "include_capital": true,
   "include_depreciation": true,
-  "renter_rate": 0.83,
+  "renter_rate_2025": 0.81,
+  "renter_rate_2026": 0.83,
+  "renter_rate_2027": 0.85,
   "renter_discount_tier": "Ordinary",
   "preferred_resort_id": "ko-olina-beach"
 }
