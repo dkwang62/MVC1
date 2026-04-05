@@ -866,14 +866,15 @@ class MVCCalculator:
     def __init__(self, repo: MVCRepository):
         self.repo = repo
 
-    def _get_daily_points(self, resort: ResortData, day: date) -> Tuple[Dict[str, int], Optional[Holiday]]:
+    def _get_daily_points(self, resort: ResortData, day: date, ignore_holidays: bool = False) -> Tuple[Dict[str, int], Optional[Holiday]]:
         year_str = str(day.year)
-        
-        # Check Holidays across ALL years (important for year-spanning holidays like NewYear)
-        for yd in resort.years.values():
-            for h in yd.holidays:
-                if h.start_date <= day <= h.end_date:
-                    return h.room_points, h
+
+        if not ignore_holidays:
+            # Check Holidays across ALL years (important for year-spanning holidays like NewYear)
+            for yd in resort.years.values():
+                for h in yd.holidays:
+                    if h.start_date <= day <= h.end_date:
+                        return h.room_points, h
 
         if year_str not in resort.years:
             return {}, None
@@ -889,12 +890,34 @@ class MVCCalculator:
                     for cat in s.day_categories:
                         if dow in cat.days:
                             return cat.room_points, None
+
+        # If ignore_holidays=True and day falls in a holiday gap (no season covers it),
+        # extrapolate from the nearest enclosing/adjacent season by proximity.
+        if ignore_holidays:
+            best_season = None
+            best_dist = None
+            for s in yd.seasons:
+                for p in s.periods:
+                    if day < p.start:
+                        dist = (p.start - day).days
+                    elif day > p.end:
+                        dist = (day - p.end).days
+                    else:
+                        dist = 0
+                    if best_dist is None or dist < best_dist:
+                        best_dist = dist
+                        best_season = s
+            if best_season:
+                for cat in best_season.day_categories:
+                    if dow in cat.days:
+                        return cat.room_points, None
+
         return {}, None
 
     def calculate_breakdown(
         self, resort_name: str, room: str, checkin: date, nights: int,
         user_mode: UserMode, rate: Union[float, Dict[str, float]], discount_policy: DiscountPolicy = DiscountPolicy.NONE,
-        owner_config: Optional[dict] = None,
+        owner_config: Optional[dict] = None, ignore_holidays: bool = False,
     ) -> CalculationResult:
         resort = self.repo.get_resort(resort_name)
         if not resort:
@@ -924,7 +947,7 @@ class MVCCalculator:
 
         while i < nights:
             d = checkin + timedelta(days=i)
-            pts_map, holiday = self._get_daily_points(resort, d)
+            pts_map, holiday = self._get_daily_points(resort, d, ignore_holidays=ignore_holidays)
 
             if holiday and holiday.name not in processed_holidays:
                 processed_holidays.add(holiday.name)
@@ -968,7 +991,8 @@ class MVCCalculator:
                 # Use checkout date for the label (end_date + 1)
                 checkout_dt = holiday.end_date + timedelta(days=1)
                 row = {
-                    "Date": f"{holiday.name} ({holiday.start_date.strftime('%b %d')} - {checkout_dt.strftime('%b %d')}) [{holiday_days} nights]",
+                    "Day": str(i + 1),
+                    "Date": f"{holiday.name} ({holiday.start_date.strftime('%Y-%m-%d')} - {holiday.end_date.strftime('%Y-%m-%d')}) [{holiday_days} nights]",
                     "Points": eff
                 }
 
@@ -1029,7 +1053,7 @@ class MVCCalculator:
                 else:
                     cost = math.ceil(eff * curr_rate)
 
-                row = {"Date": d.strftime("%Y-%m-%d (%a)"), "Points": eff}
+                row = {"Day": str(i + 1), "Date": d.strftime("%Y-%m-%d (%a)"), "Points": eff}
 
                 if is_owner:
                     row["Maintenance"] = m
@@ -1399,8 +1423,20 @@ def main(forced_mode: str = "Renter") -> None:
             step=1
         )
     
-    # Always adjust for holidays when dates overlap
-    adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
+    # Holiday ignore toggle
+    if "calc_ignore_holidays" not in st.session_state:
+        st.session_state.calc_ignore_holidays = False
+    ignore_holidays = st.toggle(
+        "Ignore holiday pricing (treat as regular season dates)",
+        key="calc_ignore_holidays",
+        help="When ON, holiday periods are priced using the underlying season rates instead of special holiday points.",
+    )
+
+    # Adjust for holidays only when the toggle is OFF
+    if ignore_holidays:
+        adj_in, adj_n, adj = checkin, nights, False
+    else:
+        adj_in, adj_n, adj = calc.adjust_holiday(r_name, checkin, nights)
 
     with c3:
         # Calculate checkout based on the latest available inputs
@@ -1469,7 +1505,7 @@ def main(forced_mode: str = "Renter") -> None:
         )
 
     # Get all available room types for this resort
-    pts, _ = calc._get_daily_points(calc.repo.get_resort(r_name), adj_in)
+    pts, _ = calc._get_daily_points(calc.repo.get_resort(r_name), adj_in, ignore_holidays=ignore_holidays)
     if not pts:
         rd = calc.repo.get_resort(r_name)
         if rd and str(adj_in.year) in rd.years:
@@ -1673,7 +1709,7 @@ def main(forced_mode: str = "Renter") -> None:
     # Calculate costs for all room types (needed for both display modes)
     all_room_data = []
     for rm in room_types:
-        room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_for_calc, policy, owner_params)
+        room_res = calc.calculate_breakdown(r_name, rm, adj_in, adj_n, mode, rate_for_calc, policy, owner_params, ignore_holidays=ignore_holidays)
         cost_label = "Total Rent" if mode == UserMode.RENTER else "Total Cost"
         all_room_data.append({
             "Room Type": rm,
@@ -1733,7 +1769,7 @@ def main(forced_mode: str = "Renter") -> None:
                     st.rerun()
         
         # Calculate the breakdown for selected room
-        res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_for_calc, policy, owner_params)
+        res = calc.calculate_breakdown(r_name, room_sel, adj_in, adj_n, mode, rate_for_calc, policy, owner_params, ignore_holidays=ignore_holidays)
         
         # Build enhanced settings caption
         discount_display = "None"
@@ -1774,7 +1810,14 @@ def main(forced_mode: str = "Renter") -> None:
             if res.discount_applied: st.success(f"✨ Discount Applied: {len(res.discounted_days)} nights")
 
         # Daily Breakdown - displayed directly without subtitle (self-explanatory)
-        st.dataframe(res.breakdown_df, use_container_width=True, hide_index=True)
+        st.dataframe(
+            res.breakdown_df,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Day": st.column_config.TextColumn("Day", width="small"),
+            },
+        )
     
     # --- SEASON AND HOLIDAY CALENDAR (Always available, independent of selection) ---
     st.divider()
