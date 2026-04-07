@@ -39687,6 +39687,622 @@
           ]
         }
       }
+    },
+    {
+      "id": "kauai-lagoon",
+      "display_name": "Kauai Lagoon🌊☀️🐚",
+      "code": "KL",
+      "resort_name": "Kauai Lagoon🌊☀️🐚",
+      "address": "3325 Holokawelu Way, Lihue, HI 96766, USA",
+      "timezone": "Pacific/Honolulu",
+      "years": {
+        "2025": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2025-01-03",
+                  "end": "2025-01-30"
+                },
+                {
+                  "start": "2025-03-28",
+                  "end": "2025-04-17"
+                },
+                {
+                  "start": "2025-04-25",
+                  "end": "2025-06-05"
+                },
+                {
+                  "start": "2025-08-29",
+                  "end": "2025-11-20"
+                },
+                {
+                  "start": "2025-12-05",
+                  "end": "2025-12-18"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 525,
+                    "2BR OV": 650,
+                    "2BR OF": 775,
+                    "3BR Island": 625,
+                    "3BR OV": 750,
+                    "3BR OF": 875
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 750,
+                    "2BR OV": 925,
+                    "2BR OF": 1100,
+                    "3BR Island": 875,
+                    "3BR OV": 1050,
+                    "3BR OF": 1250
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2025-01-31",
+                  "end": "2025-02-13"
+                },
+                {
+                  "start": "2025-02-21",
+                  "end": "2025-03-27"
+                },
+                {
+                  "start": "2025-06-06",
+                  "end": "2025-07-03"
+                },
+                {
+                  "start": "2025-07-11",
+                  "end": "2025-08-28"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR OV": 750,
+                    "2BR OF": 900,
+                    "3BR Island": 700,
+                    "3BR OV": 850,
+                    "3BR OF": 1025
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 850,
+                    "2BR OV": 1050,
+                    "2BR OF": 1275,
+                    "3BR Island": 1000,
+                    "3BR OV": 1225,
+                    "3BR OF": 1450
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Easter2",
+              "global_reference": "Easter2",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "2BR Island": 4700,
+                "2BR OV": 5850,
+                "2BR OF": 7050,
+                "3BR Island": 5500,
+                "3BR OV": 6700,
+                "3BR OF": 8025
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
+              "room_points": {
+                "2BR Island": 4125,
+                "2BR OV": 5100,
+                "2BR OF": 6075,
+                "3BR Island": 4875,
+                "3BR OV": 5850,
+                "3BR OF": 6875
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2BR Island": 5450,
+                "2BR OV": 6700,
+                "2BR OF": 8075,
+                "3BR Island": 6475,
+                "3BR OV": 7800,
+                "3BR OF": 9225
+              }
+            }
+          ]
+        },
+        "2026": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2026-01-02",
+                  "end": "2026-01-29"
+                },
+                {
+                  "start": "2026-03-27",
+                  "end": "2026-04-02"
+                },
+                {
+                  "start": "2026-04-10",
+                  "end": "2026-06-04"
+                },
+                {
+                  "start": "2026-08-28",
+                  "end": "2026-11-19"
+                },
+                {
+                  "start": "2026-12-04",
+                  "end": "2026-12-17"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 525,
+                    "2BR OV": 650,
+                    "2BR OF": 775,
+                    "3BR Island": 625,
+                    "3BR OV": 750,
+                    "3BR OF": 875
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 750,
+                    "2BR OV": 925,
+                    "2BR OF": 1100,
+                    "3BR Island": 875,
+                    "3BR OV": 1050,
+                    "3BR OF": 1250
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2026-01-30",
+                  "end": "2026-02-12"
+                },
+                {
+                  "start": "2026-02-20",
+                  "end": "2026-03-26"
+                },
+                {
+                  "start": "2026-06-05",
+                  "end": "2026-07-02"
+                },
+                {
+                  "start": "2026-07-10",
+                  "end": "2026-08-27"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR OV": 750,
+                    "2BR OF": 900,
+                    "3BR Island": 700,
+                    "3BR OV": 850,
+                    "3BR OF": 1025
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 850,
+                    "2BR OV": 1050,
+                    "2BR OF": 1275,
+                    "3BR Island": 1000,
+                    "3BR OV": 1225,
+                    "3BR OF": 1450
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Easter2",
+              "global_reference": "Easter2",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "2BR Island": 4700,
+                "2BR OV": 5850,
+                "2BR OF": 7050,
+                "3BR Island": 5500,
+                "3BR OV": 6700,
+                "3BR OF": 8025
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
+              "room_points": {
+                "2BR Island": 4125,
+                "2BR OV": 5100,
+                "2BR OF": 6075,
+                "3BR Island": 4875,
+                "3BR OV": 5850,
+                "3BR OF": 6875
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2BR Island": 5450,
+                "2BR OV": 6700,
+                "2BR OF": 8075,
+                "3BR Island": 6475,
+                "3BR OV": 7800,
+                "3BR OF": 9225
+              }
+            }
+          ]
+        },
+        "2027": {
+          "seasons": [
+            {
+              "name": "Low Season",
+              "periods": [
+                {
+                  "start": "2027-01-03",
+                  "end": "2027-01-28"
+                },
+                {
+                  "start": "2027-03-26",
+                  "end": "2027-04-01"
+                },
+                {
+                  "start": "2027-04-09",
+                  "end": "2027-06-03"
+                },
+                {
+                  "start": "2027-08-27",
+                  "end": "2027-11-18"
+                },
+                {
+                  "start": "2027-12-03",
+                  "end": "2027-12-23"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 525,
+                    "2BR OV": 650,
+                    "2BR OF": 775,
+                    "3BR Island": 625,
+                    "3BR OV": 750,
+                    "3BR OF": 875
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 750,
+                    "2BR OV": 925,
+                    "2BR OF": 1100,
+                    "3BR Island": 875,
+                    "3BR OV": 1050,
+                    "3BR OF": 1250
+                  }
+                }
+              }
+            },
+            {
+              "name": "High Season",
+              "periods": [
+                {
+                  "start": "2027-01-29",
+                  "end": "2027-02-11"
+                },
+                {
+                  "start": "2027-02-19",
+                  "end": "2027-03-25"
+                },
+                {
+                  "start": "2027-06-04",
+                  "end": "2027-07-01"
+                },
+                {
+                  "start": "2027-07-09",
+                  "end": "2027-08-26"
+                }
+              ],
+              "day_categories": {
+                "sun_thu": {
+                  "day_pattern": [
+                    "Sun",
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu"
+                  ],
+                  "room_points": {
+                    "2BR Island": 600,
+                    "2BR OV": 750,
+                    "2BR OF": 900,
+                    "3BR Island": 700,
+                    "3BR OV": 850,
+                    "3BR OF": 1025
+                  }
+                },
+                "fri_sat": {
+                  "day_pattern": [
+                    "Fri",
+                    "Sat"
+                  ],
+                  "room_points": {
+                    "2BR Island": 850,
+                    "2BR OV": 1050,
+                    "2BR OF": 1275,
+                    "3BR Island": 1000,
+                    "3BR OV": 1225,
+                    "3BR OF": 1450
+                  }
+                }
+              }
+            }
+          ],
+          "holidays": [
+            {
+              "name": "Presidents Day",
+              "global_reference": "Presidents Day",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Easter2",
+              "global_reference": "Easter2",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Independence Day",
+              "global_reference": "Independence Day",
+              "room_points": {
+                "2BR Island": 4700,
+                "2BR OV": 5850,
+                "2BR OF": 7050,
+                "3BR Island": 5500,
+                "3BR OV": 6700,
+                "3BR OF": 8025
+              }
+            },
+            {
+              "name": "Thanksgiving1",
+              "global_reference": "Thanksgiving1",
+              "room_points": {
+                "2BR Island": 4125,
+                "2BR OV": 5100,
+                "2BR OF": 6075,
+                "3BR Island": 4875,
+                "3BR OV": 5850,
+                "3BR OF": 6875
+              }
+            },
+            {
+              "name": "Thanksgiving2",
+              "global_reference": "Thanksgiving2",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "Christmas",
+              "global_reference": "Christmas",
+              "room_points": {
+                "2BR Island": 4925,
+                "2BR OV": 6125,
+                "2BR OF": 7400,
+                "3BR Island": 5850,
+                "3BR OV": 7050,
+                "3BR OF": 8425
+              }
+            },
+            {
+              "name": "NewYear",
+              "global_reference": "NewYear",
+              "room_points": {
+                "2BR Island": 5450,
+                "2BR OV": 6700,
+                "2BR OF": 8075,
+                "3BR Island": 6475,
+                "3BR OV": 7800,
+                "3BR OF": 9225
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "migration_notes": {
